@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seite im Aufbau</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Lato:wght@300;400&display=swap"
+        rel="stylesheet">
+
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Lato', sans-serif;
+            color: #333;
+            /* Hintergrundbild - Pfad anpassen! */
+            background-image: url(images/siesta.png);
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+            overflow: hidden;
+            /* Verhindert Scrollbalken */
+        }
+
+        /* Dunkler Filter für bessere Lesbarkeit */
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.3);
+        }
+
+        .content-container {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            /* NEU: Richtet die Box oben links aus */
+            justify-content: flex-start;
+            align-items: flex-start;
+            height: 100%;
+            /* NEU: Fügt einen großzügigen Abstand zum Rand hinzu */
+            padding: 5vw 14vw;
+        }
+
+        .text-box {
+            background-color: rgba(255, 255, 255, 0.9);
+            /* Leicht transparenter Kasten */
+            padding: 40px 60px;
+            border-radius: 8px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+
+            /* Fade-in Animation */
+            opacity: 0;
+            animation: fadeInBox 1.5s ease-out 0.5s forwards;
+        }
+
+        @keyframes fadeInBox {
+            to {
+                opacity: 1;
+            }
+        }
+
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            margin-top: 0;
+            margin-bottom: 20px;
+            color: #1a1a1a;
+        }
+
+        p {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            margin-bottom: 30px;
+        }
+
+        a.home-link {
+            text-decoration: none;
+            color: #007bff;
+            font-weight: bold;
+            border: 2px solid #007bff;
+            padding: 10px 20px;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+        }
+
+        a.home-link:hover {
+            background-color: #007bff;
+            color: #fff;
+        }
+
+        @media (max-width: 768px) {
+            .text-box {
+                padding: 30px 25px;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="content-container">
+        <div class="text-box">
+            <h1>Diese Seite hält gerade Siesta.</h1>
+            <p>
+                Wir gönnen diesen Inhalten eine wohlverdiente Pause unter der spanischen Sonne.
+                Schauen Sie nach einem Glas Vino und etwas Jamón einfach wieder vorbei.
+            </p>
+            <a href="index.html" class="home-link">Zurück zur Startseite</a>
+        </div>
+    </div>
+
+</body>
+
+</html>

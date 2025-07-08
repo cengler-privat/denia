@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Echter Bildertausch im Grid</title>
+    
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            text-align: center;
+            margin: 40px;
+            background-color: #f8f9fa;
+            color: #333;
+        }
+
+        .image-grid {
+            display: grid;
+            /* Passt die Anzahl der Spalten an die Bildschirmgröße an */
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            max-width: 1200px;
+            margin: 20px auto;
+        }
+
+        .grid-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Stellt sicher, dass das Bild den Container ausfüllt */
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            cursor: pointer;
+            /* Sanfter Übergang für den Tausch-Effekt */
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+
+        .grid-image:hover {
+            transform: scale(1.05); /* Leichte Vergrößerung beim Hover */
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Echter Bildertausch im Grid</h1>
+    <p>Fahre über ein Bild. Es wird mit einem zufälligen anderen Bild getauscht.</p>
+
+    <div class="image-grid">
+        <img class="grid-image" src="images/Denia2.jpg" alt="Denia Bild 1">
+        <img class="grid-image" src="images/Denia3.jpg" alt="Denia Bild 2">
+        <img class="grid-image" src="images/Denia5.jpg" alt="Denia Bild 3">
+        <img class="grid-image" src="images/Denia6.jpg" alt="Denia Bild 4">
+        <img class="grid-image" src="images/Denia7.jpg" alt="Denia Bild 5">
+        <img class="grid-image" src="images/Denia8.jpg" alt="Denia Bild 6">
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const images = document.querySelectorAll('.grid-image');
+
+            // Jedem Bild eine eindeutige ID zuweisen, um es später zu finden.
+            images.forEach((img, index) => {
+                img.id = `grid-image-${index}`;
+            });
+
+            images.forEach(image => {
+                // Event-Listener für das Betreten mit der Maus
+                image.addEventListener('mouseenter', (event) => {
+                    const hoveredImage = event.currentTarget;
+
+                    // Verhindert einen neuen Tausch, wenn das Bild bereits Teil eines Tauschs ist.
+                    if (hoveredImage.dataset.isSwapped) return;
+
+                    // Eine Liste aller anderen Bilder erstellen.
+                    const otherImages = Array.from(images).filter(img => img.id !== hoveredImage.id);
+                    
+                    // Ein zufälliges Bild aus den anderen auswählen.
+                    const imageToSwap = otherImages[Math.floor(Math.random() * otherImages.length)];
+
+                    // Die originalen Quellen beider Bilder speichern.
+                    const originalHoveredSrc = hoveredImage.src;
+                    const originalSwapSrc = imageToSwap.src;
+
+                    // Den eigentlichen Tausch der Bildquellen durchführen.
+                    hoveredImage.src = originalSwapSrc;
+                    imageToSwap.src = originalHoveredSrc;
+                    
+                    // Beide Bilder als "getauscht" markieren und miteinander verknüpfen.
+                    hoveredImage.dataset.isSwapped = 'true';
+                    imageToSwap.dataset.isSwapped = 'true';
+                    
+                    hoveredImage.dataset.swappedWith = imageToSwap.id;
+                    imageToSwap.dataset.swappedWith = hoveredImage.id;
+                    
+                    // Die Originalquellen an beiden Elementen speichern, um sie später wiederherzustellen.
+                    hoveredImage.dataset.originalSrc = originalHoveredSrc;
+                    imageToSwap.dataset.originalSrc = originalSwapSrc;
+                });
+
+                // Event-Listener für das Verlassen mit der Maus
+                image.addEventListener('mouseleave', (event) => {
+                    const hoveredImage = event.currentTarget;
+                    
+                    // Nur fortfahren, wenn das Bild tatsächlich getauscht wurde.
+                    if (!hoveredImage.dataset.isSwapped) return;
+
+                    // Das Partner-Bild finden, das am Tausch beteiligt war.
+                    const otherImageId = hoveredImage.dataset.swappedWith;
+                    const otherImage = document.getElementById(otherImageId);
+
+                    // Beide Bilder auf ihre ursprüngliche Quelle zurücksetzen.
+                    if (otherImage) { // Sicherheitsabfrage, falls das andere Bild nicht gefunden wird
+                        hoveredImage.src = hoveredImage.dataset.originalSrc;
+                        otherImage.src = otherImage.dataset.originalSrc;
+
+                        // Alle "data"-Attribute bereinigen, um den Ursprungszustand komplett wiederherzustellen.
+                        delete hoveredImage.dataset.isSwapped;
+                        delete otherImage.dataset.isSwapped;
+                        delete hoveredImage.dataset.swappedWith;
+                        delete otherImage.dataset.swappedWith;
+                        delete hoveredImage.dataset.originalSrc;
+                        delete otherImage.dataset.originalSrc;
+                    }
+                });
+            });
+        });
+    </script>
+
+</body>
+</html>
