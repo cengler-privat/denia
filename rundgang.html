@@ -1,12 +1,93 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.css"/>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.js"></script>
 
-<div id="panorama" style="width: 100%; height: 800px;"></div>
+<div id="panorama" style="width: 100%; height: 800px; background: #000;"></div>
 
 <script>
 pannellum.viewer('panorama', {
-    "type": "equirectangular",
-    "panorama": "images/rundgang_terrasse.jpg",
-    "autoLoad": true
+    "default": {
+        "firstScene": "terrasse",
+        "author": "Mein 360° Rundgang",
+        "sceneFadeDuration": 1200,
+        "autoLoad": true,
+        "autoRotate": -2, // Optionale langsame Drehung für mehr Dynamik
+        "hotSpotDebug": true // HILFE: Klicke im Browser ins Bild, um Pitch/Yaw in der Konsole zu sehen!
+    },
+
+    "scenes": {
+        "terrasse": {
+            "title": "Terrasse",
+            "type": "equirectangular",
+            "panorama": "images/rundgang_terrasse.jpg",
+            "hotSpots": [
+                {
+                    "pitch": -10,
+                    "yaw": 110,
+                    "type": "scene",
+                    "text": "Ins Wohnzimmer gehen",
+                    "sceneId": "wohnzimmer"
+                }
+            ]
+        },
+
+        "wohnzimmer": {
+            "title": "Wohnzimmer",
+            "type": "equirectangular",
+            "panorama": "images/wohnzimmer.jpg",
+            "hotSpots": [
+                {
+                    "pitch": -5,
+                    "yaw": -160,
+                    "type": "scene",
+                    "text": "Zurück zur Terrasse",
+                    "sceneId": "terrasse"
+                },
+                {
+                    "pitch": -2,
+                    "yaw": 45,
+                    "type": "scene",
+                    "text": "Zum Schlafzimmer",
+                    "sceneId": "schlafzimmer"
+                },
+                {
+                    "pitch": -2,
+                    "yaw": 80,
+                    "type": "scene",
+                    "text": "Zum Kinderzimmer",
+                    "sceneId": "kinderzimmer"
+                }
+            ]
+        },
+
+        "schlafzimmer": {
+            "title": "Schlafzimmer",
+            "type": "equirectangular",
+            "panorama": "images/schlafzimmer.jpg",
+            "hotSpots": [
+                {
+                    "pitch": -10,
+                    "yaw": 180,
+                    "type": "scene",
+                    "text": "Zurück ins Wohnzimmer",
+                    "sceneId": "wohnzimmer"
+                }
+            ]
+        },
+
+        "kinderzimmer": {
+            "title": "Kinderzimmer",
+            "type": "equirectangular",
+            "panorama": "images/kinderzimmer.jpg",
+            "hotSpots": [
+                {
+                    "pitch": -10,
+                    "yaw": 0,
+                    "type": "scene",
+                    "text": "Zurück ins Wohnzimmer",
+                    "sceneId": "wohnzimmer"
+                }
+            ]
+        }
+    }
 });
 </script>
