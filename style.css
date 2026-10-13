@@ -606,3 +606,9 @@ ul.features li::before {
         left: 20px;
     }
 }
+
+video {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
