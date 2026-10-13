@@ -613,19 +613,60 @@ video {
   display: block;
 }
 
-hotSpots: [
-  {
-    pitch: -5.40,
-    yaw: 112.30,
-    type: "info",
-    text: "Eingangsbereich / Rezeption",
-    cssClass: "custom-hotspot pulse-effect" // Eigene CSS-Klasse
-  },
-  {
-    pitch: 2.10,
-    yaw: -45.00,
-    type: "scene", // Für Rundgänge (Wechsel zum nächsten Raum)
-    text: "Zum Garten gehen",
-    sceneId: "garten"
+/* Der Hauptpunkt */
+.custom-hotspot {
+  width: 24px;
+  height: 24px;
+  background: rgba(255, 255, 255, 0.9);
+  border: 2px solid #007aff;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 0 10px rgba(0, 122, 255, 0.5);
+  transition: transform 0.2s ease, background 0.2s ease;
+  position: relative;
+}
+
+/* Vergrößern bei Mouseover */
+.custom-hotspot:hover {
+  transform: scale(1.25);
+  background: #007aff;
+}
+
+/* Sanfte Puls-Welle um den Hotspot */
+.pulse-effect::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  border: 2px solid #007aff;
+  transform: translate(-50%, -50%);
+  animation: pulse-ring 1.8s infinite cubic-bezier(0.215, 0.61, 0.355, 1);
+}
+
+@keyframes pulse-ring {
+  0% {
+    width: 100%;
+    height: 100%;
+    opacity: 1;
   }
-]
+  100% {
+    width: 260%;
+    height: 260%;
+    opacity: 0;
+  }
+}
+
+/* Schicker Tooltip bei Hover */
+.pnlm-tooltip span {
+  background: rgba(15, 23, 42, 0.85) !important;
+  backdrop-filter: blur(8px);
+  color: #ffffff !important;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 13px !important;
+  border-radius: 6px !important;
+  padding: 6px 12px !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+}
