@@ -4,7 +4,7 @@
 <div id="panorama" style="width: 100%; height: 800px; background: #000;"></div>
 
 <script>
-pannellum.viewer('panorama', {
+const myViewer = pannellum.viewer('panorama', {
     "default": {
         "firstScene": "terrasse",
         "author": "Casa Englers y Amigos",
@@ -23,12 +23,18 @@ pannellum.viewer('panorama', {
             "panorama": "images/rundgang_terrasse.jpg",
             "hotSpots": [
                 {
+                pitch: -5.40,
+                yaw: 112.30,
+                type: "info",
+                text: "Eingangsbereich / Rezeption",
+                cssClass: "custom-hotspot pulse-effect" // Eigene CSS-Klasse
+                },            
+                {
                     "pitch": -6,
                     "yaw": -140,
                     "type": "scene",
                     "text": "Ins Wohnzimmer gehen",
                     "sceneId": "wohnzimmer",
-                    "cssClass": "custom-hotspot pulse-effect" // Eigene CSS-Klasse
                 }
             ]
         },
@@ -39,8 +45,8 @@ pannellum.viewer('panorama', {
             "panorama": "images/rundgang_wohnzimmer.jpg",
             "hotSpots": [
                 {
-                    "pitch": -2,
-                    "yaw": 45,
+                    "pitch": 0,
+                    "yaw": 0,
                     "type": "scene",
                     "text": "Zurück zur Terrasse",
                     "sceneId": "terrasse"
@@ -115,6 +121,25 @@ pannellum.viewer('panorama', {
                 }
             ]
         }
+    }
+});
+// Click-Event für Koordinaten (Mouseup verhindert Konflikte mit dem Ziehen/Drehen):
+myViewer.on('mouseup', function(event) {
+    // Wandelt Pixel-Koordinaten des Mauszeigers in Pitch & Yaw um
+    const coords = myViewer.mouseEventToCoords(event);
+    const pitch = coords[0].toFixed(2);
+    const yaw = coords[1].toFixed(2);
+
+    const hotspotSnippet = `{\n  "pitch": ${pitch},\n  "yaw": ${yaw},\n  "type": "scene",\n  "text": "Neuer Ort",\n  "sceneId": "ziel_szene"\n},`;
+
+    console.log(`%c📍 Hotspot-Koordinaten erfasst:`, 'color: #007aff; font-weight: bold;');
+    console.log(hotspotSnippet);
+
+    // Optional: Kopiert den fertigen Block direkt in deine Mac-Zwischenablage
+    if (navigator.clipboard) {
+        navigator.clipboard.writeText(hotspotSnippet)
+            .then(() => console.log('📋 Fertiges JSON direkt in die Zwischenablage kopiert!'))
+            .catch(() => {});
     }
 });
 </script>
