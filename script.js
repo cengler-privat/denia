@@ -120,3 +120,20 @@ document.addEventListener('DOMContentLoaded', () => {
         setInterval(getWeatherData, 3600000); // Jede Stunde aktualisieren
     }
 });
+
+hotSpots: [
+  {
+    pitch: -5.40,
+    yaw: 112.30,
+    type: "info",
+    text: "Eingangsbereich / Rezeption",
+    cssClass: "custom-hotspot pulse-effect" // Eigene CSS-Klasse
+  },
+  {
+    pitch: 2.10,
+    yaw: -45.00,
+    type: "scene", // Für Rundgänge (Wechsel zum nächsten Raum)
+    text: "Zum Garten gehen",
+    sceneId: "garten"
+  }
+]
