@@ -613,28 +613,29 @@ video {
   display: block;
 }
 
-/* Der Hauptpunkt */
-.custom-hotspot {
-  width: 24px;
-  height: 24px;
-  background: rgba(255, 255, 255, 0.9);
-  border: 2px solid #007aff;
-  border-radius: 50%;
+/* 1. Basis-Styles von Pannellum für deinen Hotspot überschreiben */
+.pnlm-hotspot.custom-hotspot {
+  width: 26px !important;
+  height: 26px !important;
+  background-color: rgba(255, 255, 255, 0.95) !important;
+  background-image: none !important; /* Entfernt das Standard-Icon von Pannellum */
+  border: 3px solid #007aff !important;
+  border-radius: 50% !important;
   cursor: pointer;
-  box-shadow: 0 0 10px rgba(0, 122, 255, 0.5);
-  transition: transform 0.2s ease, background 0.2s ease;
-  position: relative;
+  box-shadow: 0 0 12px rgba(0, 122, 255, 0.6);
+  transition: transform 0.2s ease, background-color 0.2s ease;
+  box-sizing: border-box;
 }
 
-/* Vergrößern bei Mouseover */
-.custom-hotspot:hover {
+/* 2. Hover-Effekt */
+.pnlm-hotspot.custom-hotspot:hover {
   transform: scale(1.25);
-  background: #007aff;
+  background-color: #007aff !important;
 }
 
-/* Sanfte Puls-Welle um den Hotspot */
-.pulse-effect::after {
-  content: '';
+/* 3. Pulsierende Welle um den Hotspot */
+.pnlm-hotspot.pulse-effect::after {
+  content: "";
   position: absolute;
   top: 50%;
   left: 50%;
@@ -642,19 +643,21 @@ video {
   height: 100%;
   border-radius: 50%;
   border: 2px solid #007aff;
+  box-sizing: border-box;
   transform: translate(-50%, -50%);
-  animation: pulse-ring 1.8s infinite cubic-bezier(0.215, 0.61, 0.355, 1);
+  animation: pnlm-pulse 1.8s infinite ease-out;
+  pointer-events: none; /* Verhindert Klick-Blockaden */
 }
 
-@keyframes pulse-ring {
+@keyframes pnlm-pulse {
   0% {
     width: 100%;
     height: 100%;
     opacity: 1;
   }
   100% {
-    width: 260%;
-    height: 260%;
+    width: 250%;
+    height: 250%;
     opacity: 0;
   }
 }
