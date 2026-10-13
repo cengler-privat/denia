@@ -1,0 +1,32 @@
+- https://vscode.dev/github/cengler-privat/denia?vscode-lang=de-de
+- 360 Bilder von Insta auf SSD kopieren und über mac insta app exportieren
+- Squoosh.app (von Google entwickelt, läuft lokal im Browser, keine Upload-Wartezeit):
+Bild hineinziehen.
+Rechts auf Resize klicken.
+Methode: Lanczos3 oder Bicubic.
+Breite auf 6000 px und Höhe auf 3000 px stellen.
+Format: MozJPEG, Qualität auf ca. 80 %.
+Datei herunterladen (Dateigröße schrumpft oft um 70–80 %).
+
+- Schnellanleitung für dein Intro-Video in HandBrake:
+Starte HandBrake und ziehe dein exportiertes IntroVideo.mp4 ins Fenster.
+
+Wähle rechts in der Voreinstellungsleiste (Presets) unter Web den Eintrag Fast 1080p30.
+
+Setze im Reiter Summary (Übersicht) einen Haken bei Web Optimized (sorgt für schnelles Starten im Browser).
+
+Klicke im Reiter Audio auf den Papierkorb neben der Audiospur, um den Ton komplett zu entfernen.
+
+Klicke oben auf Start (grüner Play-Button).
+
+Dass sich die Größe kaum verändert hat, liegt meistens am Standardwert für die Bildqualität (CRF/RF) in HandBrake – dieser stand noch auf hoher Qualität statt auf maximaler Komprimierung.Über den Reiter Video kannst du die Dateigröße gezielt auf unter 5 MB senken:1.Constant Quality (RF) erhöhen:Qualitätsregler anpassen.Klicke in HandBrake auf den Reiter Video. Suche den Schieberegler bei Constant Quality (RF).Ziehe den Regler weiter nach rechts auf einen Wert zwischen 26 und 28 (Hinweis: Bei HandBrake bedeutet ein höherer RF-Wert stärkere Kompression und eine kleinere Datei).Erfolgskontrolle: Der Zahlenwert neben dem Schieberegler zeigt 26, 27 oder 28 an.2.Encoder Preset langsamer stellen:Encoder-Effizienz maximieren.Stelle im selben Reiter den Schieberegler Encoder Preset von Fast auf Medium oder Slow. Dadurch rechnet der Mac etwas länger, holt aber bei gleicher Bildqualität deutlich mehr Datenersparnis heraus.Erfolgskontrolle: Unter dem Preset-Regler steht Medium oder Slow.3.Average Bitrate auf 2000–3000 kbps setzen:Alternativ: Feste Zielbitrate vorgeben.Falls du die Dateigröße exakt berechenbar deckeln möchtest:Wechsle im Reiter Video von Constant Quality auf Average Bitrate (kbps).Trage dort 2500 ein.Setze einen Haken bei 2-Pass Encoding.Erfolgskontrolle: Bei 10 Sekunden Laufzeit und 2500 kbps wird die Datei garantiert kleiner als 4 MB.4.Export neu anstoßen:Neuen Durchlauf starten.Vergib unten bei Speichern unter einen neuen Namen (z. B. IntroVideo_klein.mp4) und klicke oben auf Start (grüner Play-Button).
+
+Grosses Video direkt in Github speichern:
+https://github.com/cengler-privat/denia/releases/tag/v1.0
+
+
+
+Zeile 61:
+            <div class="image-container">
+                <img src="images/meerblick.webp" alt="Fantastischer Meerblick">
+            </div>
