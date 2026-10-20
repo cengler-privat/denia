@@ -2,7 +2,26 @@
 <link rel="stylesheet" href="style.css">
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.js"></script>
 
-<div id="panorama" style="width: 100%; height: 800px; background: #000;"></div>
+<div class="tour-wrapper">
+    <!-- Schwebender Header -->
+    <div class="glass-header">
+        <span class="badge">360° VIRTUELLER RUNDGANG</span>
+        <h1>Casa Englers y Amigos</h1>
+    </div>
+
+    <!-- Der Panorama Viewer -->
+    <div id="panorama"></div>
+
+    <!-- Schwebendes Navigations-Dock -->
+    <div class="glass-dock">
+        <button class="dock-btn active" onclick="loadRoom('terrasse', this)">☀️ Terrasse</button>
+        <button class="dock-btn" onclick="loadRoom('wohnzimmer', this)">🛋️ Wohnzimmer</button>
+        <button class="dock-btn" onclick="loadRoom('schlafzimmer', this)">🛏️ Schlafzimmer</button>
+        <button class="dock-btn" onclick="loadRoom('kinderzimmer', this)">🧸 Kinderzimmer</button>
+        <button class="dock-btn" onclick="loadRoom('bad', this)">🚿 Bad</button>
+    </div>
+</div>
+
 
 <script>
 const myViewer = pannellum.viewer('panorama', {

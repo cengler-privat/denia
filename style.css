@@ -673,3 +673,102 @@ video {
   padding: 6px 12px !important;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
 }
+
+/* In deine style.css einfügen */
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700&display=swap');
+
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: 'Outfit', sans-serif;
+    overflow: hidden; /* Kein Scrollen, echtes App-Feeling */
+}
+
+.tour-wrapper {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+}
+
+#panorama {
+    width: 100%;
+    height: 100%;
+}
+
+/* Milchglas Header oben links */
+.glass-header {
+    position: absolute;
+    top: 25px;
+    left: 25px;
+    z-index: 10;
+    background: rgba(15, 23, 42, 0.55);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    padding: 15px 25px;
+    border-radius: 20px;
+    color: white;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    pointer-events: none; /* Klicks gehen durch aufs Panorama */
+}
+
+.glass-header .badge {
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: #f59e0b;
+    font-weight: 700;
+    display: block;
+    margin-bottom: 4px;
+}
+
+.glass-header h1 {
+    margin: 0;
+    font-size: 22px;
+    font-weight: 500;
+}
+
+/* Schwebendes Dock unten */
+.glass-dock {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+    display: flex;
+    gap: 10px;
+    background: rgba(15, 23, 42, 0.65);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    padding: 10px;
+    border-radius: 50px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+}
+
+.dock-btn {
+    background: transparent;
+    border: none;
+    color: rgba(255, 255, 255, 0.8);
+    padding: 10px 18px;
+    border-radius: 30px;
+    font-family: inherit;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+}
+
+.dock-btn:hover {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.dock-btn.active {
+    background: #f59e0b;
+    color: #000;
+    font-weight: 600;
+    box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4);
+}
+
+/* Pannellum Standard-Titel ausblenden (wir haben unseren eigenen) */
+.pnlm-title-box { display: none !important; }
