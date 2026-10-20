@@ -1,172 +1,591 @@
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.css"/>
-<link rel="stylesheet" href="style.css">
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.js"></script>
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>360° Rundgang – Casa Englers y Amigos</title>
 
-<div class="tour-wrapper">
-    <!-- Schwebender Header -->
-    <div class="glass-header">
-        <span class="badge">360° VIRTUELLER RUNDGANG</span>
-        <h1>Casa Englers y Amigos</h1>
-    </div>
+    <!-- Pannellum CSS & JS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.css"/>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.js"></script>
 
-    <!-- Der Panorama Viewer -->
-    <div id="panorama"></div>
+    <!-- Google Fonts für edle Typografie -->
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;1,600&family=Outfit:wght@300;500;700&family=Plus+Jakarta+Sans:wght@400;600&display=swap" rel="stylesheet">
 
-    <!-- Schwebendes Navigations-Dock -->
-    <div class="glass-dock">
-        <button class="dock-btn active" onclick="loadRoom('terrasse', this)">☀️ Terrasse</button>
-        <button class="dock-btn" onclick="loadRoom('wohnzimmer', this)">🛋️ Wohnzimmer</button>
-        <button class="dock-btn" onclick="loadRoom('schlafzimmer', this)">🛏️ Schlafzimmer</button>
-        <button class="dock-btn" onclick="loadRoom('kinderzimmer', this)">🧸 Kinderzimmer</button>
-        <button class="dock-btn" onclick="loadRoom('bad', this)">🚿 Bad</button>
-    </div>
-</div>
+    <style>
+        /* =========================================================
+           BASIS & DESIGN-UMSCHALTER (Oben rechts zum Testen)
+           ========================================================= */
+        * { box-sizing: border-box; }
+        body, html { margin: 0; padding: 0; transition: background-color 0.4s ease, color 0.4s ease; }
 
-
-<script>
-const myViewer = pannellum.viewer('panorama', {
-    "default": {
-        "firstScene": "terrasse",
-        "author": "Casa Englers y Amigos",
-        "sceneFadeDuration": 1200,
-        "autoLoad": true,
-        "autoRotate": -2, // Optionale langsame Drehung für mehr Dynamik
-        "compass": true,
-        "northOffset": -67,
-        //"hotSpotDebug": true // HILFE: Klicke im Browser ins Bild, um Pitch/Yaw in der Konsole zu sehen!
-    },
-
-    "scenes": {
-        "terrasse": {
-            "title": "Terrasse",
-            "type": "equirectangular",
-            "panorama": "images/rundgang_terrasse.jpg",
-            "hotSpots": [
-                {
-                pitch: -5.40,
-                yaw: 112.30,
-                type: "info",
-                text: "Eingangsbereich / Rezeption",
-                },       
-                {
-                "pitch": -1.27,
-                "yaw": 170.62,
-                "type": "scene",
-                "text": "Neuer Ort",
-                "sceneId": "wohnzimmer",
-                "cssClass": "custom-hotspot pulse-effect"
-                },     
-                {
-                    "pitch": -6,
-                    "yaw": -140,
-                    "type": "scene",
-                    "text": "Ins Wohnzimmer gehen",
-                    "sceneId": "wohnzimmer",
-                }
-            ]
-        },
-
-        "wohnzimmer": {
-            "title": "Wohnzimmer",
-            "type": "equirectangular",
-            "panorama": "images/rundgang_wohnzimmer.jpg",
-            "hotSpots": [
-                {
-                    "pitch": 0,
-                    "yaw": 0,
-                    "type": "scene",
-                    "text": "Zurück zur Terrasse",
-                    "sceneId": "terrasse"
-                },
-                {
-                    "pitch": -3.8,
-                    "yaw": -30,
-                    "type": "scene",
-                    "text": "Zum Schlafzimmer",
-                    "sceneId": "schlafzimmer"
-                },
-                {
-                    "pitch": 1.10,
-                    "yaw": -87,
-                    "type": "scene",
-                    "text": "Zum Kinderzimmer",
-                    "sceneId": "kinderzimmer"
-                },
-                {
-                    "pitch": 1.5,
-                    "yaw": -101,
-                    "type": "scene",
-                    "text": "Zum Bad",
-                    "sceneId": "bad"
-                }
-            ]
-        },
-
-        "schlafzimmer": {
-            "title": "Schlafzimmer",
-            "type": "equirectangular",
-            "panorama": "images/rundgang_schlafzimmer.jpg",
-            "hotSpots": [
-                {
-                    "pitch": 1.06,
-                    "yaw": -154,
-                    "type": "scene",
-                    "text": "Zurück ins Wohnzimmer",
-                    "sceneId": "wohnzimmer"
-                }
-            ]
-        },
-
-        "kinderzimmer": {
-            "title": "Kinderzimmer",
-            "type": "equirectangular",
-            "panorama": "images/rundgang_kinderzimmer.jpg",
-            "hotSpots": [
-                {
-                    "pitch": 6.7,
-                    "yaw": -163,
-                    "type": "scene",
-                    "text": "Zurück ins Wohnzimmer",
-                    "sceneId": "wohnzimmer"
-                }
-            ]
-        },
-
-        "bad": {
-            "title": "Bad",
-            "type": "equirectangular",
-            "panorama": "images/rundgang_bad.jpg",
-            "pitch": -16,
-            "yaw": 161,
-            "hotSpots": [
-                {
-                    "pitch": -19,
-                    "yaw": -178,
-                    "type": "scene",
-                    "text": "Zurück ins Wohnzimmer",
-                    "sceneId": "wohnzimmer"
-                }
-            ]
+        .theme-switcher {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 9999;
+            background: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(10px);
+            padding: 8px 14px;
+            border-radius: 30px;
+            border: 1px solid rgba(255,255,255,0.2);
+            color: #fff;
+            font-family: 'Outfit', sans-serif;
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
         }
-    }
-});
-// Click-Event für Koordinaten (Mouseup verhindert Konflikte mit dem Ziehen/Drehen):
-myViewer.on('mouseup', function(event) {
-    // Wandelt Pixel-Koordinaten des Mauszeigers in Pitch & Yaw um
-    const coords = myViewer.mouseEventToCoords(event);
-    const pitch = coords[0].toFixed(2);
-    const yaw = coords[1].toFixed(2);
 
-    const hotspotSnippet = `{\n  "pitch": ${pitch},\n  "yaw": ${yaw},\n  "type": "scene",\n  "text": "Neuer Ort",\n  "sceneId": "ziel_szene"\n},`;
+        .theme-switcher select {
+            background: #222;
+            color: #f59e0b;
+            border: 1px solid #444;
+            padding: 4px 10px;
+            border-radius: 15px;
+            font-family: inherit;
+            font-weight: 500;
+            cursor: pointer;
+            outline: none;
+        }
 
-    console.log(`%c📍 Hotspot-Koordinaten erfasst:`, 'color: #007aff; font-weight: bold;');
-    console.log(hotspotSnippet);
+        /* Standard-Titel von Pannellum ausblenden, da wir eigene Header nutzen */
+        .pnlm-title-box { display: none !important; }
 
-    // Optional: Kopiert den fertigen Block direkt in deine Mac-Zwischenablage
-    if (navigator.clipboard) {
-        navigator.clipboard.writeText(hotspotSnippet)
-            .then(() => console.log('📋 Fertiges JSON direkt in die Zwischenablage kopiert!'))
-            .catch(() => {});
-    }
-});
-</script>
+        /* =========================================================
+           DESIGN 1: CINEMATIC GLASSMORPHISM (Vollbild)
+           ========================================================= */
+        body.theme-glass {
+            font-family: 'Outfit', sans-serif;
+            overflow: hidden;
+            background: #000;
+        }
+
+        body.theme-glass .tour-layout {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+        }
+
+        body.theme-glass .tour-header {
+            position: absolute;
+            top: 25px;
+            left: 25px;
+            z-index: 10;
+            background: rgba(15, 23, 42, 0.55);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            padding: 16px 26px;
+            border-radius: 20px;
+            color: white;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+            pointer-events: none;
+        }
+
+        body.theme-glass .eyebrow {
+            font-size: 11px;
+            letter-spacing: 2px;
+            color: #f59e0b;
+            font-weight: 700;
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        body.theme-glass .tour-header h1 {
+            margin: 0;
+            font-size: 24px;
+            font-weight: 500;
+        }
+
+        body.theme-glass .tour-desc { display: none; }
+
+        body.theme-glass .room-nav {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 10;
+            display: flex;
+            gap: 8px;
+            background: rgba(15, 23, 42, 0.65);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            padding: 10px;
+            border-radius: 50px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+        }
+
+        body.theme-glass .nav-btn {
+            background: transparent;
+            border: none;
+            color: rgba(255, 255, 255, 0.85);
+            padding: 10px 18px;
+            border-radius: 30px;
+            font-family: inherit;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        body.theme-glass .nav-btn .num { display: none; }
+
+        body.theme-glass .nav-btn:hover {
+            color: #fff;
+            background: rgba(255, 255, 255, 0.12);
+        }
+
+        body.theme-glass .nav-btn.active {
+            background: #f59e0b;
+            color: #000;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4);
+        }
+
+        body.theme-glass .viewer-wrapper,
+        body.theme-glass #panorama {
+            width: 100%;
+            height: 100%;
+        }
+
+        /* =========================================================
+           DESIGN 2: BOUTIQUE RESORT MAGAZIN (Warmes Editorial)
+           ========================================================= */
+        body.theme-editorial {
+            background-color: #f4EFE6;
+            color: #2C2523;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            padding: 40px;
+        }
+
+        body.theme-editorial .tour-layout {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 340px 1fr;
+            gap: 45px;
+            align-items: center;
+            min-height: calc(100vh - 80px);
+        }
+
+        body.theme-editorial .eyebrow {
+            font-size: 12px;
+            letter-spacing: 3px;
+            color: #C86D51;
+            font-weight: 600;
+            display: block;
+        }
+
+        body.theme-editorial .tour-header h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 52px;
+            line-height: 1.05;
+            margin: 10px 0 18px 0;
+            color: #1a1615;
+        }
+
+        body.theme-editorial .tour-desc {
+            font-size: 15px;
+            line-height: 1.6;
+            color: #6E655F;
+            margin-bottom: 28px;
+        }
+
+        body.theme-editorial .room-nav {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        body.theme-editorial .nav-btn {
+            background: rgba(255, 255, 255, 0.5);
+            border: 1px solid rgba(44, 37, 35, 0.1);
+            padding: 14px 18px;
+            border-radius: 12px;
+            text-align: left;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: all 0.25s ease;
+            font-family: inherit;
+            font-size: 15px;
+            color: #2C2523;
+        }
+
+        body.theme-editorial .nav-btn .num {
+            font-size: 12px;
+            color: #C86D51;
+            font-weight: 700;
+        }
+
+        body.theme-editorial .nav-btn:hover {
+            border-color: #C86D51;
+            transform: translateX(5px);
+            background: #fff;
+        }
+
+        body.theme-editorial .nav-btn.active {
+            background: #2C2523;
+            color: #f4EFE6;
+            border-color: #2C2523;
+        }
+
+        body.theme-editorial #panorama {
+            width: 100%;
+            height: 760px;
+            border-radius: 28px;
+            overflow: hidden;
+            box-shadow: 0 25px 50px -12px rgba(44, 37, 35, 0.25);
+            border: 6px solid #fff;
+        }
+
+        /* =========================================================
+           DESIGN 3: AMBIENT DARK MODE (Kino-Leuchteffekt)
+           ========================================================= */
+        body.theme-ambient {
+            background-color: #090b10;
+            color: #ffffff;
+            font-family: 'Outfit', sans-serif;
+            padding: 35px 25px;
+        }
+
+        body.theme-ambient .tour-layout {
+            max-width: 1280px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        body.theme-ambient .eyebrow {
+            font-size: 12px;
+            letter-spacing: 4px;
+            color: #fbbf24;
+            display: block;
+            margin-bottom: 6px;
+        }
+
+        body.theme-ambient .tour-header h1 {
+            font-weight: 300;
+            letter-spacing: 5px;
+            font-size: 32px;
+            margin: 0 0 20px 0;
+            text-transform: uppercase;
+            background: linear-gradient(90deg, #fff, #fbbf24, #fff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        body.theme-ambient .tour-desc { display: none; }
+
+        body.theme-ambient .room-nav {
+            display: inline-flex;
+            background: #161b26;
+            padding: 6px;
+            border-radius: 40px;
+            border: 1px solid #262f40;
+            margin-bottom: 30px;
+            gap: 6px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        body.theme-ambient .nav-btn {
+            background: transparent;
+            border: none;
+            color: #8b9bb4;
+            padding: 10px 20px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 14px;
+            transition: 0.3s;
+        }
+
+        body.theme-ambient .nav-btn .num { display: none; }
+
+        body.theme-ambient .nav-btn.active,
+        body.theme-ambient .nav-btn:hover {
+            background: #262f40;
+            color: #fbbf24;
+        }
+
+        body.theme-ambient .viewer-wrapper {
+            position: relative;
+            border-radius: 24px;
+            padding: 4px;
+            background: linear-gradient(135deg, rgba(251,191,36,0.45), rgba(255,255,255,0.05), rgba(56,189,248,0.35));
+            box-shadow: 0 0 90px -10px rgba(251, 191, 36, 0.28);
+        }
+
+        body.theme-ambient #panorama {
+            width: 100%;
+            height: 720px;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        /* =========================================================
+           CUSTOM HOTSPOT STYLING (Pulsierender Punkt im Panorama)
+           ========================================================= */
+        .custom-hotspot {
+            height: 28px;
+            width: 28px;
+            background: rgba(245, 158, 11, 0.95);
+            border: 3px solid #ffffff;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 0 15px rgba(0,0,0,0.6);
+            transition: transform 0.2s ease, background 0.2s ease;
+        }
+
+        .custom-hotspot:hover {
+            transform: scale(1.25);
+            background: #ffffff;
+            border-color: #f59e0b;
+        }
+
+        .pulse-effect::after {
+            content: '';
+            position: absolute;
+            top: -7px; left: -7px; right: -7px; bottom: -7px;
+            border: 2px solid #f59e0b;
+            border-radius: 50%;
+            animation: pulseRing 2s infinite ease-out;
+            pointer-events: none;
+        }
+
+        @keyframes pulseRing {
+            0% { transform: scale(0.8); opacity: 1; }
+            100% { transform: scale(1.9); opacity: 0; }
+        }
+
+        /* Responsives Verhalten für kleinere Bildschirme */
+        @media (max-width: 960px) {
+            body.theme-editorial .tour-layout { grid-template-columns: 1fr; }
+            body.theme-editorial #panorama { height: 500px; }
+            body.theme-glass .room-nav { width: 92%; overflow-x: auto; justify-content: flex-start; }
+        }
+    </style>
+</head>
+
+<!-- Standardmäßig startet "theme-glass". Du kannst hier auch "theme-editorial" oder "theme-ambient" eintragen -->
+<body class="theme-glass">
+
+    <!-- LIVE DESIGN-UMSCHALTER (Kannst du später löschen, wenn du deinen Favoriten gewählt hast) -->
+    <div class="theme-switcher">
+        <span>🎨 Stil:</span>
+        <select onchange="changeTheme(this.value)">
+            <option value="theme-glass">1. Glassmorphism (Vollbild)</option>
+            <option value="theme-editorial">2. Boutique Magazin (Hell)</option>
+            <option value="theme-ambient">3. Ambient Kino (Dunkel)</option>
+        </select>
+    </div>
+
+    <div class="tour-layout">
+        <!-- Seitenleiste / Header + Navigation -->
+        <aside class="tour-sidebar">
+            <header class="tour-header">
+                <span class="eyebrow">360° VIRTUELLER RUNDGANG</span>
+                <h1>Casa Englers y Amigos</h1>
+                <p class="tour-desc">
+                    Erkunde unser Ferienhaus bequem von zu Hause aus. Nutze die Maus zum Umschauen oder wähle direkt einen Raum:
+                </p>
+            </header>
+
+            <nav class="room-nav">
+                <button class="nav-btn active" onclick="loadRoom('terrasse', this)">
+                    <span class="num">01</span> ☀️ Terrasse
+                </button>
+                <button class="nav-btn" onclick="loadRoom('wohnzimmer', this)">
+                    <span class="num">02</span> 🛋️ Wohnzimmer
+                </button>
+                <button class="nav-btn" onclick="loadRoom('schlafzimmer', this)">
+                    <span class="num">03</span> 🛏️ Schlafzimmer
+                </button>
+                <button class="nav-btn" onclick="loadRoom('kinderzimmer', this)">
+                    <span class="num">04</span> 🧸 Kinderzimmer
+                </button>
+                <button class="nav-btn" onclick="loadRoom('bad', this)">
+                    <span class="num">05</span> 🚿 Bad
+                </button>
+            </nav>
+        </aside>
+
+        <!-- Panorama Viewer -->
+        <main class="viewer-wrapper">
+            <div id="panorama"></div>
+        </main>
+    </div>
+
+    <script>
+        const myViewer = pannellum.viewer('panorama', {
+            "default": {
+                "firstScene": "terrasse",
+                "author": "Casa Englers y Amigos",
+                "sceneFadeDuration": 1200,
+                "autoLoad": true,
+                "autoRotate": -2,
+                "compass": true,
+                "northOffset": -67
+            },
+
+            "scenes": {
+                "terrasse": {
+                    "title": "Terrasse",
+                    "type": "equirectangular",
+                    "panorama": "images/rundgang_terrasse.jpg",
+                    "hotSpots": [
+                        {
+                            "pitch": -5.40,
+                            "yaw": 112.30,
+                            "type": "info",
+                            "text": "Eingangsbereich / Rezeption"
+                        },       
+                        {
+                            "pitch": -1.27,
+                            "yaw": 170.62,
+                            "type": "scene",
+                            "text": "Neuer Ort",
+                            "sceneId": "wohnzimmer",
+                            "cssClass": "custom-hotspot pulse-effect"
+                        },     
+                        {
+                            "pitch": -6,
+                            "yaw": -140,
+                            "type": "scene",
+                            "text": "Ins Wohnzimmer gehen",
+                            "sceneId": "wohnzimmer"
+                        }
+                    ]
+                },
+
+                "wohnzimmer": {
+                    "title": "Wohnzimmer",
+                    "type": "equirectangular",
+                    "panorama": "images/rundgang_wohnzimmer.jpg",
+                    "hotSpots": [
+                        {
+                            "pitch": 0,
+                            "yaw": 0,
+                            "type": "scene",
+                            "text": "Zurück zur Terrasse",
+                            "sceneId": "terrasse"
+                        },
+                        {
+                            "pitch": -3.8,
+                            "yaw": -30,
+                            "type": "scene",
+                            "text": "Zum Schlafzimmer",
+                            "sceneId": "schlafzimmer"
+                        },
+                        {
+                            "pitch": 1.10,
+                            "yaw": -87,
+                            "type": "scene",
+                            "text": "Zum Kinderzimmer",
+                            "sceneId": "kinderzimmer"
+                        },
+                        {
+                            "pitch": 1.5,
+                            "yaw": -101,
+                            "type": "scene",
+                            "text": "Zum Bad",
+                            "sceneId": "bad"
+                        }
+                    ]
+                },
+
+                "schlafzimmer": {
+                    "title": "Schlafzimmer",
+                    "type": "equirectangular",
+                    "panorama": "images/rundgang_schlafzimmer.jpg",
+                    "hotSpots": [
+                        {
+                            "pitch": 1.06,
+                            "yaw": -154,
+                            "type": "scene",
+                            "text": "Zurück ins Wohnzimmer",
+                            "sceneId": "wohnzimmer"
+                        }
+                    ]
+                },
+
+                "kinderzimmer": {
+                    "title": "Kinderzimmer",
+                    "type": "equirectangular",
+                    "panorama": "images/rundgang_kinderzimmer.jpg",
+                    "hotSpots": [
+                        {
+                            "pitch": 6.7,
+                            "yaw": -163,
+                            "type": "scene",
+                            "text": "Zurück ins Wohnzimmer",
+                            "sceneId": "wohnzimmer"
+                        }
+                    ]
+                },
+
+                "bad": {
+                    "title": "Bad",
+                    "type": "equirectangular",
+                    "panorama": "images/rundgang_bad.jpg",
+                    "pitch": -16,
+                    "yaw": 161,
+                    "hotSpots": [
+                        {
+                            "pitch": -19,
+                            "yaw": -178,
+                            "type": "scene",
+                            "text": "Zurück ins Wohnzimmer",
+                            "sceneId": "wohnzimmer"
+                        }
+                    ]
+                }
+            }
+        });
+
+        // Raum über die neuen Buttons wechseln
+        function loadRoom(sceneId, btnElement) {
+            myViewer.loadScene(sceneId);
+            document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+            if (btnElement) btnElement.classList.add('active');
+        }
+
+        // Wenn im Panorama auf einen Hotspot geklickt wird -> aktiven Button in der Leiste mitwechseln
+        myViewer.on('scenechange', function(sceneId) {
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.getAttribute('onclick').includes(`'${sceneId}'`));
+            });
+        });
+
+        // Design-Umschalter Funktion (aktualisiert auch die Pannellum-Größe)
+        function changeTheme(themeClass) {
+            document.body.className = themeClass;
+            setTimeout(() => {
+                myViewer.resize();
+            }, 50);
+        }
+
+        // Dein Click-Event für Hotspot-Koordinaten in der Konsole & Zwischenablage
+        myViewer.on('mouseup', function(event) {
+            const coords = myViewer.mouseEventToCoords(event);
+            const pitch = coords[0].toFixed(2);
+            const yaw = coords[1].toFixed(2);
+
+            const hotspotSnippet = `{\n  "pitch": ${pitch},\n  "yaw": ${yaw},\n  "type": "scene",\n  "text": "Neuer Ort",\n  "sceneId": "ziel_szene"\n},`;
+
+            console.log(`%c📍 Hotspot-Koordinaten erfasst:`, 'color: #007aff; font-weight: bold;');
+            console.log(hotspotSnippet);
+
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(hotspotSnippet)
+                    .then(() => console.log('📋 Fertiges JSON direkt in die Zwischenablage kopiert!'))
+                    .catch(() => {});
+            }
+        });
+    </script>
+</body>
+</html>
