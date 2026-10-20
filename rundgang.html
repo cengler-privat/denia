@@ -2,7 +2,6 @@
 <html lang="de">
 <head>
     <meta charset="UTF-8">
-    <!-- Wichtig für Smartphones: viewport-fit=cover nutzt auch den Bereich um die iPhone Notch/Home-Bar -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>360° Rundgang – Casa Englers y Amigos</title>
 
@@ -29,11 +28,11 @@
             overscroll-behavior: none;
         }
 
-        /* Design-Umschalter */
+        /* Design-Umschalter (jetzt unten links, damit oben rechts Platz für den Grundriss ist) */
         .theme-switcher {
             position: fixed;
-            top: 20px;
-            right: 20px;
+            bottom: 25px;
+            left: 25px;
             z-index: 9999;
             background: rgba(15, 23, 42, 0.85);
             backdrop-filter: blur(10px);
@@ -63,7 +62,7 @@
             outline: none;
         }
 
-        /* Standard-Titel & "by ..."-Autor-Box von Pannellum komplett ausblenden */
+        /* Standard-Titel & Autor-Box von Pannellum komplett ausblenden */
         .pnlm-title-box,
         .pnlm-author-box { 
             display: none !important; 
@@ -72,6 +71,143 @@
         /* Scrollbalken in den horizontalen Menüs unsichtbar machen */
         .room-nav::-webkit-scrollbar { display: none; }
         .room-nav { -ms-overflow-style: none; scrollbar-width: none; }
+
+        .viewer-wrapper {
+            position: relative;
+        }
+
+        /* =========================================================
+           🗺️ INTERAKTIVER GRUNDRISS & BLICKRICHTUNGS-RADAR (OBEN RECHTS)
+           ========================================================= */
+        .floorplan-card {
+            position: absolute;
+            top: 22px;
+            right: 22px;
+            z-index: 30;
+            width: 220px;
+            background: rgba(15, 23, 42, 0.72);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            padding: 12px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.45);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            user-select: none;
+        }
+
+        .floorplan-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+            padding: 0 4px;
+            color: rgba(255, 255, 255, 0.9);
+            font-family: 'Outfit', sans-serif;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+        }
+
+        .fp-toggle-btn {
+            background: rgba(255, 255, 255, 0.12);
+            border: none;
+            color: #fff;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s;
+        }
+
+        .fp-toggle-btn:hover {
+            background: #f59e0b;
+            color: #000;
+        }
+
+        /* Eingeklappter Zustand des Grundrisses */
+        .floorplan-card.collapsed {
+            width: auto;
+            padding: 8px 12px;
+            border-radius: 30px;
+        }
+        .floorplan-card.collapsed .floorplan-svg {
+            display: none;
+        }
+        .floorplan-card.collapsed .floorplan-header {
+            margin-bottom: 0;
+            gap: 8px;
+        }
+
+        .floorplan-svg {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 12px;
+            background: rgba(0, 0, 0, 0.28);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        /* Räume im SVG-Grundriss */
+        .fp-room {
+            fill: rgba(255, 255, 255, 0.06);
+            stroke: rgba(255, 255, 255, 0.35);
+            stroke-width: 1.8;
+            cursor: pointer;
+            transition: fill 0.25s ease, stroke 0.25s ease;
+        }
+
+        .fp-room:hover {
+            fill: rgba(245, 158, 11, 0.22);
+            stroke: rgba(245, 158, 11, 0.8);
+        }
+
+        .fp-room.active {
+            fill: rgba(245, 158, 11, 0.16);
+            stroke: #f59e0b;
+            stroke-width: 2.2;
+        }
+
+        .fp-label {
+            fill: rgba(255, 255, 255, 0.7);
+            font-family: 'Outfit', sans-serif;
+            font-size: 8.5px;
+            font-weight: 500;
+            text-anchor: middle;
+            pointer-events: none;
+        }
+
+        /* Standort-Punkte auf dem Grundriss */
+        .fp-node {
+            fill: rgba(255, 255, 255, 0.8);
+            stroke: #0f172a;
+            stroke-width: 2;
+            cursor: pointer;
+            transition: all 0.25s ease;
+        }
+
+        .fp-node:hover {
+            r: 7;
+            fill: #f59e0b;
+        }
+
+        .fp-node.active {
+            fill: #f59e0b;
+            stroke: #ffffff;
+            stroke-width: 2.5;
+            r: 6.5;
+        }
+
+        /* Der Blickrichtungs-Radar-Kegel */
+        #radar-group {
+            pointer-events: none;
+            transition: transform 0.08s linear;
+        }
 
         /* =========================================================
            DESIGN 1: CINEMATIC GLASSMORPHISM (Vollbild)
@@ -91,8 +227,8 @@
 
         body.theme-glass .tour-header {
             position: absolute;
-            top: 25px;
-            left: 25px;
+            top: 22px;
+            left: 22px;
             z-index: 10;
             background: rgba(15, 23, 42, 0.55);
             backdrop-filter: blur(12px);
@@ -395,14 +531,29 @@
            📱 SMARTPHONE HOCHKANT (PORTRAIT) OPTIMIERUNG
            ========================================================= */
         @media (max-width: 768px) {
-            .theme-switcher {
+            /* Grundriss oben rechts kompakter machen */
+            .floorplan-card {
                 top: max(12px, env(safe-area-inset-top, 12px));
                 right: 12px;
-                padding: 5px 10px;
+                width: 155px;
+                padding: 8px;
+                border-radius: 16px;
+            }
+            .floorplan-header {
+                font-size: 9px;
+                margin-bottom: 5px;
+            }
+
+            /* Stil-Umschalter oben über die Zoom-Controls oder dezent unten */
+            .theme-switcher {
+                bottom: auto;
+                top: 78px;
+                left: 12px;
+                padding: 4px 8px;
                 font-size: 11px;
             }
             .theme-switcher span { display: none; }
-            .theme-switcher select { font-size: 12px; padding: 3px 8px; }
+            .theme-switcher select { font-size: 11px; padding: 2px 6px; }
 
             .custom-hotspot {
                 width: 36px;
@@ -410,7 +561,7 @@
             }
 
             .pnlm-controls-container {
-                top: 85px !important;
+                top: 118px !important;
                 left: 12px !important;
             }
 
@@ -424,7 +575,7 @@
             body.theme-glass .tour-header {
                 top: max(12px, env(safe-area-inset-top, 12px));
                 left: 12px;
-                right: 155px;
+                right: 175px; /* Platz lassen für den Grundriss rechts */
                 padding: 10px 14px;
                 border-radius: 14px;
             }
@@ -433,7 +584,7 @@
                 letter-spacing: 1.5px;
             }
             body.theme-glass .tour-header h1 {
-                font-size: 16px;
+                font-size: 15px;
                 white-space: nowrap;
                 overflow: hidden;
                 text-overflow: ellipsis;
@@ -465,14 +616,11 @@
             body.theme-editorial .tour-sidebar {
                 width: 100%;
             }
-            body.theme-editorial .tour-header {
-                padding-right: 130px;
-            }
             body.theme-editorial .eyebrow {
                 font-size: 10px;
             }
             body.theme-editorial .tour-header h1 {
-                font-size: 30px;
+                font-size: 28px;
                 margin: 4px 0 8px 0;
             }
             body.theme-editorial .tour-desc {
@@ -512,7 +660,6 @@
             }
             body.theme-ambient .tour-header {
                 text-align: left;
-                padding-right: 135px;
             }
             body.theme-ambient .eyebrow {
                 font-size: 9px;
@@ -590,8 +737,78 @@
             </nav>
         </aside>
 
-        <!-- Panorama Viewer -->
+        <!-- Panorama Viewer + Interaktiver Grundriss oben rechts -->
         <main class="viewer-wrapper">
+            
+            <!-- 🗺️ INTERAKTIVER GRUNDRISS MIT LIVE-RADAR (OBEN RECHTS) -->
+            <div class="floorplan-card" id="floorplanCard">
+                <div class="floorplan-header">
+                    <span>🗺️ Grundriss</span>
+                    <button class="fp-toggle-btn" onclick="toggleFloorplan()" title="Grundriss ein-/ausklappen">−</button>
+                </div>
+
+                <svg class="floorplan-svg" viewBox="0 0 220 245">
+                    <defs>
+                        <!-- Sanfter Farbverlauf für den Radar-Sichtkegel -->
+                        <radialGradient id="radarBeamGrad" cx="0" cy="0" r="65" gradientUnits="userSpaceOnUse">
+                            <stop offset="0%" stop-color="#f59e0b" stop-opacity="0.75"/>
+                            <stop offset="65%" stop-color="#f59e0b" stop-opacity="0.25"/>
+                            <stop offset="100%" stop-color="#f59e0b" stop-opacity="0.0"/>
+                        </radialGradient>
+                    </defs>
+
+                    <!-- RÄUME (Klickbar) -->
+                    <!-- 06 Rückseite / Terrasse West (Oben) -->
+                    <rect id="room-rueckseite" class="fp-room" x="15" y="10" width="190" height="36" rx="6" onclick="loadRoom('rueckseite')" />
+                    <text x="110" y="31" class="fp-label">Rückseite (West)</text>
+
+                    <!-- 03 Schlafzimmer (Mitte Links) -->
+                    <rect id="room-schlafzimmer" class="fp-room" x="15" y="52" width="60" height="65" rx="4" onclick="loadRoom('schlafzimmer')" />
+                    <text x="45" y="75" class="fp-label">Schlafz.</text>
+
+                    <!-- 04 Kinderzimmer (Unten Links) -->
+                    <rect id="room-kinderzimmer" class="fp-room" x="15" y="121" width="60" height="58" rx="4" onclick="loadRoom('kinderzimmer')" />
+                    <text x="45" y="142" class="fp-label">Kinderz.</text>
+
+                    <!-- 02 Wohnzimmer (Zentral) -->
+                    <rect id="room-wohnzimmer" class="fp-room" x="79" y="52" width="76" height="127" rx="4" onclick="loadRoom('wohnzimmer')" />
+                    <text x="117" y="102" class="fp-label">Wohnzimmer</text>
+
+                    <!-- 05 Bad (Rechts) -->
+                    <rect id="room-bad" class="fp-room" x="159" y="52" width="46" height="65" rx="4" onclick="loadRoom('bad')" />
+                    <text x="182" y="75" class="fp-label">Bad</text>
+
+                    <!-- 01 Sonnenterrasse (Unten) -->
+                    <rect id="room-terrasse" class="fp-room active" x="15" y="185" width="190" height="48" rx="6" onclick="loadRoom('terrasse')" />
+                    <text x="110" y="224" class="fp-label">Sonnenterrasse</text>
+
+                    <!-- 📡 BLICKRICHTUNGS-RADAR (Sichtkegel) -->
+                    <g id="radar-group" transform="translate(117, 205)">
+                        <path id="radar-cone" d="M 0,0 L -32,-52 A 60,60 0 0,1 32,-52 Z" fill="url(#radarBeamGrad)" stroke="rgba(245, 158, 11, 0.5)" stroke-width="1" />
+                    </g>
+
+                    <!-- 📍 KAMERA-STANDORT-PUNKTE (Klickbar) -->
+                    <circle id="node-rueckseite" class="fp-node" cx="110" cy="28" r="5" onclick="loadRoom('rueckseite')">
+                        <title>Rückseite</title>
+                    </circle>
+                    <circle id="node-schlafzimmer" class="fp-node" cx="45" cy="92" r="5" onclick="loadRoom('schlafzimmer')">
+                        <title>Schlafzimmer</title>
+                    </circle>
+                    <circle id="node-kinderzimmer" class="fp-node" cx="45" cy="156" r="5" onclick="loadRoom('kinderzimmer')">
+                        <title>Kinderzimmer</title>
+                    </circle>
+                    <circle id="node-wohnzimmer" class="fp-node" cx="117" cy="118" r="5" onclick="loadRoom('wohnzimmer')">
+                        <title>Wohnzimmer</title>
+                    </circle>
+                    <circle id="node-bad" class="fp-node" cx="182" cy="92" r="5" onclick="loadRoom('bad')">
+                        <title>Bad</title>
+                    </circle>
+                    <circle id="node-terrasse" class="fp-node active" cx="117" cy="205" r="6" onclick="loadRoom('terrasse')">
+                        <title>Terrasse</title>
+                    </circle>
+                </svg>
+            </div>
+
             <div id="panorama"></div>
         </main>
     </div>
@@ -599,10 +816,22 @@
     <script>
         const isMobilePortrait = window.innerWidth <= 768 && window.innerHeight > window.innerWidth;
 
+        // =========================================================================
+        // 🗺️ KOORDINATEN & NORD-AUSRICHTUNG DER RÄUME AUF DEM GRUNDRISS
+        // x, y = Position im SVG | offset = Dreh-Korrektur des Radars falls nötig
+        // =========================================================================
+        const floorplanNodes = {
+            "terrasse":     { x: 117, y: 205, offset: 0 },
+            "wohnzimmer":   { x: 117, y: 118, offset: 180 },
+            "schlafzimmer": { x: 45,  y: 92,  offset: 90 },
+            "kinderzimmer": { x: 45,  y: 156, offset: 90 },
+            "bad":          { x: 182, y: 92,  offset: -90 },
+            "rueckseite":   { x: 110, y: 28,  offset: 180 }
+        };
+
         const myViewer = pannellum.viewer('panorama', {
             "default": {
                 "firstScene": "terrasse",
-                // "author" entfernt, damit kein "by Casa..." im Bild erscheint
                 "sceneFadeDuration": 1200,
                 "autoLoad": true,
                 "autoRotate": -2,
@@ -743,18 +972,15 @@
             }
         });
 
-        // Raum über die Buttons wechseln + Button auf dem Smartphone sanft in die Mitte scrollen
+        // Raum über Buttons oder Grundriss wechseln
         function loadRoom(sceneId, btnElement) {
             myViewer.loadScene(sceneId);
-            document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
-            if (btnElement) {
-                btnElement.classList.add('active');
-                btnElement.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
-            }
+            syncNavigationUI(sceneId);
         }
 
-        // Wenn im Panorama auf einen Hotspot getippt wird -> passenden Button aktivieren & in Sichtweite scrollen
-        myViewer.on('scenechange', function(sceneId) {
+        // Synchronisiert die untere Button-Leiste UND die Räume/Punkte im Grundriss
+        function syncNavigationUI(sceneId) {
+            // 1. Buttons in der Leiste aktualisieren
             document.querySelectorAll('.nav-btn').forEach(btn => {
                 const isTarget = btn.getAttribute('onclick').includes(`'${sceneId}'`);
                 btn.classList.toggle('active', isTarget);
@@ -762,7 +988,59 @@
                     btn.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
                 }
             });
+
+            // 2. Grundriss-Räume & Punkte hervorheben
+            document.querySelectorAll('.fp-room').forEach(r => r.classList.remove('active'));
+            document.querySelectorAll('.fp-node').forEach(n => n.classList.remove('active'));
+
+            const activeRoom = document.getElementById(`room-${sceneId}`);
+            const activeNode = document.getElementById(`node-${sceneId}`);
+            if (activeRoom) activeRoom.classList.add('active');
+            if (activeNode) activeNode.classList.add('active');
+        }
+
+        // Wenn im Panorama auf einen Hotspot geklickt wird -> UI und Grundriss automatisch mitwechseln
+        myViewer.on('scenechange', function(sceneId) {
+            syncNavigationUI(sceneId);
         });
+
+        // =========================================================================
+        // 📡 ECHTZEIT-RADAR-ANIMATION (60 FPS Loop für Drehung & Zoom-Winkel)
+        // =========================================================================
+        const radarGroup = document.getElementById('radar-group');
+        const radarCone = document.getElementById('radar-cone');
+
+        function updateRadar() {
+            const currentScene = myViewer.getScene();
+            const node = floorplanNodes[currentScene] || floorplanNodes['terrasse'];
+            
+            // Aktuelle Blickrichtung (Yaw) und Zoom (HFOV) aus Pannellum holen
+            const yaw = myViewer.getYaw() || 0;
+            const hfov = myViewer.getHfov() || 100;
+
+            // Kegel-Position & Rotation auf dem Grundriss setzen
+            const angle = yaw + (node.offset || 0);
+            radarGroup.setAttribute('transform', `translate(${node.x}, ${node.y}) rotate(${angle})`);
+
+            // Kegel-Breite dynamisch an den aktuellen Zoomfaktor (HFOV) anpassen
+            const radius = 58;
+            const halfAngleRad = (Math.min(Math.max(hfov, 40), 120) / 2) * (Math.PI / 180);
+            const xSpread = (Math.sin(halfAngleRad) * radius).toFixed(1);
+            const ySpread = (-Math.cos(halfAngleRad) * radius).toFixed(1);
+            
+            radarCone.setAttribute('d', `M 0,0 L ${-xSpread},${ySpread} A ${radius},${radius} 0 0,1 ${xSpread},${ySpread} Z`);
+
+            requestAnimationFrame(updateRadar);
+        }
+        requestAnimationFrame(updateRadar);
+
+        // Grundriss ein-/ausklappen (besonders praktisch auf dem Smartphone)
+        function toggleFloorplan() {
+            const card = document.getElementById('floorplanCard');
+            const btn = card.querySelector('.fp-toggle-btn');
+            card.classList.toggle('collapsed');
+            btn.textContent = card.classList.contains('collapsed') ? '+' : '−';
+        }
 
         // Design-Umschalter Funktion
         function changeTheme(themeClass) {
@@ -772,7 +1050,7 @@
             }, 60);
         }
 
-        // Bei Drehung des Smartphones (Hochformat <-> Querformat) Viewer sauber anpassen
+        // Bei Drehung des Smartphones Viewer anpassen
         window.addEventListener('resize', () => {
             myViewer.resize();
         });
