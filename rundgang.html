@@ -28,7 +28,7 @@
             overscroll-behavior: none;
         }
 
-        /* Design-Umschalter (jetzt unten links, damit oben rechts Platz für den Grundriss ist) */
+        /* Design-Umschalter unten links */
         .theme-switcher {
             position: fixed;
             bottom: 25px;
@@ -62,13 +62,12 @@
             outline: none;
         }
 
-        /* Standard-Titel & Autor-Box von Pannellum komplett ausblenden */
+        /* Standard-Titel & Autor-Box von Pannellum ausblenden */
         .pnlm-title-box,
         .pnlm-author-box { 
             display: none !important; 
         }
 
-        /* Scrollbalken in den horizontalen Menüs unsichtbar machen */
         .room-nav::-webkit-scrollbar { display: none; }
         .room-nav { -ms-overflow-style: none; scrollbar-width: none; }
 
@@ -130,7 +129,6 @@
             color: #000;
         }
 
-        /* Eingeklappter Zustand des Grundrisses */
         .floorplan-card.collapsed {
             width: auto;
             padding: 8px 12px;
@@ -153,7 +151,6 @@
             border: 1px solid rgba(255, 255, 255, 0.08);
         }
 
-        /* Räume im SVG-Grundriss */
         .fp-room {
             fill: rgba(255, 255, 255, 0.06);
             stroke: rgba(255, 255, 255, 0.35);
@@ -182,7 +179,6 @@
             pointer-events: none;
         }
 
-        /* Standort-Punkte auf dem Grundriss */
         .fp-node {
             fill: rgba(255, 255, 255, 0.8);
             stroke: #0f172a;
@@ -203,7 +199,6 @@
             r: 6.5;
         }
 
-        /* Der Blickrichtungs-Radar-Kegel */
         #radar-group {
             pointer-events: none;
             transition: transform 0.08s linear;
@@ -531,7 +526,6 @@
            📱 SMARTPHONE HOCHKANT (PORTRAIT) OPTIMIERUNG
            ========================================================= */
         @media (max-width: 768px) {
-            /* Grundriss oben rechts kompakter machen */
             .floorplan-card {
                 top: max(12px, env(safe-area-inset-top, 12px));
                 right: 12px;
@@ -544,7 +538,6 @@
                 margin-bottom: 5px;
             }
 
-            /* Stil-Umschalter oben über die Zoom-Controls oder dezent unten */
             .theme-switcher {
                 bottom: auto;
                 top: 78px;
@@ -571,11 +564,11 @@
                 transform: scale(0.85);
             }
 
-            /* --- 1. GLASSMORPHISM AUF SMARTPHONE HOCHKANT --- */
+            /* 1. GLASSMORPHISM */
             body.theme-glass .tour-header {
                 top: max(12px, env(safe-area-inset-top, 12px));
                 left: 12px;
-                right: 175px; /* Platz lassen für den Grundriss rechts */
+                right: 175px;
                 padding: 10px 14px;
                 border-radius: 14px;
             }
@@ -603,7 +596,7 @@
                 scroll-snap-align: center;
             }
 
-            /* --- 2. BOUTIQUE MAGAZIN AUF SMARTPHONE HOCHKANT --- */
+            /* 2. BOUTIQUE MAGAZIN */
             body.theme-editorial {
                 padding: 16px 14px 24px 14px;
             }
@@ -654,7 +647,7 @@
                 border-width: 4px;
             }
 
-            /* --- 3. AMBIENT KINO AUF SMARTPHONE HOCHKANT --- */
+            /* 3. AMBIENT KINO */
             body.theme-ambient {
                 padding: 16px 12px 24px 12px;
             }
@@ -705,7 +698,6 @@
     </div>
 
     <div class="tour-layout">
-        <!-- Seitenleiste / Header + Navigation -->
         <aside class="tour-sidebar">
             <header class="tour-header">
                 <span class="eyebrow">360° VIRTUELLER RUNDGANG</span>
@@ -737,10 +729,10 @@
             </nav>
         </aside>
 
-        <!-- Panorama Viewer + Interaktiver Grundriss oben rechts -->
+        <!-- Panorama Viewer + Interaktiver Grundriss -->
         <main class="viewer-wrapper">
             
-            <!-- 🗺️ INTERAKTIVER GRUNDRISS MIT LIVE-RADAR (OBEN RECHTS) -->
+            <!-- 🗺️ INTERAKTIVER GRUNDRISS (BAD LINKS, SCHLAF- & KINDERZIMMER RECHTS) -->
             <div class="floorplan-card" id="floorplanCard">
                 <div class="floorplan-header">
                     <span>🗺️ Grundriss</span>
@@ -749,61 +741,60 @@
 
                 <svg class="floorplan-svg" viewBox="0 0 220 245">
                     <defs>
-                        <!-- Sanfter Farbverlauf für den Radar-Sichtkegel -->
                         <radialGradient id="radarBeamGrad" cx="0" cy="0" r="65" gradientUnits="userSpaceOnUse">
-                            <stop offset="0%" stop-color="#f59e0b" stop-opacity="0.75"/>
+                            <stop offset="0%" stop-color="#f59e0b" stop-opacity="0.8"/>
                             <stop offset="65%" stop-color="#f59e0b" stop-opacity="0.25"/>
                             <stop offset="100%" stop-color="#f59e0b" stop-opacity="0.0"/>
                         </radialGradient>
                     </defs>
 
-                    <!-- RÄUME (Klickbar) -->
-                    <!-- 06 Rückseite / Terrasse West (Oben) -->
+                    <!-- RÄUME -->
+                    <!-- 06 Rückseite (Oben) -->
                     <rect id="room-rueckseite" class="fp-room" x="15" y="10" width="190" height="36" rx="6" onclick="loadRoom('rueckseite')" />
                     <text x="110" y="31" class="fp-label">Rückseite (West)</text>
 
-                    <!-- 03 Schlafzimmer (Mitte Links) -->
-                    <rect id="room-schlafzimmer" class="fp-room" x="15" y="52" width="60" height="65" rx="4" onclick="loadRoom('schlafzimmer')" />
-                    <text x="45" y="75" class="fp-label">Schlafz.</text>
-
-                    <!-- 04 Kinderzimmer (Unten Links) -->
-                    <rect id="room-kinderzimmer" class="fp-room" x="15" y="121" width="60" height="58" rx="4" onclick="loadRoom('kinderzimmer')" />
-                    <text x="45" y="142" class="fp-label">Kinderz.</text>
+                    <!-- 05 Bad (JETZT LINKS) -->
+                    <rect id="room-bad" class="fp-room" x="15" y="52" width="50" height="127" rx="4" onclick="loadRoom('bad')" />
+                    <text x="40" y="118" class="fp-label">Bad</text>
 
                     <!-- 02 Wohnzimmer (Zentral) -->
-                    <rect id="room-wohnzimmer" class="fp-room" x="79" y="52" width="76" height="127" rx="4" onclick="loadRoom('wohnzimmer')" />
-                    <text x="117" y="102" class="fp-label">Wohnzimmer</text>
+                    <rect id="room-wohnzimmer" class="fp-room" x="69" y="52" width="82" height="127" rx="4" onclick="loadRoom('wohnzimmer')" />
+                    <text x="110" y="118" class="fp-label">Wohnzimmer</text>
 
-                    <!-- 05 Bad (Rechts) -->
-                    <rect id="room-bad" class="fp-room" x="159" y="52" width="46" height="65" rx="4" onclick="loadRoom('bad')" />
-                    <text x="182" y="75" class="fp-label">Bad</text>
+                    <!-- 03 Schlafzimmer (JETZT RECHTS OBEN) -->
+                    <rect id="room-schlafzimmer" class="fp-room" x="155" y="52" width="50" height="62" rx="4" onclick="loadRoom('schlafzimmer')" />
+                    <text x="180" y="85" class="fp-label">Schlafz.</text>
 
-                    <!-- 01 Sonnenterrasse (Unten) -->
+                    <!-- 04 Kinderzimmer (JETZT RECHTS UNTEN) -->
+                    <rect id="room-kinderzimmer" class="fp-room" x="155" y="118" width="50" height="61" rx="4" onclick="loadRoom('kinderzimmer')" />
+                    <text x="180" y="152" class="fp-label">Kinderz.</text>
+
+                    <!-- 01 Terrasse (Unten) -->
                     <rect id="room-terrasse" class="fp-room active" x="15" y="185" width="190" height="48" rx="6" onclick="loadRoom('terrasse')" />
                     <text x="110" y="224" class="fp-label">Sonnenterrasse</text>
 
-                    <!-- 📡 BLICKRICHTUNGS-RADAR (Sichtkegel) -->
-                    <g id="radar-group" transform="translate(117, 205)">
+                    <!-- 📡 BLICKRICHTUNGS-RADAR -->
+                    <g id="radar-group" transform="translate(110, 205)">
                         <path id="radar-cone" d="M 0,0 L -32,-52 A 60,60 0 0,1 32,-52 Z" fill="url(#radarBeamGrad)" stroke="rgba(245, 158, 11, 0.5)" stroke-width="1" />
                     </g>
 
-                    <!-- 📍 KAMERA-STANDORT-PUNKTE (Klickbar) -->
+                    <!-- 📍 STANDORT-PUNKTE -->
                     <circle id="node-rueckseite" class="fp-node" cx="110" cy="28" r="5" onclick="loadRoom('rueckseite')">
                         <title>Rückseite</title>
                     </circle>
-                    <circle id="node-schlafzimmer" class="fp-node" cx="45" cy="92" r="5" onclick="loadRoom('schlafzimmer')">
-                        <title>Schlafzimmer</title>
-                    </circle>
-                    <circle id="node-kinderzimmer" class="fp-node" cx="45" cy="156" r="5" onclick="loadRoom('kinderzimmer')">
-                        <title>Kinderzimmer</title>
-                    </circle>
-                    <circle id="node-wohnzimmer" class="fp-node" cx="117" cy="118" r="5" onclick="loadRoom('wohnzimmer')">
-                        <title>Wohnzimmer</title>
-                    </circle>
-                    <circle id="node-bad" class="fp-node" cx="182" cy="92" r="5" onclick="loadRoom('bad')">
+                    <circle id="node-bad" class="fp-node" cx="40" cy="115" r="5" onclick="loadRoom('bad')">
                         <title>Bad</title>
                     </circle>
-                    <circle id="node-terrasse" class="fp-node active" cx="117" cy="205" r="6" onclick="loadRoom('terrasse')">
+                    <circle id="node-wohnzimmer" class="fp-node" cx="110" cy="115" r="5" onclick="loadRoom('wohnzimmer')">
+                        <title>Wohnzimmer</title>
+                    </circle>
+                    <circle id="node-schlafzimmer" class="fp-node" cx="180" cy="83" r="5" onclick="loadRoom('schlafzimmer')">
+                        <title>Schlafzimmer</title>
+                    </circle>
+                    <circle id="node-kinderzimmer" class="fp-node" cx="180" cy="148" r="5" onclick="loadRoom('kinderzimmer')">
+                        <title>Kinderzimmer</title>
+                    </circle>
+                    <circle id="node-terrasse" class="fp-node active" cx="110" cy="205" r="6" onclick="loadRoom('terrasse')">
                         <title>Terrasse</title>
                     </circle>
                 </svg>
@@ -817,16 +808,15 @@
         const isMobilePortrait = window.innerWidth <= 768 && window.innerHeight > window.innerWidth;
 
         // =========================================================================
-        // 🗺️ KOORDINATEN & NORD-AUSRICHTUNG DER RÄUME AUF DEM GRUNDRISS
-        // x, y = Position im SVG | offset = Dreh-Korrektur des Radars falls nötig
+        // 🗺️ KORRIGIERTE KOORDINATEN & 180°-GEDREHTE AUSRICHTUNGEN
         // =========================================================================
         const floorplanNodes = {
-            "terrasse":     { x: 117, y: 205, offset: 0 },
-            "wohnzimmer":   { x: 117, y: 118, offset: 180 },
-            "schlafzimmer": { x: 45,  y: 92,  offset: 90 },
-            "kinderzimmer": { x: 45,  y: 156, offset: 90 },
-            "bad":          { x: 182, y: 92,  offset: -90 },
-            "rueckseite":   { x: 110, y: 28,  offset: 180 }
+            "terrasse":     { x: 110, y: 205, offset: 180 }, // Um 180° gedreht
+            "wohnzimmer":   { x: 110, y: 115, offset: 0 },   // Um 180° gedreht (180 -> 0)
+            "schlafzimmer": { x: 180, y: 83,  offset: -90 }, // Angepasst an rechte Seite
+            "kinderzimmer": { x: 180, y: 148, offset: -90 }, // Angepasst an rechte Seite
+            "bad":          { x: 40,  y: 115, offset: 90 },  // Angepasst an linke Seite
+            "rueckseite":   { x: 110, y: 28,  offset: 0 }    // Um 180° gedreht (180 -> 0)
         };
 
         const myViewer = pannellum.viewer('panorama', {
@@ -972,15 +962,12 @@
             }
         });
 
-        // Raum über Buttons oder Grundriss wechseln
         function loadRoom(sceneId, btnElement) {
             myViewer.loadScene(sceneId);
             syncNavigationUI(sceneId);
         }
 
-        // Synchronisiert die untere Button-Leiste UND die Räume/Punkte im Grundriss
         function syncNavigationUI(sceneId) {
-            // 1. Buttons in der Leiste aktualisieren
             document.querySelectorAll('.nav-btn').forEach(btn => {
                 const isTarget = btn.getAttribute('onclick').includes(`'${sceneId}'`);
                 btn.classList.toggle('active', isTarget);
@@ -989,7 +976,6 @@
                 }
             });
 
-            // 2. Grundriss-Räume & Punkte hervorheben
             document.querySelectorAll('.fp-room').forEach(r => r.classList.remove('active'));
             document.querySelectorAll('.fp-node').forEach(n => n.classList.remove('active'));
 
@@ -999,14 +985,11 @@
             if (activeNode) activeNode.classList.add('active');
         }
 
-        // Wenn im Panorama auf einen Hotspot geklickt wird -> UI und Grundriss automatisch mitwechseln
         myViewer.on('scenechange', function(sceneId) {
             syncNavigationUI(sceneId);
         });
 
-        // =========================================================================
-        // 📡 ECHTZEIT-RADAR-ANIMATION (60 FPS Loop für Drehung & Zoom-Winkel)
-        // =========================================================================
+        // 📡 LIVE RADAR AKTUALISIERUNG
         const radarGroup = document.getElementById('radar-group');
         const radarCone = document.getElementById('radar-cone');
 
@@ -1014,15 +997,12 @@
             const currentScene = myViewer.getScene();
             const node = floorplanNodes[currentScene] || floorplanNodes['terrasse'];
             
-            // Aktuelle Blickrichtung (Yaw) und Zoom (HFOV) aus Pannellum holen
             const yaw = myViewer.getYaw() || 0;
             const hfov = myViewer.getHfov() || 100;
 
-            // Kegel-Position & Rotation auf dem Grundriss setzen
             const angle = yaw + (node.offset || 0);
             radarGroup.setAttribute('transform', `translate(${node.x}, ${node.y}) rotate(${angle})`);
 
-            // Kegel-Breite dynamisch an den aktuellen Zoomfaktor (HFOV) anpassen
             const radius = 58;
             const halfAngleRad = (Math.min(Math.max(hfov, 40), 120) / 2) * (Math.PI / 180);
             const xSpread = (Math.sin(halfAngleRad) * radius).toFixed(1);
@@ -1034,7 +1014,6 @@
         }
         requestAnimationFrame(updateRadar);
 
-        // Grundriss ein-/ausklappen (besonders praktisch auf dem Smartphone)
         function toggleFloorplan() {
             const card = document.getElementById('floorplanCard');
             const btn = card.querySelector('.fp-toggle-btn');
@@ -1042,7 +1021,6 @@
             btn.textContent = card.classList.contains('collapsed') ? '+' : '−';
         }
 
-        // Design-Umschalter Funktion
         function changeTheme(themeClass) {
             document.body.className = themeClass;
             setTimeout(() => {
@@ -1050,12 +1028,10 @@
             }, 60);
         }
 
-        // Bei Drehung des Smartphones Viewer anpassen
         window.addEventListener('resize', () => {
             myViewer.resize();
         });
 
-        // Click-Event für Hotspot-Koordinaten in der Konsole & Zwischenablage
         myViewer.on('mouseup', function(event) {
             const coords = myViewer.mouseEventToCoords(event);
             if (!coords || isNaN(coords[0])) return;
