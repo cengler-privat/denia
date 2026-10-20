@@ -19,14 +19,14 @@
            ========================================================= */
         * { 
             box-sizing: border-box; 
-            -webkit-tap-highlight-color: transparent; /* Entfernt graues Aufblitzen beim Tippen auf iOS/Android */
+            -webkit-tap-highlight-color: transparent;
         }
         
         body, html { 
             margin: 0; 
             padding: 0; 
             transition: background-color 0.4s ease, color 0.4s ease;
-            overscroll-behavior: none; /* Verhindert versehentliches "Pull-to-Refresh" beim Drehen im Panorama */
+            overscroll-behavior: none;
         }
 
         /* Design-Umschalter */
@@ -63,8 +63,11 @@
             outline: none;
         }
 
-        /* Standard-Titel von Pannellum ausblenden */
-        .pnlm-title-box { display: none !important; }
+        /* Standard-Titel & "by ..."-Autor-Box von Pannellum komplett ausblenden */
+        .pnlm-title-box,
+        .pnlm-author-box { 
+            display: none !important; 
+        }
 
         /* Scrollbalken in den horizontalen Menüs unsichtbar machen */
         .room-nav::-webkit-scrollbar { display: none; }
@@ -83,7 +86,7 @@
             position: relative;
             width: 100vw;
             height: 100vh;
-            height: 100dvh; /* Dynamische Höhe für Mobile-Browser */
+            height: 100dvh;
         }
 
         body.theme-glass .tour-header {
@@ -392,29 +395,25 @@
            📱 SMARTPHONE HOCHKANT (PORTRAIT) OPTIMIERUNG
            ========================================================= */
         @media (max-width: 768px) {
-            /* Umschalter kleiner und unauffälliger oben rechts */
             .theme-switcher {
                 top: max(12px, env(safe-area-inset-top, 12px));
                 right: 12px;
                 padding: 5px 10px;
                 font-size: 11px;
             }
-            .theme-switcher span { display: none; } /* Nur noch das Dropdown zeigen */
+            .theme-switcher span { display: none; }
             .theme-switcher select { font-size: 12px; padding: 3px 8px; }
 
-            /* Größere Touch-Fläche für Hotspots auf dem Smartphone */
             .custom-hotspot {
                 width: 36px;
                 height: 36px;
             }
 
-            /* Pannellum Zoom-Buttons links etwas tiefer setzen, damit sie nicht unter dem Header liegen */
             .pnlm-controls-container {
                 top: 85px !important;
                 left: 12px !important;
             }
 
-            /* Kompass auf dem Handy etwas dezenter und höher über der unteren Leiste */
             .pnlm-compass {
                 bottom: 85px !important;
                 right: 14px !important;
@@ -425,7 +424,7 @@
             body.theme-glass .tour-header {
                 top: max(12px, env(safe-area-inset-top, 12px));
                 left: 12px;
-                right: 155px; /* Platz lassen für den Stil-Umschalter rechts */
+                right: 155px;
                 padding: 10px 14px;
                 border-radius: 14px;
             }
@@ -467,7 +466,7 @@
                 width: 100%;
             }
             body.theme-editorial .tour-header {
-                padding-right: 130px; /* Platz für Umschalter */
+                padding-right: 130px;
             }
             body.theme-editorial .eyebrow {
                 font-size: 10px;
@@ -477,9 +476,8 @@
                 margin: 4px 0 8px 0;
             }
             body.theme-editorial .tour-desc {
-                display: none; /* Spart wertvollen vertikalen Platz auf dem Handy */
+                display: none;
             }
-            /* Vertikale Liste wird auf dem Handy zur horizontalen Swipe-Leiste! */
             body.theme-editorial .room-nav {
                 flex-direction: row;
                 overflow-x: auto;
@@ -502,7 +500,7 @@
                 display: flex;
             }
             body.theme-editorial #panorama {
-                height: 68dvh; /* Perfekte Hochkant-Höhe */
+                height: 68dvh;
                 min-height: 420px;
                 border-radius: 22px;
                 border-width: 4px;
@@ -539,7 +537,7 @@
                 scroll-snap-align: center;
             }
             body.theme-ambient #panorama {
-                height: 70dvh; /* Maximale Hochformat-Bühne */
+                height: 70dvh;
                 min-height: 430px;
                 border-radius: 18px;
             }
@@ -586,6 +584,9 @@
                 <button class="nav-btn" onclick="loadRoom('bad', this)">
                     <span class="num">05</span> 🚿 Bad
                 </button>
+                <button class="nav-btn" onclick="loadRoom('rueckseite', this)">
+                    <span class="num">06</span> 🌅 Rückseite
+                </button>
             </nav>
         </aside>
 
@@ -596,21 +597,18 @@
     </div>
 
     <script>
-        // Prüfen, ob der Nutzer auf einem Smartphone im Hochformat ist:
-        // Falls ja, wählen wir einen etwas weiteren Blickwinkel (hfov: 85 statt 100/110), 
-        // damit das Bild an den Rändern nicht verzerrt, man aber trotzdem genug sieht.
         const isMobilePortrait = window.innerWidth <= 768 && window.innerHeight > window.innerWidth;
 
         const myViewer = pannellum.viewer('panorama', {
             "default": {
                 "firstScene": "terrasse",
-                "author": "Casa Englers y Amigos",
+                // "author" entfernt, damit kein "by Casa..." im Bild erscheint
                 "sceneFadeDuration": 1200,
                 "autoLoad": true,
                 "autoRotate": -2,
                 "compass": true,
                 "northOffset": -67,
-                "hfov": isMobilePortrait ? 80 : 100, // Optimales Sichtfeld für Hochkant vs. Breitbild
+                "hfov": isMobilePortrait ? 80 : 100,
                 "minHfov": 50,
                 "maxHfov": 120
             },
@@ -724,6 +722,21 @@
                             "type": "scene",
                             "text": "Zurück ins Wohnzimmer",
                             "sceneId": "wohnzimmer"
+                        }
+                    ]
+                },
+
+                "rueckseite": {
+                    "title": "Rückseite",
+                    "type": "equirectangular",
+                    "panorama": "images/rundgang_terrasse_west.jpg",
+                    "hotSpots": [
+                        {
+                            "pitch": 0,
+                            "yaw": 0,
+                            "type": "scene",
+                            "text": "Zurück zur Terrasse",
+                            "sceneId": "terrasse"
                         }
                     ]
                 }
