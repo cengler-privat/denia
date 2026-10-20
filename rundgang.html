@@ -2,30 +2,42 @@
 <html lang="de">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Wichtig für Smartphones: viewport-fit=cover nutzt auch den Bereich um die iPhone Notch/Home-Bar -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>360° Rundgang – Casa Englers y Amigos</title>
 
     <!-- Pannellum CSS & JS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.css"/>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.js"></script>
 
-    <!-- Google Fonts für edle Typografie -->
+    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;1,600&family=Outfit:wght@300;500;700&family=Plus+Jakarta+Sans:wght@400;600&display=swap" rel="stylesheet">
 
     <style>
         /* =========================================================
-           BASIS & DESIGN-UMSCHALTER (Oben rechts zum Testen)
+           BASIS & TOUCH-OPTIMIERUNG
            ========================================================= */
-        * { box-sizing: border-box; }
-        body, html { margin: 0; padding: 0; transition: background-color 0.4s ease, color 0.4s ease; }
+        * { 
+            box-sizing: border-box; 
+            -webkit-tap-highlight-color: transparent; /* Entfernt graues Aufblitzen beim Tippen auf iOS/Android */
+        }
+        
+        body, html { 
+            margin: 0; 
+            padding: 0; 
+            transition: background-color 0.4s ease, color 0.4s ease;
+            overscroll-behavior: none; /* Verhindert versehentliches "Pull-to-Refresh" beim Drehen im Panorama */
+        }
 
+        /* Design-Umschalter */
         .theme-switcher {
             position: fixed;
             top: 20px;
             right: 20px;
             z-index: 9999;
-            background: rgba(0, 0, 0, 0.75);
+            background: rgba(15, 23, 42, 0.85);
             backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             padding: 8px 14px;
             border-radius: 30px;
             border: 1px solid rgba(255,255,255,0.2);
@@ -35,23 +47,28 @@
             display: flex;
             align-items: center;
             gap: 8px;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.35);
         }
 
         .theme-switcher select {
-            background: #222;
+            background: #1e293b;
             color: #f59e0b;
-            border: 1px solid #444;
+            border: 1px solid #475569;
             padding: 4px 10px;
             border-radius: 15px;
             font-family: inherit;
             font-weight: 500;
+            font-size: 13px;
             cursor: pointer;
             outline: none;
         }
 
-        /* Standard-Titel von Pannellum ausblenden, da wir eigene Header nutzen */
+        /* Standard-Titel von Pannellum ausblenden */
         .pnlm-title-box { display: none !important; }
+
+        /* Scrollbalken in den horizontalen Menüs unsichtbar machen */
+        .room-nav::-webkit-scrollbar { display: none; }
+        .room-nav { -ms-overflow-style: none; scrollbar-width: none; }
 
         /* =========================================================
            DESIGN 1: CINEMATIC GLASSMORPHISM (Vollbild)
@@ -66,6 +83,7 @@
             position: relative;
             width: 100vw;
             height: 100vh;
+            height: 100dvh; /* Dynamische Höhe für Mobile-Browser */
         }
 
         body.theme-glass .tour-header {
@@ -103,7 +121,7 @@
 
         body.theme-glass .room-nav {
             position: absolute;
-            bottom: 30px;
+            bottom: max(25px, env(safe-area-inset-bottom, 25px));
             left: 50%;
             transform: translateX(-50%);
             z-index: 10;
@@ -112,10 +130,13 @@
             background: rgba(15, 23, 42, 0.65);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
-            padding: 10px;
+            padding: 8px;
             border-radius: 50px;
             border: 1px solid rgba(255, 255, 255, 0.2);
-            box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.45);
+            max-width: 94vw;
+            overflow-x: auto;
+            scroll-behavior: smooth;
         }
 
         body.theme-glass .nav-btn {
@@ -127,8 +148,9 @@
             font-family: inherit;
             font-size: 14px;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.25s ease;
             white-space: nowrap;
+            flex-shrink: 0;
         }
 
         body.theme-glass .nav-btn .num { display: none; }
@@ -214,6 +236,8 @@
             font-family: inherit;
             font-size: 15px;
             color: #2C2523;
+            white-space: nowrap;
+            flex-shrink: 0;
         }
 
         body.theme-editorial .nav-btn .num {
@@ -288,8 +312,8 @@
             border: 1px solid #262f40;
             margin-bottom: 30px;
             gap: 6px;
-            flex-wrap: wrap;
-            justify-content: center;
+            max-width: 100%;
+            overflow-x: auto;
         }
 
         body.theme-ambient .nav-btn {
@@ -302,6 +326,8 @@
             font-family: inherit;
             font-size: 14px;
             transition: 0.3s;
+            white-space: nowrap;
+            flex-shrink: 0;
         }
 
         body.theme-ambient .nav-btn .num { display: none; }
@@ -328,11 +354,11 @@
         }
 
         /* =========================================================
-           CUSTOM HOTSPOT STYLING (Pulsierender Punkt im Panorama)
+           CUSTOM HOTSPOT STYLING
            ========================================================= */
         .custom-hotspot {
-            height: 28px;
-            width: 28px;
+            height: 30px;
+            width: 30px;
             background: rgba(245, 158, 11, 0.95);
             border: 3px solid #ffffff;
             border-radius: 50%;
@@ -362,25 +388,174 @@
             100% { transform: scale(1.9); opacity: 0; }
         }
 
-        /* Responsives Verhalten für kleinere Bildschirme */
-        @media (max-width: 960px) {
-            body.theme-editorial .tour-layout { grid-template-columns: 1fr; }
-            body.theme-editorial #panorama { height: 500px; }
-            body.theme-glass .room-nav { width: 92%; overflow-x: auto; justify-content: flex-start; }
+        /* =========================================================
+           📱 SMARTPHONE HOCHKANT (PORTRAIT) OPTIMIERUNG
+           ========================================================= */
+        @media (max-width: 768px) {
+            /* Umschalter kleiner und unauffälliger oben rechts */
+            .theme-switcher {
+                top: max(12px, env(safe-area-inset-top, 12px));
+                right: 12px;
+                padding: 5px 10px;
+                font-size: 11px;
+            }
+            .theme-switcher span { display: none; } /* Nur noch das Dropdown zeigen */
+            .theme-switcher select { font-size: 12px; padding: 3px 8px; }
+
+            /* Größere Touch-Fläche für Hotspots auf dem Smartphone */
+            .custom-hotspot {
+                width: 36px;
+                height: 36px;
+            }
+
+            /* Pannellum Zoom-Buttons links etwas tiefer setzen, damit sie nicht unter dem Header liegen */
+            .pnlm-controls-container {
+                top: 85px !important;
+                left: 12px !important;
+            }
+
+            /* Kompass auf dem Handy etwas dezenter und höher über der unteren Leiste */
+            .pnlm-compass {
+                bottom: 85px !important;
+                right: 14px !important;
+                transform: scale(0.85);
+            }
+
+            /* --- 1. GLASSMORPHISM AUF SMARTPHONE HOCHKANT --- */
+            body.theme-glass .tour-header {
+                top: max(12px, env(safe-area-inset-top, 12px));
+                left: 12px;
+                right: 155px; /* Platz lassen für den Stil-Umschalter rechts */
+                padding: 10px 14px;
+                border-radius: 14px;
+            }
+            body.theme-glass .eyebrow {
+                font-size: 9px;
+                letter-spacing: 1.5px;
+            }
+            body.theme-glass .tour-header h1 {
+                font-size: 16px;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+            body.theme-glass .room-nav {
+                bottom: max(16px, env(safe-area-inset-bottom, 16px));
+                width: calc(100vw - 24px);
+                justify-content: flex-start;
+                padding: 6px;
+                border-radius: 30px;
+                scroll-snap-type: x mandatory;
+            }
+            body.theme-glass .nav-btn {
+                padding: 10px 15px;
+                font-size: 13px;
+                scroll-snap-align: center;
+            }
+
+            /* --- 2. BOUTIQUE MAGAZIN AUF SMARTPHONE HOCHKANT --- */
+            body.theme-editorial {
+                padding: 16px 14px 24px 14px;
+            }
+            body.theme-editorial .tour-layout {
+                display: flex;
+                flex-direction: column;
+                gap: 14px;
+                min-height: calc(100dvh - 40px);
+            }
+            body.theme-editorial .tour-sidebar {
+                width: 100%;
+            }
+            body.theme-editorial .tour-header {
+                padding-right: 130px; /* Platz für Umschalter */
+            }
+            body.theme-editorial .eyebrow {
+                font-size: 10px;
+            }
+            body.theme-editorial .tour-header h1 {
+                font-size: 30px;
+                margin: 4px 0 8px 0;
+            }
+            body.theme-editorial .tour-desc {
+                display: none; /* Spart wertvollen vertikalen Platz auf dem Handy */
+            }
+            /* Vertikale Liste wird auf dem Handy zur horizontalen Swipe-Leiste! */
+            body.theme-editorial .room-nav {
+                flex-direction: row;
+                overflow-x: auto;
+                gap: 8px;
+                padding-bottom: 4px;
+                scroll-snap-type: x mandatory;
+            }
+            body.theme-editorial .nav-btn {
+                padding: 10px 14px;
+                font-size: 13px;
+                border-radius: 25px;
+                scroll-snap-align: center;
+            }
+            body.theme-editorial .nav-btn:hover {
+                transform: none;
+            }
+            body.theme-editorial .viewer-wrapper {
+                width: 100%;
+                flex: 1;
+                display: flex;
+            }
+            body.theme-editorial #panorama {
+                height: 68dvh; /* Perfekte Hochkant-Höhe */
+                min-height: 420px;
+                border-radius: 22px;
+                border-width: 4px;
+            }
+
+            /* --- 3. AMBIENT KINO AUF SMARTPHONE HOCHKANT --- */
+            body.theme-ambient {
+                padding: 16px 12px 24px 12px;
+            }
+            body.theme-ambient .tour-header {
+                text-align: left;
+                padding-right: 135px;
+            }
+            body.theme-ambient .eyebrow {
+                font-size: 9px;
+                letter-spacing: 2px;
+            }
+            body.theme-ambient .tour-header h1 {
+                font-size: 18px;
+                letter-spacing: 2px;
+                margin-bottom: 12px;
+            }
+            body.theme-ambient .room-nav {
+                display: flex;
+                justify-content: flex-start;
+                width: 100%;
+                margin-bottom: 14px;
+                padding: 5px;
+                scroll-snap-type: x mandatory;
+            }
+            body.theme-ambient .nav-btn {
+                padding: 9px 14px;
+                font-size: 13px;
+                scroll-snap-align: center;
+            }
+            body.theme-ambient #panorama {
+                height: 70dvh; /* Maximale Hochformat-Bühne */
+                min-height: 430px;
+                border-radius: 18px;
+            }
         }
     </style>
 </head>
 
-<!-- Standardmäßig startet "theme-glass". Du kannst hier auch "theme-editorial" oder "theme-ambient" eintragen -->
 <body class="theme-glass">
 
-    <!-- LIVE DESIGN-UMSCHALTER (Kannst du später löschen, wenn du deinen Favoriten gewählt hast) -->
+    <!-- LIVE DESIGN-UMSCHALTER -->
     <div class="theme-switcher">
         <span>🎨 Stil:</span>
         <select onchange="changeTheme(this.value)">
-            <option value="theme-glass">1. Glassmorphism (Vollbild)</option>
-            <option value="theme-editorial">2. Boutique Magazin (Hell)</option>
-            <option value="theme-ambient">3. Ambient Kino (Dunkel)</option>
+            <option value="theme-glass">1. Glassmorphism</option>
+            <option value="theme-editorial">2. Boutique Magazin</option>
+            <option value="theme-ambient">3. Ambient Kino</option>
         </select>
     </div>
 
@@ -421,6 +596,11 @@
     </div>
 
     <script>
+        // Prüfen, ob der Nutzer auf einem Smartphone im Hochformat ist:
+        // Falls ja, wählen wir einen etwas weiteren Blickwinkel (hfov: 85 statt 100/110), 
+        // damit das Bild an den Rändern nicht verzerrt, man aber trotzdem genug sieht.
+        const isMobilePortrait = window.innerWidth <= 768 && window.innerHeight > window.innerWidth;
+
         const myViewer = pannellum.viewer('panorama', {
             "default": {
                 "firstScene": "terrasse",
@@ -429,7 +609,10 @@
                 "autoLoad": true,
                 "autoRotate": -2,
                 "compass": true,
-                "northOffset": -67
+                "northOffset": -67,
+                "hfov": isMobilePortrait ? 80 : 100, // Optimales Sichtfeld für Hochkant vs. Breitbild
+                "minHfov": 50,
+                "maxHfov": 120
             },
 
             "scenes": {
@@ -547,31 +730,44 @@
             }
         });
 
-        // Raum über die neuen Buttons wechseln
+        // Raum über die Buttons wechseln + Button auf dem Smartphone sanft in die Mitte scrollen
         function loadRoom(sceneId, btnElement) {
             myViewer.loadScene(sceneId);
             document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
-            if (btnElement) btnElement.classList.add('active');
+            if (btnElement) {
+                btnElement.classList.add('active');
+                btnElement.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+            }
         }
 
-        // Wenn im Panorama auf einen Hotspot geklickt wird -> aktiven Button in der Leiste mitwechseln
+        // Wenn im Panorama auf einen Hotspot getippt wird -> passenden Button aktivieren & in Sichtweite scrollen
         myViewer.on('scenechange', function(sceneId) {
             document.querySelectorAll('.nav-btn').forEach(btn => {
-                btn.classList.toggle('active', btn.getAttribute('onclick').includes(`'${sceneId}'`));
+                const isTarget = btn.getAttribute('onclick').includes(`'${sceneId}'`);
+                btn.classList.toggle('active', isTarget);
+                if (isTarget) {
+                    btn.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+                }
             });
         });
 
-        // Design-Umschalter Funktion (aktualisiert auch die Pannellum-Größe)
+        // Design-Umschalter Funktion
         function changeTheme(themeClass) {
             document.body.className = themeClass;
             setTimeout(() => {
                 myViewer.resize();
-            }, 50);
+            }, 60);
         }
 
-        // Dein Click-Event für Hotspot-Koordinaten in der Konsole & Zwischenablage
+        // Bei Drehung des Smartphones (Hochformat <-> Querformat) Viewer sauber anpassen
+        window.addEventListener('resize', () => {
+            myViewer.resize();
+        });
+
+        // Click-Event für Hotspot-Koordinaten in der Konsole & Zwischenablage
         myViewer.on('mouseup', function(event) {
             const coords = myViewer.mouseEventToCoords(event);
+            if (!coords || isNaN(coords[0])) return;
             const pitch = coords[0].toFixed(2);
             const yaw = coords[1].toFixed(2);
 
