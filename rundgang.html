@@ -276,8 +276,8 @@
         }
 
         .custom-hotspot {
-            height: 20px; 
-            width: 20px;  
+            height: 10px; 
+            width: 1%;  
             background: rgba(245, 158, 11, 0.95);
             border: 2px solid #ffffff; 
             border-radius: 50%;
@@ -341,8 +341,8 @@
             }
 
             .custom-hotspot {
-                width: 36px;
-                height: 36px;
+                width: 10px;
+                height: 10px;
             }
         }
     </style>
@@ -453,13 +453,13 @@
 
         // Angepasste Radar-Zentren für das neue Layout
         const floorplanNodes = {
-            "terrasse":     { x: 110, y: 195, offset: 180 },
-            "wohnzimmer":   { x: 78,  y: 129, offset: 0 },
-            "schlafzimmer": { x: 175, y: 151, offset: -90 },
-            "kinderzimmer": { x: 175, y: 107, offset: -90 },
-            "bad":          { x: 45,  y: 65,  offset: 90 },
-            "rueckseite":   { x: 110, y: 26,  offset: 0 }
-        };
+            "terrasse":     { x: 110, y: 195, offset: -133 },
+            "wohnzimmer":   { x: 78,  y: 129, offset: 155 },
+            "schlafzimmer": { x: 175, y: 151, offset: 64 },
+            "kinderzimmer": { x: 175, y: 107, offset: 159 },
+            "bad":          { x: 45,  y: 65,  offset: 3 },
+            "rueckseite":   { x: 110, y: 26,  offset: 40 }
+};
 
         const myViewer = pannellum.viewer('panorama', {
             "default": {
