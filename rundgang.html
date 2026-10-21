@@ -83,58 +83,55 @@
 
         /* =========================================================
            ✨ DEZENTES GLASSMORPHISM-DESIGN FÜR PANNELLUM BUTTONS & KOMPASS
-           ========================================================= */
+        ========================================================= */
         .pnlm-controls-container {
             top: 18px !important;
             left: 18px !important;
-            background: rgba(15, 23, 42, 0.45) !important;
-            backdrop-filter: blur(10px) !important;
-            -webkit-backdrop-filter: blur(10px) !important;
-            border: 1px solid rgba(255, 255, 255, 0.15) !important;
-            border-radius: 14px !important;
-            padding: 4px !important;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25) !important;
         }
 
-        .pnlm-controls-container div.pnlm-button {
-            background-color: transparent !important;
-            background-image: none !important;
-            box-shadow: none !important;
-            border: none !important;
+        /* Überschreibt die harten weißen Boxen (.pnlm-controls) von Pannellum */
+        .pnlm-controls {
+            background-color: rgba(255, 255, 255, 0.45) !important;
+            backdrop-filter: blur(8px) !important;
+            -webkit-backdrop-filter: blur(8px) !important;
+            border: 1px solid rgba(255, 255, 255, 0.35) !important;
+            border-radius: 10px !important;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2) !important;
+            transition: background-color 0.2s ease, opacity 0.2s ease;
+            opacity: 0.85;
         }
 
-        .pnlm-controls-container .pnlm-button {
-            filter: invert(1) grayscale(100%) brightness(200%);
-            opacity: 0.7;
-            transition: opacity 0.2s;
-        }
-
-        .pnlm-controls-container .pnlm-button:hover {
+        .pnlm-controls:hover {
+            background-color: rgba(255, 255, 255, 0.75) !important;
             opacity: 1;
         }
 
-        .pnlm-button:hover {
-            opacity: 1;
-            background-color: rgba(255, 255, 255, 0.15) !important;
+        /* Dezente Trennlinie zwischen + und - */
+        .pnlm-zoom-in {
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1) !important;
         }
 
+        /* Wichtig beim Kompass: "background-color" statt "background" nutzen, 
+           damit die Kompassnadel (background-image) sichtbar bleibt! */
         .pnlm-compass {
             bottom: 20px !important;
             right: 20px !important;
             z-index: 100 !important;
-            background: rgba(15, 23, 42, 0.45) !important;
-            backdrop-filter: blur(10px) !important;
-            -webkit-backdrop-filter: blur(10px) !important;
-            border: 1px solid rgba(255, 255, 255, 0.15) !important;
+            background-color: rgba(255, 255, 255, 0.45) !important;
+            backdrop-filter: blur(8px) !important;
+            -webkit-backdrop-filter: blur(8px) !important;
+            border: 1px solid rgba(255, 255, 255, 0.35) !important;
             border-radius: 50% !important;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25) !important;
-            opacity: 0.8;
-            transition: opacity 0.2s;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2) !important;
+            opacity: 0.85;
+            transition: opacity 0.2s ease, background-color 0.2s ease;
         }
 
         .pnlm-compass:hover {
+            background-color: rgba(255, 255, 255, 0.75) !important;
             opacity: 1;
         }
+
 
         /* =========================================================
            🗺️ INTERAKTIVER GRUNDRISS (3 Spalten, 5 Zeilen)
@@ -392,7 +389,7 @@
                         <text x="110" y="28" class="fp-label">Wohnungseingang</text>
 
                         <!-- ZEILE 2: Spalte 1 (Bad), Spalte 2 (Flur - ohne Bild), Spalte 3 (Kabuff - ohne Bild) -->
-                        <rect class="fp-room" x="15" y="46" width="60" height="38" rx="4" onclick="loadRoom('bad')" />
+                        <rect id="room-bad" class="fp-room" x="15" y="46" width="60" height="38" rx="4" onclick="loadRoom('bad')" />
                         <text x="45" y="68" class="fp-label">Bad</text>
 
                         <rect class="fp-room-static" x="79" y="46" width="62" height="38" rx="4" />
@@ -482,6 +479,8 @@
                     "title": "Terrasse",
                     "type": "equirectangular",
                     "panorama": "images/rundgang_terrasse.jpg",
+                    "pitch": 11.50,
+                    "yaw": -60.62,
                     "hotSpots": [
                         {
                             "pitch": -18.73,
@@ -498,6 +497,8 @@
                     "title": "Wohnzimmer",
                     "type": "equirectangular",
                     "panorama": "images/rundgang_wohnzimmer.jpg",
+                    "pitch": -2.69,
+                    "yaw": -126.98,
                     "hotSpots": [
                         {
                             "pitch": -0.82,
@@ -601,8 +602,8 @@
                     "panorama": "images/rundgang_terrasse_west_abends.jpg",
                     "hotSpots": [
                         {
-                            "pitch": -9.37,
-                            "yaw": 139.61,
+                            "pitch": -8.98,
+                            "yaw": 143.87,
                             "type": "scene",
                             "text": "Zurück ins Wohnzimmer",
                             "sceneId": "wohnzimmer",
