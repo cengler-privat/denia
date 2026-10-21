@@ -19,7 +19,7 @@
     <style>
         .tour-page-header {
             text-align: center;
-            padding: 85px 20px 20px 20px;
+            padding: 85px 20px 15px 20px;
             max-width: 900px;
             margin: 0 auto;
         }
@@ -56,64 +56,12 @@
             padding: 10px 20px 40px 20px;
         }
 
-        .room-nav-wrapper {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 20px;
-        }
-
-        .room-nav {
-            display: flex;
-            gap: 8px;
-            background: rgba(15, 23, 42, 0.9);
-            padding: 8px;
-            border-radius: 50px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
-            max-width: 100%;
-            overflow-x: auto;
-            scroll-behavior: smooth;
-            -ms-overflow-style: none;
-            scrollbar-width: none;
-        }
-
-        .room-nav::-webkit-scrollbar {
-            display: none;
-        }
-
-        .nav-btn {
-            background: transparent;
-            border: none;
-            color: rgba(255, 255, 255, 0.85);
-            padding: 10px 20px;
-            border-radius: 30px;
-            font-family: 'Lato', sans-serif;
-            font-size: 15px;
-            font-weight: 400;
-            cursor: pointer;
-            transition: all 0.25s ease;
-            white-space: nowrap;
-            flex-shrink: 0;
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        .nav-btn:hover {
-            color: #fff;
-            background: rgba(255, 255, 255, 0.12);
-        }
-
-        .nav-btn.active {
-            background: #f59e0b;
-            color: #000;
-            font-weight: 700;
-            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4);
-        }
-
         .viewer-stage {
             position: relative;
             width: 100%;
-            height: 75vh;
+            height: 78vh;
             min-height: 540px;
-            max-height: 820px;
+            max-height: 850px;
             border-radius: 24px;
             overflow: hidden;
             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.35);
@@ -131,11 +79,52 @@
             display: none !important;
         }
 
+        /* =========================================================
+           ✨ DEZENTES GLASSMORPHISM-DESIGN FÜR PANNELLUM BUTTONS & KOMPASS
+           ========================================================= */
+        .pnlm-controls-container {
+            top: 18px !important;
+            left: 18px !important;
+            background: rgba(15, 23, 42, 0.45) !important;
+            backdrop-filter: blur(10px) !important;
+            -webkit-backdrop-filter: blur(10px) !important;
+            border: 1px solid rgba(255, 255, 255, 0.15) !important;
+            border-radius: 14px !important;
+            padding: 4px !important;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25) !important;
+        }
+
+        .pnlm-button {
+            background-color: transparent !important;
+            opacity: 0.75;
+            transition: opacity 0.2s, background-color 0.2s;
+        }
+
+        .pnlm-button:hover {
+            opacity: 1;
+            background-color: rgba(255, 255, 255, 0.12) !important;
+        }
+
         .pnlm-compass {
             bottom: 20px !important;
             right: 20px !important;
+            background: rgba(15, 23, 42, 0.45) !important;
+            backdrop-filter: blur(10px) !important;
+            -webkit-backdrop-filter: blur(10px) !important;
+            border: 1px solid rgba(255, 255, 255, 0.15) !important;
+            border-radius: 50% !important;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25) !important;
+            opacity: 0.8;
+            transition: opacity 0.2s;
         }
 
+        .pnlm-compass:hover {
+            opacity: 1;
+        }
+
+        /* =========================================================
+           🗺️ INTERAKTIVER GRUNDRISS
+           ========================================================= */
         .floorplan-card {
             position: absolute;
             top: 18px;
@@ -297,38 +286,9 @@
             100% { transform: scale(1.9); opacity: 0; }
         }
 
-        .tour-hints {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 20px;
-            max-width: 1100px;
-            margin: 10px auto 30px auto;
-            padding: 0 20px;
-        }
-
-        .hint-card {
-            background: rgba(255, 255, 255, 0.7);
-            border-radius: 14px;
-            padding: 18px 22px;
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
-            text-align: center;
-            font-family: 'Lato', sans-serif;
-        }
-
-        .hint-card strong {
-            display: block;
-            font-size: 1.05rem;
-            margin-bottom: 6px;
-        }
-
-        .hint-card span {
-            font-size: 0.92rem;
-            opacity: 0.8;
-        }
-
         @media (max-width: 768px) {
             .tour-page-header {
-                padding: 75px 15px 12px 15px;
+                padding: 75px 15px 10px 15px;
             }
 
             .tour-page-header p {
@@ -339,26 +299,9 @@
                 padding: 5px 10px 25px 10px;
             }
 
-            .room-nav-wrapper {
-                justify-content: flex-start;
-                margin-bottom: 12px;
-            }
-
-            .room-nav {
-                width: 100%;
-                padding: 6px;
-                scroll-snap-type: x mandatory;
-            }
-
-            .nav-btn {
-                padding: 9px 15px;
-                font-size: 13.5px;
-                scroll-snap-align: center;
-            }
-
             .viewer-stage {
-                height: 70dvh;
-                min-height: 430px;
+                height: 75dvh;
+                min-height: 450px;
                 border-radius: 18px;
                 border-width: 3px;
             }
@@ -392,29 +335,18 @@
         <span class="burger-menu-bar"></span>
     </button>
     
-    <!-- Zentrales Menü wird hier dynamisch geladen -->
     <div id="menu-container"></div>
 
     <main class="bg-light">
         <header class="tour-page-header">
             <span class="eyebrow">Virtueller 360° Rundgang</span>
             <h1>Hereinspaziert in die Casa!</h1>
-            <p>Schaut euch schon mal in Ruhe um: Wählt oben direkt ein Zimmer, klickt im Grundriss auf einen Raum oder wandert über die Punkte mitten durchs Bild.</p>
+            <p>Schaut euch im Panorama um, nutzt die Hotspots im Bild oder klickt direkt im Grundriss auf den gewünschten Raum.</p>
         </header>
 
         <section class="tour-section-container">
-            <div class="room-nav-wrapper">
-                <nav class="room-nav">
-                    <button class="nav-btn active" onclick="loadRoom('terrasse', this)">☀️ Terrasse</button>
-                    <button class="nav-btn" onclick="loadRoom('wohnzimmer', this)">🛋️ Wohnzimmer</button>
-                    <button class="nav-btn" onclick="loadRoom('schlafzimmer', this)">🛏️ Schlafzimmer</button>
-                    <button class="nav-btn" onclick="loadRoom('kinderzimmer', this)">🧸 Kinderzimmer</button>
-                    <button class="nav-btn" onclick="loadRoom('bad', this)">🚿 Bad</button>
-                    <button class="nav-btn" onclick="loadRoom('rueckseite', this)">🌅 Rückseite</button>
-                </nav>
-            </div>
-
             <div class="viewer-stage">
+                <!-- 🗺️ INTERAKTIVER GRUNDRISS -->
                 <div class="floorplan-card" id="floorplanCard">
                     <div class="floorplan-header">
                         <span>🗺️ Grundriss</span>
@@ -464,23 +396,6 @@
                 <div id="panorama"></div>
             </div>
         </section>
-
-        <section id="trigger-whatsapp" class="content-section bg-light" style="padding-top: 10px;">
-            <div class="tour-hints">
-                <div class="hint-card">
-                    <strong>👆 Umschauen & Zoomen</strong>
-                    <span>Ziehe das Bild mit der Maus oder dem Finger. Mit dem Mausrad oder zwei Fingern kannst du zoomen.</span>
-                </div>
-                <div class="hint-card">
-                    <strong>🗺️ Live-Grundriss</strong>
-                    <span>Der goldene Kegel zeigt dir immer deine genaue Blickrichtung. Klicke auf einen Raum, um direkt dorthin zu springen.</span>
-                </div>
-                <div class="hint-card">
-                    <strong>💬 Noch Fragen zur Bude?</strong>
-                    <span>Schreibt uns einfach direkt per <a href="https://wa.me/491733045695" target="_blank">WhatsApp</a> oder springt zurück zur <a href="index.html">Startseite</a>.</span>
-                </div>
-            </div>
-        </section>
     </main>
 
     <a href="https://wa.me/491733045695" class="whatsapp-button" target="_blank" id="whatsapp-btn" title="WhatsApp schreiben">
@@ -528,13 +443,6 @@
                     "type": "equirectangular",
                     "panorama": "images/rundgang_terrasse.jpg",
                     "hotSpots": [
-                        {
-                            "pitch": -5.40,
-                            "yaw": 112.30,
-                            "type": "info",
-                            "text": "Eingangsbereich / Rezeption",
-                            "cssClass": "custom-hotspot pulse-effect"
-                        },       
                         {
                             "pitch": -1.27,
                             "yaw": 170.62,
@@ -659,14 +567,6 @@
         }
 
         function syncNavigationUI(sceneId) {
-            document.querySelectorAll('.nav-btn').forEach(btn => {
-                const isTarget = btn.getAttribute('onclick').includes(`'${sceneId}'`);
-                btn.classList.toggle('active', isTarget);
-                if (isTarget) {
-                    btn.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
-                }
-            });
-
             document.querySelectorAll('.fp-room').forEach(r => r.classList.remove('active'));
             document.querySelectorAll('.fp-node').forEach(n => n.classList.remove('active'));
 

@@ -300,7 +300,7 @@ body {
     min-height: 80vh;
     padding: 5rem 10%;
     gap: 3rem;
-    c transform: translateY(30px);
+    transform: translateY(30px);
     transition: opacity 0.8s ease-out, transform 0.8s ease-out;
 }
 
@@ -672,4 +672,42 @@ video {
   border-radius: 6px !important;
   padding: 6px 12px !important;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+}
+
+/* =========================================================
+   FIX FÜR BURGER-MENÜ AUF DEM DESKTOP
+   ========================================================= */
+
+/* 1. Stellt sicher, dass das aufgeklappte Menü immer ganz oben liegt */
+.main-menu-panel {
+    z-index: 100000 !important;
+}
+
+/* 2. Stellt sicher, dass der Burger-Button immer anklickbar ist */
+.burger-menu-button {
+    z-index: 100001 !important;
+}
+
+/* 3. Verhindert, dass das Panorama-Plugin Klicks "schluckt", bevor sie das Menü erreichen */
+.viewer-stage {
+    isolation: isolate;
+}
+
+/* =========================================================
+   ANPASSUNG SCROLL-TO-TOP BUTTON (Weißer Hintergrund)
+   ========================================================= */
+.scroll-to-top-button {
+    background-color: #ffffff !important; /* Weißer Hintergrund */
+    color: #1a1615 !important;            /* Dunkles Icon (falls Schrift/SVG Farbe nutzt) */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Falls das SVG-Icon im Button eine feste Farbe hat, erzwingen wir sie hier: */
+.scroll-to-top-button svg path {
+    fill: #1a1615 !important;
+}
+
+/* Hover-Effekt (leichtes Grau beim Drüberfahren, analog zum Burger) */
+.scroll-to-top-button:hover {
+    background-color: #f1f5f9 !important;
 }
