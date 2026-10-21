@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kulinarisches & Lieblingsrestaurants – Casa Englers y Amigos</title>
+
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,600&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        /* =========================================================
+           SPEZIFISCHES DESIGN FÜR KULINARISCHES & AUSFLÜGE
+           ========================================================= */
+        .page-hero {
+            text-align: center;
+            padding: 95px 20px 35px 20px;
+            background: linear-gradient(180deg, #0f172a 0%, #1e293b 100%);
+            color: #ffffff;
+        }
+
+        .page-hero .eyebrow {
+            font-family: 'Lato', sans-serif;
+            font-size: 13px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: #f59e0b;
+            font-weight: 700;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .page-hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.2rem, 4.5vw, 3.4rem);
+            margin: 0 0 12px 0;
+            color: #ffffff;
+        }
+
+        .page-hero p {
+            font-family: 'Lato', sans-serif;
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.85);
+            max-width: 650px;
+            margin: 0 auto 28px auto;
+            line-height: 1.6;
+        }
+
+        /* Interaktive Vibe-Filter (Pillen-Leiste) */
+        .vibe-filter-bar {
+            display: inline-flex;
+            gap: 8px;
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(10px);
+            padding: 8px;
+            border-radius: 50px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            max-width: 100%;
+            overflow-x: auto;
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        .vibe-filter-bar::-webkit-scrollbar { display: none; }
+
+        .vibe-btn {
+            background: transparent;
+            border: none;
+            color: rgba(255, 255, 255, 0.85);
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-family: 'Lato', sans-serif;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            white-space: nowrap;
+        }
+
+        .vibe-btn:hover {
+            background: rgba(255, 255, 255, 0.12);
+            color: #fff;
+        }
+
+        .vibe-btn.active {
+            background: #f59e0b;
+            color: #0f172a;
+            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4);
+        }
+
+        /* Karten-Grid */
+        .spots-container {
+            max-width: 1240px;
+            margin: 0 auto;
+            padding: 50px 20px;
+        }
+
+        .spots-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 32px;
+        }
+
+        .spot-card {
+            background: #ffffff;
+            border-radius: 22px;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(15, 23, 42, 0.08);
+            border: 1px solid rgba(15, 23, 42, 0.06);
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .spot-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 22px 45px rgba(15, 23, 42, 0.14);
+        }
+
+        .spot-card.hidden {
+            display: none;
+        }
+
+        .spot-visual {
+            position: relative;
+            height: 210px;
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: flex-end;
+            padding: 16px;
+        }
+
+        .spot-visual::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, rgba(15,23,42,0.1) 0%, rgba(15,23,42,0.75) 100%);
+        }
+
+        .spot-badges {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            width: 100%;
+        }
+
+        .spot-badge {
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(8px);
+            color: #fff;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-family: 'Lato', sans-serif;
+            font-size: 12px;
+            font-weight: 700;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .spot-badge.highlight {
+            background: #f59e0b;
+            color: #0f172a;
+            border-color: #f59e0b;
+        }
+
+        .spot-body {
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            text-align: left;
+        }
+
+        .spot-category {
+            font-family: 'Lato', sans-serif;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #d97706;
+            margin-bottom: 6px;
+        }
+
+        .spot-body h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.65rem;
+            margin: 0 0 12px 0;
+            color: #0f172a;
+        }
+
+        .spot-desc {
+            font-family: 'Lato', sans-serif;
+            font-size: 0.98rem;
+            line-height: 1.6;
+            color: #475569;
+            margin: 0 0 20px 0;
+        }
+
+        /* Englers Geheimtipp Box */
+        .insider-tip {
+            background: #fffbeb;
+            border-left: 4px solid #f59e0b;
+            padding: 14px 16px;
+            border-radius: 0 12px 12px 0;
+            margin-bottom: 22px;
+            margin-top: auto;
+        }
+
+        .insider-tip strong {
+            display: block;
+            font-family: 'Lato', sans-serif;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #b45309;
+            margin-bottom: 4px;
+        }
+
+        .insider-tip p {
+            margin: 0;
+            font-family: 'Lato', sans-serif;
+            font-size: 0.92rem;
+            color: #78350f;
+            line-height: 1.45;
+        }
+
+        /* Action Buttons unten in der Karte */
+        .spot-actions {
+            display: flex;
+            gap: 10px;
+            padding-top: 14px;
+            border-top: 1px solid #f1f5f9;
+        }
+
+        .action-btn {
+            flex: 1;
+            text-align: center;
+            text-decoration: none;
+            padding: 10px 14px;
+            border-radius: 12px;
+            font-family: 'Lato', sans-serif;
+            font-size: 13.5px;
+            font-weight: 700;
+            transition: all 0.2s ease;
+        }
+
+        .action-btn.primary {
+            background: #0f172a;
+            color: #ffffff;
+        }
+
+        .action-btn.primary:hover {
+            background: #f59e0b;
+            color: #0f172a;
+        }
+
+        .action-btn.secondary {
+            background: #f1f5f9;
+            color: #334155;
+        }
+
+        .action-btn.secondary:hover {
+            background: #e2e8f0;
+        }
+
+        /* =========================================================
+           ZEITSTRAHL: EIN PERFEKTER GENUSS-ABEND IN DÉNIA
+           ========================================================= */
+        .timeline-section {
+            background: #0f172a;
+            color: #ffffff;
+            padding: 65px 20px;
+        }
+
+        .timeline-header {
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto 45px auto;
+        }
+
+        .timeline-header h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.8rem, 3.5vw, 2.5rem);
+            color: #ffffff;
+            margin: 8px 0 12px 0;
+        }
+
+        .timeline-wrapper {
+            max-width: 850px;
+            margin: 0 auto;
+            position: relative;
+            padding-left: 32px;
+            border-left: 3px solid rgba(245, 158, 11, 0.4);
+        }
+
+        .timeline-step {
+            position: relative;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 18px;
+            padding: 22px 26px;
+            margin-bottom: 24px;
+            text-align: left;
+        }
+
+        .timeline-step::before {
+            content: '';
+            position: absolute;
+            left: -41px;
+            top: 26px;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: #f59e0b;
+            border: 3px solid #0f172a;
+            box-shadow: 0 0 12px #f59e0b;
+        }
+
+        .timeline-time {
+            font-family: 'Lato', sans-serif;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: #f59e0b;
+            text-transform: uppercase;
+        }
+
+        .timeline-step h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.35rem;
+            margin: 6px 0 8px 0;
+            color: #fff;
+        }
+
+        .timeline-step p {
+            margin: 0;
+            font-size: 0.96rem;
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.55;
+        }
+
+        @media (max-width: 768px) {
+            .spots-grid {
+                grid-template-columns: 1fr;
+            }
+            .vibe-filter-bar {
+                justify-content: flex-start;
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-light">
+
+    <!-- Burger-Menü Button & Dynamischer Container -->
+    <button class="burger-menu-button" id="burger-menu-btn" title="Menü öffnen">
+        <span class="burger-menu-bar"></span>
+        <span class="burger-menu-bar"></span>
+        <span class="burger-menu-bar"></span>
+    </button>
+    <div id="menu-container"></div>
+
+    <!-- Kopfbereich mit Stimmungs-Filtern -->
+    <header class="page-hero">
+        <span class="eyebrow">UNESCO Creative City of Gastronomy</span>
+        <h1>Unsere Lieblingsrestaurants</h1>
+        <p>In Dénia schlecht zu essen ist fast unmöglich – aber hier sind unsere handverlesenen Favoriten, in denen wir selbst immer wieder landen!</p>
+
+        <div class="vibe-filter-bar">
+            <button class="vibe-btn active" onclick="filterSpots('all', this)">✨ Alle Favoriten</button>
+            <button class="vibe-btn" onclick="filterSpots('tapas', this)">🍤 Tapas & Altstadt</button>
+            <button class="vibe-btn" onclick="filterSpots('location', this)">🥂 Location & Cross-Over</button>
+            <button class="vibe-btn" onclick="filterSpots('meer', this)">🥘 Paella & Meer</button>
+        </div>
+    </header>
+
+    <main>
+        <section class="spots-container">
+            <div class="spots-grid">
+
+                <!-- 1. LA SUCRERIA DE LA PLAÇA -->
+                <article class="spot-card" data-category="tapas">
+                    <div class="spot-visual" style="background-image: url('images/denia11.jpg');">
+                        <div class="spot-badges">
+                            <span class="spot-badge highlight">⭐ Englers Favorit</span>
+                            <span class="spot-badge">🍤 Kreative Tapas</span>
+                            <span class="spot-badge">📍 Plaça del Convent</span>
+                        </div>
+                    </div>
+                    <div class="spot-body">
+                        <span class="spot-category">Tapas & Platz-Atmosphäre</span>
+                        <h2>La Sucreria de la Plaça</h2>
+                        <p class="spot-desc">
+                            Wunderschön gelegen an der Plaça del Convent. Hier sitzt ihr entspannt draußen auf dem Platz und bekommt fantastische, modern interpretierte Tapas zum Teilen. Perfekt, um sich einmal quer durch die Karte zu probieren!
+                        </p>
+                        <div class="insider-tip">
+                            <strong>💡 Englers Insider-Tipp:</strong>
+                            <p>Sichert euch abends rechtzeitig einen Tisch draußen auf dem Platz – die Stimmung, wenn die Lichter angehen, ist unschlagbar. Unbedingt mehrere kleine Gerichte in die Mitte stellen!</p>
+                        </div>
+                        <div class="spot-actions">
+                            <a href="https://www.google.com/maps/search/?api=1&query=La+Sucreria+de+la+Placa+Denia" target="_blank" class="action-btn primary">📍 Route in Google Maps</a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- 2. PEPA TERESA -->
+                <article class="spot-card" data-category="tapas">
+                    <div class="spot-visual" style="background-image: url('images/denia6.jpg');">
+                        <div class="spot-badges">
+                            <span class="spot-badge highlight">🔥 Kult-Tapas</span>
+                            <span class="spot-badge">🍷 Calle Loreto</span>
+                        </div>
+                    </div>
+                    <div class="spot-body">
+                        <span class="spot-category">Traditionelle Tapas & Lokalkolorit</span>
+                        <h2>Pepa Teresa</h2>
+                        <p class="spot-desc">
+                            Ein echtes Stück authentisches Dénia mitten in der berühmten, autofreien Schlemmer-Gasse <em>Calle Loreto</em>. Lebendig, herzlich, trubelig und voll mit spanischen Klassikern aus dem Meer und vom Land.
+                        </p>
+                        <div class="insider-tip">
+                            <strong>💡 Englers Insider-Tipp:</strong>
+                            <p>Kommt am besten kurz vor dem großen spanischen Ansturm (gegen 19:30 / 20:00 Uhr), bestellt euch ein kühles Cerveza oder einen lokalen Weißwein und lasst euch von der Tageskarte an der Tafel inspirieren!</p>
+                        </div>
+                        <div class="spot-actions">
+                            <a href="https://www.google.com/maps/search/?api=1&query=Pepa+Teresa+Calle+Loreto+Denia" target="_blank" class="action-btn primary">📍 Route in Google Maps</a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- 3. REPUBLIC DÉNIA -->
+                <article class="spot-card" data-category="location">
+                    <div class="spot-visual" style="background-image: url('images/denia13.jpg');">
+                        <div class="spot-badges">
+                            <span class="spot-badge highlight">🛥️ Top-Location</span>
+                            <span class="spot-badge">🥢 Cross-Over Küche</span>
+                            <span class="spot-badge">🍹 Marina de Dénia</span>
+                        </div>
+                    </div>
+                    <div class="spot-body">
+                        <span class="spot-category">Hafen-Flair & Moderne Cross-Over Küche</span>
+                        <h2>Republic Dénia</h2>
+                        <p class="spot-desc">
+                            Direkt im schicken Yachthafen (Marina de Dénia) gelegen mit traumhaftem Blick aufs Wasser, die Boote und den Montgó im Hintergrund. Stylisches Ambiente trifft hier auf eine spannende internationale Cross-Over-Küche (von Sushi-Twists bis Grill).
+                        </p>
+                        <div class="insider-tip">
+                            <strong>💡 Englers Insider-Tipp:</strong>
+                            <p>Ideal für einen besonderen Abend! Kommt schon zum Sonnenuntergang auf einen Aperitif/Cocktail auf die Terrasse am Wasser und bleibt danach direkt zum Dinner.</p>
+                        </div>
+                        <div class="spot-actions">
+                            <a href="https://www.google.com/maps/search/?api=1&query=Republic+Marina+de+Denia" target="_blank" class="action-btn primary">📍 Route in Google Maps</a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- 4. GAMBA ROJA & PAELLA KLASSIKER (Ergänzung) -->
+                <article class="spot-card" data-category="meer">
+                    <div class="spot-visual" style="background-image: url('images/gambas.jpg');">
+                        <div class="spot-badges">
+                            <span class="spot-badge">🦐 Gamba Roja</span>
+                            <span class="spot-badge">🥘 Reisgerichte</span>
+                        </div>
+                    </div>
+                    <div class="spot-body">
+                        <span class="spot-category">Meeresfrüchte & Spanischer Mittagstisch</span>
+                        <h2>Arroz a Banda & Gamba Roja</h2>
+                        <p class="spot-desc">
+                            Wenn ihr in Dénia seid, dürft ihr zwei Dinge nicht verpassen: Die weltberühmte rote Garnele aus Dénia (<em>Gamba Roja</em>) und ein echtes Reisgericht (<em>Arroz a Banda</em> oder <em>Fideuà</em>) am Mittag direkt am Meer.
+                        </p>
+                        <div class="insider-tip">
+                            <strong>💡 Englers Insider-Tipp:</strong>
+                            <p>Spanier essen Paella fast immer zum Mittagessen (ca. 14:00 Uhr), selten abends! Fragt uns gerne per WhatsApp nach unserem aktuellen Favoriten für die beste Paella am Strand.</p>
+                        </div>
+                        <div class="spot-actions">
+                            <a href="https://wa.me/491733045695" target="_blank" class="action-btn secondary">💬 Aktuellen Tipp erfragen</a>
+                        </div>
+                    </div>
+                </article>
+
+            </div>
+        </section>
+
+        <!-- Konzept 2: Der kulinarische Abend-Fahrplan -->
+        <section id="trigger-whatsapp" class="timeline-section">
+            <div class="timeline-header">
+                <span style="color: #f59e0b; letter-spacing: 3px; font-size: 12px; font-weight: 700; text-transform: uppercase;">Unsere Empfehlung</span>
+                <h2>Der perfekte Schlemmer-Abend</h2>
+                <p style="color: rgba(255,255,255,0.75);">Ihr könnt euch nicht entscheiden? Kombiniert unsere drei Lieblingsspots einfach zu einer einzigen unvergesslichen Nacht:</p>
+            </div>
+
+            <div class="timeline-wrapper">
+                <div class="timeline-step">
+                    <span class="timeline-time">19:00 Uhr – Sundowner am Hafen</span>
+                    <h3>Aperitif im Republic</h3>
+                    <p>Startet entspannt in der Marina de Dénia, wenn die Sonne hinter dem Berg Montgó versinkt und die Yachten im goldenen Licht glitzern.</p>
+                </div>
+                <div class="timeline-step">
+                    <span class="timeline-time">20:30 Uhr – Tapas-Runde #1</span>
+                    <h3>Pepa Teresa in der Calle Loreto</h3>
+                    <p>Spaziert rüber in die Altstadt und stürzt euch ins bunte Treiben der Loreto-Gasse für die ersten traditionellen Tapas.</p>
+                </div>
+                <div class="timeline-step">
+                    <span class="timeline-time">22:00 Uhr – Ausklang auf dem Platz</span>
+                    <h3>La Sucreria de la Plaça</h3>
+                    <p>Zum krönenden Abschluss noch ein Glas Wein und feine Kleinigkeiten unter freiem Himmel auf der Plaça del Convent genießen.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Schwebende Buttons & Wetter -->
+    <a href="https://wa.me/491733045695" class="whatsapp-button" target="_blank" id="whatsapp-btn">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="#ffffff" d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.8 0-67.6-9.5-97.2-27.2l-6.7-4-71.7 18.7 19.3-68.6-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z" /></svg>
+    </a>
+
+    <button id="scroll-to-top-btn" class="scroll-to-top-button" title="Nach oben scrollen">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M246.6 41.4c-12.5-12.5-32.8-12.5-45.3 0l-160 160c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L224 109.3 361.4 246.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-160-160z" /></svg>
+    </button>
+
+    <div id="weather-overlay">
+        <span id="temperature">--</span>°C
+    </div>
+
+    <script src="script.js" defer></script>
+    <script>
+        function filterSpots(category, btn) {
+            document.querySelectorAll('.vibe-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            document.querySelectorAll('.spot-card').forEach(card => {
+                if (category === 'all' || card.dataset.category.includes(category)) {
+                    card.classList.remove('hidden');
+                } else {
+                    card.classList.add('hidden');
+                }
+            });
+        }
+    </script>
+</body>
+</html>
