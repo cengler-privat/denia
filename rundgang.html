@@ -96,7 +96,6 @@
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25) !important;
         }
 
-        /* Zwingt den Hintergrund der einzelnen Buttons im Container komplett weg */
         .pnlm-controls-container div.pnlm-button {
             background-color: transparent !important;
             background-image: none !important;
@@ -104,7 +103,6 @@
             border: none !important;
         }
 
-        /* Färbt die Icons (Pfeile/Symbole) hell, damit sie auf dem dunklen Glas lesbar sind */
         .pnlm-controls-container .pnlm-button {
             filter: invert(1) grayscale(100%) brightness(200%);
             opacity: 0.7;
@@ -123,7 +121,7 @@
         .pnlm-compass {
             bottom: 20px !important;
             right: 20px !important;
-            z-index: 100 !important; /* Zwingt den Kompass ganz nach vorne */
+            z-index: 100 !important;
             background: rgba(15, 23, 42, 0.45) !important;
             backdrop-filter: blur(10px) !important;
             -webkit-backdrop-filter: blur(10px) !important;
@@ -139,14 +137,14 @@
         }
 
         /* =========================================================
-           🗺️ INTERAKTIVER GRUNDRISS
+           🗺️ INTERAKTIVER GRUNDRISS (3 Spalten, 5 Zeilen)
            ========================================================= */
         .floorplan-card {
             position: absolute;
             top: 18px;
             right: 18px;
             z-index: 30;
-            width: 215px;
+            width: 230px;
             background: rgba(15, 23, 42, 0.75);
             backdrop-filter: blur(14px);
             -webkit-backdrop-filter: blur(14px);
@@ -220,7 +218,7 @@
         .fp-room {
             fill: rgba(255, 255, 255, 0.06);
             stroke: rgba(255, 255, 255, 0.35);
-            stroke-width: 1.8;
+            stroke-width: 1.5;
             cursor: pointer;
             transition: fill 0.25s ease, stroke 0.25s ease;
         }
@@ -233,21 +231,29 @@
         .fp-room.active {
             fill: rgba(245, 158, 11, 0.18);
             stroke: #f59e0b;
-            stroke-width: 2.2;
+            stroke-width: 2;
+        }
+
+        /* Spezieller Stil für Räume ohne interaktive Hotspots (Kabuff & Flur) */
+        .fp-room-static {
+            fill: rgba(255, 255, 255, 0.02);
+            stroke: rgba(255, 255, 255, 0.18);
+            stroke-width: 1.2;
+            cursor: default;
         }
 
         .fp-label {
             fill: rgba(255, 255, 255, 0.78);
             font-family: 'Lato', sans-serif;
-            font-size: 8.5px;
+            font-size: 7.5px;
             font-weight: 700;
             text-anchor: middle;
             pointer-events: none;
         }
 
         .fp-node {
-            fill: rgba(255, 255, 255, 0.85);
-            stroke: #0f172a;
+            fill: #f59e0b;
+            stroke: #ffffff;
             stroke-width: 2;
             cursor: pointer;
             opacity: 0;
@@ -264,7 +270,7 @@
             stroke: #ffffff;
             stroke-width: 2.5;
             opacity: 1; 
-            r: 6.5;
+            r: 5.5;
         }
 
         #radar-group {
@@ -298,12 +304,6 @@
             animation: pulseRing 2s infinite ease-out;
             pointer-events: none;
         }
-
-        @keyframes pulseRing {
-            0% { transform: scale(0.8); opacity: 1; }
-            100% { transform: scale(1.9); opacity: 0; }
-        }
-
 
         @keyframes pulseRing {
             0% { transform: scale(0.8); opacity: 1; }
@@ -370,50 +370,65 @@
 
         <section class="tour-section-container">
             <div class="viewer-stage">
-                <!-- 🗺️ INTERAKTIVER GRUNDRISS -->
+                <!-- 🗺️ INTERAKTIVER GRUNDRISS (3 Spalten, 5 Zeilen) -->
                 <div class="floorplan-card" id="floorplanCard">
                     <div class="floorplan-header">
                         <span>🗺️ Grundriss</span>
                         <button class="fp-toggle-btn" onclick="toggleFloorplan()" title="Grundriss ein-/ausklappen">−</button>
                     </div>
 
-                    <svg class="floorplan-svg" viewBox="0 0 220 245">
+                    <!-- SVG angepasst auf ein exaktes 3-Spalten / 5-Zeilen-Raster -->
+                    <svg class="floorplan-svg" viewBox="0 0 220 250">
                         <defs>
-                            <radialGradient id="radarBeamGrad" cx="0" cy="0" r="65" gradientUnits="userSpaceOnUse">
+                            <radialGradient id="radarBeamGrad" cx="0" cy="0" r="55" gradientUnits="userSpaceOnUse">
                                 <stop offset="0%" stop-color="#f59e0b" stop-opacity="0.8"/>
                                 <stop offset="65%" stop-color="#f59e0b" stop-opacity="0.25"/>
                                 <stop offset="100%" stop-color="#f59e0b" stop-opacity="0.0"/>
                             </radialGradient>
                         </defs>
 
-                        <rect id="room-rueckseite" class="fp-room" x="15" y="10" width="190" height="36" rx="6" onclick="loadRoom('rueckseite')" />
-                        <text x="110" y="31" class="fp-label">Wohnungseingang</text>
+                        <!-- ZEILE 1: Spalte 1 bis 3 -> Wohnungseingang (Rückseite) -->
+                        <rect id="room-rueckseite" class="fp-room" x="15" y="10" width="190" height="32" rx="5" onclick="loadRoom('rueckseite')" />
+                        <text x="110" y="28" class="fp-label">Wohnungseingang</text>
 
-                        <rect id="room-bad" class="fp-room" x="15" y="52" width="50" height="127" rx="4" onclick="loadRoom('bad')" />
-                        <text x="40" y="118" class="fp-label">Bad</text>
+                        <!-- ZEILE 2: Spalte 1 (Bad), Spalte 2 (Flur - ohne Bild), Spalte 3 (Kabuff - ohne Bild) -->
+                        <rect class="fp-room" x="15" y="46" width="60" height="38" rx="4" onclick="loadRoom('bad')" />
+                        <text x="45" y="68" class="fp-label">Bad</text>
 
-                        <rect id="room-wohnzimmer" class="fp-room" x="69" y="52" width="82" height="127" rx="4" onclick="loadRoom('wohnzimmer')" />
-                        <text x="110" y="118" class="fp-label">Wohnzimmer</text>
+                        <rect class="fp-room-static" x="79" y="46" width="62" height="38" rx="4" />
+                        <text x="110" y="68" class="fp-label" fill="rgba(255,255,255,0.4)">Flur</text>
 
-                        <rect id="room-schlafzimmer" class="fp-room" x="155" y="52" width="50" height="62" rx="4" onclick="loadRoom('schlafzimmer')" />
-                        <text x="180" y="85" class="fp-label">Schlafz.</text>
+                        <rect class="fp-room-static" x="145" y="46" width="60" height="38" rx="4" />
+                        <text x="175" y="68" class="fp-label" fill="rgba(255,255,255,0.4)">Kabuff</text>
 
-                        <rect id="room-kinderzimmer" class="fp-room" x="155" y="118" width="50" height="61" rx="4" onclick="loadRoom('kinderzimmer')" />
-                        <text x="180" y="152" class="fp-label">Kinderz.</text>
+                        <!-- ZEILE 3 & 4, Spalte 1 bis 2: Wohnzimmer (spannt über Zeile 3 & 4) -->
+                        <rect id="room-wohnzimmer" class="fp-room" x="15" y="88" width="126" height="82" rx="4" onclick="loadRoom('wohnzimmer')" />
+                        <text x="78" y="132" class="fp-label">Wohnzimmer</text>
 
-                        <rect id="room-terrasse" class="fp-room active" x="15" y="185" width="190" height="48" rx="6" onclick="loadRoom('terrasse')" />
-                        <text x="110" y="224" class="fp-label">Sonnent≤errasse</text>
+                        <!-- ZEILE 3, Spalte 3: Kinderzimmer -->
+                        <rect id="room-kinderzimmer" class="fp-room" x="145" y="88" width="60" height="38" rx="4" onclick="loadRoom('kinderzimmer')" />
+                        <text x="175" y="110" class="fp-label">Kinderzimmer</text>
 
-                        <g id="radar-group" transform="translate(110, 205)">
-                            <path id="radar-cone" d="M 0,0 L -32,-52 A 60,60 0 0,1 32,-52 Z" fill="url(#radarBeamGrad)" stroke="rgba(245, 158, 11, 0.5)" stroke-width="1" />
+                        <!-- ZEILE 4, Spalte 3: Schlafzimmer -->
+                        <rect id="room-schlafzimmer" class="fp-room" x="145" y="132" width="60" height="38" rx="4" onclick="loadRoom('schlafzimmer')" />
+                        <text x="175" y="154" class="fp-label">Schlafzimmer</text>
+
+                        <!-- ZEILE 5, Spalte 1 bis 3: Sonnenterrasse -->
+                        <rect id="room-terrasse" class="fp-room active" x="15" y="174" width="190" height="42" rx="5" onclick="loadRoom('terrasse')" />
+                        <text x="110" y="198" class="fp-label">Sonnenterrasse</text>
+
+                        <!-- 📡 BLICKRICHTUNGS-RADAR -->
+                        <g id="radar-group" transform="translate(110, 195)">
+                            <path id="radar-cone" d="M 0,0 L -30,-48 A 55,55 0 0,1 30,-48 Z" fill="url(#radarBeamGrad)" stroke="rgba(245, 158, 11, 0.5)" stroke-width="1" />
                         </g>
 
-                        <circle id="node-rueckseite" class="fp-node" cx="110" cy="28" r="5" onclick="loadRoom('rueckseite')"><title>Rückseite</title></circle>
-                        <circle id="node-bad" class="fp-node" cx="40" cy="115" r="5" onclick="loadRoom('bad')"><title>Bad</title></circle>
-                        <circle id="node-wohnzimmer" class="fp-node" cx="110" cy="115" r="5" onclick="loadRoom('wohnzimmer')"><title>Wohnzimmer</title></circle>
-                        <circle id="node-schlafzimmer" class="fp-node" cx="180" cy="83" r="5" onclick="loadRoom('schlafzimmer')"><title>Schlafzimmer</title></circle>
-                        <circle id="node-kinderzimmer" class="fp-node" cx="180" cy="148" r="5" onclick="loadRoom('kinderzimmer')"><title>Kinderzimmer</title></circle>
-                        <circle id="node-terrasse" class="fp-node active" cx="110" cy="205" r="6" onclick="loadRoom('terrasse')"><title>Terrasse</title></circle>
+                        <!-- 📍 STANDORT-PUNKTE (Nur für Räume mit echtem Panorama) -->
+                        <circle id="node-rueckseite" class="fp-node" cx="110" cy="26" r="5" onclick="loadRoom('rueckseite')"><title>Wohnungseingang</title></circle>
+                        <circle id="node-bad" class="fp-node" cx="45" cy="65" r="5" onclick="loadRoom('bad')"><title>Bad</title></circle>
+                        <circle id="node-wohnzimmer" class="fp-node" cx="78" cy="129" r="5" onclick="loadRoom('wohnzimmer')"><title>Wohnzimmer</title></circle>
+                        <circle id="node-kinderzimmer" class="fp-node" cx="175" cy="107" r="5" onclick="loadRoom('kinderzimmer')"><title>Kinderzimmer</title></circle>
+                        <circle id="node-schlafzimmer" class="fp-node" cx="175" cy="151" r="5" onclick="loadRoom('schlafzimmer')"><title>Schlafzimmer</title></circle>
+                        <circle id="node-terrasse" class="fp-node active" cx="110" cy="195" r="5" onclick="loadRoom('terrasse')"><title>Sonnenterrasse</title></circle>
                     </svg>
                 </div>
 
@@ -439,13 +454,14 @@
     <script>
         const isMobilePortrait = window.innerWidth <= 768 && window.innerHeight > window.innerWidth;
 
+        // Angepasste Radar-Zentren für das neue Layout
         const floorplanNodes = {
-            "terrasse":     { x: 110, y: 205, offset: 180 },
-            "wohnzimmer":   { x: 110, y: 115, offset: 0 },
-            "schlafzimmer": { x: 180, y: 83,  offset: -90 },
-            "kinderzimmer": { x: 180, y: 148, offset: -90 },
-            "bad":          { x: 40,  y: 115, offset: 90 },
-            "rueckseite":   { x: 110, y: 28,  offset: 0 }
+            "terrasse":     { x: 110, y: 195, offset: 180 },
+            "wohnzimmer":   { x: 78,  y: 129, offset: 0 },
+            "schlafzimmer": { x: 175, y: 151, offset: -90 },
+            "kinderzimmer": { x: 175, y: 107, offset: -90 },
+            "bad":          { x: 45,  y: 65,  offset: 90 },
+            "rueckseite":   { x: 110, y: 26,  offset: 0 }
         };
 
         const myViewer = pannellum.viewer('panorama', {
@@ -530,6 +546,8 @@
                     "title": "Schlafzimmer",
                     "type": "equirectangular",
                     "panorama": "images/rundgang_schlafzimmer.jpg",
+                    "pitch": 2.79,
+                    "yaw": 168.92,
                     "hotSpots": [
                         {
                             "pitch": 1.06,
@@ -546,6 +564,8 @@
                     "title": "Kinderzimmer",
                     "type": "equirectangular",
                     "panorama": "images/rundgang_kinderzimmer.jpg",
+                    "pitch": -2.94,
+                    "yaw": 87.85,
                     "hotSpots": [
                         {
                             "pitch": -3.34,
@@ -565,8 +585,8 @@
                     "yaw": 161,
                     "hotSpots": [
                         {
-                            "pitch": -19,
-                            "yaw": -178,
+                            "pitch": -12.69,
+                            "yaw": 131.86,
                             "type": "scene",
                             "text": "Zurück ins Wohnzimmer",
                             "sceneId": "wohnzimmer",
@@ -625,7 +645,7 @@
             const angle = yaw + (node.offset || 0);
             radarGroup.setAttribute('transform', `translate(${node.x}, ${node.y}) rotate(${angle})`);
 
-            const radius = 58;
+            const radius = 55;
             const halfAngleRad = (Math.min(Math.max(hfov, 40), 120) / 2) * (Math.PI / 180);
             const xSpread = (Math.sin(halfAngleRad) * radius).toFixed(1);
             const ySpread = (-Math.cos(halfAngleRad) * radius).toFixed(1);
