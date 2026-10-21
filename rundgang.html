@@ -96,18 +96,20 @@
 
         .pnlm-button {
             background-color: transparent !important;
+            background-image: none !important; /* Entfernt den harten Standard-Hintergrund */
             opacity: 0.75;
             transition: opacity 0.2s, background-color 0.2s;
         }
 
         .pnlm-button:hover {
             opacity: 1;
-            background-color: rgba(255, 255, 255, 0.12) !important;
+            background-color: rgba(255, 255, 255, 0.15) !important;
         }
 
         .pnlm-compass {
             bottom: 20px !important;
             right: 20px !important;
+            z-index: 100 !important; /* Zwingt den Kompass ganz nach vorne */
             background: rgba(15, 23, 42, 0.45) !important;
             backdrop-filter: blur(10px) !important;
             -webkit-backdrop-filter: blur(10px) !important;
@@ -363,7 +365,7 @@
                         </defs>
 
                         <rect id="room-rueckseite" class="fp-room" x="15" y="10" width="190" height="36" rx="6" onclick="loadRoom('rueckseite')" />
-                        <text x="110" y="31" class="fp-label">Rückseite (West)</text>
+                        <text x="110" y="31" class="fp-label">Wohnungseingang</text>
 
                         <rect id="room-bad" class="fp-room" x="15" y="52" width="50" height="127" rx="4" onclick="loadRoom('bad')" />
                         <text x="40" y="118" class="fp-label">Bad</text>
@@ -378,7 +380,7 @@
                         <text x="180" y="152" class="fp-label">Kinderz.</text>
 
                         <rect id="room-terrasse" class="fp-room active" x="15" y="185" width="190" height="48" rx="6" onclick="loadRoom('terrasse')" />
-                        <text x="110" y="224" class="fp-label">Sonnenterrasse</text>
+                        <text x="110" y="224" class="fp-label">Sonnent≤errasse</text>
 
                         <g id="radar-group" transform="translate(110, 205)">
                             <path id="radar-cone" d="M 0,0 L -32,-52 A 60,60 0 0,1 32,-52 Z" fill="url(#radarBeamGrad)" stroke="rgba(245, 158, 11, 0.5)" stroke-width="1" />
@@ -444,20 +446,13 @@
                     "panorama": "images/rundgang_terrasse.jpg",
                     "hotSpots": [
                         {
-                            "pitch": -1.27,
-                            "yaw": 170.62,
+                            "pitch": -18.73,
+                            "yaw": 133.49,
                             "type": "scene",
                             "text": "Ins Wohnzimmer",
                             "sceneId": "wohnzimmer",
                             "cssClass": "custom-hotspot pulse-effect"
                         },     
-                        {
-                            "pitch": -6,
-                            "yaw": -140,
-                            "type": "scene",
-                            "text": "Ins Wohnzimmer gehen",
-                            "sceneId": "wohnzimmer"
-                        }
                     ]
                 },
 
@@ -467,32 +462,44 @@
                     "panorama": "images/rundgang_wohnzimmer.jpg",
                     "hotSpots": [
                         {
-                            "pitch": 0,
-                            "yaw": 0,
+                            "pitch": -0.82,
+                            "yaw": 47.16,
                             "type": "scene",
                             "text": "Zurück zur Terrasse",
-                            "sceneId": "terrasse"
+                            "sceneId": "terrasse",
+                            "cssClass": "custom-hotspot pulse-effect"
                         },
                         {
                             "pitch": -3.8,
                             "yaw": -30,
                             "type": "scene",
                             "text": "Zum Schlafzimmer",
-                            "sceneId": "schlafzimmer"
+                            "sceneId": "schlafzimmer",
+                            "cssClass": "custom-hotspot pulse-effect"
                         },
                         {
                             "pitch": 1.10,
                             "yaw": -87,
                             "type": "scene",
                             "text": "Zum Kinderzimmer",
-                            "sceneId": "kinderzimmer"
+                            "sceneId": "kinderzimmer",
+                            "cssClass": "custom-hotspot pulse-effect"
                         },
                         {
                             "pitch": 1.5,
                             "yaw": -101,
                             "type": "scene",
+                            "text": "Zum Wohnungseingang",
+                            "sceneId": "rueckseite",
+                            "cssClass": "custom-hotspot pulse-effect"
+                        },
+                        {
+                            "pitch": 2.33,
+                            "yaw": -129.42,
+                            "type": "scene",
                             "text": "Zum Bad",
-                            "sceneId": "bad"
+                            "sceneId": "bad",
+                            "cssClass": "custom-hotspot pulse-effect"
                         }
                     ]
                 },
@@ -507,7 +514,8 @@
                             "yaw": -154,
                             "type": "scene",
                             "text": "Zurück ins Wohnzimmer",
-                            "sceneId": "wohnzimmer"
+                            "sceneId": "wohnzimmer",
+                            "cssClass": "custom-hotspot pulse-effect"
                         }
                     ]
                 },
@@ -518,15 +526,15 @@
                     "panorama": "images/rundgang_kinderzimmer.jpg",
                     "hotSpots": [
                         {
-                            "pitch": 6.7,
-                            "yaw": -163,
+                            "pitch": -3.34,
+                            "yaw": 110.62,
                             "type": "scene",
                             "text": "Zurück ins Wohnzimmer",
-                            "sceneId": "wohnzimmer"
+                            "sceneId": "wohnzimmer",
+                            "cssClass": "custom-hotspot pulse-effect"
                         }
                     ]
                 },
-
                 "bad": {
                     "title": "Bad",
                     "type": "equirectangular",
@@ -539,7 +547,8 @@
                             "yaw": -178,
                             "type": "scene",
                             "text": "Zurück ins Wohnzimmer",
-                            "sceneId": "wohnzimmer"
+                            "sceneId": "wohnzimmer",
+                            "cssClass": "custom-hotspot pulse-effect"
                         }
                     ]
                 },
@@ -547,14 +556,15 @@
                 "rueckseite": {
                     "title": "Rückseite",
                     "type": "equirectangular",
-                    "panorama": "images/rundgang_terrasse_west.jpg",
+                    "panorama": "images/rundgang_terrasse_west_abends.jpg",
                     "hotSpots": [
                         {
-                            "pitch": 0,
-                            "yaw": 0,
+                            "pitch": -9.37,
+                            "yaw": 139.61,
                             "type": "scene",
-                            "text": "Zurück zur Terrasse",
-                            "sceneId": "terrasse"
+                            "text": "Zurück ins Wohnzimmer",
+                            "sceneId": "wohnzimmer",
+                            "cssClass": "custom-hotspot pulse-effect"
                         }
                     ]
                 }
