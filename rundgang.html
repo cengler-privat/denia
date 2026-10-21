@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>360° Rundgang – Casa Englers y Amigos</title>
 
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
@@ -94,11 +96,23 @@
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25) !important;
         }
 
-        .pnlm-button {
+        /* Zwingt den Hintergrund der einzelnen Buttons im Container komplett weg */
+        .pnlm-controls-container div.pnlm-button {
             background-color: transparent !important;
-            background-image: none !important; /* Entfernt den harten Standard-Hintergrund */
-            opacity: 0.75;
-            transition: opacity 0.2s, background-color 0.2s;
+            background-image: none !important;
+            box-shadow: none !important;
+            border: none !important;
+        }
+
+        /* Färbt die Icons (Pfeile/Symbole) hell, damit sie auf dem dunklen Glas lesbar sind */
+        .pnlm-controls-container .pnlm-button {
+            filter: invert(1) grayscale(100%) brightness(200%);
+            opacity: 0.7;
+            transition: opacity 0.2s;
+        }
+
+        .pnlm-controls-container .pnlm-button:hover {
+            opacity: 1;
         }
 
         .pnlm-button:hover {
