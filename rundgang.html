@@ -250,6 +250,7 @@
             stroke: #0f172a;
             stroke-width: 2;
             cursor: pointer;
+            opacity: 0;
             transition: all 0.25s ease;
         }
 
@@ -262,6 +263,7 @@
             fill: #f59e0b;
             stroke: #ffffff;
             stroke-width: 2.5;
+            opacity: 1; 
             r: 6.5;
         }
 
@@ -271,13 +273,13 @@
         }
 
         .custom-hotspot {
-            height: 30px;
-            width: 30px;
+            height: 20px; 
+            width: 20px;  
             background: rgba(245, 158, 11, 0.95);
-            border: 3px solid #ffffff;
+            border: 2px solid #ffffff; 
             border-radius: 50%;
             cursor: pointer;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.6);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
             transition: transform 0.2s ease, background 0.2s ease;
         }
 
@@ -290,12 +292,18 @@
         .pulse-effect::after {
             content: '';
             position: absolute;
-            top: -7px; left: -7px; right: -7px; bottom: -7px;
+            top: -5px; left: -5px; right: -5px; bottom: -5px;
             border: 2px solid #f59e0b;
             border-radius: 50%;
             animation: pulseRing 2s infinite ease-out;
             pointer-events: none;
         }
+
+        @keyframes pulseRing {
+            0% { transform: scale(0.8); opacity: 1; }
+            100% { transform: scale(1.9); opacity: 0; }
+        }
+
 
         @keyframes pulseRing {
             0% { transform: scale(0.8); opacity: 1; }
