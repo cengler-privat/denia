@@ -4,182 +4,111 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wichtige Informationen zu Eurem Aufenthalt</title>
-    <style>
-    /* Basis-Styling für bessere Lesbarkeit */
-    body {
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-        line-height: 1.6;
-        margin: 0;
-        padding: 0;
-        color: #333;
+    <title>Info-Ordner – Casa Englers y Amigos</title>
 
-        /* NEU: Hintergrundbild hinzufügen */
-        background-image: url('images/meerblick.jpg'); /* Pfad zum Meerblick-Bild */
-        background-size: cover; /* Bild füllt den gesamten Bildschirm */
-        background-position: center center; /* Bild wird zentriert */
-        background-attachment: fixed; /* Hintergrund scrollt nicht mit */
-    }
-
-    main {
-        max-width: 800px;
-        margin: 40px auto;
-        padding: 20px 40px;
-        
-        /* NEU: Leicht transparenter Hintergrund für den Textbereich */
-        background-color: rgba(255, 255, 255, 0.9); /* Weiß mit 90% Deckkraft */
-
-        border-radius: 8px;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.15); /* Etwas stärkerer Schatten für mehr Tiefe */
-    }
-
-    h1, h2, h3 {
-        font-family: 'Playfair Display', serif;
-        color: #1a1a1a;
-    }
-
-    h2 {
-        border-bottom: 2px solid #eee;
-        padding-bottom: 10px;
-        margin-top: 40px;
-    }
-
-    strong {
-        color: #000;
-    }
-
-    .contact-info, .departure-info {
-        background-color: rgba(245, 245, 245, 0.7); /* Ebenfalls leicht transparent */
-        border-left: 4px solid #007bff;
-        padding: 15px 20px;
-        margin: 20px 0;
-        border-radius: 4px;
-    }
-</style>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
+    <!-- Burger-Menü Button (wird immer angezeigt) -->
+    <button class="burger-menu-button" id="burger-menu-btn" title="Menü öffnen">
+        <span class="burger-menu-bar"></span>
+        <span class="burger-menu-bar"></span>
+        <span class="burger-menu-bar"></span>
+    </button>
+    
+    <!-- Hier lädt das JavaScript automatisch die zentralste menu.html -->
+    <div id="menu-container"></div>
+    
+    <section class="hero" style="min-height: 45vh;">
+        <div class="hero-content">
+            <h1>Info-Ordner</h1>
+            <h1>* * * *</h1>
+            <p class="subtitle">Euer digitaler Ratgeber vor Ort</p>
+            <p>Alle wichtigen Details zu eurem Aufenthalt in der Casa</p>
+        </div>
+    </section>
+
     <main>
-        <h1>Liebe Gäste,</h1>
+        <!-- WLAN & Internet -->
+        <section class="content-section bg-light">
+            <div class="text-container" style="max-width: 800px; margin: 0 auto; text-align: left;">
+                <h2>📶 WLAN & Internet</h2>
+                <p>Damit ihr eure Urlaubsbilder sofort mit den Daheimgebliebenen teilen könnt (oder im Homeoffice neidisch machen), haben wir natürlich schnelles Internet vor Ort.</p>
+                <ul class="features">
+                    <li><strong>Netzwerk (SSID):</strong> Casa_Englers_Guest</li>
+                    <li><strong>Passwort:</strong> Findet ihr direkt auf dem Router im Wohnzimmer oder auf dem Infobild im Flur.</li>
+                </ul>
+            </div>
+        </section>
 
-        <p>Wir heißen euch ganz herzlich in unserer Ferienwohnung willkommen und wünschen euch einen schönen Aufenthalt.
-        </p>
-        <p>In diesem Ordner findet ihr einige Informationen rund um die Wohnung, die Anlage Albatros, Dénia und viele
-            Tipps zu Ausflügen und Restaurants.</p>
-
-        <div class="contact-info">
-            <p>Sollten Fragen offen bleiben, versuchen wir gerne, diese telefonisch, per Mail, SMS oder WhatsApp zu
-                beantworten.</p>
-            <p>
-                <strong>Telefon 1:</strong> +49 6227 xxxx<br>
-                <strong>Telefon 2:</strong> +49 173 xx xxx xx<br>
-                <strong>E-Mail:</strong> denia@xenglersx.de
-            </p>
-        </div>
-
-        <p>Einen schönen Aufenthalt und tolle Ferien wünscht euch,<br>Eure Familie Engler</p>
-
-        <h2>Technische Details & Geräte</h2>
-
-        <h3>Strom</h3>
-        <p>Der Sicherungskasten befindet sich im Abstellkämmerchen hinter der Tür.</p>
-
-        <h3>Wasser</h3>
-        <p>Der Wasserhahn (Hebel) ist an der Wand hinter der Waschmaschine. Es ist ein spanisches Patent, man muss den
-            Hebel anheben, drehen und dann auf den kleinen Dorn setzen.</p>
-        <p>Sollte jetzt noch kein Wasser fließen, hat jemand am Hauptwasserhahn hantiert (ab und an gibt es Handwerker
-            in der Anlage und diese stellen zur Sicherheit gerne dem ganzen Block das Wasser ab). Für diesen Fall findet
-            ihr am Hebel einen 3Kant-Schlüssel. Mit diesem 'bewaffnet' müsst ihr hinunter zum Parkplatz. Dort ist links
-            an der Hauswand vor der Nr. 5 ein vergitterter Kasten mit den Hauptwasserhähnen. Der 3Kant-Schlüssel öffnet
-            das Gittertürchen, der oberste Hahn ist unserer, diesen aufdrehen und das Wasser läuft.</p>
-
-        <h3>Kühlschrank</h3>
-        <p>Sobald der Strom am Sicherungskasten angeschaltet ist, nimmt der Kühlschrank seine Arbeit auf. Wenn nicht,
-            müsst ihr den ON-Knopf nochmal extra drücken. Er zeigt jetzt die aktuelle Temperatur an. Bitte beladet ihn
-            nicht sofort mit eurem gesamten Ersteinkauf, sondern stellt nur einen Teil (z.B. ein Getränk) mittig
-            hinein, schließt die Tür und gebt ihm eine Weile Zeit. Nach ca. 1/2 Stunde sollte die Temperatur schon
-            merklich gefallen sein. Bis es richtig kalt ist, hängt natürlich auch ein bisschen von der Außentemperatur
-            ab.</p>
-
-        <h3>Waschmaschine & Geschirrspüler</h3>
-        <p>Leider ist die Steckdose im Abstellraum etwas überfordert. Bitte benutzt deshalb die Waschmaschine und
-            den Geschirrspüler <strong>nicht gleichzeitig</strong>!</p>
-
-        <h2>Ausstattung & Nutzung</h2>
-
-        <h3>Terrassenmöbel</h3>
-        <p>Diese sind bei eurer Anreise eventuell noch in der Wohnung untergestellt. Ihr findet auf der Terrasse
-            bestimmt einen guten Platz dafür.</p>
-
-        <h3>Handtücher</h3>
-        <p>Bitte verwendet die einfarbigen Handtücher nur in der Wohnung.</p>
-
-        <h3>Strandhandtücher</h3>
-        <p>Gerne stellen wir euch auf vorherige Anfrage Strandhandtücher zur Verfügung. Diese sind dann vor eurer
-            Abreise zu waschen und im Kämmerchen aufzuhängen.</p>
-
-        <h3>Liegen und Strandstühle</h3>
-        <p>Im Abstellraum stehen diverse Strandliegen, Stühle und Sonnenschirme.</p>
-
-        <h3>Spielsachen und Schlauchboot</h3>
-        <p>Im Kinderzimmer lagern diverse Strandspielsachen und aufblasbare Wassertiere. Wir müssen nicht darauf
-            hinweisen, dass die Benutzung auf eigene Gefahr erfolgt :-)</p>
-
-        <h3>Lebensmittel und Getränke</h3>
-        <p>Bitte bedient euch an den vorhandenen Lebensmitteln und Gewürzen. So entsteht weniger Verschwendung, als
-            wenn sich jeder Urlauber alles neu kaufen würde. Bitte denkt auch an die Urlauber nach euch, die sich
-            über eine Coca-Cola oder ein Bier bei ihrer Ankunft freuen würden.</p>
-
-        <h3>Grill</h3>
-        <p>Der Elektro-Grill steht im Abstellraum oben auf dem Schrank, bitte verstaut ihn nach der Benutzung
-            gereinigt wieder dort.</p>
-
-        <h2>Anlage Albatros & Umgebung</h2>
-
-        <h3>Müll</h3>
-        <p>Der Müllplatz für die Urbanización Albatros befindet sich an der Ausfahrt. Der Schlüssel dazu hängt am
-            Schlüsselbrett mit einem grünen Etikett und einem Herzanhänger.</p>
-
-        <h3>Fußgänger-Tor</h3>
-        <p><strong>An der Straße:</strong> Auch hierfür benötigt ihr den Schlüssel mit dem grünen Etikett und dem
-            Herzanhänger.</p>
-        <p><strong>Am Strand:</strong> Dieses Tor öffnet sich mit einem wechselnden Zahlencode: <strong>2468A</strong>
-        </p>
-
-        <h2>Allgemeine Hinweise</h2>
-
-        <h3>Wind</h3>
-        <p>Manchmal... ok, meistens weht stark böiger Wind. Aus diesem Grund sind an fast allen Fenstern und an der
-            Haustür Haken und kleine Ösen, um diese zu befestigen und ein Zuschlagen zu verhindern. Bitte lasst an
-            solchen Tagen den Sonnenschirm und/oder die Markise auf der Terrasse nicht offen und unbeaufsichtigt.</p>
-
-        <h3>Reparaturen</h3>
-        <p>Sollte euch während eures Aufenthaltes auffallen, dass etwas defekt ist, lasst es uns bitte umgehend
-            wissen, damit wir es, falls ihr das wünscht, noch während eures Aufenthaltes reparieren lassen können.</p>
-        <p>Jedem geht einmal etwas kaputt. Das ist nicht schlimm! Bitte lasst es uns aber wissen, damit wir zeitnah
-            für Ersatz sorgen können.</p>
-
-        <h2>Abreise</h2>
-        <div class="departure-info">
-            <p>Jeder Urlaub geht leider auch einmal zu Ende, und der Tag der Abreise rückt näher. Aus organisatorischen
-                Gründen kann die Endreinigung nicht immer sofort erfolgen, deshalb haben wir hier ein paar kleine
-                Bitten:</p>
-            <ul>
-                <li>Bitte spült euer Geschirr und entsorgt euren Müll bei Abreise.</li>
-                <li>Bitte schaltet ca. 4 Stunden vor Abreise den Kühlschrank aus, reibt ihn nach dem Abtauen innen
-                    trocken und lasst ihn offenstehen.</li>
-                <li>Bitte schließt alle Fenster und Rollläden.</li>
-                <li>Bitte bringt einen Satz Schlüssel mit Öffner für das Straßentor wieder mit nach Deutschland und
-                    sendet diesen an uns zurück.</li>
+        <!-- Check-In & Check-Out -->
+        <section class="gallery-section bg-dark">
+            <h2>🔑 Check-in & Check-out</h2>
+            <p>Damit alles reibungslos abläuft, hier ein paar kurze Richtzeiten für die Schlüssel- und Wohnungsübergabe:</p>
+            <ul class="features">
+                <li><strong>Anreise (Check-in):</strong> Ab 15:00 Uhr ist die Bude bezugsfertig für euch.</li>
+                <li><strong>Abreise (Check-out):</strong> Bis 11:00 Uhr müsst ihr schweren Herzens die Schlüssel wieder abgeben.</li>
+                <li><strong>Schlüssel-Mission:</strong> Vergesst nicht, den Schlüssel nach eurer Abreise innerhalb von 10 Tagen per Einschreiben an uns zurückzusenden!</li>
             </ul>
-        </div>
+        </section>
 
-        <p>Wir wünschen euch eine gute Heimreise und hoffen, die Erholung hält noch etwas an,<br>mit ganz lieben
-            Grüßen,<br>Eure Familie Engler</p>
+        <!-- Geräte im Haus -->
+        <section class="content-section reverse bg-light">
+            <div class="text-container" style="max-width: 800px; margin: 0 auto; text-align: left;">
+                <h2>⚡ Bedienung der Geräte</h2>
+                <p>Unsere Hexenküche und Haushaltshelfer wollen richtig bedient werden:</p>
+                <ul class="features">
+                    <li><strong>Nespresso-Maschine:</strong> Tank füllen, Kapsel rein, Hebel runter, Espresso genießen. Bitte den Kapselbehälter bei Abreise leeren.</li>
+                    <li><strong>Spülmaschine:</strong> Tabs stehen bereit. Nach dem Spülen die Tür einen Spalt offen lassen.</li>
+                    <li><strong>Waschmaschine (im Bad):</strong> Bitte keine Kochwäsche bei 90 Grad starten – 30 bis 40 Grad reichen völlig für den Sangria-Fleck.</li>
+                    <li><strong>Klimaanlage / Heizung:</strong> Bitte schaltet die Klimaanlage aus, wenn ihr das Apartment verlasst oder die Fenster geöffnet sind. Die Umwelt (und unsere Stromrechnung) danken es euch!</li>
+                </ul>
+            </div>
+        </section>
 
+        <!-- Müll & Pool -->
+        <section class="gallery-section bg-dark">
+            <h2>🗑️ Müllentsorgung & Urbanisation</h2>
+            <p>Ein paar kleine Regeln für ein harmonisches Miteinander in der Anlage:</p>
+            <ul class="features">
+                <li><strong>Müll:</strong> Die Müllcontainer stehen direkt unten an der Zufahrt zur Urbanisation. Bitte trennt Glas und Restmüll ein wenig. Lasst am Abreisetag bitte keinen Biomüll mehr in der Küche stehen.</li>
+                <li><strong>Pool-Regeln:</strong> Die Pools der Urbanisation Albatros stehen euch von morgens bis abends offen. Bitte nehmt Rücksicht auf andere Nachbarn, keine Glasflaschen mit an den Rand nehmen und nach dem Strandbesuch kurz den Sand abduschen.</li>
+            </ul>
+        </section>
+
+        <!-- Kontakt & Notfall -->
+        <section id="trigger-whatsapp" class="content-section bg-light">
+            <div class="text-container" style="max-width: 800px; margin: 0 auto; text-align: left;">
+                <h2>🚨 Notfälle & Wichtige Nummern</h2>
+                <p>Sollte es brennen, das Wasser knapp werden oder ihr den Weincorkenzieher nicht finden:</p>
+                <ul class="features">
+                    <li><strong>Notruf (Spanien gesamt):</strong> 112 (Polizei, Feuerwehr, Rettungsdienst)</li>
+                    <li><strong>Direkter Draht zu uns:</strong> Schreibt uns jederzeit über <a href="https://wa.me/491733045695" target="_blank">WhatsApp</a>. Wir helfen euch sofort weiter!</li>
+                </ul>
+            </div>
+        </section>
     </main>
+    
+    <!-- Schwebende Buttons & Wetter -->
+    <a href="https://wa.me/491733045695" class="whatsapp-button" target="_blank" id="whatsapp-btn">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="#ffffff" d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.8 0-67.6-9.5-97.2-27.2l-6.7-4-71.7 18.7 19.3-68.6-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z" /></svg>
+    </a>
+
+    <button id="scroll-to-top-btn" class="scroll-to-top-button" title="Nach oben scrollen">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M246.6 41.4c-12.5-12.5-32.8-12.5-45.3 0l-160 160c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L224 109.3 361.4 246.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-160-160z" /></svg>
+    </button>
+
+    <div id="weather-overlay">
+        <span id="temperature">--</span>°C
+    </div>
+    
+    <script src="script.js" defer></script>
 
 </body>
-
 </html>

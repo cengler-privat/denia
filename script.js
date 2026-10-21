@@ -6,33 +6,57 @@ document.addEventListener('DOMContentLoaded', () => {
     const selectAll = (selector) => document.querySelectorAll(selector);
 
     // =========================================
+    //   0. Zentrales Menü via Fetch laden
+    // =========================================
+    const menuContainer = select('#menu-container');
+    if (menuContainer) {
+        fetch('menu.html')
+            .then(response => {
+                if (!response.ok) throw new Error('Netzwerkfehler beim Laden des Menüs');
+                return response.text();
+            })
+            .then(data => {
+                menuContainer.innerHTML = data;
+                initBurgerMenu(); // Burger-Logik erst starten, wenn das Menü da ist!
+            })
+            .catch(error => console.error('Fehler beim Laden des Menüs:', error));
+    } else {
+        initBurgerMenu(); // Falls das Menü hartcodiert ist
+    }
+
+    // =========================================
     //   1. Logik für das Burger-Menü & Slide-Panel
     // =========================================
-    const burgerMenuBtn = select('#burger-menu-btn');
-    const mainMenuPanel = select('#main-menu-panel');
+    function initBurgerMenu() {
+        const burgerMenuBtn = select('#burger-menu-btn');
+        const mainMenuPanel = select('#main-menu-panel');
 
-    if (burgerMenuBtn && mainMenuPanel) {
-        burgerMenuBtn.addEventListener('click', (event) => {
-            event.stopPropagation();
-            // Button und Panel gleichzeitig aktivieren/deaktivieren
-            burgerMenuBtn.classList.toggle('is-active');
-            mainMenuPanel.classList.toggle('is-active');
-            
-            // Scrollen der Seite verhindern, wenn Menü aktiv ist
-            const isActive = mainMenuPanel.classList.contains('is-active');
-            document.body.style.overflow = isActive ? 'hidden' : '';
-        });
+        if (burgerMenuBtn && mainMenuPanel) {
+            burgerMenuBtn.addEventListener('click', (event) => {
+                event.stopPropagation();
+                burgerMenuBtn.classList.toggle('is-active');
+                mainMenuPanel.classList.toggle('is-active');
+                
+                const isActive = mainMenuPanel.classList.contains('is-active');
+                document.body.style.overflow = isActive ? 'hidden' : '';
+            });
 
-        document.addEventListener('click', (event) => {
-            const isClickInsideMenu = mainMenuPanel.contains(event.target);
-            const isClickOnTrigger = burgerMenuBtn.contains(event.target);
+            document.addEventListener('click', (event) => {
+                // Prüfen ob Elemente existieren, da Menü dynamisch geladen wird
+                const panel = select('#main-menu-panel');
+                const btn = select('#burger-menu-btn');
+                if (!panel || !btn) return;
 
-            if (mainMenuPanel.classList.contains('is-active') && !isClickInsideMenu && !isClickOnTrigger) {
-                mainMenuPanel.classList.remove('is-active');
-                burgerMenuBtn.classList.remove('is-active'); // Auch Button-Animation zurücksetzen
-                document.body.style.overflow = ''; // Scrollen wieder erlauben
-            }
-        });
+                const isClickInsideMenu = panel.contains(event.target);
+                const isClickOnTrigger = btn.contains(event.target);
+
+                if (panel.classList.contains('is-active') && !isClickInsideMenu && !isClickOnTrigger) {
+                    panel.classList.remove('is-active');
+                    btn.classList.remove('is-active');
+                    document.body.style.overflow = '';
+                }
+            });
+        }
     }
 
     // =========================================
@@ -86,7 +110,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const weatherOverlay = select('#weather-overlay');
     
     if (weatherOverlay) {
-        const apiKey = '55e0ea5d0963adcdb93ec3a43f670a33'; // Ihr API-Schlüssel
+        const apiKey = '55e0ea5d0963adcdb93ec3a43f670a33';
         const city = 'Denia';
         const units = 'metric';
         const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=${units}`;
@@ -117,23 +141,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         getWeatherData();
-        setInterval(getWeatherData, 3600000); // Jede Stunde aktualisieren
+        setInterval(getWeatherData, 3600000);
     }
 });
-
-hotSpots: [
-  {
-    pitch: -5.40,
-    yaw: 112.30,
-    type: "info",
-    text: "Eingangsbereich / Rezeption",
-    cssClass: "custom-hotspot pulse-effect" // Eigene CSS-Klasse
-  },
-  {
-    pitch: 2.10,
-    yaw: -45.00,
-    type: "scene", // Für Rundgänge (Wechsel zum nächsten Raum)
-    text: "Zum Garten gehen",
-    sceneId: "garten"
-  }
-]
