@@ -95,6 +95,10 @@ body {
     transition: all 0.3s ease-in-out;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     opacity: 0;
+    animation: fadeInButton 0.3s ease-out 0.2s both;
+}
+
+body.home-page .burger-menu-button {
     animation: fadeInButton 0.5s ease-out 2.5s both;
 }
 
@@ -134,6 +138,7 @@ body {
     box-sizing: border-box;
     opacity: 0.8;
     z-index: 1050;
+    overflow-y: auto;
     transform: translateX(-105%);
     transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
@@ -378,6 +383,9 @@ ul.features {
     list-style: none;
     padding-left: 0;
     margin-top: 1rem;
+    display: inline-block;
+    text-align: left;
+    max-width: 100%;
 }
 
 ul.features li {
@@ -387,9 +395,12 @@ ul.features li {
 }
 
 ul.features li::before {
-    position: static !important;
-    display: inline-block;
-    margin-right: 10px;
+    content: '✔';
+    position: absolute;
+    left: 0;
+    top: 0;
+    color: var(--color-accent);
+    font-weight: bold;
 }
 
 
@@ -493,6 +504,10 @@ ul.features li::before {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     cursor: pointer;
     transition: background-color 0.3s ease;
+    animation: fadeInButton 0.3s ease-out 0.2s both;
+}
+
+body.home-page #weather-overlay {
     animation: fadeInButton 0.5s ease-out 2.5s both;
 }
 

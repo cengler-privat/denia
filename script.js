@@ -117,6 +117,13 @@ document.addEventListener('DOMContentLoaded', () => {
         const weatherDetailsUrl = 'https://www.meteoblue.com/de/wetter/woche/denia_spanien_2518878';
 
         const temperatureSpan = select('#temperature');
+        const WEATHER_CACHE_KEY = 'denia_weather_cache';
+        const WEATHER_CACHE_TTL = 15 * 60 * 1000; // 15 Minuten
+
+        const showTemperature = (temp) => {
+            temperatureSpan.textContent = temp;
+            weatherOverlay.style.display = 'block';
+        };
 
         const getWeatherData = async () => {
             try {
@@ -125,9 +132,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 
                 const data = await response.json();
 
-                if (data?.main?.temp) {
-                    temperatureSpan.textContent = data.main.temp.toFixed(0);
-                    weatherOverlay.style.display = 'block';
+                if (data?.main?.temp !== undefined) {
+                    const tempStr = data.main.temp.toFixed(0);
+                    showTemperature(tempStr);
+                    try {
+                        sessionStorage.setItem(WEATHER_CACHE_KEY, JSON.stringify({
+                            temp: tempStr,
+                            timestamp: Date.now()
+                        }));
+                    } catch (_) {}
                 } else {
                     throw new Error('Temperaturdaten nicht im API-Response gefunden.');
                 }
@@ -140,7 +153,21 @@ document.addEventListener('DOMContentLoaded', () => {
             window.open(weatherDetailsUrl, '_blank');
         });
 
-        getWeatherData();
+        let hasFreshCache = false;
+        try {
+            const cachedRaw = sessionStorage.getItem(WEATHER_CACHE_KEY);
+            if (cachedRaw) {
+                const cached = JSON.parse(cachedRaw);
+                if (cached?.temp !== undefined && (Date.now() - cached.timestamp) < WEATHER_CACHE_TTL) {
+                    showTemperature(cached.temp);
+                    hasFreshCache = true;
+                }
+            }
+        } catch (_) {}
+
+        if (!hasFreshCache) {
+            getWeatherData();
+        }
         setInterval(getWeatherData, 3600000);
     }
 });
