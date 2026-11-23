@@ -546,24 +546,39 @@
             background: rgba(255, 255, 255, 0.04);
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .control-row {
+            display: flex;
             flex-wrap: wrap;
             align-items: center;
             justify-content: space-between;
-            gap: 12px;
+            gap: 10px;
         }
 
         .control-group {
             display: flex;
             flex-wrap: wrap;
             align-items: center;
-            gap: 8px;
+            gap: 7px;
+        }
+
+        .control-label {
+            font-size: 11.5px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: rgba(255, 255, 255, 0.6);
+            font-weight: 700;
+            margin-right: 2px;
         }
 
         .modal-pill {
             background: rgba(255, 255, 255, 0.1);
             border: 1px solid rgba(255, 255, 255, 0.16);
             color: rgba(255, 255, 255, 0.9);
-            padding: 6px 13px;
+            padding: 6px 12px;
             border-radius: 20px;
             font-family: 'Lato', sans-serif;
             font-size: 12.5px;
@@ -582,14 +597,159 @@
             border-color: #f59e0b;
         }
 
-        .date-display-badge {
-            background: rgba(245, 158, 11, 0.15);
-            border: 1px solid rgba(245, 158, 11, 0.4);
-            color: #fde68a;
-            padding: 6px 12px;
+        .modal-pill.dest-pill.active {
+            background: #38bdf8;
+            color: #0f172a;
+            border-color: #38bdf8;
+        }
+
+        .modal-date-input,
+        .modal-select {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.22);
+            color: #ffffff;
+            padding: 6px 10px;
             border-radius: 10px;
+            font-family: 'Lato', sans-serif;
             font-size: 13px;
             font-weight: 700;
+            color-scheme: dark;
+        }
+
+        .modal-select option {
+            background: #0f172a;
+            color: #ffffff;
+        }
+
+        .modal-check {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 12.5px;
+            color: rgba(255, 255, 255, 0.88);
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .modal-check input {
+            accent-color: #f59e0b;
+            width: 15px;
+            height: 15px;
+        }
+
+        .baggage-badge {
+            background: rgba(34, 197, 94, 0.16);
+            border: 1px solid rgba(34, 197, 94, 0.4);
+            color: #86efac;
+            padding: 5px 11px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .modal-search-btn {
+            background: #f59e0b;
+            color: #0f172a;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 12px;
+            font-family: 'Lato', sans-serif;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background 0.2s ease;
+        }
+
+        .modal-search-btn:hover {
+            background: #fbbf24;
+        }
+
+        .combo-banner {
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.18), rgba(56, 189, 248, 0.14));
+            border: 1px solid rgba(245, 158, 11, 0.35);
+            border-radius: 14px;
+            padding: 13px 16px;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+        }
+
+        .combo-banner strong {
+            color: #fde68a;
+            display: block;
+            font-size: 0.95rem;
+        }
+
+        .combo-banner small {
+            color: rgba(255, 255, 255, 0.78);
+            font-size: 0.82rem;
+        }
+
+        .live-status-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            font-size: 0.84rem;
+            color: rgba(255, 255, 255, 0.78);
+            padding: 4px 2px;
+        }
+
+        .live-back-btn {
+            background: rgba(255, 255, 255, 0.12);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #ffffff;
+            padding: 5px 12px;
+            border-radius: 10px;
+            font-size: 12.5px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .live-back-btn:hover {
+            background: rgba(255, 255, 255, 0.22);
+        }
+
+        .airline-logo-mini {
+            width: 26px;
+            height: 26px;
+            border-radius: 6px;
+            background: #ffffff;
+            padding: 2px;
+            object-fit: contain;
+            flex-shrink: 0;
+        }
+
+        .fare-main-flex {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .fare-link.airline-btn {
+            background: rgba(56, 189, 248, 0.18);
+            color: #7dd3fc;
+            border: 1px solid rgba(56, 189, 248, 0.35);
+        }
+
+        .fare-link.airline-btn:hover {
+            background: #38bdf8;
+            color: #0f172a;
+        }
+
+        .fare-link.book-btn {
+            border: none;
+            cursor: pointer;
+            font-family: 'Lato', sans-serif;
+        }
+
+        .loading-box {
+            text-align: center;
+            padding: 32px 16px;
+            color: rgba(255, 255, 255, 0.85);
+            font-size: 0.95rem;
         }
 
         .price-modal-body {
@@ -907,36 +1067,71 @@
         </section>
     </main>
 
-    <!-- 💶 PREISÜBERSICHT OVERLAY -->
+    <!-- 💶 FLUGSUCHE & PREISÜBERSICHT OVERLAY -->
     <div class="price-modal-backdrop" id="priceModalBackdrop" role="dialog" aria-modal="true" aria-labelledby="priceModalTitle">
         <div class="price-modal" onclick="event.stopPropagation()">
             <div class="price-modal-header">
                 <div>
-                    <span class="eyebrow">Flugpreis-Überblick · 1 Woche Dénia</span>
-                    <h2 id="priceModalTitle">Kommendes Wochenende (+ 7 Tage Rückflug)</h2>
+                    <span class="eyebrow">Flugsuche &amp; Preisvergleich · immer inkl. 1 Handgepäck</span>
+                    <h2 id="priceModalTitle">Günstigste Flüge nach Dénia finden</h2>
                 </div>
                 <button type="button" class="price-modal-close" onclick="closePriceModal()" aria-label="Preisübersicht schließen">✕</button>
             </div>
 
             <div class="price-modal-controls">
-                <div class="control-group" id="modalOriginFilters">
-                    <button type="button" class="modal-pill active" data-origin="ALL" onclick="filterModalOrigin('ALL')">Alle</button>
-                    <button type="button" class="modal-pill" data-origin="FRA" onclick="filterModalOrigin('FRA')">Frankfurt (FRA)</button>
-                    <button type="button" class="modal-pill" data-origin="STR" onclick="filterModalOrigin('STR')">Stuttgart (STR)</button>
-                    <button type="button" class="modal-pill" data-origin="FKB" onclick="filterModalOrigin('FKB')">Baden-Airpark (FKB)</button>
+                <!-- Zeile 1: Zeitraum -->
+                <div class="control-row">
+                    <div class="control-group">
+                        <span class="control-label">Zeitraum:</span>
+                        <input type="date" id="flightOutDate" class="modal-date-input" aria-label="Hinflug-Datum" onchange="onFlightDateChange()">
+                        <span style="color: rgba(255,255,255,0.6);">→</span>
+                        <input type="date" id="flightRetDate" class="modal-date-input" aria-label="Rückflug-Datum" onchange="onFlightDateChange()">
+                    </div>
+                    <div class="control-group">
+                        <button type="button" class="modal-pill active" id="btnPresetSat" onclick="applyDatePreset('sat')">Kommendes WE (Sa→Sa)</button>
+                        <button type="button" class="modal-pill" id="btnPresetFri" onclick="applyDatePreset('fri')">Fr→Fr</button>
+                        <button type="button" class="modal-pill" id="btnPreset14" onclick="applyDatePreset('14d')">+14 Tage</button>
+                    </div>
                 </div>
 
-                <div class="control-group">
-                    <button type="button" class="modal-pill active" id="btnDaySat" onclick="setWeekendMode('sat')">Sa → Sa</button>
-                    <button type="button" class="modal-pill" id="btnDayFri" onclick="setWeekendMode('fri')">Fr → Fr</button>
-                    <span class="date-display-badge" id="modalDateRange">-- → --</span>
+                <!-- Zeile 2: Flughafen-Kombi -->
+                <div class="control-row">
+                    <div class="control-group" id="modalOriginFilters">
+                        <span class="control-label">Abflug:</span>
+                        <button type="button" class="modal-pill active" data-origin="FRA" onclick="toggleOriginAirport('FRA')">Frankfurt (FRA)</button>
+                        <button type="button" class="modal-pill active" data-origin="STR" onclick="toggleOriginAirport('STR')">Stuttgart (STR)</button>
+                        <button type="button" class="modal-pill active" data-origin="FKB" onclick="toggleOriginAirport('FKB')">Baden-Airpark (FKB)</button>
+                    </div>
+                    <div class="control-group" id="modalDestFilters">
+                        <span class="control-label">Ziel:</span>
+                        <button type="button" class="modal-pill dest-pill active" data-dest="ALC" onclick="toggleDestAirport('ALC')">Alicante (ALC)</button>
+                        <button type="button" class="modal-pill dest-pill active" data-dest="VLC" onclick="toggleDestAirport('VLC')">Valencia (VLC)</button>
+                    </div>
+                </div>
+
+                <!-- Zeile 3: Optionen & Such-Button -->
+                <div class="control-row">
+                    <div class="control-group">
+                        <select id="flightAdults" class="modal-select" aria-label="Passagiere" onchange="runFlightSearch()">
+                            <option value="1" selected>1 Person</option>
+                            <option value="2">2 Personen</option>
+                            <option value="3">3 Personen</option>
+                            <option value="4">4 Personen</option>
+                        </select>
+                        <label class="modal-check">
+                            <input type="checkbox" id="flightNonstop" checked onchange="runFlightSearch()">
+                            <span>Nur Direktflüge</span>
+                        </label>
+                        <span class="baggage-badge">🧳 inkl. 1 Handgepäck p. P.</span>
+                    </div>
+                    <button type="button" class="modal-search-btn" onclick="runFlightSearch()">🔍 Günstigste suchen</button>
                 </div>
             </div>
 
             <div class="price-modal-body" id="fareListContainer"></div>
 
-            <div class="price-modal-footer">
-                Hinweis: Angegebene Beträge sind typische Richtwerte für Hin- &amp; Rückflug (Handgepäck). Ein Klick auf <strong>Google Flights</strong> oder <strong>Skyscanner</strong> öffnet sofort die tagesaktuellen Live-Preise für genau das gewählte Wochenende.
+            <div class="price-modal-footer" id="priceModalFooter">
+                Alle Suchlinks enthalten automatisch den Filter <strong>inkl. 1 Handgepäck</strong> und sind nach dem günstigsten Preis sortiert.
             </div>
         </div>
     </div>
@@ -956,30 +1151,37 @@
     <script src="script.js" defer></script>
     <script>
         // =========================================
-        //   1. Dynamisches kommendes Wochenende (+7 Tage) & Preis-Overlay
+        //   1. Zeitraum-Flugsuche, Live-Worker (SerpApi) & Anbieter-Links
         // =========================================
+        // Trage hier deine Cloudflare-Worker-URL ein (siehe cloudflare-worker/README.md),
+        // z. B. 'https://denia-flights.deinname.workers.dev' -> aktiviert echte Live-Preise!
+        const FLIGHT_WORKER_URL = 'https://denia-flights.cf-5a7.workers.dev';
+
         const FLIGHT_ROUTES = [
-            { origin: 'FKB', originName: 'Baden-Airpark', dest: 'VLC', destName: 'Valencia', airline: 'Ryanair (Direkt)', duration: 'ca. 2h 10m', estimate: 'ca. 55–150 €' },
-            { origin: 'FKB', originName: 'Baden-Airpark', dest: 'ALC', destName: 'Alicante', airline: 'Ryanair (Direkt)', duration: 'ca. 2h 20m', estimate: 'ca. 60–160 €' },
-            { origin: 'STR', originName: 'Stuttgart',     dest: 'VLC', destName: 'Valencia', airline: 'Eurowings (Direkt)', duration: 'ca. 2h 10m', estimate: 'ca. 100–210 €' },
-            { origin: 'STR', originName: 'Stuttgart',     dest: 'ALC', destName: 'Alicante', airline: 'Eurowings (Direkt)', duration: 'ca. 2h 25m', estimate: 'ca. 110–230 €' },
-            { origin: 'FRA', originName: 'Frankfurt',     dest: 'VLC', destName: 'Valencia', airline: 'Lufthansa (Direkt)', duration: 'ca. 2h 20m', estimate: 'ca. 120–240 €' },
-            { origin: 'FRA', originName: 'Frankfurt',     dest: 'ALC', destName: 'Alicante', airline: 'Lufthansa (Direkt)', duration: 'ca. 2h 30m', estimate: 'ca. 130–260 €' }
+            { origin: 'FKB', originName: 'Baden-Airpark', dest: 'VLC', destName: 'Valencia', airline: 'Ryanair',    airlineType: 'ryanair',   duration: 'ca. 2h 10m', estimate: 'ca. 85–180 €',  minVal: 85 },
+            { origin: 'FKB', originName: 'Baden-Airpark', dest: 'ALC', destName: 'Alicante', airline: 'Ryanair',    airlineType: 'ryanair',   duration: 'ca. 2h 20m', estimate: 'ca. 90–190 €',  minVal: 90 },
+            { origin: 'STR', originName: 'Stuttgart',     dest: 'VLC', destName: 'Valencia', airline: 'Eurowings',  airlineType: 'eurowings', duration: 'ca. 2h 10m', estimate: 'ca. 120–230 €', minVal: 120 },
+            { origin: 'STR', originName: 'Stuttgart',     dest: 'ALC', destName: 'Alicante', airline: 'Eurowings',  airlineType: 'eurowings', duration: 'ca. 2h 25m', estimate: 'ca. 130–250 €', minVal: 130 },
+            { origin: 'FRA', originName: 'Frankfurt',     dest: 'VLC', destName: 'Valencia', airline: 'Lufthansa',  airlineType: 'lufthansa', duration: 'ca. 2h 20m', estimate: 'ca. 135–260 €', minVal: 135 },
+            { origin: 'FRA', originName: 'Frankfurt',     dest: 'ALC', destName: 'Alicante', airline: 'Lufthansa',  airlineType: 'lufthansa', duration: 'ca. 2h 30m', estimate: 'ca. 145–280 €', minVal: 145 }
         ];
 
-        let currentOriginFilter = 'ALL';
-        let currentWeekendMode = 'sat'; // 'sat' (Sa->Sa) oder 'fri' (Fr->Fr)
+        let selectedOrigins = new Set(['FRA', 'STR', 'FKB']);
+        let selectedDests = new Set(['ALC', 'VLC']);
+        let lastLiveFlights = [];
+        let lastLiveGoogleUrl = null;
+        let selectedOutboundFlight = null;
 
         function getUpcomingWeekendDates(mode) {
             const targetDow = mode === 'fri' ? 5 : 6; // 5 = Fr, 6 = Sa
             const now = new Date();
             const depart = new Date(now.getFullYear(), now.getMonth(), now.getDate());
             let diff = (targetDow - depart.getDay() + 7) % 7;
-            if (diff === 0) diff = 7; // Falls heute schon Fr/Sa ist, nächstes Wochenende wählen
+            if (diff === 0) diff = 7;
             depart.setDate(depart.getDate() + diff);
 
             const ret = new Date(depart);
-            ret.setDate(ret.getDate() + 7);
+            ret.setDate(ret.getDate() + (mode === '14d' ? 14 : 7));
             return { depart, ret };
         }
 
@@ -990,54 +1192,388 @@
             return `${y}-${m}-${day}`;
         }
 
-        function fmtSky(d) {
-            return fmtISO(d).replace(/-/g, '').slice(2); // YYMMDD
-        }
-
         function fmtDE(d) {
             const days = ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa'];
             return `${days[d.getDay()]}, ${String(d.getDate()).padStart(2, '0')}.${String(d.getMonth() + 1).padStart(2, '0')}.`;
         }
 
-        function renderFareOverlay() {
-            const { depart, ret } = getUpcomingWeekendDates(currentWeekendMode);
-            const depIso = fmtISO(depart);
-            const retIso = fmtISO(ret);
-            const depSky = fmtSky(depart);
-            const retSky = fmtSky(ret);
+        function fmtMinutes(mins) {
+            if (!mins) return '';
+            const h = Math.floor(mins / 60);
+            const m = mins % 60;
+            return `${h}h ${String(m).padStart(2, '0')}m`;
+        }
 
-            const rangeLabel = `${fmtDE(depart)} → ${fmtDE(ret)}`;
-            document.getElementById('modalDateRange').textContent = rangeLabel;
+        function buildKayakUrl(originsArr, destsArr, depIso, retIso, adults, nonstop) {
+            const fs = nonstop ? 'cfc=1;stops=0' : 'cfc=1';
+            return `https://www.kayak.de/flights/${originsArr.join(',')}-${destsArr.join(',')}/${depIso}/${retIso}/${adults}adults?sort=price_a&fs=${encodeURIComponent(fs)}`;
+        }
 
-            const filtered = currentOriginFilter === 'ALL'
-                ? FLIGHT_ROUTES
-                : FLIGHT_ROUTES.filter(r => r.origin === currentOriginFilter);
+        function buildAirlineUrl(route, depIso, retIso, adults) {
+            if (route.airlineType === 'ryanair') {
+                return `https://www.ryanair.com/de/de/trip/flights/select?adults=${adults}&teens=0&children=0&infants=0&dateOut=${depIso}&dateIn=${retIso}&isConnectedFlight=false&isReturn=true&originIata=${route.origin}&destinationIata=${route.dest}`;
+            }
+            if (route.airlineType === 'eurowings') {
+                return `https://www.eurowings.com/de/buchen/fluege/flugsuche.html?origin=${route.origin}&destination=${route.dest}&outboundDate=${depIso}&returnDate=${retIso}&adultCount=${adults}`;
+            }
+            return `https://www.lufthansa.com/de/de/homepage`;
+        }
 
+        function syncFilterPills() {
+            document.querySelectorAll('#modalOriginFilters .modal-pill').forEach(btn => {
+                btn.classList.toggle('active', selectedOrigins.has(btn.dataset.origin));
+            });
+            document.querySelectorAll('#modalDestFilters .modal-pill').forEach(btn => {
+                btn.classList.toggle('active', selectedDests.has(btn.dataset.dest));
+            });
+        }
+
+        function toggleOriginAirport(code) {
+            if (selectedOrigins.has(code) && selectedOrigins.size === 1) return; // Mind. 1 aktiv
+            if (selectedOrigins.has(code)) selectedOrigins.delete(code);
+            else selectedOrigins.add(code);
+            syncFilterPills();
+            runFlightSearch();
+        }
+
+        function toggleDestAirport(code) {
+            if (selectedDests.has(code) && selectedDests.size === 1) return; // Mind. 1 aktiv
+            if (selectedDests.has(code)) selectedDests.delete(code);
+            else selectedDests.add(code);
+            syncFilterPills();
+            runFlightSearch();
+        }
+
+        function applyDatePreset(mode) {
+            const { depart, ret } = getUpcomingWeekendDates(mode);
+            document.getElementById('flightOutDate').value = fmtISO(depart);
+            document.getElementById('flightRetDate').value = fmtISO(ret);
+            document.getElementById('btnPresetSat').classList.toggle('active', mode === 'sat');
+            document.getElementById('btnPresetFri').classList.toggle('active', mode === 'fri');
+            document.getElementById('btnPreset14').classList.toggle('active', mode === '14d');
+            runFlightSearch();
+        }
+
+        function onFlightDateChange() {
+            const outEl = document.getElementById('flightOutDate');
+            const retEl = document.getElementById('flightRetDate');
+            if (outEl.value && (!retEl.value || retEl.value <= outEl.value)) {
+                const d = new Date(outEl.value + 'T12:00:00');
+                d.setDate(d.getDate() + 7);
+                retEl.value = fmtISO(d);
+            }
+            ['btnPresetSat', 'btnPresetFri', 'btnPreset14'].forEach(id => {
+                document.getElementById(id).classList.remove('active');
+            });
+            runFlightSearch();
+        }
+
+        function getSearchState() {
+            const out = document.getElementById('flightOutDate').value;
+            const ret = document.getElementById('flightRetDate').value;
+            const adults = parseInt(document.getElementById('flightAdults').value, 10) || 1;
+            const nonstop = document.getElementById('flightNonstop').checked;
+            return {
+                origins: [...selectedOrigins],
+                dests: [...selectedDests],
+                out,
+                ret,
+                adults,
+                nonstop
+            };
+        }
+
+        // Fallback / Direkt-Vergleich (sofort einsatzbereit ohne Backend)
+        function renderFallbackResults(errorNote) {
+            const s = getSearchState();
             const container = document.getElementById('fareListContainer');
-            container.innerHTML = filtered.map(r => {
-                const googleUrl = `https://www.google.com/travel/flights?q=${encodeURIComponent(`Flights from ${r.origin} to ${r.dest} on ${depIso} through ${retIso}`)}&curr=EUR&hl=de`;
-                const skyUrl = `https://www.skyscanner.de/transport/fluge/${r.origin.toLowerCase()}/${r.dest.toLowerCase()}/${depSky}/${retSky}/`;
+            const comboKayakUrl = buildKayakUrl(s.origins, s.dests, s.out, s.ret, s.adults, s.nonstop);
+            const filtered = FLIGHT_ROUTES
+                .filter(r => selectedOrigins.has(r.origin) && selectedDests.has(r.dest))
+                .sort((a, b) => a.minVal - b.minVal);
+
+            const errorBanner = errorNote
+                ? `<div class="live-status-bar"><span>ℹ️ ${errorNote} – nutze den direkten Kombi-Vergleich:</span></div>`
+                : '';
+
+            const comboHtml = `
+                <div class="combo-banner">
+                    <div>
+                        <strong>🏆 Kombi-Suche: ${s.origins.join(' / ')} → ${s.dests.join(' / ')}</strong>
+                        <small>Alle gewählten Flughäfen gleichzeitig · günstigster Preis zuerst · inkl. 1 Handgepäck p. P.</small>
+                    </div>
+                    <a href="${comboKayakUrl}" target="_blank" rel="noopener noreferrer" class="fare-link google">Günstigste Kombi auf KAYAK ↗</a>
+                </div>
+            `;
+
+            const rowsHtml = filtered.map(r => {
+                const kayakUrl = buildKayakUrl([r.origin], [r.dest], s.out, s.ret, s.adults, s.nonstop);
+                const googleUrl = `https://www.google.com/travel/flights?q=${encodeURIComponent(`Flights from ${r.origin} to ${r.dest} on ${s.out} through ${s.ret}`)}&curr=EUR&hl=de`;
+                const airlineUrl = buildAirlineUrl(r, s.out, s.ret, s.adults);
                 return `
                     <div class="fare-row">
                         <div>
                             <div class="fare-route">${r.originName} (${r.origin}) → ${r.destName} (${r.dest})</div>
-                            <div class="fare-sub">${r.airline} · ${r.duration}</div>
+                            <div class="fare-sub">${r.airline} (Direkt) · ${r.duration} · 🧳 inkl. 1 Handgepäck</div>
                         </div>
                         <div class="fare-estimate">
                             <strong>${r.estimate}</strong>
-                            <small>Richtwert Hin &amp; Rück</small>
+                            <small>Richtwert p. P. (Hin &amp; Rück)</small>
                         </div>
                         <div class="fare-links">
-                            <a href="${googleUrl}" target="_blank" rel="noopener noreferrer" class="fare-link google">Google Flights ↗</a>
-                            <a href="${skyUrl}" target="_blank" rel="noopener noreferrer" class="fare-link sky">Skyscanner ↗</a>
+                            <a href="${kayakUrl}" target="_blank" rel="noopener noreferrer" class="fare-link google">KAYAK (1 Handgep.) ↗</a>
+                            <a href="${googleUrl}" target="_blank" rel="noopener noreferrer" class="fare-link sky">Google Flights ↗</a>
+                            <a href="${airlineUrl}" target="_blank" rel="noopener noreferrer" class="fare-link airline-btn">${r.airline} ↗</a>
                         </div>
                     </div>
                 `;
             }).join('');
+
+            container.innerHTML = errorBanner + comboHtml + rowsHtml;
+            document.getElementById('priceModalFooter').innerHTML =
+                'Richtwerte gelten inkl. 1 Handgepäck p. P. (Hin &amp; Rück). Der <strong>KAYAK-Kombi-Link</strong> vergleicht alle gewählten Flughäfen gleichzeitig inkl. Handgepäck-Filter (<code>cfc=1</code>).';
+        }
+
+        // Live-Modus (Cloudflare Worker + SerpApi Google Flights mit bags=1)
+        async function runFlightSearch() {
+            const s = getSearchState();
+            if (!s.out || !s.ret) return;
+
+            if (!FLIGHT_WORKER_URL) {
+                renderFallbackResults();
+                return;
+            }
+
+            const container = document.getElementById('fareListContainer');
+            container.innerHTML = `<div class="loading-box">✈️ Suche günstigste Live-Flüge für <strong>${s.origins.join(', ')} → ${s.dests.join(', ')}</strong> (inkl. 1 Handgepäck)…</div>`;
+
+            try {
+                const params = new URLSearchParams({
+                    from: s.origins.join(','),
+                    to: s.dests.join(','),
+                    out: s.out,
+                    ret: s.ret,
+                    adults: String(s.adults),
+                    nonstop: s.nonstop ? '1' : '0'
+                });
+                const resp = await fetch(`${FLIGHT_WORKER_URL.replace(/\/+$/, '')}/search?${params.toString()}`);
+                const data = await resp.json();
+                if (!resp.ok || data.error) throw new Error(data.error || `HTTP ${resp.status}`);
+
+                lastLiveFlights = data.flights || [];
+                lastLiveGoogleUrl = data.google_flights_url || null;
+                renderLiveOutboundList(data.cached);
+            } catch (err) {
+                console.warn('Live-Flugsuche Fallback:', err);
+                renderFallbackResults('Live-Suche momentan nicht erreichbar');
+            }
+        }
+
+        function renderLiveOutboundList(isCached) {
+            const s = getSearchState();
+            const container = document.getElementById('fareListContainer');
+            if (!lastLiveFlights.length) {
+                renderFallbackResults('Keine Direktflüge für exakt dieses Datum gefunden');
+                return;
+            }
+
+            const statusBar = `
+                <div class="live-status-bar">
+                    <span>🟢 <strong>${lastLiveFlights.length} günstigste Live-Flüge</strong> (Hin &amp; Rück inkl. 1 Handgepäck${isCached ? ' · Cache' : ''})</span>
+                    ${lastLiveGoogleUrl ? `<a href="${lastLiveGoogleUrl}" target="_blank" rel="noopener noreferrer" class="fare-link sky">Alle auf Google Flights ↗</a>` : ''}
+                </div>
+            `;
+
+            const rows = lastLiveFlights.map((f, idx) => {
+                const first = f.legs[0] || {};
+                const last = f.legs[f.legs.length - 1] || first;
+                const depTime = (first.dep_time || '').slice(11, 16);
+                const arrTime = (last.arr_time || '').slice(11, 16);
+                const stopLabel = f.stops === 0 ? 'Direktflug' : `${f.stops} Stopp${f.stops > 1 ? 's' : ''}`;
+                const logoHtml = f.airline_logo ? `<img src="${f.airline_logo}" alt="" class="airline-logo-mini">` : '';
+                return `
+                    <div class="fare-row">
+                        <div class="fare-main-flex">
+                            ${logoHtml}
+                            <div>
+                                <div class="fare-route">${first.dep_code} → ${last.arr_code} · ${depTime}–${arrTime}</div>
+                                <div class="fare-sub">${f.airlines.join(', ')} (${first.flight_number || ''}) · ${stopLabel} · ${fmtMinutes(f.total_duration)} · 🧳 1 Handgepäck</div>
+                            </div>
+                        </div>
+                        <div class="fare-estimate">
+                            <strong>${f.price} €</strong>
+                            <small>gesamt (${s.adults} Pers., Hin &amp; Rück)</small>
+                        </div>
+                        <div class="fare-links">
+                            ${f.departure_token
+                                ? `<button type="button" class="fare-link google book-btn" onclick="loadReturnFlights(${idx})">Rückflug &amp; Anbieter →</button>`
+                                : (lastLiveGoogleUrl ? `<a href="${lastLiveGoogleUrl}" target="_blank" rel="noopener noreferrer" class="fare-link google">Ansehen ↗</a>` : '')
+                            }
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            container.innerHTML = statusBar + rows;
+            document.getElementById('priceModalFooter').innerHTML =
+                'Live-Preise via Google Flights inkl. <strong>1 Handgepäck pro Person</strong>. Wähle einen Hinflug, um den passenden Rückflug und die direkten Anbieter-Buchungslinks anzuzeigen.';
+        }
+
+        async function loadReturnFlights(outboundIdx) {
+            const outbound = lastLiveFlights[outboundIdx];
+            if (!outbound?.departure_token) return;
+            selectedOutboundFlight = outbound;
+            const s = getSearchState();
+            const container = document.getElementById('fareListContainer');
+            container.innerHTML = '<div class="loading-box">🔄 Lade passende Rückflüge…</div>';
+
+            try {
+                const params = new URLSearchParams({
+                    from: s.origins.join(','),
+                    to: s.dests.join(','),
+                    out: s.out,
+                    ret: s.ret,
+                    adults: String(s.adults),
+                    departure_token: outbound.departure_token
+                });
+                const resp = await fetch(`${FLIGHT_WORKER_URL.replace(/\/+$/, '')}/returns?${params.toString()}`);
+                const data = await resp.json();
+                if (!resp.ok || data.error) throw new Error(data.error || `HTTP ${resp.status}`);
+
+                const returns = data.returns || [];
+                window._lastReturns = returns;
+                const firstOut = outbound.legs[0] || {};
+                const lastOut = outbound.legs[outbound.legs.length - 1] || firstOut;
+
+                const header = `
+                    <div class="live-status-bar">
+                        <button type="button" class="live-back-btn" onclick="renderLiveOutboundList(true)">← Hinflüge</button>
+                        <span>Gewählt: <strong>${firstOut.dep_code} → ${lastOut.arr_code}</strong> (${(firstOut.dep_time || '').slice(11, 16)}) · Rückflug wählen:</span>
+                    </div>
+                `;
+
+                const rows = returns.map((r, rIdx) => {
+                    const rf = r.legs[0] || {};
+                    const rl = r.legs[r.legs.length - 1] || rf;
+                    const stopLabel = r.stops === 0 ? 'Direktflug' : `${r.stops} Stopp${r.stops > 1 ? 's' : ''}`;
+                    const logoHtml = r.airline_logo ? `<img src="${r.airline_logo}" alt="" class="airline-logo-mini">` : '';
+                    return `
+                        <div class="fare-row">
+                            <div class="fare-main-flex">
+                                ${logoHtml}
+                                <div>
+                                    <div class="fare-route">${rf.dep_code} → ${rl.arr_code} · ${(rf.dep_time || '').slice(11, 16)}–${(rl.arr_time || '').slice(11, 16)}</div>
+                                    <div class="fare-sub">${r.airlines.join(', ')} (${rf.flight_number || ''}) · ${stopLabel} · ${fmtMinutes(r.total_duration)}</div>
+                                </div>
+                            </div>
+                            <div class="fare-estimate">
+                                <strong>${r.price} €</strong>
+                                <small>gesamt inkl. 1 Handgepäck</small>
+                            </div>
+                            <div class="fare-links">
+                                <button type="button" class="fare-link google book-btn" onclick="loadBookingOptions(${rIdx})">Anbieter &amp; Buchen →</button>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+
+                container.innerHTML = header + (rows || '<div class="loading-box">Keine passenden Rückflüge gefunden.</div>');
+            } catch (err) {
+                container.innerHTML = `<div class="live-status-bar"><button type="button" class="live-back-btn" onclick="renderLiveOutboundList(true)">← Zurück</button><span>Fehler beim Laden der Rückflüge.</span></div>`;
+            }
+        }
+
+        async function loadBookingOptions(returnIdx) {
+            const retFlight = (window._lastReturns || [])[returnIdx];
+            if (!retFlight?.booking_token) return;
+            const s = getSearchState();
+            const container = document.getElementById('fareListContainer');
+            container.innerHTML = '<div class="loading-box">🔗 Lade direkte Buchungslinks der Anbieter…</div>';
+
+            try {
+                const params = new URLSearchParams({
+                    from: s.origins.join(','),
+                    to: s.dests.join(','),
+                    out: s.out,
+                    ret: s.ret,
+                    adults: String(s.adults),
+                    booking_token: retFlight.booking_token
+                });
+                const resp = await fetch(`${FLIGHT_WORKER_URL.replace(/\/+$/, '')}/booking?${params.toString()}`);
+                const data = await resp.json();
+                if (!resp.ok || data.error) throw new Error(data.error || `HTTP ${resp.status}`);
+
+                window._lastBookingOptions = data.options || [];
+                const header = `
+                    <div class="live-status-bar">
+                        <button type="button" class="live-back-btn" onclick="renderLiveOutboundList(true)">← Neue Auswahl</button>
+                        <span><strong>Direkt zum konkreten Flug beim Anbieter:</strong></span>
+                    </div>
+                `;
+
+                const rows = (data.options || []).map((opt, idx) => `
+                    <div class="fare-row">
+                        <div>
+                            <div class="fare-route">${opt.book_with} ${opt.is_airline ? '⭐ (Direkt Airline)' : ''}</div>
+                            <div class="fare-sub">${opt.option_title || 'Standard-Tarif'} · 🧳 inkl. 1 Handgepäck</div>
+                        </div>
+                        <div class="fare-estimate">
+                            <strong>${opt.price !== null ? opt.price + ' €' : 'Live-Preis'}</strong>
+                            <small>gesamt (${s.adults} Pers.)</small>
+                        </div>
+                        <div class="fare-links">
+                            <button type="button" class="fare-link google book-btn" onclick="openProviderBooking(${idx})">Zum Anbieter ↗</button>
+                        </div>
+                    </div>
+                `).join('');
+
+                container.innerHTML = header + (rows || '<div class="loading-box">Keine direkten Buchungsoptionen gefunden.</div>');
+            } catch (err) {
+                container.innerHTML = `<div class="live-status-bar"><button type="button" class="live-back-btn" onclick="renderLiveOutboundList(true)">← Zurück</button><span>Fehler beim Laden der Anbieter-Links.</span></div>`;
+            }
+        }
+
+        function openProviderBooking(optionIdx) {
+            const opt = (window._lastBookingOptions || [])[optionIdx];
+            const req = opt?.booking_request;
+            if (!req?.url) return;
+
+            if (req.post_data) {
+                const form = document.createElement('form');
+                form.method = 'POST';
+                form.action = req.url;
+                form.target = '_blank';
+                form.style.display = 'none';
+                const params = new URLSearchParams(req.post_data);
+                for (const [k, v] of params.entries()) {
+                    const input = document.createElement('input');
+                    input.type = 'hidden';
+                    input.name = k;
+                    input.value = v;
+                    form.appendChild(input);
+                }
+                document.body.appendChild(form);
+                form.submit();
+                form.remove();
+            } else {
+                window.open(req.url, '_blank', 'noopener,noreferrer');
+            }
         }
 
         function openPriceModal(origin) {
-            filterModalOrigin(origin || 'ALL');
+            if (origin && origin !== 'ALL') {
+                selectedOrigins = new Set([origin]);
+            } else {
+                selectedOrigins = new Set(['FRA', 'STR', 'FKB']);
+            }
+            selectedDests = new Set(['ALC', 'VLC']);
+            syncFilterPills();
+
+            if (!document.getElementById('flightOutDate').value) {
+                applyDatePreset('sat');
+            } else {
+                runFlightSearch();
+            }
             document.getElementById('priceModalBackdrop').classList.add('is-open');
             document.body.style.overflow = 'hidden';
         }
@@ -1045,21 +1581,6 @@
         function closePriceModal() {
             document.getElementById('priceModalBackdrop').classList.remove('is-open');
             document.body.style.overflow = '';
-        }
-
-        function filterModalOrigin(origin) {
-            currentOriginFilter = origin;
-            document.querySelectorAll('#modalOriginFilters .modal-pill').forEach(btn => {
-                btn.classList.toggle('active', btn.dataset.origin === origin);
-            });
-            renderFareOverlay();
-        }
-
-        function setWeekendMode(mode) {
-            currentWeekendMode = mode;
-            document.getElementById('btnDaySat').classList.toggle('active', mode === 'sat');
-            document.getElementById('btnDayFri').classList.toggle('active', mode === 'fri');
-            renderFareOverlay();
         }
 
         document.getElementById('priceModalBackdrop').addEventListener('click', closePriceModal);
