@@ -841,9 +841,117 @@
             color: rgba(255, 255, 255, 0.68);
         }
 
+        .mobile-filter-toggle {
+            display: none;
+        }
+
         @media (max-width: 768px) {
             .map-frame-wrap {
                 height: 390px;
+            }
+
+            .price-modal-backdrop {
+                padding: 8px;
+            }
+
+            .price-modal {
+                width: 100%;
+                max-height: 94vh;
+                max-height: 94dvh;
+                border-radius: 18px;
+                overflow-y: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+
+            .price-modal-header {
+                position: sticky;
+                top: 0;
+                z-index: 10;
+                background: rgba(15, 23, 42, 0.98);
+                padding: 12px 14px;
+                align-items: center;
+                flex-shrink: 0;
+            }
+
+            .price-modal-header .eyebrow {
+                display: none;
+            }
+
+            .price-modal-header h2 {
+                font-size: 1.12rem;
+            }
+
+            .price-modal-close {
+                width: 32px;
+                height: 32px;
+                font-size: 15px;
+            }
+
+            .mobile-filter-toggle {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 10px;
+                width: 100%;
+                padding: 10px 14px;
+                background: rgba(255, 255, 255, 0.07);
+                border: none;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+                color: #ffffff;
+                font-family: 'Lato', sans-serif;
+                font-size: 0.84rem;
+                text-align: left;
+                cursor: pointer;
+                flex-shrink: 0;
+            }
+
+            .mobile-filter-toggle .mf-summary {
+                color: rgba(255, 255, 255, 0.88);
+                font-weight: 700;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+            }
+
+            .mobile-filter-toggle .mf-action {
+                color: #fbbf24;
+                font-weight: 700;
+                white-space: nowrap;
+                flex-shrink: 0;
+            }
+
+            .price-modal-controls {
+                display: none;
+                padding: 12px 14px;
+                gap: 10px;
+                flex-shrink: 0;
+            }
+
+            .price-modal-controls.is-expanded {
+                display: flex;
+            }
+
+            .modal-pill {
+                padding: 5px 10px;
+                font-size: 12px;
+            }
+
+            .modal-date-input,
+            .modal-select {
+                padding: 5px 8px;
+                font-size: 12.5px;
+            }
+
+            .price-modal-body {
+                padding: 12px 14px;
+                overflow-y: visible;
+                flex-shrink: 0;
+            }
+
+            .price-modal-footer {
+                padding: 10px 14px;
+                font-size: 0.78rem;
+                flex-shrink: 0;
             }
 
             .fare-row {
@@ -1078,7 +1186,12 @@
                 <button type="button" class="price-modal-close" onclick="closePriceModal()" aria-label="Preisübersicht schließen">✕</button>
             </div>
 
-            <div class="price-modal-controls">
+            <button type="button" class="mobile-filter-toggle" id="mobileFilterToggle" onclick="toggleMobileFlightFilters()" aria-expanded="false" aria-controls="priceModalControls">
+                <span class="mf-summary" id="mobileFilterSummary">✈️ Alle Flughäfen · 1 P.</span>
+                <span class="mf-action" id="mobileFilterAction">⚙️ Filter ▾</span>
+            </button>
+
+            <div class="price-modal-controls" id="priceModalControls">
                 <!-- Zeile 1: Zeitraum -->
                 <div class="control-row">
                     <div class="control-group">
@@ -1124,7 +1237,7 @@
                         </label>
                         <span class="baggage-badge">🧳 inkl. 1 Handgepäck p. P.</span>
                     </div>
-                    <button type="button" class="modal-search-btn" onclick="runFlightSearch()">🔍 Günstigste suchen</button>
+                    <button type="button" class="modal-search-btn" onclick="runFlightSearch(true)">🔍 Günstigste suchen</button>
                 </div>
             </div>
 
@@ -1334,9 +1447,38 @@
                 'Richtwerte gelten inkl. 1 Handgepäck p. P. (Hin &amp; Rück). Der <strong>KAYAK-Kombi-Link</strong> vergleicht alle gewählten Flughäfen gleichzeitig inkl. Handgepäck-Filter (<code>cfc=1</code>).';
         }
 
-        // Live-Modus (Cloudflare Worker + SerpApi Google Flights mit bags=1)
-        async function runFlightSearch() {
+        function toggleMobileFlightFilters(forceOpen) {
+            const controls = document.getElementById('priceModalControls');
+            const toggleBtn = document.getElementById('mobileFilterToggle');
+            const actionEl = document.getElementById('mobileFilterAction');
+            if (!controls) return;
+            const shouldOpen = (typeof forceOpen === 'boolean')
+                ? forceOpen
+                : !controls.classList.contains('is-expanded');
+            controls.classList.toggle('is-expanded', shouldOpen);
+            if (toggleBtn) toggleBtn.setAttribute('aria-expanded', shouldOpen ? 'true' : 'false');
+            if (actionEl) actionEl.textContent = shouldOpen ? '✕ Filter zu ▴' : '⚙️ Filter ▾';
+        }
+
+        function updateMobileFilterSummary() {
+            const el = document.getElementById('mobileFilterSummary');
+            if (!el) return;
             const s = getSearchState();
+            const fmtShort = (iso) => {
+                if (!iso) return '';
+                const [, m, d] = iso.split('-');
+                return `${d}.${m}.`;
+            };
+            const dateTxt = (s.out && s.ret) ? `${fmtShort(s.out)}–${fmtShort(s.ret)}` : '';
+            const routeTxt = `${s.origins.join('/')} → ${s.dests.join('/')}`;
+            el.textContent = `${dateTxt ? dateTxt + ' · ' : ''}${routeTxt} · ${s.adults} P.`;
+        }
+
+        // Live-Modus (Cloudflare Worker + SerpApi Google Flights mit bags=1)
+        async function runFlightSearch(collapseMobile = false) {
+            const s = getSearchState();
+            updateMobileFilterSummary();
+            if (collapseMobile) toggleMobileFlightFilters(false);
             if (!s.out || !s.ret) return;
 
             if (!FLIGHT_WORKER_URL) {
@@ -1569,6 +1711,7 @@
             selectedDests = new Set(['ALC', 'VLC']);
             syncFilterPills();
 
+            toggleMobileFlightFilters(false);
             if (!document.getElementById('flightOutDate').value) {
                 applyDatePreset('sat');
             } else {
