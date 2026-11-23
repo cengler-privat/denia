@@ -1,0 +1,1195 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anreise – Flüge &amp; Auto-Route nach Dénia – Casa Englers y Amigos</title>
+
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        .page-hero {
+            text-align: center;
+            padding: 95px 20px 42px 20px;
+            background: linear-gradient(180deg, #0f172a 0%, #1e293b 100%);
+            color: #ffffff;
+        }
+
+        .page-hero .eyebrow {
+            font-family: 'Lato', sans-serif;
+            font-size: 13px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: #f59e0b;
+            font-weight: 700;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .page-hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.2rem, 4.5vw, 3.4rem);
+            margin: 0 0 12px 0;
+            color: #ffffff;
+        }
+
+        .page-hero p {
+            font-family: 'Lato', sans-serif;
+            font-size: 1.08rem;
+            color: rgba(255, 255, 255, 0.85);
+            max-width: 680px;
+            margin: 0 auto 28px auto;
+            line-height: 1.6;
+        }
+
+        .hero-actions {
+            display: inline-flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        .hero-cta {
+            border: none;
+            text-decoration: none;
+            padding: 12px 24px;
+            border-radius: 30px;
+            font-family: 'Lato', sans-serif;
+            font-size: 14.5px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .hero-cta.primary {
+            background: #f59e0b;
+            color: #0f172a;
+            box-shadow: 0 6px 20px rgba(245, 158, 11, 0.35);
+        }
+
+        .hero-cta.primary:hover {
+            background: #fbbf24;
+            transform: translateY(-2px);
+        }
+
+        .hero-cta.secondary {
+            background: rgba(255, 255, 255, 0.12);
+            color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.22);
+        }
+
+        .hero-cta.secondary:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .travel-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 48px 20px 70px 20px;
+        }
+
+        .section-heading {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        .section-heading .sub-eyebrow {
+            font-family: 'Lato', sans-serif;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            color: #d97706;
+            display: block;
+            margin-bottom: 6px;
+        }
+
+        .section-heading h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.8rem, 3.2vw, 2.4rem);
+            color: #0f172a;
+            margin: 0 0 10px 0;
+        }
+
+        .section-heading p {
+            font-family: 'Lato', sans-serif;
+            font-size: 1rem;
+            color: #475569;
+            max-width: 650px;
+            margin: 0 auto;
+        }
+
+        /* Flughafen-Karten */
+        .airport-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
+            gap: 26px;
+            margin-bottom: 28px;
+        }
+
+        .airport-card {
+            background: #ffffff;
+            border-radius: 22px;
+            padding: 26px;
+            box-shadow: 0 15px 35px rgba(15, 23, 42, 0.08);
+            border: 1px solid rgba(15, 23, 42, 0.06);
+            display: flex;
+            flex-direction: column;
+            text-align: left;
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+        }
+
+        .airport-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 42px rgba(15, 23, 42, 0.12);
+        }
+
+        .airport-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            margin-bottom: 14px;
+        }
+
+        .iata-badge {
+            background: #0f172a;
+            color: #f59e0b;
+            font-family: 'Lato', sans-serif;
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            padding: 6px 12px;
+            border-radius: 10px;
+        }
+
+        .airport-tag {
+            background: #fef3c7;
+            color: #92400e;
+            font-size: 12px;
+            font-weight: 700;
+            padding: 5px 11px;
+            border-radius: 20px;
+        }
+
+        .airport-card h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.55rem;
+            color: #0f172a;
+            margin: 0 0 8px 0;
+        }
+
+        .airport-desc {
+            font-family: 'Lato', sans-serif;
+            font-size: 0.95rem;
+            color: #475569;
+            line-height: 1.55;
+            margin: 0 0 16px 0;
+        }
+
+        .route-pills {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .route-pill {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 10px 14px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.9rem;
+        }
+
+        .route-pill strong {
+            color: #0f172a;
+            display: block;
+        }
+
+        .route-pill small {
+            color: #64748b;
+            font-size: 0.82rem;
+        }
+
+        .route-price-hint {
+            font-weight: 700;
+            color: #b45309;
+            white-space: nowrap;
+            font-size: 0.86rem;
+        }
+
+        .card-price-btn {
+            margin-top: auto;
+            width: 100%;
+            border: none;
+            background: #0f172a;
+            color: #ffffff;
+            padding: 12px 16px;
+            border-radius: 12px;
+            font-family: 'Lato', sans-serif;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .card-price-btn:hover {
+            background: #f59e0b;
+            color: #0f172a;
+        }
+
+        .price-banner {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: #ffffff;
+            border-radius: 20px;
+            padding: 24px 28px;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 18px;
+            margin-bottom: 60px;
+            box-shadow: 0 15px 35px rgba(15, 23, 42, 0.14);
+        }
+
+        .price-banner h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.4rem;
+            margin: 0 0 4px 0;
+            color: #ffffff;
+        }
+
+        .price-banner p {
+            margin: 0;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.95rem;
+        }
+
+        /* Google Maps Auto-Anreise */
+        .map-card {
+            background: #ffffff;
+            border-radius: 22px;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(15, 23, 42, 0.09);
+            border: 1px solid rgba(15, 23, 42, 0.07);
+            margin-bottom: 30px;
+        }
+
+        .map-card-header {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 14px;
+            padding: 20px 24px;
+            background: #0f172a;
+            color: #ffffff;
+        }
+
+        .map-card-header h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.45rem;
+            margin: 0;
+            color: #ffffff;
+        }
+
+        .airport-switcher {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .switch-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            color: rgba(255, 255, 255, 0.9);
+            padding: 9px 18px;
+            border-radius: 24px;
+            font-family: 'Lato', sans-serif;
+            font-size: 13.5px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .switch-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .switch-btn.active {
+            background: #f59e0b;
+            color: #0f172a;
+            border-color: #f59e0b;
+            box-shadow: 0 4px 14px rgba(245, 158, 11, 0.35);
+        }
+
+        .switch-btn.reverse-btn.active {
+            background: #38bdf8;
+            color: #0f172a;
+            border-color: #38bdf8;
+            box-shadow: 0 4px 14px rgba(56, 189, 248, 0.35);
+        }
+
+        .route-stats-bar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px 26px;
+            padding: 14px 24px;
+            background: #fffbeb;
+            border-bottom: 1px solid #fde68a;
+            font-family: 'Lato', sans-serif;
+            font-size: 0.92rem;
+            color: #78350f;
+        }
+
+        .route-stat strong {
+            color: #0f172a;
+        }
+
+        .map-frame-wrap {
+            position: relative;
+            width: 100%;
+            height: 490px;
+            background: #0f172a;
+        }
+
+        .map-frame-wrap iframe {
+            width: 100%;
+            height: 100%;
+            border: 0;
+            display: block;
+        }
+
+        .map-card-footer {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 14px;
+            padding: 18px 24px;
+            background: #f8fafc;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        .map-address {
+            font-family: 'Lato', sans-serif;
+            font-size: 0.92rem;
+            color: #334155;
+            margin: 0;
+        }
+
+        .map-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .action-btn {
+            text-decoration: none;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 12px;
+            font-family: 'Lato', sans-serif;
+            font-size: 13.5px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .action-btn.primary {
+            background: #f59e0b;
+            color: #0f172a;
+        }
+
+        .action-btn.primary:hover {
+            background: #d97706;
+            color: #ffffff;
+        }
+
+        .action-btn.secondary {
+            background: #e2e8f0;
+            color: #1e293b;
+        }
+
+        .action-btn.secondary:hover {
+            background: #cbd5e1;
+        }
+
+        .tips-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 22px;
+        }
+
+        .tip-card {
+            background: #ffffff;
+            border-radius: 18px;
+            padding: 22px 24px;
+            box-shadow: 0 10px 25px rgba(15, 23, 42, 0.06);
+            border: 1px solid rgba(15, 23, 42, 0.06);
+            text-align: left;
+        }
+
+        .tip-card h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.22rem;
+            color: #0f172a;
+            margin: 0 0 8px 0;
+        }
+
+        .tip-card p {
+            font-family: 'Lato', sans-serif;
+            font-size: 0.94rem;
+            line-height: 1.55;
+            color: #475569;
+            margin: 0;
+        }
+
+        /* =========================================================
+           💶 PREISÜBERSICHT-OVERLAY (Glassmorphism-Modal)
+           ========================================================= */
+        .price-modal-backdrop {
+            position: fixed;
+            inset: 0;
+            z-index: 100005;
+            background: rgba(15, 23, 42, 0.35);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 18px;
+        }
+
+        .price-modal-backdrop.is-open {
+            display: flex;
+        }
+
+        .price-modal {
+            width: min(860px, 96vw);
+            max-height: 88vh;
+            background: rgba(15, 23, 42, 0.92);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 22px;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.5);
+            color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .price-modal-header {
+            padding: 18px 22px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 12px;
+        }
+
+        .price-modal-header .eyebrow {
+            font-size: 11px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #f59e0b;
+            font-weight: 700;
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .price-modal-header h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            margin: 0;
+            color: #ffffff;
+        }
+
+        .price-modal-close {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.1);
+            color: #ffffff;
+            font-size: 18px;
+            cursor: pointer;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s ease;
+        }
+
+        .price-modal-close:hover {
+            background: rgba(255, 255, 255, 0.24);
+        }
+
+        .price-modal-controls {
+            padding: 14px 22px;
+            background: rgba(255, 255, 255, 0.04);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+        }
+
+        .control-group {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .modal-pill {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.16);
+            color: rgba(255, 255, 255, 0.9);
+            padding: 6px 13px;
+            border-radius: 20px;
+            font-family: 'Lato', sans-serif;
+            font-size: 12.5px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .modal-pill:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .modal-pill.active {
+            background: #f59e0b;
+            color: #0f172a;
+            border-color: #f59e0b;
+        }
+
+        .date-display-badge {
+            background: rgba(245, 158, 11, 0.15);
+            border: 1px solid rgba(245, 158, 11, 0.4);
+            color: #fde68a;
+            padding: 6px 12px;
+            border-radius: 10px;
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .price-modal-body {
+            padding: 18px 22px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .fare-row {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 14px;
+            padding: 14px 16px;
+            display: grid;
+            grid-template-columns: 1.4fr 1fr auto;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .fare-route {
+            font-weight: 700;
+            font-size: 1rem;
+            color: #ffffff;
+        }
+
+        .fare-sub {
+            font-size: 0.83rem;
+            color: rgba(255, 255, 255, 0.7);
+            margin-top: 2px;
+        }
+
+        .fare-estimate {
+            text-align: right;
+        }
+
+        .fare-estimate strong {
+            display: block;
+            color: #fbbf24;
+            font-size: 1.02rem;
+        }
+
+        .fare-estimate small {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.76rem;
+        }
+
+        .fare-links {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+        }
+
+        .fare-link {
+            text-decoration: none;
+            padding: 8px 13px;
+            border-radius: 10px;
+            font-size: 12.5px;
+            font-weight: 700;
+            white-space: nowrap;
+            transition: all 0.2s ease;
+        }
+
+        .fare-link.google {
+            background: #f59e0b;
+            color: #0f172a;
+        }
+
+        .fare-link.google:hover {
+            background: #fbbf24;
+        }
+
+        .fare-link.sky {
+            background: rgba(255, 255, 255, 0.14);
+            color: #ffffff;
+        }
+
+        .fare-link.sky:hover {
+            background: rgba(255, 255, 255, 0.25);
+        }
+
+        .price-modal-footer {
+            padding: 12px 22px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(2, 6, 23, 0.55);
+            font-size: 0.82rem;
+            color: rgba(255, 255, 255, 0.68);
+        }
+
+        @media (max-width: 768px) {
+            .map-frame-wrap {
+                height: 390px;
+            }
+
+            .fare-row {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+
+            .fare-estimate {
+                text-align: left;
+            }
+
+            .fare-links {
+                justify-content: flex-start;
+            }
+
+            .map-actions {
+                width: 100%;
+            }
+
+            .action-btn {
+                flex: 1;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-light">
+
+    <button class="burger-menu-button" id="burger-menu-btn" title="Menü öffnen">
+        <span class="burger-menu-bar"></span>
+        <span class="burger-menu-bar"></span>
+        <span class="burger-menu-bar"></span>
+    </button>
+    <div id="menu-container"></div>
+
+    <header class="page-hero">
+        <span class="eyebrow">Anreise nach Dénia</span>
+        <h1>Dein Weg in die Sonne</h1>
+        <p>Von Frankfurt, Stuttgart oder dem Baden-Airpark in gut zwei Stunden nach Alicante oder Valencia – und dann entspannt in rund 70 Minuten über die mautfreie AP-7 direkt ans Meer.</p>
+
+        <div class="hero-actions">
+            <button type="button" class="hero-cta primary" onclick="openPriceModal('ALL')">💶 Preisübersicht kommendes Wochenende</button>
+            <a href="#auto-route" class="hero-cta secondary">🚗 Auto-Route ab Flughafen</a>
+        </div>
+    </header>
+
+    <main>
+        <section class="travel-container">
+
+            <!-- 1. FLUGMÖGLICHKEITEN -->
+            <div class="section-heading">
+                <span class="sub-eyebrow">1. Mit dem Flugzeug</span>
+                <h2>Abflughäfen &amp; Direktverbindungen</h2>
+                <p>Dénia liegt genau in der Mitte zwischen den Flughäfen <strong>Alicante (ALC)</strong> und <strong>Valencia (VLC)</strong> – ihr könnt also flexibel den günstigsten Flug wählen.</p>
+            </div>
+
+            <div class="airport-grid">
+                <!-- FRANKFURT -->
+                <article class="airport-card">
+                    <div class="airport-top">
+                        <span class="iata-badge">FRA</span>
+                        <span class="airport-tag">Häufigste Verbindungen</span>
+                    </div>
+                    <h3>Frankfurt am Main</h3>
+                    <p class="airport-desc">Ideal für maximale Flexibilität: <strong>Lufthansa</strong> fliegt beide Zielflughäfen direkt an – Valencia oft sogar mehrfach täglich.</p>
+                    <div class="route-pills">
+                        <div class="route-pill">
+                            <div>
+                                <strong>FRA → Valencia (VLC)</strong>
+                                <small>Lufthansa · Direkt · ca. 2 Std. 20 Min.</small>
+                            </div>
+                            <span class="route-price-hint">ca. 120–240 €</span>
+                        </div>
+                        <div class="route-pill">
+                            <div>
+                                <strong>FRA → Alicante (ALC)</strong>
+                                <small>Lufthansa · Direkt · ca. 2 Std. 30 Min.</small>
+                            </div>
+                            <span class="route-price-hint">ca. 130–260 €</span>
+                        </div>
+                    </div>
+                    <button type="button" class="card-price-btn" onclick="openPriceModal('FRA')">💶 Wochenend-Preise ab Frankfurt</button>
+                </article>
+
+                <!-- STUTTGART -->
+                <article class="airport-card">
+                    <div class="airport-top">
+                        <span class="iata-badge">STR</span>
+                        <span class="airport-tag">Komfortabel &amp; direkt</span>
+                    </div>
+                    <h3>Stuttgart</h3>
+                    <p class="airport-desc">Entspannter Flughafen im Süden mit direkten Urlaubsverbindungen durch <strong>Eurowings</strong> (je nach Saison an ausgewählten Wochentagen).</p>
+                    <div class="route-pills">
+                        <div class="route-pill">
+                            <div>
+                                <strong>STR → Valencia (VLC)</strong>
+                                <small>Eurowings · Direkt · ca. 2 Std. 10 Min.</small>
+                            </div>
+                            <span class="route-price-hint">ca. 100–210 €</span>
+                        </div>
+                        <div class="route-pill">
+                            <div>
+                                <strong>STR → Alicante (ALC)</strong>
+                                <small>Eurowings · Direkt · ca. 2 Std. 25 Min.</small>
+                            </div>
+                            <span class="route-price-hint">ca. 110–230 €</span>
+                        </div>
+                    </div>
+                    <button type="button" class="card-price-btn" onclick="openPriceModal('STR')">💶 Wochenend-Preise ab Stuttgart</button>
+                </article>
+
+                <!-- BADEN-AIRPARK -->
+                <article class="airport-card">
+                    <div class="airport-top">
+                        <span class="iata-badge">FKB</span>
+                        <span class="airport-tag">⭐ Preis-Leistungs-Tipp</span>
+                    </div>
+                    <h3>Baden-Airpark (Karlsruhe)</h3>
+                    <p class="airport-desc">Kurze Wege, stressfreier Check-in und günstiges Parken: <strong>Ryanair</strong> fliegt beide Flughäfen regelmäßig direkt und oft sehr preiswert an.</p>
+                    <div class="route-pills">
+                        <div class="route-pill">
+                            <div>
+                                <strong>FKB → Alicante (ALC)</strong>
+                                <small>Ryanair · Direkt · ca. 2 Std. 20 Min.</small>
+                            </div>
+                            <span class="route-price-hint">ca. 60–160 €</span>
+                        </div>
+                        <div class="route-pill">
+                            <div>
+                                <strong>FKB → Valencia (VLC)</strong>
+                                <small>Ryanair · Direkt · ca. 2 Std. 10 Min.</small>
+                            </div>
+                            <span class="route-price-hint">ca. 55–150 €</span>
+                        </div>
+                    </div>
+                    <button type="button" class="card-price-btn" onclick="openPriceModal('FKB')">💶 Wochenend-Preise ab Baden-Airpark</button>
+                </article>
+            </div>
+
+            <div class="price-banner">
+                <div>
+                    <h3>Kommendes Wochenende + 1 Woche Sonne?</h3>
+                    <p id="bannerWeekendText">Öffne die kompakte Preisübersicht für alle 6 Strecken mit vorausgewählten Wochenend-Daten.</p>
+                </div>
+                <button type="button" class="hero-cta primary" onclick="openPriceModal('ALL')">✈️ Live-Preise im Overlay öffnen</button>
+            </div>
+
+            <!-- 2. AUTO-ANREISE MIT GOOGLE MAPS -->
+            <div id="auto-route" class="section-heading">
+                <span class="sub-eyebrow">2. Weiterfahrt mit dem Mietwagen</span>
+                <h2>Google Maps Route vom Flughafen zur Casa</h2>
+                <p>Wähle einfach deinen Zielflughafen aus – beide Strecken führen entspannt über die <strong>mautfreie Autobahn AP-7</strong>.</p>
+            </div>
+
+            <div class="map-card">
+                <div class="map-card-header">
+                    <h3 id="mapTitle">Route: Flughafen Alicante (ALC) → Casa Englers</h3>
+                    <div class="airport-switcher">
+                        <button type="button" class="switch-btn active" id="btn-map-alc" onclick="selectDriveRoute('ALC')">✈️ Alicante (ALC)</button>
+                        <button type="button" class="switch-btn" id="btn-map-vlc" onclick="selectDriveRoute('VLC')">✈️ Valencia (VLC)</button>
+                        <button type="button" class="switch-btn reverse-btn" id="btn-map-reverse" onclick="toggleDriveDirection()" title="Route für den Heimflug umkehren">⇄ Heimflug</button>
+                    </div>
+                </div>
+
+                <div class="route-stats-bar" id="routeStatsBar">
+                    <span class="route-stat">🛣️ Strecke: <strong id="statDist">ca. 104 km</strong></span>
+                    <span class="route-stat">⏱️ Fahrzeit: <strong id="statTime">ca. 1 Std. 10 Min.</strong></span>
+                    <span class="route-stat">💶 Maut: <strong>Mautfrei (AP-7)</strong></span>
+                    <span class="route-stat" id="statExit">🚪 Ausfahrt: <strong>Nr. 62 (Ondara / Dénia)</strong></span>
+                </div>
+
+                <div class="map-frame-wrap">
+                    <div class="embed-consent-gate" id="gmapsConsentGate">
+                        <div class="embed-consent-icon">🗺️</div>
+                        <h3>Google Maps Route anzeigen</h3>
+                        <p>Aus Datenschutzgründen wird die interaktive Karte erst nach deinem Klick geladen. Dabei wird deine IP-Adresse an <strong>Google Maps</strong> übertragen (<a href="impressum.html">Datenschutz</a>).</p>
+                        <label class="embed-consent-remember">
+                            <input type="checkbox" id="gmapsRememberCheck" checked>
+                            <span>Entscheidung in diesem Browser merken (lokal)</span>
+                        </label>
+                        <button type="button" class="embed-consent-btn" onclick="grantGmapsConsent()">🗺️ Google Maps Route laden</button>
+                    </div>
+                    <iframe
+                        id="routeMapIframe"
+                        title="Google Maps Anreise nach Dénia"
+                        loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade"
+                        allowfullscreen>
+                    </iframe>
+                </div>
+
+                <div class="map-card-footer">
+                    <p class="map-address">
+                        <span id="mapAddressText"><strong>Ziel:</strong> Urbanización Albatros · Ctra. de les Marines a Dénia, km 3,5 · 03700 Dénia</span>
+                        <button type="button" class="consent-revoke-btn" id="gmapsRevokeBtn" onclick="revokeGmapsConsent()">🔒 Karte ausblenden / Einwilligung widerrufen</button>
+                    </p>
+                    <div class="map-actions">
+                        <a id="openMapsBtn" href="https://www.google.com/maps/dir/?api=1&origin=Aeropuerto+de+Alicante-Elche+Miguel+Hernandez&destination=38.8569,0.0690&travelmode=driving" target="_blank" rel="noopener noreferrer" class="action-btn primary">📍 Navigation in Google Maps ↗</a>
+                        <button type="button" class="action-btn secondary" id="copyCoordsBtn" onclick="copyDestination()">📋 Zieladresse kopieren</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tips-grid">
+                <article class="tip-card">
+                    <h3>🛣️ AP-7 ist komplett mautfrei</h3>
+                    <p>Sowohl von Alicante als auch von Valencia ist die Küstenautobahn AP-7 kostenlos befahrbar. Bei Ausfahrt 62 (Ondara/Dénia) abfahren und Richtung Las Marinas halten.</p>
+                </article>
+                <article class="tip-card">
+                    <h3>🚙 Mietwagen direkt am Terminal</h3>
+                    <p>Alle großen Vermieter sitzen direkt im Terminal von ALC und VLC. Frühzeitig online buchen spart besonders in den Ferien deutlich.</p>
+                </article>
+                <article class="tip-card">
+                    <h3>🅿️ Parkplatz direkt an der Anlage</h3>
+                    <p>Euer Mietwagen steht sicher auf dem Gelände der <em>Urbanisation Albatros</em> – kein langes Parkplatzsuchen, direkt Koffer ausladen und ab an den Pool.</p>
+                </article>
+            </div>
+
+            <div id="trigger-whatsapp" style="height: 1px;"></div>
+        </section>
+    </main>
+
+    <!-- 💶 PREISÜBERSICHT OVERLAY -->
+    <div class="price-modal-backdrop" id="priceModalBackdrop" role="dialog" aria-modal="true" aria-labelledby="priceModalTitle">
+        <div class="price-modal" onclick="event.stopPropagation()">
+            <div class="price-modal-header">
+                <div>
+                    <span class="eyebrow">Flugpreis-Überblick · 1 Woche Dénia</span>
+                    <h2 id="priceModalTitle">Kommendes Wochenende (+ 7 Tage Rückflug)</h2>
+                </div>
+                <button type="button" class="price-modal-close" onclick="closePriceModal()" aria-label="Preisübersicht schließen">✕</button>
+            </div>
+
+            <div class="price-modal-controls">
+                <div class="control-group" id="modalOriginFilters">
+                    <button type="button" class="modal-pill active" data-origin="ALL" onclick="filterModalOrigin('ALL')">Alle</button>
+                    <button type="button" class="modal-pill" data-origin="FRA" onclick="filterModalOrigin('FRA')">Frankfurt (FRA)</button>
+                    <button type="button" class="modal-pill" data-origin="STR" onclick="filterModalOrigin('STR')">Stuttgart (STR)</button>
+                    <button type="button" class="modal-pill" data-origin="FKB" onclick="filterModalOrigin('FKB')">Baden-Airpark (FKB)</button>
+                </div>
+
+                <div class="control-group">
+                    <button type="button" class="modal-pill active" id="btnDaySat" onclick="setWeekendMode('sat')">Sa → Sa</button>
+                    <button type="button" class="modal-pill" id="btnDayFri" onclick="setWeekendMode('fri')">Fr → Fr</button>
+                    <span class="date-display-badge" id="modalDateRange">-- → --</span>
+                </div>
+            </div>
+
+            <div class="price-modal-body" id="fareListContainer"></div>
+
+            <div class="price-modal-footer">
+                Hinweis: Angegebene Beträge sind typische Richtwerte für Hin- &amp; Rückflug (Handgepäck). Ein Klick auf <strong>Google Flights</strong> oder <strong>Skyscanner</strong> öffnet sofort die tagesaktuellen Live-Preise für genau das gewählte Wochenende.
+            </div>
+        </div>
+    </div>
+
+    <a href="https://wa.me/491733045695" class="whatsapp-button" target="_blank" id="whatsapp-btn">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="#ffffff" d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.8 0-67.6-9.5-97.2-27.2l-6.7-4-71.7 18.7 19.3-68.6-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z" /></svg>
+    </a>
+
+    <button id="scroll-to-top-btn" class="scroll-to-top-button" title="Nach oben scrollen">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M246.6 41.4c-12.5-12.5-32.8-12.5-45.3 0l-160 160c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L224 109.3 361.4 246.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-160-160z" /></svg>
+    </button>
+
+    <div id="weather-overlay">
+        <span id="temperature">--</span>°C
+    </div>
+
+    <script src="script.js" defer></script>
+    <script>
+        // =========================================
+        //   1. Dynamisches kommendes Wochenende (+7 Tage) & Preis-Overlay
+        // =========================================
+        const FLIGHT_ROUTES = [
+            { origin: 'FKB', originName: 'Baden-Airpark', dest: 'VLC', destName: 'Valencia', airline: 'Ryanair (Direkt)', duration: 'ca. 2h 10m', estimate: 'ca. 55–150 €' },
+            { origin: 'FKB', originName: 'Baden-Airpark', dest: 'ALC', destName: 'Alicante', airline: 'Ryanair (Direkt)', duration: 'ca. 2h 20m', estimate: 'ca. 60–160 €' },
+            { origin: 'STR', originName: 'Stuttgart',     dest: 'VLC', destName: 'Valencia', airline: 'Eurowings (Direkt)', duration: 'ca. 2h 10m', estimate: 'ca. 100–210 €' },
+            { origin: 'STR', originName: 'Stuttgart',     dest: 'ALC', destName: 'Alicante', airline: 'Eurowings (Direkt)', duration: 'ca. 2h 25m', estimate: 'ca. 110–230 €' },
+            { origin: 'FRA', originName: 'Frankfurt',     dest: 'VLC', destName: 'Valencia', airline: 'Lufthansa (Direkt)', duration: 'ca. 2h 20m', estimate: 'ca. 120–240 €' },
+            { origin: 'FRA', originName: 'Frankfurt',     dest: 'ALC', destName: 'Alicante', airline: 'Lufthansa (Direkt)', duration: 'ca. 2h 30m', estimate: 'ca. 130–260 €' }
+        ];
+
+        let currentOriginFilter = 'ALL';
+        let currentWeekendMode = 'sat'; // 'sat' (Sa->Sa) oder 'fri' (Fr->Fr)
+
+        function getUpcomingWeekendDates(mode) {
+            const targetDow = mode === 'fri' ? 5 : 6; // 5 = Fr, 6 = Sa
+            const now = new Date();
+            const depart = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+            let diff = (targetDow - depart.getDay() + 7) % 7;
+            if (diff === 0) diff = 7; // Falls heute schon Fr/Sa ist, nächstes Wochenende wählen
+            depart.setDate(depart.getDate() + diff);
+
+            const ret = new Date(depart);
+            ret.setDate(ret.getDate() + 7);
+            return { depart, ret };
+        }
+
+        function fmtISO(d) {
+            const y = d.getFullYear();
+            const m = String(d.getMonth() + 1).padStart(2, '0');
+            const day = String(d.getDate()).padStart(2, '0');
+            return `${y}-${m}-${day}`;
+        }
+
+        function fmtSky(d) {
+            return fmtISO(d).replace(/-/g, '').slice(2); // YYMMDD
+        }
+
+        function fmtDE(d) {
+            const days = ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa'];
+            return `${days[d.getDay()]}, ${String(d.getDate()).padStart(2, '0')}.${String(d.getMonth() + 1).padStart(2, '0')}.`;
+        }
+
+        function renderFareOverlay() {
+            const { depart, ret } = getUpcomingWeekendDates(currentWeekendMode);
+            const depIso = fmtISO(depart);
+            const retIso = fmtISO(ret);
+            const depSky = fmtSky(depart);
+            const retSky = fmtSky(ret);
+
+            const rangeLabel = `${fmtDE(depart)} → ${fmtDE(ret)}`;
+            document.getElementById('modalDateRange').textContent = rangeLabel;
+
+            const filtered = currentOriginFilter === 'ALL'
+                ? FLIGHT_ROUTES
+                : FLIGHT_ROUTES.filter(r => r.origin === currentOriginFilter);
+
+            const container = document.getElementById('fareListContainer');
+            container.innerHTML = filtered.map(r => {
+                const googleUrl = `https://www.google.com/travel/flights?q=${encodeURIComponent(`Flights from ${r.origin} to ${r.dest} on ${depIso} through ${retIso}`)}&curr=EUR&hl=de`;
+                const skyUrl = `https://www.skyscanner.de/transport/fluge/${r.origin.toLowerCase()}/${r.dest.toLowerCase()}/${depSky}/${retSky}/`;
+                return `
+                    <div class="fare-row">
+                        <div>
+                            <div class="fare-route">${r.originName} (${r.origin}) → ${r.destName} (${r.dest})</div>
+                            <div class="fare-sub">${r.airline} · ${r.duration}</div>
+                        </div>
+                        <div class="fare-estimate">
+                            <strong>${r.estimate}</strong>
+                            <small>Richtwert Hin &amp; Rück</small>
+                        </div>
+                        <div class="fare-links">
+                            <a href="${googleUrl}" target="_blank" rel="noopener noreferrer" class="fare-link google">Google Flights ↗</a>
+                            <a href="${skyUrl}" target="_blank" rel="noopener noreferrer" class="fare-link sky">Skyscanner ↗</a>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function openPriceModal(origin) {
+            filterModalOrigin(origin || 'ALL');
+            document.getElementById('priceModalBackdrop').classList.add('is-open');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closePriceModal() {
+            document.getElementById('priceModalBackdrop').classList.remove('is-open');
+            document.body.style.overflow = '';
+        }
+
+        function filterModalOrigin(origin) {
+            currentOriginFilter = origin;
+            document.querySelectorAll('#modalOriginFilters .modal-pill').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.origin === origin);
+            });
+            renderFareOverlay();
+        }
+
+        function setWeekendMode(mode) {
+            currentWeekendMode = mode;
+            document.getElementById('btnDaySat').classList.toggle('active', mode === 'sat');
+            document.getElementById('btnDayFri').classList.toggle('active', mode === 'fri');
+            renderFareOverlay();
+        }
+
+        document.getElementById('priceModalBackdrop').addEventListener('click', closePriceModal);
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closePriceModal();
+        });
+
+        // =========================================
+        //   2. Google Maps Auto-Route (ALC / VLC <-> Casa Englers)
+        // =========================================
+        const CASA_COORDS = '38.8569,0.0690';
+        const DRIVE_ROUTES = {
+            ALC: {
+                name: 'Flughafen Alicante (ALC)',
+                query: 'Aeropuerto+de+Alicante-Elche+Miguel+Hernandez,+Spanien',
+                navOrigin: 'Aeropuerto+de+Alicante-Elche+Miguel+Hernandez',
+                dist: 'ca. 104 km',
+                time: 'ca. 1 Std. 10 Min.'
+            },
+            VLC: {
+                name: 'Flughafen Valencia (VLC)',
+                query: 'Aeropuerto+de+Valencia,+Spanien',
+                navOrigin: 'Aeropuerto+de+Valencia',
+                dist: 'ca. 112 km',
+                time: 'ca. 1 Std. 15 Min.'
+            }
+        };
+
+        const GMAPS_CONSENT_KEY = 'denia_consent_gmaps';
+        let currentDriveCode = 'ALC';
+        let isReturnTrip = false;
+        let gmapsUnlockedThisSession = false;
+
+        function buildDriveUrls(code, returnTrip) {
+            const r = DRIVE_ROUTES[code] || DRIVE_ROUTES.ALC;
+            const saddr = returnTrip ? CASA_COORDS : r.query;
+            const daddr = returnTrip ? r.query : CASA_COORDS;
+            const origin = returnTrip ? CASA_COORDS : r.navOrigin;
+            const dest = returnTrip ? r.navOrigin : CASA_COORDS;
+            return {
+                embedUrl: `https://maps.google.com/maps?saddr=${saddr}&daddr=${daddr}&dirflg=d&hl=de&output=embed`,
+                navUrl: `https://www.google.com/maps/dir/?api=1&origin=${origin}&destination=${dest}&travelmode=driving`
+            };
+        }
+
+        function hasGmapsConsent() {
+            if (gmapsUnlockedThisSession) return true;
+            try { return localStorage.getItem(GMAPS_CONSENT_KEY) === '1'; } catch (_) { return false; }
+        }
+
+        function updateGmapsGateUI() {
+            const unlocked = hasGmapsConsent();
+            document.getElementById('gmapsConsentGate').classList.toggle('is-hidden', unlocked);
+            document.getElementById('gmapsRevokeBtn').classList.toggle('is-visible', unlocked);
+        }
+
+        function grantGmapsConsent() {
+            gmapsUnlockedThisSession = true;
+            const remember = document.getElementById('gmapsRememberCheck')?.checked;
+            if (remember) {
+                try { localStorage.setItem(GMAPS_CONSENT_KEY, '1'); } catch (_) {}
+            }
+            updateGmapsGateUI();
+            const urls = buildDriveUrls(currentDriveCode, isReturnTrip);
+            document.getElementById('routeMapIframe').src = urls.embedUrl;
+        }
+
+        function revokeGmapsConsent() {
+            gmapsUnlockedThisSession = false;
+            try { localStorage.removeItem(GMAPS_CONSENT_KEY); } catch (_) {}
+            document.getElementById('routeMapIframe').src = 'about:blank';
+            updateGmapsGateUI();
+        }
+
+        function toggleDriveDirection() {
+            isReturnTrip = !isReturnTrip;
+            selectDriveRoute(currentDriveCode);
+        }
+
+        function selectDriveRoute(code) {
+            currentDriveCode = code;
+            const r = DRIVE_ROUTES[code] || DRIVE_ROUTES.ALC;
+            const urls = buildDriveUrls(code, isReturnTrip);
+
+            document.getElementById('btn-map-alc').classList.toggle('active', code === 'ALC');
+            document.getElementById('btn-map-vlc').classList.toggle('active', code === 'VLC');
+
+            const revBtn = document.getElementById('btn-map-reverse');
+            revBtn.classList.toggle('active', isReturnTrip);
+            revBtn.textContent = isReturnTrip ? '⇄ Rückfahrt aktiv' : '⇄ Heimflug';
+
+            document.getElementById('mapTitle').textContent = isReturnTrip
+                ? `Rückfahrt: Casa Englers → ${r.name}`
+                : `Route: ${r.name} → Casa Englers`;
+            document.getElementById('statDist').textContent = r.dist;
+            document.getElementById('statTime').textContent = r.time;
+            document.getElementById('statExit').innerHTML = isReturnTrip
+                ? '🚪 Auffahrt: <strong>Nr. 62 (Ondara / Dénia)</strong>'
+                : '🚪 Ausfahrt: <strong>Nr. 62 (Ondara / Dénia)</strong>';
+            document.getElementById('mapAddressText').innerHTML = isReturnTrip
+                ? `<strong>Heimflug-Route:</strong> Urbanización Albatros → ${r.name}`
+                : '<strong>Ziel:</strong> Urbanización Albatros · Ctra. de les Marines a Dénia, km 3,5 · 03700 Dénia';
+
+            const navBtn = document.getElementById('openMapsBtn');
+            navBtn.href = urls.navUrl;
+            navBtn.textContent = isReturnTrip ? '📍 Navigation zum Flughafen ↗' : '📍 Navigation in Google Maps ↗';
+
+            updateGmapsGateUI();
+            if (hasGmapsConsent()) {
+                document.getElementById('routeMapIframe').src = urls.embedUrl;
+            }
+        }
+
+        function copyDestination() {
+            const addr = 'Urbanización Albatros, Ctra. de les Marines a Dénia km 3.5, 03700 Dénia (38.8569, 0.0690)';
+            const btn = document.getElementById('copyCoordsBtn');
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(addr).then(() => {
+                    btn.textContent = '✓ Adresse kopiert!';
+                    setTimeout(() => { btn.textContent = '📋 Zieladresse kopieren'; }, 2200);
+                });
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const { depart, ret } = getUpcomingWeekendDates('sat');
+            document.getElementById('bannerWeekendText').textContent =
+                `Kommendes Wochenende (${fmtDE(depart)} → ${fmtDE(ret)}): Vergleiche alle 6 Strecken ab Frankfurt, Stuttgart & Baden-Airpark kompakt im Overlay.`;
+            selectDriveRoute('ALC');
+        });
+    </script>
+</body>
+</html>

@@ -8,10 +8,6 @@
 
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,600&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
-
     <link rel="stylesheet" href="style.css">
 
     <style>
@@ -376,6 +372,16 @@
                     </div>
 
                     <div class="radar-frame-wrap">
+                        <div class="embed-consent-gate" id="shipsConsentGate">
+                            <div class="embed-consent-icon">🚢</div>
+                            <h3>Live-Schiffsradar anzeigen</h3>
+                            <p>Aus Datenschutzgründen wird das Schiffsradar erst nach deinem Klick geladen. Dabei wird deine IP-Adresse an <strong>VesselFinder</strong> übertragen (<a href="impressum.html">Datenschutz</a>).</p>
+                            <label class="embed-consent-remember ship-accent">
+                                <input type="checkbox" id="shipsRememberCheck" checked>
+                                <span>Entscheidung in diesem Browser merken (lokal)</span>
+                            </label>
+                            <button type="button" class="embed-consent-btn ship-btn" onclick="grantShipsConsent()">🚢 Schiffsradar (VesselFinder) laden</button>
+                        </div>
                         <iframe
                             id="ships-iframe"
                             title="VesselFinder Live-Schiffsradar vor Dénia"
@@ -386,7 +392,10 @@
                     </div>
 
                     <div class="radar-card-footer">
-                        <p class="radar-note">Klicke auf ein Schiffssymbol für Name, Kurs &amp; Geschwindigkeit (Quelle: VesselFinder).</p>
+                        <p class="radar-note">
+                            Klicke auf ein Schiffssymbol für Name, Kurs &amp; Geschwindigkeit (Quelle: VesselFinder).
+                            <button type="button" class="consent-revoke-btn" id="shipsRevokeBtn" onclick="revokeShipsConsent()">🔒 Karte ausblenden / Einwilligung widerrufen</button>
+                        </p>
                         <div class="radar-actions">
                             <a id="ships-external-link" href="https://www.vesselfinder.com/?lat=38.865&lon=0.085&zoom=12" target="_blank" rel="noopener noreferrer" class="action-btn ship">🚢 In VesselFinder öffnen ↗</a>
                             <a href="rundgang.html" class="action-btn secondary">🔄 Zum 360°-Balkonblick</a>
@@ -426,6 +435,16 @@
                     </div>
 
                     <div class="radar-frame-wrap">
+                        <div class="embed-consent-gate" id="flightsConsentGate">
+                            <div class="embed-consent-icon">✈️</div>
+                            <h3>Live-Flugradar anzeigen</h3>
+                            <p>Aus Datenschutzgründen wird die Live-Flugkarte erst nach deinem Klick geladen. Dabei wird deine IP-Adresse an <strong>ADS-B Exchange</strong> übertragen (<a href="impressum.html">Datenschutz</a>).</p>
+                            <label class="embed-consent-remember">
+                                <input type="checkbox" id="flightsRememberCheck" checked>
+                                <span>Entscheidung in diesem Browser merken (lokal)</span>
+                            </label>
+                            <button type="button" class="embed-consent-btn" onclick="grantFlightsConsent()">✈️ Flugradar (ADS-B Exchange) laden</button>
+                        </div>
                         <iframe
                             id="flights-iframe"
                             title="Live-Flugradar über Dénia (ADS-B Exchange)"
@@ -436,7 +455,10 @@
                     </div>
 
                     <div class="radar-card-footer">
-                        <p class="radar-note">Live-Karte via ADS-B Exchange – für Flugdetails &amp; die Handy-App direkt zu Flightradar24 wechseln.</p>
+                        <p class="radar-note">
+                            Live-Karte via ADS-B Exchange – für Flugdetails &amp; die Handy-App direkt zu Flightradar24 wechseln.
+                            <button type="button" class="consent-revoke-btn" id="flightsRevokeBtn" onclick="revokeFlightsConsent()">🔒 Karte ausblenden / Einwilligung widerrufen</button>
+                        </p>
                         <div class="radar-actions">
                             <a id="fr24-external-link" href="https://www.flightradar24.com/38.865,0.085/12" target="_blank" rel="noopener noreferrer" class="action-btn fr24">✈️ In Flightradar24 öffnen ↗</a>
                             <a id="airplanes-external-link" href="https://globe.adsbexchange.com/?lat=38.865&lon=0.085&zoom=12" target="_blank" rel="noopener noreferrer" class="action-btn secondary">🌐 Vollbild-Karte ↗</a>
@@ -478,8 +500,28 @@
 
     <script src="script.js" defer></script>
     <script>
+        const SHIPS_CONSENT_KEY = 'denia_consent_vesselfinder';
+        const FLIGHTS_CONSENT_KEY = 'denia_consent_adsb';
+        let shipsUnlockedThisSession = false;
+        let flightsUnlockedThisSession = false;
         let shipsLoaded = false;
         let flightsLoaded = false;
+        let currentShipView = { lat: 38.865, lon: 0.085, zoom: 12 };
+        let currentFlightView = { lat: 38.865, lon: 0.085, zoom: 12 };
+
+        function hasConsent(key, sessionFlag) {
+            if (sessionFlag) return true;
+            try { return localStorage.getItem(key) === '1'; } catch (_) { return false; }
+        }
+
+        function updateRadarGatesUI() {
+            const shipsOk = hasConsent(SHIPS_CONSENT_KEY, shipsUnlockedThisSession);
+            const flightsOk = hasConsent(FLIGHTS_CONSENT_KEY, flightsUnlockedThisSession);
+            document.getElementById('shipsConsentGate').classList.toggle('is-hidden', shipsOk);
+            document.getElementById('shipsRevokeBtn').classList.toggle('is-visible', shipsOk);
+            document.getElementById('flightsConsentGate').classList.toggle('is-hidden', flightsOk);
+            document.getElementById('flightsRevokeBtn').classList.toggle('is-visible', flightsOk);
+        }
 
         function buildShipUrl(lat, lon, zoom) {
             const ra = encodeURIComponent(window.location.href.startsWith('http') ? window.location.href : 'https://denia.englers.win/radar.html');
@@ -490,25 +532,67 @@
             return `https://globe.adsbexchange.com/?lat=${lat}&lon=${lon}&zoom=${zoom}&hideSidebar&hideButtons`;
         }
 
+        function grantShipsConsent() {
+            shipsUnlockedThisSession = true;
+            if (document.getElementById('shipsRememberCheck')?.checked) {
+                try { localStorage.setItem(SHIPS_CONSENT_KEY, '1'); } catch (_) {}
+            }
+            updateRadarGatesUI();
+            setShipView(currentShipView.lat, currentShipView.lon, currentShipView.zoom);
+        }
+
+        function revokeShipsConsent() {
+            shipsUnlockedThisSession = false;
+            shipsLoaded = false;
+            try { localStorage.removeItem(SHIPS_CONSENT_KEY); } catch (_) {}
+            document.getElementById('ships-iframe').src = 'about:blank';
+            updateRadarGatesUI();
+        }
+
+        function grantFlightsConsent() {
+            flightsUnlockedThisSession = true;
+            if (document.getElementById('flightsRememberCheck')?.checked) {
+                try { localStorage.setItem(FLIGHTS_CONSENT_KEY, '1'); } catch (_) {}
+            }
+            updateRadarGatesUI();
+            setFlightView(currentFlightView.lat, currentFlightView.lon, currentFlightView.zoom);
+        }
+
+        function revokeFlightsConsent() {
+            flightsUnlockedThisSession = false;
+            flightsLoaded = false;
+            try { localStorage.removeItem(FLIGHTS_CONSENT_KEY); } catch (_) {}
+            document.getElementById('flights-iframe').src = 'about:blank';
+            updateRadarGatesUI();
+        }
+
         function setShipView(lat, lon, zoom, btn) {
+            currentShipView = { lat, lon, zoom };
             if (btn) {
                 document.querySelectorAll('#panel-ships .preset-btn').forEach(b => b.classList.remove('active'));
                 btn.classList.add('active');
             }
-            document.getElementById('ships-iframe').src = buildShipUrl(lat, lon, zoom);
             document.getElementById('ships-external-link').href = `https://www.vesselfinder.com/?lat=${lat}&lon=${lon}&zoom=${zoom}`;
-            shipsLoaded = true;
+            updateRadarGatesUI();
+            if (hasConsent(SHIPS_CONSENT_KEY, shipsUnlockedThisSession)) {
+                document.getElementById('ships-iframe').src = buildShipUrl(lat, lon, zoom);
+                shipsLoaded = true;
+            }
         }
 
         function setFlightView(lat, lon, zoom, btn) {
+            currentFlightView = { lat, lon, zoom };
             if (btn) {
                 document.querySelectorAll('#panel-flights .preset-btn').forEach(b => b.classList.remove('active'));
                 btn.classList.add('active');
             }
-            document.getElementById('flights-iframe').src = buildFlightUrl(lat, lon, zoom);
             document.getElementById('fr24-external-link').href = `https://www.flightradar24.com/${lat},${lon}/${zoom}`;
             document.getElementById('airplanes-external-link').href = `https://globe.adsbexchange.com/?lat=${lat}&lon=${lon}&zoom=${zoom}`;
-            flightsLoaded = true;
+            updateRadarGatesUI();
+            if (hasConsent(FLIGHTS_CONSENT_KEY, flightsUnlockedThisSession)) {
+                document.getElementById('flights-iframe').src = buildFlightUrl(lat, lon, zoom);
+                flightsLoaded = true;
+            }
         }
 
         function switchRadarTab(tab) {
@@ -519,15 +603,16 @@
             document.getElementById('tab-btn-flights').classList.toggle('active', isFlights);
 
             if (isFlights) {
-                if (!flightsLoaded) setFlightView(38.865, 0.085, 12);
+                if (!flightsLoaded) setFlightView(currentFlightView.lat, currentFlightView.lon, currentFlightView.zoom);
                 history.replaceState(null, '', '#fluege');
             } else {
-                if (!shipsLoaded) setShipView(38.865, 0.085, 12);
+                if (!shipsLoaded) setShipView(currentShipView.lat, currentShipView.lon, currentShipView.zoom);
                 history.replaceState(null, '', '#schiffe');
             }
         }
 
         document.addEventListener('DOMContentLoaded', () => {
+            updateRadarGatesUI();
             if (window.location.hash === '#fluege') {
                 switchRadarTab('flights');
             } else {
