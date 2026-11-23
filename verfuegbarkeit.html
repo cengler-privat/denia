@@ -1,0 +1,1891 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Admin-Kalender – Casa Englers y Amigos</title>
+
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        /* Hero analog zu info-ordner.html & kulinarisches.html */
+        .page-hero {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: #ffffff;
+            text-align: center;
+            padding: 110px 20px 55px 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .page-hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -20%;
+            width: 140%;
+            height: 200%;
+            background: radial-gradient(circle at 50% 30%, rgba(245, 158, 11, 0.16), transparent 60%);
+            pointer-events: none;
+        }
+
+        .page-hero .eyebrow {
+            font-family: 'Lato', sans-serif;
+            font-size: 13px;
+            letter-spacing: 3.5px;
+            text-transform: uppercase;
+            color: #f59e0b;
+            font-weight: 700;
+            display: block;
+            margin-bottom: 12px;
+            position: relative;
+        }
+
+        .page-hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.4rem, 5vw, 3.8rem);
+            margin: 0 0 16px 0;
+            line-height: 1.15;
+            position: relative;
+        }
+
+        .page-hero p {
+            font-family: 'Lato', sans-serif;
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.85);
+            max-width: 650px;
+            margin: 0 auto 30px auto;
+            line-height: 1.6;
+            position: relative;
+        }
+
+        /* Saison-Schnellnavigation */
+        .vibe-filter-bar {
+            display: inline-flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 8px;
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            padding: 8px;
+            border-radius: 50px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            position: relative;
+        }
+
+        .vibe-btn {
+            background: transparent;
+            color: rgba(255, 255, 255, 0.85);
+            border: none;
+            padding: 10px 18px;
+            border-radius: 40px;
+            font-family: 'Lato', sans-serif;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.25s ease;
+        }
+
+        .vibe-btn:hover {
+            color: #ffffff;
+            background: rgba(255, 255, 255, 0.12);
+        }
+
+        .vibe-btn.active {
+            background: #f59e0b;
+            color: #0f172a;
+            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4);
+        }
+
+        /* Hauptbereich */
+        .cal-wrapper {
+            max-width: 1240px;
+            margin: 34px auto 60px auto;
+            padding: 0 20px;
+        }
+
+        /* Status-Banner (Live / Vorschau / Ladezustand) */
+        .sync-banner {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            background: #ffffff;
+            border: 1px solid rgba(15, 23, 42, 0.07);
+            border-radius: 16px;
+            padding: 12px 18px;
+            margin-bottom: 20px;
+            box-shadow: 0 6px 20px rgba(15, 23, 42, 0.04);
+            font-family: 'Lato', sans-serif;
+            font-size: 0.9rem;
+            color: #475569;
+        }
+
+        .sync-banner.demo-mode {
+            background: #fffbeb;
+            border-color: rgba(245, 158, 11, 0.35);
+            color: #92400e;
+        }
+
+        .sync-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 700;
+            color: #0f172a;
+        }
+
+        .sync-dot {
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+            background: #94a3b8;
+            display: inline-block;
+        }
+
+        .sync-dot.live {
+            background: #22c55e;
+            box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.2);
+        }
+
+        .sync-dot.demo {
+            background: #f59e0b;
+            box-shadow: 0 0 0 4px rgba(245, 158, 11, 0.22);
+        }
+
+        /* Steuerleiste + Legende */
+        .cal-controls {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            margin-bottom: 22px;
+        }
+
+        .cal-legend {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 14px;
+            font-family: 'Lato', sans-serif;
+            font-size: 0.88rem;
+            color: #334155;
+            font-weight: 600;
+        }
+
+        .legend-item {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+        }
+
+        .swatch {
+            width: 18px;
+            height: 18px;
+            border-radius: 6px;
+            display: inline-block;
+            border: 1px solid rgba(15, 23, 42, 0.14);
+        }
+
+        .swatch.free {
+            background: #ffffff;
+        }
+
+        .swatch.booked {
+            background: #fecdd3;
+            border-color: #fda4af;
+        }
+
+        .swatch.pending {
+            background: #fde68a;
+            border-color: #f59e0b;
+        }
+
+        .swatch.split {
+            background: linear-gradient(135deg, #fecdd3 48%, #ffffff 52%);
+            border-color: #fda4af;
+        }
+
+        .cal-nav-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .nav-pill {
+            background: #ffffff;
+            color: #0f172a;
+            border: 1px solid #cbd5e1;
+            border-radius: 12px;
+            padding: 9px 14px;
+            font-family: 'Lato', sans-serif;
+            font-size: 0.88rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .nav-pill:hover {
+            background: #0f172a;
+            color: #ffffff;
+            border-color: #0f172a;
+        }
+
+        .nav-pill.active-span {
+            background: #0f172a;
+            color: #ffffff;
+            border-color: #0f172a;
+        }
+
+        /* Anfrage- & Auswahlleiste */
+        .inquiry-bar {
+            background: #ffffff;
+            border: 1.5px solid rgba(15, 23, 42, 0.08);
+            border-radius: 20px;
+            padding: 18px 22px;
+            margin-bottom: 26px;
+            box-shadow: 0 10px 30px rgba(15, 23, 42, 0.06);
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            transition: border-color 0.25s ease, box-shadow 0.25s ease;
+        }
+
+        .inquiry-bar.has-range {
+            border-color: #f59e0b;
+            box-shadow: 0 12px 34px rgba(245, 158, 11, 0.16);
+        }
+
+        .inquiry-info {
+            font-family: 'Lato', sans-serif;
+            color: #334155;
+            font-size: 0.96rem;
+            line-height: 1.5;
+        }
+
+        .inquiry-info strong {
+            color: #0f172a;
+        }
+
+        .inquiry-sub {
+            display: block;
+            font-size: 0.85rem;
+            color: #64748b;
+            margin-top: 2px;
+        }
+
+        .inquiry-sub.warn {
+            color: #b45309;
+            font-weight: 700;
+        }
+
+        .inquiry-sub.error {
+            color: #be123c;
+            font-weight: 700;
+        }
+
+        .inquiry-actions {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .wa-cta-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #25d366;
+            color: #052e16;
+            text-decoration: none;
+            border: none;
+            border-radius: 13px;
+            padding: 12px 20px;
+            font-family: 'Lato', sans-serif;
+            font-size: 0.94rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+            box-shadow: 0 6px 18px rgba(37, 211, 102, 0.28);
+        }
+
+        .wa-cta-btn:hover {
+            background: #22c55e;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 24px rgba(37, 211, 102, 0.36);
+        }
+
+        .wa-cta-btn.disabled {
+            background: #e2e8f0;
+            color: #94a3b8;
+            box-shadow: none;
+            pointer-events: none;
+        }
+
+        .reset-btn {
+            background: #f1f5f9;
+            color: #475569;
+            border: none;
+            border-radius: 12px;
+            padding: 11px 14px;
+            font-family: 'Lato', sans-serif;
+            font-size: 0.88rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background 0.2s ease, color 0.2s ease;
+        }
+
+        .reset-btn:hover {
+            background: #e2e8f0;
+            color: #0f172a;
+        }
+
+        /* Monats-Grid */
+        .months-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .month-card {
+            background: #ffffff;
+            border-radius: 22px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(15, 23, 42, 0.06);
+            border: 1px solid rgba(15, 23, 42, 0.06);
+        }
+
+        .month-header {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: #ffffff;
+            padding: 15px 20px;
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+        }
+
+        .month-header h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.28rem;
+            margin: 0;
+            color: #ffffff;
+        }
+
+        .month-header span {
+            font-family: 'Lato', sans-serif;
+            font-size: 0.82rem;
+            font-weight: 700;
+            color: #f59e0b;
+            letter-spacing: 1px;
+        }
+
+        .month-body {
+            padding: 14px 14px 18px 14px;
+        }
+
+        .weekdays-row,
+        .days-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 5px;
+        }
+
+        .weekdays-row {
+            margin-bottom: 8px;
+        }
+
+        .weekday-lbl {
+            text-align: center;
+            font-family: 'Lato', sans-serif;
+            font-size: 0.74rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            color: #94a3b8;
+            padding: 4px 0;
+        }
+
+        .day-cell {
+            aspect-ratio: 1 / 1;
+            border-radius: 10px;
+            border: 1.5px solid #f1f5f9;
+            background: #ffffff;
+            color: #0f172a;
+            font-family: 'Lato', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            cursor: pointer;
+            transition: transform 0.14s ease, border-color 0.14s ease, box-shadow 0.14s ease;
+            user-select: none;
+            padding: 0;
+        }
+
+        .day-cell.empty {
+            border: none;
+            background: transparent;
+            cursor: default;
+            pointer-events: none;
+        }
+
+        .day-cell.is-past {
+            color: #cbd5e1;
+            background: #f8fafc;
+            border-color: #f8fafc;
+            cursor: default;
+        }
+
+        .day-cell.is-today {
+            box-shadow: inset 0 0 0 2px #0f172a;
+        }
+
+        /* Status-Füllungen (inkl. diagonaler Wechseltage!) */
+        .day-cell.state-booked {
+            background: #fecdd3;
+            border-color: #fda4af;
+            color: #9f1239;
+            cursor: not-allowed;
+        }
+
+        .day-cell.state-pending {
+            background: #fde68a;
+            border-color: #f59e0b;
+            color: #92400e;
+        }
+
+        /* Anreise eines Gastes (Nachmittag belegt/pending, Vormittag frei → Abreise möglich) */
+        .day-cell.split-free-booked {
+            background: linear-gradient(135deg, #ffffff 48.5%, #fecdd3 51.5%);
+            border-color: #fda4af;
+            color: #0f172a;
+        }
+
+        .day-cell.split-free-pending {
+            background: linear-gradient(135deg, #ffffff 48.5%, #fde68a 51.5%);
+            border-color: #f59e0b;
+            color: #0f172a;
+        }
+
+        /* Abreise eines Gastes (Vormittag belegt/pending, Nachmittag frei → Anreise möglich) */
+        .day-cell.split-booked-free {
+            background: linear-gradient(135deg, #fecdd3 48.5%, #ffffff 51.5%);
+            border-color: #fda4af;
+            color: #0f172a;
+        }
+
+        .day-cell.split-pending-free {
+            background: linear-gradient(135deg, #fde68a 48.5%, #ffffff 51.5%);
+            border-color: #f59e0b;
+            color: #0f172a;
+        }
+
+        /* Doppelter Wechseltag (booked + pending treffen aufeinander) */
+        .day-cell.split-booked-pending {
+            background: linear-gradient(135deg, #fecdd3 48.5%, #fde68a 51.5%);
+            border-color: #f59e0b;
+            color: #7c2d12;
+        }
+
+        .day-cell.split-pending-booked {
+            background: linear-gradient(135deg, #fde68a 48.5%, #fecdd3 51.5%);
+            border-color: #fda4af;
+            color: #7c2d12;
+            cursor: not-allowed;
+        }
+
+        .day-cell:not(.is-past):not(.state-booked):not(.empty):hover {
+            border-color: #0f172a;
+            transform: scale(1.06);
+            z-index: 2;
+        }
+
+        /* Ausgewählter Wunschzeitraum */
+        .day-cell.in-range {
+            background: #e0f2fe !important;
+            border-color: #38bdf8 !important;
+            color: #0369a1 !important;
+        }
+
+        .day-cell.in-range-pending {
+            background: linear-gradient(135deg, #fde68a 48%, #bae6fd 52%) !important;
+            border-color: #0284c7 !important;
+            color: #0f172a !important;
+        }
+
+        .day-cell.sel-edge {
+            background: #0f172a !important;
+            border-color: #0f172a !important;
+            color: #ffffff !important;
+            box-shadow: 0 4px 12px rgba(15, 23, 42, 0.35);
+            z-index: 3;
+        }
+
+        /* Sync-Leiste Aktionen (Refresh & Admin-Schloss) */
+        .sync-actions {
+            display: inline-flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .sync-mini-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: #f1f5f9;
+            color: #334155;
+            border: 1px solid #cbd5e1;
+            border-radius: 999px;
+            padding: 5px 12px;
+            font-family: 'Lato', sans-serif;
+            font-size: 0.8rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .sync-mini-btn:hover {
+            background: #0f172a;
+            color: #ffffff;
+            border-color: #0f172a;
+        }
+
+        .sync-mini-btn.admin-active {
+            background: #0f172a;
+            color: #fbbf24;
+            border-color: #0f172a;
+        }
+
+        .sync-mini-btn.spinning .spin-icon {
+            display: inline-block;
+            animation: spin360 0.7s linear infinite;
+        }
+
+        @keyframes spin360 {
+            to { transform: rotate(360deg); }
+        }
+
+        .gcal-add-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            background: #0f172a;
+            color: #fbbf24;
+            text-decoration: none;
+            border-radius: 13px;
+            padding: 12px 18px;
+            font-family: 'Lato', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 700;
+            transition: all 0.2s ease;
+        }
+
+        .gcal-add-btn:hover {
+            background: #1e293b;
+            transform: translateY(-2px);
+        }
+
+        .flight-cta-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            background: #0284c7;
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 13px;
+            padding: 12px 18px;
+            font-family: 'Lato', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 700;
+            transition: all 0.2s ease;
+            box-shadow: 0 6px 16px rgba(2, 132, 199, 0.25);
+        }
+
+        .flight-cta-btn:hover {
+            background: #0369a1;
+            transform: translateY(-2px);
+        }
+
+        .admin-row-actions {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-pill.flight-pill {
+            background: #e0f2fe;
+            color: #0369a1;
+            border-color: #7dd3fc;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .nav-pill.flight-pill:hover {
+            background: #0284c7;
+            color: #ffffff;
+            border-color: #0284c7;
+        }
+
+        /* Admin-Buchungsliste unter dem Kalender */
+        .admin-panel {
+            margin-top: 32px;
+            background: #ffffff;
+            border: 2px solid #0f172a;
+            border-radius: 22px;
+            overflow: hidden;
+            box-shadow: 0 14px 36px rgba(15, 23, 42, 0.1);
+            display: none;
+        }
+
+        .admin-panel.show {
+            display: block;
+        }
+
+        .admin-panel-header {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: #ffffff;
+            padding: 18px 24px;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+        }
+
+        .admin-panel-header h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.35rem;
+            margin: 0;
+            color: #ffffff;
+        }
+
+        .admin-panel-header span.sub {
+            display: block;
+            font-family: 'Lato', sans-serif;
+            font-size: 0.84rem;
+            color: rgba(255, 255, 255, 0.75);
+            margin-top: 3px;
+        }
+
+        .admin-header-btns {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .admin-btn-light {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(255, 255, 255, 0.12);
+            color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            border-radius: 10px;
+            padding: 8px 14px;
+            font-family: 'Lato', sans-serif;
+            font-size: 0.84rem;
+            font-weight: 700;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .admin-btn-light:hover {
+            background: #f59e0b;
+            color: #0f172a;
+            border-color: #f59e0b;
+        }
+
+        .admin-list {
+            padding: 18px 22px 22px 22px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .admin-booking-row {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            padding: 14px 16px;
+            border-radius: 14px;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            transition: border-color 0.2s ease, background 0.2s ease;
+        }
+
+        .admin-booking-row.highlight {
+            border-color: #f59e0b;
+            background: #fffbeb;
+        }
+
+        .admin-row-main {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .admin-row-top {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .admin-status-tag {
+            font-family: 'Lato', sans-serif;
+            font-size: 0.74rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            padding: 3px 9px;
+            border-radius: 999px;
+        }
+
+        .admin-status-tag.booked {
+            background: #fecdd3;
+            color: #9f1239;
+        }
+
+        .admin-status-tag.pending {
+            background: #fde68a;
+            color: #92400e;
+        }
+
+        .admin-booking-title {
+            font-family: 'Lato', sans-serif;
+            font-size: 1rem;
+            font-weight: 700;
+            color: #0f172a;
+        }
+
+        .admin-booking-dates {
+            font-family: 'Lato', sans-serif;
+            font-size: 0.88rem;
+            color: #475569;
+        }
+
+        .admin-booking-notes {
+            font-family: 'Lato', sans-serif;
+            font-size: 0.85rem;
+            color: #64748b;
+            white-space: pre-line;
+            margin-top: 2px;
+        }
+
+        /* Admin-Login Modal */
+        .admin-modal-backdrop {
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.65);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            z-index: 2000;
+        }
+
+        .admin-modal-backdrop.open {
+            display: flex;
+        }
+
+        .admin-modal {
+            background: #ffffff;
+            border-radius: 22px;
+            max-width: 400px;
+            width: 100%;
+            padding: 26px 26px 24px 26px;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.35);
+            font-family: 'Lato', sans-serif;
+        }
+
+        .admin-modal h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            margin: 0 0 8px 0;
+            color: #0f172a;
+        }
+
+        .admin-modal p {
+            margin: 0 0 18px 0;
+            font-size: 0.92rem;
+            color: #475569;
+            line-height: 1.5;
+        }
+
+        .admin-input {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 12px 14px;
+            border-radius: 12px;
+            border: 1.5px solid #cbd5e1;
+            font-family: 'Lato', sans-serif;
+            font-size: 1rem;
+            color: #0f172a;
+            margin-bottom: 10px;
+        }
+
+        .admin-input:focus {
+            outline: none;
+            border-color: #f59e0b;
+        }
+
+        .admin-modal-err {
+            color: #be123c;
+            font-size: 0.86rem;
+            font-weight: 700;
+            min-height: 20px;
+            margin-bottom: 12px;
+        }
+
+        .admin-modal-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+
+        /* Dunkle Info-Sektion unten analog zu info-ordner.html */
+        .cal-footer-section {
+            background: #0f172a;
+            color: #ffffff;
+            padding: 60px 20px 70px 20px;
+        }
+
+        .cal-footer-inner {
+            max-width: 1080px;
+            margin: 0 auto;
+        }
+
+        .cal-footer-header {
+            text-align: center;
+            margin-bottom: 34px;
+        }
+
+        .cal-footer-header .eyebrow {
+            color: #f59e0b;
+            letter-spacing: 3px;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .cal-footer-header h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.8rem, 3.2vw, 2.4rem);
+            color: #ffffff;
+            margin: 0;
+        }
+
+        .cal-tips-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 20px;
+        }
+
+        .cal-tip-box {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 18px;
+            padding: 22px 24px;
+        }
+
+        .cal-tip-tag {
+            font-family: 'Lato', sans-serif;
+            font-size: 11.5px;
+            font-weight: 700;
+            letter-spacing: 1.8px;
+            color: #f59e0b;
+            text-transform: uppercase;
+        }
+
+        .cal-tip-box h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.22rem;
+            margin: 6px 0 8px 0;
+            color: #ffffff;
+        }
+
+        .cal-tip-box p {
+            margin: 0;
+            font-size: 0.94rem;
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.55;
+        }
+
+        .cal-tip-box a {
+            color: #7dd3fc;
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .cal-tip-box a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 1024px) {
+            .months-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        @media (max-width: 680px) {
+            .months-grid { grid-template-columns: 1fr; }
+            .vibe-filter-bar { justify-content: flex-start; width: 100%; border-radius: 22px; }
+            .cal-controls { flex-direction: column; align-items: stretch; }
+            .cal-nav-group { justify-content: space-between; }
+            .inquiry-bar { flex-direction: column; align-items: stretch; }
+            .wa-cta-btn { width: 100%; justify-content: center; }
+        }
+
+        /* Vollbild Admin-Zugangssperre (nach außen komplett geschlossen) */
+        #protected-content {
+            display: none;
+        }
+
+        #protected-content.unlocked {
+            display: block;
+        }
+
+        .admin-gate {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            box-sizing: border-box;
+        }
+
+        .admin-gate.hidden {
+            display: none;
+        }
+
+        .admin-gate-card {
+            background: #ffffff;
+            border-radius: 24px;
+            max-width: 410px;
+            width: 100%;
+            padding: 34px 30px 28px 30px;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.4);
+            text-align: center;
+            font-family: 'Lato', sans-serif;
+        }
+
+        .admin-gate-icon {
+            font-size: 2.5rem;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .admin-gate-card h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.75rem;
+            color: #0f172a;
+            margin: 0 0 8px 0;
+        }
+
+        .admin-gate-card p {
+            font-size: 0.94rem;
+            color: #475569;
+            margin: 0 0 20px 0;
+            line-height: 1.55;
+        }
+
+        .admin-gate-submit {
+            width: 100%;
+            background: #0f172a;
+            color: #ffffff;
+            border: none;
+            border-radius: 13px;
+            padding: 13px 20px;
+            font-family: 'Lato', sans-serif;
+            font-size: 0.96rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background 0.2s ease, transform 0.2s ease;
+        }
+
+        .admin-gate-submit:hover {
+            background: #f59e0b;
+            color: #0f172a;
+        }
+
+        .admin-gate-back {
+            display: inline-block;
+            margin-top: 16px;
+            font-size: 0.88rem;
+            color: #64748b;
+            text-decoration: none;
+            font-weight: 700;
+        }
+
+        .admin-gate-back:hover {
+            color: #0f172a;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body class="bg-light">
+
+    <button class="burger-menu-button" id="burger-menu-btn" title="Menü öffnen">
+        <span class="burger-menu-bar"></span>
+        <span class="burger-menu-bar"></span>
+        <span class="burger-menu-bar"></span>
+    </button>
+    <div id="menu-container"></div>
+
+    <!-- Vollbild Admin-Sperre (Standard für jeden Besucher ohne gültiges Passwort) -->
+    <section class="admin-gate" id="admin-gate">
+        <div class="admin-gate-card">
+            <span class="admin-gate-icon">🔒</span>
+            <h1>Admin-Bereich</h1>
+            <p>Der Belegungskalender ist nach außen nicht sichtbar. Bitte melde dich mit deinem Admin-Passwort an.</p>
+            <form onsubmit="submitAdminLogin(event)">
+                <input type="password" id="admin-pin-input" class="admin-input" placeholder="Admin-Passwort eingeben …" autocomplete="current-password" required autofocus>
+                <div class="admin-modal-err" id="admin-modal-err"></div>
+                <button type="submit" class="admin-gate-submit" id="admin-submit-btn">Anmelden</button>
+            </form>
+            <a href="index.html" class="admin-gate-back">← Zurück zur Startseite</a>
+        </div>
+    </section>
+
+    <div id="protected-content">
+    <header class="page-hero">
+        <span class="eyebrow">Casa Englers y Amigos · Admin-Kalender</span>
+        <h1>Verfügbarkeit</h1>
+        <p>Interne Belegungsübersicht direkt aus Google Kalender – inklusive Details, Wechseltagen und Schnell-Anlage.</p>
+
+        <div class="vibe-filter-bar" id="season-bar">
+            <!-- Dynamisch für aktuelles & nächstes Jahr befüllt -->
+        </div>
+    </header>
+
+    <main>
+        <section class="cal-wrapper">
+            <!-- Sync-Status (Admin-Leiste) -->
+            <div class="sync-banner" id="sync-banner">
+                <div class="sync-indicator">
+                    <span class="sync-dot" id="sync-dot"></span>
+                    <span id="sync-title">Kalender wird geladen …</span>
+                </div>
+                <div class="sync-actions">
+                    <span id="sync-detail">Synchronisation mit Google Kalender</span>
+                    <button type="button" class="sync-mini-btn" id="refresh-btn" onclick="manualRefresh()" title="Kalender sofort frisch von Google laden">
+                        <span class="spin-icon">↻</span> Aktualisieren
+                    </button>
+                    <button type="button" class="sync-mini-btn admin-active" id="admin-toggle-btn" onclick="logoutAdmin()" title="Admin-Modus beenden">
+                        🔓 Abmelden
+                    </button>
+                </div>
+            </div>
+
+            <!-- Legende & Navigation -->
+            <div class="cal-controls">
+                <div class="cal-legend">
+                    <span class="legend-item"><span class="swatch free"></span> Frei</span>
+                    <span class="legend-item"><span class="swatch pending"></span> Reserviert / Anfrage</span>
+                    <span class="legend-item"><span class="swatch booked"></span> Belegt</span>
+                    <span class="legend-item"><span class="swatch split"></span> An-/Abreisetag</span>
+                </div>
+                <div class="cal-nav-group">
+                    <button type="button" class="nav-pill" onclick="shiftMonths(-1)">← Zurück</button>
+                    <button type="button" class="nav-pill" onclick="shiftMonths(1)">Weiter →</button>
+                </div>
+            </div>
+
+            <!-- Interaktive Wunschzeitraum- & WhatsApp-Leiste -->
+            <div class="inquiry-bar" id="inquiry-bar">
+                <div class="inquiry-info" id="inquiry-info">
+                    <strong>Wunschzeitraum wählen:</strong> Klickt zuerst euren Anreisetag und dann den Abreisetag im Kalender an.
+                    <span class="inquiry-sub">Wechseltage (diagonal geteilt) können als An- oder Abreisetag genutzt werden.</span>
+                </div>
+                <div class="inquiry-actions">
+                    <button type="button" class="reset-btn" id="reset-selection-btn" onclick="resetSelection()" style="display:none;">✕ Zurücksetzen</button>
+                    <a href="#" target="_blank" rel="noopener noreferrer" class="flight-cta-btn" id="flight-search-btn" style="display:none;">
+                        ✈️ Flüge suchen
+                    </a>
+                    <a href="#" target="_blank" rel="noopener noreferrer" class="gcal-add-btn" id="gcal-add-btn" style="display:none;">
+                        ➕ In Google Kalender anlegen
+                    </a>
+                    <a href="#" target="_blank" rel="noopener noreferrer" class="wa-cta-btn disabled" id="wa-inquiry-btn">
+                        💬 Per WhatsApp anfragen
+                    </a>
+                </div>
+            </div>
+
+            <!-- Monats-Karten -->
+            <div class="months-grid" id="months-grid"></div>
+
+            <!-- Admin-Buchungsübersicht (nur sichtbar wenn als Admin angemeldet) -->
+            <div class="admin-panel" id="admin-panel">
+                <div class="admin-panel-header">
+                    <div>
+                        <h3>🔓 Admin-Ansicht · Buchungsdetails</h3>
+                        <span class="sub">Direkt aus deinem Google Kalender geladen – für normale Besucher unsichtbar.</span>
+                    </div>
+                    <div class="admin-header-btns">
+                        <button type="button" class="admin-btn-light" onclick="manualRefresh()">↻ Sofort aktualisieren</button>
+                        <a href="https://calendar.google.com" target="_blank" rel="noopener noreferrer" class="admin-btn-light">📅 Google Kalender öffnen</a>
+                    </div>
+                </div>
+                <div class="admin-list" id="admin-list"></div>
+            </div>
+        </section>
+
+        <!-- DUNKLE INFO-SEKTION -->
+        <section id="trigger-whatsapp" class="cal-footer-section">
+            <div class="cal-footer-inner">
+                <div class="cal-footer-header">
+                    <span class="eyebrow">Gut zu wissen rund um eure Anfrage</span>
+                    <h2>So läuft’s bei uns</h2>
+                </div>
+                <div class="cal-tips-grid">
+                    <div class="cal-tip-box">
+                        <span class="cal-tip-tag">Wechseltage</span>
+                        <h3>🔑 Check-in &amp; Check-out</h3>
+                        <p><strong>Anreise ab 15:00 Uhr</strong>, <strong>Abreise bis 11:00 Uhr</strong>. Diagonal geteilte Tage zeigen Wechseltage: Vormittags frei = Abreise möglich, nachmittags frei = Anreise möglich.</p>
+                    </div>
+                    <div class="cal-tip-box">
+                        <span class="cal-tip-tag">Gelbe Tage</span>
+                        <h3>💛 Reserviert / Anfrage</h3>
+                        <p>Gelb markierte Zeiträume sind gerade in Abstimmung oder vorgemerkt. Fragt trotzdem gerne kurz per WhatsApp nach – manchmal wird kurzfristig wieder etwas frei!</p>
+                    </div>
+                    <div class="cal-tip-box">
+                        <span class="cal-tip-tag">Privat &amp; unkompliziert</span>
+                        <h3>✈️ Direkt mit Flügen kombinieren</h3>
+                        <p>Wir vermieten unsere Casa privat an Freunde, Familie &amp; Bekannte. Passende Flüge ab FRA, STR oder FKB könnt ihr direkt auf unserer <a href="anreise.html">Anreise-Seite</a> prüfen.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    </div>
+
+    <a href="https://wa.me/491733045695" class="whatsapp-button" target="_blank" id="whatsapp-btn">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="#ffffff" d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.8 0-67.6-9.5-97.2-27.2l-6.7-4-71.7 18.7 19.3-68.6-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z" /></svg>
+    </a>
+
+    <button id="scroll-to-top-btn" class="scroll-to-top-button" title="Nach oben scrollen">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M246.6 41.4c-12.5-12.5-32.8-12.5-45.3 0l-160 160c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L224 109.3 361.4 246.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-160-160z" /></svg>
+    </button>
+
+    <div id="weather-overlay">
+        <span id="temperature">--</span>°C
+    </div>
+
+    <script src="script.js" defer></script>
+    <script>
+        /* =========================================================
+           KONFIGURATION
+        ========================================================= */
+        const CALENDAR_API_URL = 'https://denia-flights.cf-5a7.workers.dev/calendar';
+        const WHATSAPP_NUMBER = '491733045695';
+
+        const MONTH_NAMES = [
+            'Januar', 'Februar', 'März', 'April', 'Mai', 'Juni',
+            'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'
+        ];
+        const WEEKDAYS_SHORT = ['Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa', 'So'];
+        const WEEKDAYS_DE = ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa'];
+
+        const todayDate = new Date();
+        const todayIso = toIso(todayDate.getFullYear(), todayDate.getMonth(), todayDate.getDate());
+
+        // Standard-Startmonat: März bis November (9 Monate; ab November automatisch nächstes Jahr)
+        const defaultSeasonYear = (todayDate.getMonth() >= 10)
+            ? todayDate.getFullYear() + 1
+            : todayDate.getFullYear();
+
+        let viewYear = defaultSeasonYear;
+        let viewMonth = 2; // 0-basiert: 2 = März
+        let monthSpan = 9; // März bis November (9 Monate = 3×3)
+
+        // dayMap[iso] = { am: null | 'booked' | 'pending', pm: null | 'booked' | 'pending', bookings: [] }
+        let currentBookings = [];
+        let dayMap = {};
+        let selStart = null;
+        let selEnd = null;
+        let lastErrorMsg = '';
+
+        // Admin-Modus (nur in dieser Browser-Session gespeichert)
+        const ADMIN_STORAGE_KEY = 'denia_cal_admin_pin';
+        let adminPin = sessionStorage.getItem(ADMIN_STORAGE_KEY) || '';
+        let isAdminActive = false;
+
+        /* =========================================================
+           DATUMS-HELFER
+        ========================================================= */
+        function pad2(n) { return String(n).padStart(2, '0'); }
+
+        function toIso(y, mZero, d) {
+            return `${y}-${pad2(mZero + 1)}-${pad2(d)}`;
+        }
+
+        function parseIso(iso) {
+            const [y, m, d] = iso.split('-').map(Number);
+            return new Date(y, m - 1, d);
+        }
+
+        function addDaysIso(iso, delta) {
+            const dt = parseIso(iso);
+            dt.setDate(dt.getDate() + delta);
+            return toIso(dt.getFullYear(), dt.getMonth(), dt.getDate());
+        }
+
+        function diffDays(startIso, endIso) {
+            const a = parseIso(startIso);
+            const b = parseIso(endIso);
+            return Math.round((b - a) / 86400000);
+        }
+
+        function formatDeDate(iso, withWeekday = true) {
+            const dt = parseIso(iso);
+            const base = `${pad2(dt.getDate())}.${pad2(dt.getMonth() + 1)}.${dt.getFullYear()}`;
+            return withWeekday ? `${WEEKDAYS_DE[dt.getDay()]}, ${base}` : base;
+        }
+
+        function toGcalDate(iso) {
+            return iso.replace(/-/g, '');
+        }
+
+        function escapeHtml(str) {
+            return String(str || '')
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;');
+        }
+
+        /* =========================================================
+           BELEGUNG AUF HALBTAGE (AM / PM) MAPPEN
+        ========================================================= */
+        function mergeHalf(current, incoming) {
+            if (current === 'booked' || incoming === 'booked') return 'booked';
+            if (current === 'pending' || incoming === 'pending') return 'pending';
+            return null;
+        }
+
+        function buildDayMap(bookings) {
+            const map = {};
+            const ensure = (iso) => {
+                if (!map[iso]) map[iso] = { am: null, pm: null, entries: [] };
+                return map[iso];
+            };
+
+            bookings.forEach((b, idx) => {
+                if (!b.start || !b.end) return;
+                const st = b.status === 'pending' ? 'pending' : 'booked';
+                const ref = { ...b, _idx: idx };
+
+                if (b.start === b.end) {
+                    const cell = ensure(b.start);
+                    cell.am = mergeHalf(cell.am, st);
+                    cell.pm = mergeHalf(cell.pm, st);
+                    cell.entries.push(ref);
+                    return;
+                }
+
+                // Anreisetag: Nachmittag belegt
+                const startCell = ensure(b.start);
+                startCell.pm = mergeHalf(startCell.pm, st);
+                startCell.entries.push(ref);
+
+                // Zwischentage: ganztägig belegt
+                let cursor = addDaysIso(b.start, 1);
+                let guard = 0;
+                while (cursor < b.end && guard < 400) {
+                    const mid = ensure(cursor);
+                    mid.am = mergeHalf(mid.am, st);
+                    mid.pm = mergeHalf(mid.pm, st);
+                    mid.entries.push(ref);
+                    cursor = addDaysIso(cursor, 1);
+                    guard++;
+                }
+
+                // Abreisetag: Vormittag belegt
+                const endCell = ensure(b.end);
+                endCell.am = mergeHalf(endCell.am, st);
+                endCell.entries.push(ref);
+            });
+            return map;
+        }
+
+        function getDayState(iso) {
+            return dayMap[iso] || { am: null, pm: null, entries: [] };
+        }
+
+        function getDayVisualClass(st) {
+            const { am, pm } = st;
+            if (!am && !pm) return '';
+            if (am === 'booked' && pm === 'booked') return 'state-booked';
+            if (am === 'pending' && pm === 'pending') return 'state-pending';
+            if (!am && pm === 'booked') return 'split-free-booked';
+            if (!am && pm === 'pending') return 'split-free-pending';
+            if (am === 'booked' && !pm) return 'split-booked-free';
+            if (am === 'pending' && !pm) return 'split-pending-free';
+            if (am === 'booked' && pm === 'pending') return 'split-booked-pending';
+            if (am === 'pending' && pm === 'booked') return 'split-pending-booked';
+            return '';
+        }
+
+        function getDayTooltip(iso, st) {
+            if (isAdminActive && st.entries && st.entries.length > 0) {
+                return st.entries.map(e => {
+                    const tag = e.status === 'pending' ? '[Anfrage/Res.]' : '[Belegt]';
+                    const range = `${formatDeDate(e.start, false)}–${formatDeDate(e.end, false)}`;
+                    return `${tag} ${e.title || '(Ohne Titel)'} (${range})${e.notes ? ' – ' + e.notes : ''}`;
+                }).join('\n');
+            }
+            if (iso < todayIso) return 'Vergangener Tag';
+            const { am, pm } = st;
+            if (!am && !pm) return 'Frei – klicken für Wunschzeitraum';
+            if (am === 'booked' && pm === 'booked') return 'Belegt';
+            if (am === 'pending' && pm === 'pending') return 'Reserviert / Anfrage läuft';
+            if (!am && pm === 'booked') return 'Wechseltag: Vormittags frei (Abreise bis 11 Uhr möglich), ab 15 Uhr belegt';
+            if (am === 'booked' && !pm) return 'Wechseltag: Bis 11 Uhr belegt, ab 15 Uhr frei (Anreise möglich)';
+            if (!am && pm === 'pending') return 'Vormittags frei, nachmittags reserviert/Anfrage';
+            if (am === 'pending' && !pm) return 'Vormittags reserviert/Anfrage, ab 15 Uhr frei';
+            return 'Wechseltag (Belegt / Anfrage)';
+        }
+
+        /* =========================================================
+           AUSWAHL-LOGIK (ANREISE → ABREISE → WHATSAPP / GCAL)
+        ========================================================= */
+        function checkRangeValidity(startIso, endIso) {
+            let touchesPending = false;
+            const startSt = getDayState(startIso);
+            if (startSt.pm === 'booked') return { ok: false };
+            if (startSt.pm === 'pending') touchesPending = true;
+
+            let cursor = addDaysIso(startIso, 1);
+            let guard = 0;
+            while (cursor < endIso && guard < 180) {
+                const st = getDayState(cursor);
+                if (st.am === 'booked' || st.pm === 'booked') return { ok: false };
+                if (st.am === 'pending' || st.pm === 'pending') touchesPending = true;
+                cursor = addDaysIso(cursor, 1);
+                guard++;
+            }
+
+            const endSt = getDayState(endIso);
+            if (endSt.am === 'booked') return { ok: false };
+            if (endSt.am === 'pending') touchesPending = true;
+
+            return { ok: true, touchesPending };
+        }
+
+        function highlightAdminBooking(idx) {
+            const row = document.getElementById(`admin-row-${idx}`);
+            if (!row) return;
+            document.querySelectorAll('.admin-booking-row.highlight').forEach(r => r.classList.remove('highlight'));
+            row.classList.add('highlight');
+            row.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
+        function handleDayClick(iso) {
+            const st = getDayState(iso);
+
+            // Im Admin-Modus: Klick auf voll belegten Tag springt direkt zum Buchungseintrag
+            if (isAdminActive && st.am === 'booked' && st.pm === 'booked' && st.entries.length > 0) {
+                highlightAdminBooking(st.entries[0]._idx);
+                return;
+            }
+
+            if (iso < todayIso) return;
+            lastErrorMsg = '';
+
+            // Neuer Start, wenn noch nichts gewählt oder bereits ein kompletter Zeitraum steht
+            if (!selStart || (selStart && selEnd)) {
+                if (st.pm === 'booked') {
+                    lastErrorMsg = 'An diesem Tag ist die Casa nachmittags bereits belegt – bitte wählt einen anderen Anreisetag.';
+                    updateInquiryBar();
+                    return;
+                }
+                selStart = iso;
+                selEnd = null;
+                renderCalendars();
+                updateInquiryBar();
+                return;
+            }
+
+            // Klick auf denselben oder früheren Tag → neuen Start setzen
+            if (iso <= selStart) {
+                if (st.pm === 'booked') {
+                    lastErrorMsg = 'An diesem Tag ist die Casa nachmittags bereits belegt.';
+                } else {
+                    selStart = iso;
+                    selEnd = null;
+                }
+                renderCalendars();
+                updateInquiryBar();
+                return;
+            }
+
+            // Zweiter Klick → Abreisetag prüfen
+            const check = checkRangeValidity(selStart, iso);
+            if (!check.ok) {
+                lastErrorMsg = 'In diesem Zeitraum liegen bereits belegte Tage – bitte wählt einen freien Zeitraum.';
+                if (st.pm !== 'booked') {
+                    selStart = iso;
+                    selEnd = null;
+                }
+                renderCalendars();
+                updateInquiryBar();
+                return;
+            }
+
+            selEnd = iso;
+            renderCalendars();
+            updateInquiryBar(check.touchesPending);
+        }
+
+        function resetSelection() {
+            selStart = null;
+            selEnd = null;
+            lastErrorMsg = '';
+            renderCalendars();
+            updateInquiryBar();
+        }
+
+        function updateInquiryBar(touchesPending = false) {
+            const bar = document.getElementById('inquiry-bar');
+            const info = document.getElementById('inquiry-info');
+            const waBtn = document.getElementById('wa-inquiry-btn');
+            const gcalBtn = document.getElementById('gcal-add-btn');
+            const flightBtn = document.getElementById('flight-search-btn');
+            const resetBtn = document.getElementById('reset-selection-btn');
+
+            if (selStart && selEnd) {
+                const nights = diffDays(selStart, selEnd);
+                const startTxt = formatDeDate(selStart, true);
+                const endTxt = formatDeDate(selEnd, true);
+
+                bar.classList.add('has-range');
+                resetBtn.style.display = 'inline-block';
+
+                const subHtml = touchesPending
+                    ? `<span class="inquiry-sub warn">⚠️ Hinweis: Enthält gelb markierte Anfrage-Tage – fragt trotzdem gerne kurz nach!</span>`
+                    : `<span class="inquiry-sub">Sieht gut aus! Direkt Flüge prüfen, in Google Kalender eintragen oder per WhatsApp anfragen.</span>`;
+
+                info.innerHTML = `<strong>${startTxt} – ${endTxt}</strong> (${nights} ${nights === 1 ? 'Nacht' : 'Nächte'})${subHtml}`;
+
+                const msg = `Hola Julia! Ist die Casa Englers y Amigos vom ${formatDeDate(selStart, false)} bis ${formatDeDate(selEnd, false)} (${nights} ${nights === 1 ? 'Nacht' : 'Nächte'}) noch frei?`;
+                waBtn.href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`;
+                waBtn.classList.remove('disabled');
+
+                // Direkte Flugsuche für den ausgewählten Zeitraum
+                flightBtn.href = `anreise.html?out=${encodeURIComponent(selStart)}&ret=${encodeURIComponent(selEnd)}`;
+                flightBtn.style.display = 'inline-flex';
+
+                // Admin-Shortcut: Vorausgefüllten Ganztagestermin in Google Kalender öffnen
+                if (isAdminActive) {
+                    const gcalEndExcl = addDaysIso(selEnd, 1);
+                    const gcalUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&dates=${toGcalDate(selStart)}/${toGcalDate(gcalEndExcl)}&text=${encodeURIComponent('Casa Dénia – ')}&details=${encodeURIComponent('Anreise ab 15:00 Uhr, Abreise bis 11:00 Uhr')}`;
+                    gcalBtn.href = gcalUrl;
+                    gcalBtn.style.display = 'inline-flex';
+                } else {
+                    gcalBtn.style.display = 'none';
+                }
+                return;
+            }
+
+            bar.classList.remove('has-range');
+            waBtn.classList.add('disabled');
+            waBtn.href = '#';
+            gcalBtn.style.display = 'none';
+            flightBtn.style.display = 'none';
+
+            if (selStart) {
+                resetBtn.style.display = 'inline-block';
+                const errHtml = lastErrorMsg
+                    ? `<span class="inquiry-sub error">${lastErrorMsg}</span>`
+                    : `<span class="inquiry-sub">Wählt jetzt euren gewünschten Abreisetag im Kalender.</span>`;
+                info.innerHTML = `<strong>Anreise: ${formatDeDate(selStart, true)}</strong>${errHtml}`;
+            } else {
+                resetBtn.style.display = 'none';
+                const subHtml = lastErrorMsg
+                    ? `<span class="inquiry-sub error">${lastErrorMsg}</span>`
+                    : `<span class="inquiry-sub">Wechseltage (diagonal geteilt) können als An- oder Abreisetag genutzt werden.</span>`;
+                info.innerHTML = `<strong>Wunschzeitraum wählen:</strong> Klickt zuerst euren Anreisetag und dann den Abreisetag im Kalender an.${subHtml}`;
+            }
+        }
+
+        /* =========================================================
+           KALENDER RENDERN & NAVIGATION
+        ========================================================= */
+        function renderCalendars() {
+            const grid = document.getElementById('months-grid');
+            grid.innerHTML = '';
+
+            for (let i = 0; i < monthSpan; i++) {
+                const dt = new Date(viewYear, viewMonth + i, 1);
+                const y = dt.getFullYear();
+                const m = dt.getMonth();
+                const daysInMonth = new Date(y, m + 1, 0).getDate();
+                const firstDow = (dt.getDay() + 6) % 7;
+
+                const card = document.createElement('article');
+                card.className = 'month-card';
+
+                const header = document.createElement('div');
+                header.className = 'month-header';
+                header.innerHTML = `<h2>${MONTH_NAMES[m]}</h2><span>${y}</span>`;
+
+                const body = document.createElement('div');
+                body.className = 'month-body';
+
+                const wdRow = document.createElement('div');
+                wdRow.className = 'weekdays-row';
+                WEEKDAYS_SHORT.forEach(w => {
+                    const span = document.createElement('span');
+                    span.className = 'weekday-lbl';
+                    span.textContent = w;
+                    wdRow.appendChild(span);
+                });
+
+                const daysGrid = document.createElement('div');
+                daysGrid.className = 'days-grid';
+
+                for (let e = 0; e < firstDow; e++) {
+                    const empty = document.createElement('span');
+                    empty.className = 'day-cell empty';
+                    daysGrid.appendChild(empty);
+                }
+
+                for (let d = 1; d <= daysInMonth; d++) {
+                    const iso = toIso(y, m, d);
+                    const st = getDayState(iso);
+                    const btn = document.createElement('button');
+                    btn.type = 'button';
+                    btn.className = 'day-cell';
+                    btn.textContent = d;
+                    btn.title = getDayTooltip(iso, st);
+
+                    if (iso < todayIso) {
+                        btn.classList.add('is-past');
+                        if (isAdminActive && st.entries && st.entries.length > 0) {
+                            const vis = getDayVisualClass(st);
+                            if (vis) btn.classList.add(vis);
+                            btn.addEventListener('click', () => highlightAdminBooking(st.entries[0]._idx));
+                        } else {
+                            btn.disabled = true;
+                        }
+                    } else {
+                        const vis = getDayVisualClass(st);
+                        if (vis) btn.classList.add(vis);
+                        if (iso === todayIso) btn.classList.add('is-today');
+
+                        if (selStart && iso === selStart) {
+                            btn.classList.add('sel-edge');
+                        } else if (selEnd && iso === selEnd) {
+                            btn.classList.add('sel-edge');
+                        } else if (selStart && selEnd && iso > selStart && iso < selEnd) {
+                            const hasPend = st.am === 'pending' || st.pm === 'pending';
+                            btn.classList.add(hasPend ? 'in-range-pending' : 'in-range');
+                        }
+
+                        btn.addEventListener('click', () => handleDayClick(iso));
+                    }
+
+                    daysGrid.appendChild(btn);
+                }
+
+                body.appendChild(wdRow);
+                body.appendChild(daysGrid);
+                card.appendChild(header);
+                card.appendChild(body);
+                grid.appendChild(card);
+            }
+        }
+
+        function renderAdminPanel() {
+            const panel = document.getElementById('admin-panel');
+            const list = document.getElementById('admin-list');
+            const banner = document.getElementById('sync-banner');
+            const lockBtn = document.getElementById('admin-lock-btn');
+
+            if (!isAdminActive) {
+                panel.classList.remove('show');
+                if (!banner.classList.contains('demo-mode')) {
+                    banner.style.display = 'none';
+                }
+                if (lockBtn) lockBtn.style.display = 'inline-block';
+                return;
+            }
+
+            panel.classList.add('show');
+            banner.style.display = 'flex';
+            if (lockBtn) lockBtn.style.display = 'none';
+
+            if (!currentBookings.length) {
+                list.innerHTML = '<p style="margin:0;color:#64748b;">Keine aktuellen oder kommenden Termine im Google Kalender gefunden.</p>';
+                return;
+            }
+
+            list.innerHTML = '';
+            currentBookings.forEach((b, idx) => {
+                const nights = Math.max(1, diffDays(b.start, b.end));
+                const startDt = parseIso(b.start);
+                const row = document.createElement('div');
+                row.className = 'admin-booking-row';
+                row.id = `admin-row-${idx}`;
+
+                const tagClass = b.status === 'pending' ? 'pending' : 'booked';
+                const tagLabel = b.status === 'pending' ? 'Reserviert / Anfrage' : 'Belegt';
+                const flightLinkHtml = (b.end > b.start && b.end >= todayIso)
+                    ? `<a href="anreise.html?out=${encodeURIComponent(b.start)}&ret=${encodeURIComponent(b.end)}" target="_blank" rel="noopener noreferrer" class="nav-pill flight-pill">✈️ Flüge suchen</a>`
+                    : '';
+
+                row.innerHTML = `
+                    <div class="admin-row-main">
+                        <div class="admin-row-top">
+                            <span class="admin-status-tag ${tagClass}">${tagLabel}</span>
+                            <span class="admin-booking-title">${escapeHtml(b.title || '(Ohne Titel)')}</span>
+                        </div>
+                        <div class="admin-booking-dates">
+                            ${formatDeDate(b.start, true)} – ${formatDeDate(b.end, true)} (${nights} ${nights === 1 ? 'Nacht' : 'Nächte'})
+                        </div>
+                        ${b.notes ? `<div class="admin-booking-notes">${escapeHtml(b.notes)}</div>` : ''}
+                    </div>
+                    <div class="admin-row-actions">
+                        ${flightLinkHtml}
+                        <button type="button" class="nav-pill" onclick="jumpToBookingMonth(${startDt.getFullYear()}, ${startDt.getMonth()})">
+                            Im Kalender zeigen →
+                        </button>
+                    </div>
+                `;
+                list.appendChild(row);
+            });
+        }
+
+        function jumpToBookingMonth(y, mZero) {
+            viewYear = y;
+            viewMonth = mZero;
+            clearActiveSeasonPill();
+            renderCalendars();
+            document.getElementById('months-grid').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        function shiftMonths(delta) {
+            const dt = new Date(viewYear, viewMonth + delta, 1);
+            viewYear = dt.getFullYear();
+            viewMonth = dt.getMonth();
+            clearActiveSeasonPill();
+            renderCalendars();
+        }
+
+        function jumpToDefaultSeason() {
+            viewYear = defaultSeasonYear;
+            viewMonth = 2;
+            setActiveSeasonPill(document.querySelector('#season-bar .vibe-btn:nth-child(2)'));
+            renderCalendars();
+        }
+
+        function jumpToMonth(y, mZero, btn) {
+            viewYear = y;
+            viewMonth = mZero;
+            setActiveSeasonPill(btn);
+            renderCalendars();
+        }
+
+        function clearActiveSeasonPill() {
+            document.querySelectorAll('#season-bar .vibe-btn').forEach(b => b.classList.remove('active'));
+        }
+
+        function setActiveSeasonPill(btn) {
+            clearActiveSeasonPill();
+            if (btn) btn.classList.add('active');
+        }
+
+        function buildSeasonBar() {
+            const bar = document.getElementById('season-bar');
+            const y = defaultSeasonYear;
+
+            const items = [
+                { label: '📅 Heute', y: todayDate.getFullYear(), m: todayDate.getMonth() },
+                { label: `🌸 Frühling ${y}`, y, m: 2, isDefault: true },
+                { label: `☀️ Sommer ${y}`, y, m: 5 },
+                { label: `🍂 Herbst ${y}`, y, m: 8 }
+            ];
+
+            bar.innerHTML = '';
+            items.forEach((it) => {
+                const btn = document.createElement('button');
+                btn.type = 'button';
+                btn.className = 'vibe-btn' + (it.isDefault ? ' active' : '');
+                btn.textContent = it.label;
+                btn.addEventListener('click', () => jumpToMonth(it.y, it.m, btn));
+                bar.appendChild(btn);
+            });
+        }
+
+        /* =========================================================
+           ADMIN-SPERRE, LOGIN & MANUELLER REFRESH
+        ========================================================= */
+        function unlockPage() {
+            document.getElementById('admin-gate').classList.add('hidden');
+            document.getElementById('protected-content').classList.add('unlocked');
+        }
+
+        function lockPage() {
+            adminPin = '';
+            isAdminActive = false;
+            currentBookings = [];
+            dayMap = {};
+            selStart = null;
+            selEnd = null;
+            sessionStorage.removeItem(ADMIN_STORAGE_KEY);
+            document.getElementById('protected-content').classList.remove('unlocked');
+            document.getElementById('admin-gate').classList.remove('hidden');
+            const input = document.getElementById('admin-pin-input');
+            if (input) {
+                input.value = '';
+                input.focus();
+            }
+        }
+
+        function logoutAdmin() {
+            lockPage();
+        }
+
+        async function submitAdminLogin(ev) {
+            ev.preventDefault();
+            const input = document.getElementById('admin-pin-input');
+            const errEl = document.getElementById('admin-modal-err');
+            const submitBtn = document.getElementById('admin-submit-btn');
+            const pin = input.value.trim();
+            if (!pin) return;
+
+            errEl.textContent = '';
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Prüfe …';
+
+            try {
+                const resp = await fetch(`${CALENDAR_API_URL}?admin=1&refresh=1`, {
+                    cache: 'no-store',
+                    headers: { 'X-Admin-Key': pin }
+                });
+                const data = await resp.json();
+                if (!resp.ok || !Array.isArray(data.bookings)) {
+                    throw new Error(data.error || `Fehler (HTTP ${resp.status})`);
+                }
+                adminPin = pin;
+                isAdminActive = true;
+                sessionStorage.setItem(ADMIN_STORAGE_KEY, pin);
+                unlockPage();
+                applyLiveData(data);
+            } catch (err) {
+                errEl.textContent = err.message || 'Anmeldung fehlgeschlagen.';
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Anmelden';
+            }
+        }
+
+        async function manualRefresh() {
+            if (!adminPin) return;
+            const btn = document.getElementById('refresh-btn');
+            btn.classList.add('spinning');
+            btn.disabled = true;
+            try {
+                await loadAvailability({ forceRefresh: true });
+            } finally {
+                btn.classList.remove('spinning');
+                btn.disabled = false;
+            }
+        }
+
+        /* =========================================================
+           DATEN LADEN (STRIKT NUR FÜR AUTHENTIFIZIERTE ADMINS)
+        ========================================================= */
+        function applyLiveData(data) {
+            const banner = document.getElementById('sync-banner');
+            const dot = document.getElementById('sync-dot');
+            const title = document.getElementById('sync-title');
+            const detail = document.getElementById('sync-detail');
+
+            currentBookings = data.bookings || [];
+            dayMap = buildDayMap(currentBookings);
+            banner.classList.remove('demo-mode');
+            banner.style.display = 'flex';
+            dot.className = 'sync-dot live';
+            title.textContent = 'Live mit Google Kalender synchronisiert';
+            const updatedDate = data.updated ? new Date(data.updated) : new Date();
+            detail.textContent = `Stand: ${pad2(updatedDate.getDate())}.${pad2(updatedDate.getMonth() + 1)}.${updatedDate.getFullYear()}, ${pad2(updatedDate.getHours())}:${pad2(updatedDate.getMinutes())} Uhr`;
+            renderCalendars();
+            renderAdminPanel();
+            updateInquiryBar();
+        }
+
+        async function loadAvailability({ forceRefresh = false } = {}) {
+            if (!adminPin) {
+                lockPage();
+                return;
+            }
+
+            try {
+                const url = forceRefresh
+                    ? `${CALENDAR_API_URL}?admin=1&refresh=1`
+                    : `${CALENDAR_API_URL}?admin=1`;
+
+                const resp = await fetch(url, {
+                    cache: 'no-store',
+                    headers: { 'X-Admin-Key': adminPin }
+                });
+                const data = await resp.json();
+
+                if (resp.status === 401 || resp.status === 503) {
+                    lockPage();
+                    document.getElementById('admin-modal-err').textContent = data.error || 'Bitte erneut anmelden.';
+                    return;
+                }
+
+                if (!resp.ok || !Array.isArray(data.bookings)) {
+                    throw new Error(data.error || `HTTP ${resp.status}`);
+                }
+
+                isAdminActive = true;
+                unlockPage();
+                applyLiveData(data);
+            } catch (err) {
+                const banner = document.getElementById('sync-banner');
+                const dot = document.getElementById('sync-dot');
+                const title = document.getElementById('sync-title');
+                const detail = document.getElementById('sync-detail');
+                banner.classList.add('demo-mode');
+                banner.style.display = 'flex';
+                dot.className = 'sync-dot demo';
+                title.textContent = 'Fehler beim Laden des Kalenders';
+                detail.textContent = err.message || 'Bitte erneut auf Aktualisieren klicken.';
+            }
+        }
+
+        // Initialisieren: ohne gespeicherte Admin-Session bleibt die Sperre aktiv!
+        buildSeasonBar();
+        if (adminPin) {
+            loadAvailability({ forceRefresh: false });
+        }
+    </script>
+</body>
+
+</html>

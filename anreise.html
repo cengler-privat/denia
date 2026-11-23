@@ -1712,6 +1712,19 @@
             document.getElementById('bannerWeekendText').textContent =
                 `Kommendes Wochenende (${fmtDE(depart)} → ${fmtDE(ret)}): Vergleiche alle 6 Strecken ab Frankfurt, Stuttgart & Baden-Airpark kompakt im Overlay.`;
             selectDriveRoute('ALC');
+
+            // Direktstart der Flugsuche, wenn ?out=YYYY-MM-DD&ret=YYYY-MM-DD übergeben wurde (z. B. aus dem Kalender)
+            const urlParams = new URLSearchParams(window.location.search);
+            const paramOut = urlParams.get('out') || '';
+            const paramRet = urlParams.get('ret') || '';
+            if (/^\d{4}-\d{2}-\d{2}$/.test(paramOut) && /^\d{4}-\d{2}-\d{2}$/.test(paramRet) && paramRet > paramOut) {
+                document.getElementById('flightOutDate').value = paramOut;
+                document.getElementById('flightRetDate').value = paramRet;
+                ['btnPresetSat', 'btnPresetFri', 'btnPreset14'].forEach(id => {
+                    document.getElementById(id).classList.remove('active');
+                });
+                openPriceModal('ALL');
+            }
         });
     </script>
 </body>

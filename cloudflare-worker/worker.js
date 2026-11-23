@@ -1,13 +1,18 @@
 /**
- * Cloudflare Worker: Casa Englers Live-Flugsuche (SerpApi Google Flights Proxy)
+ * Cloudflare Worker: Casa Englers Live-Flugsuche & Belegungskalender
  *
  * Routen:
+ *   GET /calendar                  (anonymisierte Belegung, 2 Min. Cache)
+ *   GET /calendar?refresh=1        (Cache umgehen & sofort frisch von Google laden)
+ *   GET /calendar?admin=1          (nur mit Header X-Admin-Key: <ADMIN_PIN>, liefert Titel & Notizen)
  *   GET /search?from=FRA,STR,FKB&to=ALC,VLC&out=YYYY-MM-DD&ret=YYYY-MM-DD&adults=1&nonstop=1
  *   GET /returns?from=...&to=...&out=...&ret=...&adults=1&departure_token=...
  *   GET /booking?from=...&to=...&out=...&ret=...&adults=1&booking_token=...
  *
- * Secret in Cloudflare hinterlegen:
- *   SERPAPI_KEY = <dein SerpApi API-Key>
+ * Secrets in Cloudflare hinterlegen:
+ *   SERPAPI_KEY  = <dein SerpApi API-Key>
+ *   GCAL_ICS_URL = <geheime iCal-Adresse (.ics) aus Google Kalender>
+ *   ADMIN_PIN    = <dein geheimes Admin-Passwort für Details auf verfuegbarkeit.html>
  */
 
 const ALLOWED_ORIGINS = [
@@ -27,7 +32,7 @@ function corsHeaders(request) {
     return {
         'Access-Control-Allow-Origin': allowed,
         'Access-Control-Allow-Methods': 'GET, OPTIONS',
-        'Access-Control-Allow-Headers': 'Content-Type',
+        'Access-Control-Allow-Headers': 'Content-Type, X-Admin-Key',
         'Vary': 'Origin'
     };
 }
@@ -39,6 +44,8 @@ function jsonResponse(data, status, request, cacheSeconds = 0) {
     };
     if (cacheSeconds > 0) {
         headers['Cache-Control'] = `public, max-age=${cacheSeconds}`;
+    } else {
+        headers['Cache-Control'] = 'no-store';
     }
     return new Response(JSON.stringify(data), { status, headers });
 }
@@ -121,6 +128,154 @@ async function fetchSerpApiCached(params, env, ttlSeconds) {
     return { data, cached: false };
 }
 
+/* =========================================================
+   Google-Kalender iCal (.ics) Parser + Admin-Modus
+========================================================= */
+function timingSafeEqual(a, b) {
+    const enc = new TextEncoder();
+    const ba = enc.encode(String(a || ''));
+    const bb = enc.encode(String(b || ''));
+    const len = Math.max(ba.length, bb.length);
+    let diff = ba.length ^ bb.length;
+    for (let i = 0; i < len; i++) {
+        diff |= (ba[i] || 0) ^ (bb[i] || 0);
+    }
+    return diff === 0 && ba.length > 0;
+}
+
+function unescapeIcsText(raw) {
+    return (raw || '')
+        .replace(/\\n/gi, '\n')
+        .replace(/\\,/g, ',')
+        .replace(/\\;/g, ';')
+        .replace(/\\\\/g, '\\')
+        .trim();
+}
+
+function shiftIsoDate(iso, deltaDays) {
+    const [y, m, d] = iso.split('-').map(Number);
+    const dt = new Date(Date.UTC(y, m - 1, d + deltaDays));
+    return dt.toISOString().slice(0, 10);
+}
+
+function parseIcsDate(params, value) {
+    const v = (value || '').trim();
+    const isAllDay = /VALUE=DATE\b/i.test(params || '') || /^\d{8}$/.test(v);
+    const match = v.match(/^(\d{4})(\d{2})(\d{2})/);
+    if (!match) return null;
+    return {
+        iso: `${match[1]}-${match[2]}-${match[3]}`,
+        isAllDay
+    };
+}
+
+function parseIcsBookings(rawIcs) {
+    const unfolded = rawIcs.replace(/\r?\n[ \t]/g, '');
+    const blocks = unfolded.split(/BEGIN:VEVENT\r?\n/i).slice(1);
+
+    const now = new Date();
+    const minIso = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate() - 45))
+        .toISOString().slice(0, 10);
+    const maxIso = new Date(Date.UTC(now.getUTCFullYear() + 2, now.getUTCMonth(), now.getUTCDate()))
+        .toISOString().slice(0, 10);
+
+    const bookings = [];
+
+    for (const block of blocks) {
+        const eventBody = block.split(/END:VEVENT/i)[0] || '';
+        const lines = eventBody.split(/\r?\n/);
+
+        let dtStart = null;
+        let dtEnd = null;
+        let summary = '';
+        let description = '';
+        let statusVal = '';
+        let transpVal = '';
+
+        for (const line of lines) {
+            const colonIdx = line.indexOf(':');
+            if (colonIdx === -1) continue;
+            const left = line.slice(0, colonIdx);
+            const val = line.slice(colonIdx + 1).trim();
+            const semiIdx = left.indexOf(';');
+            const name = (semiIdx === -1 ? left : left.slice(0, semiIdx)).toUpperCase();
+            const params = semiIdx === -1 ? '' : left.slice(semiIdx + 1);
+
+            if (name === 'DTSTART') dtStart = parseIcsDate(params, val);
+            else if (name === 'DTEND') dtEnd = parseIcsDate(params, val);
+            else if (name === 'SUMMARY') summary = unescapeIcsText(val);
+            else if (name === 'DESCRIPTION') description = unescapeIcsText(val);
+            else if (name === 'STATUS') statusVal = val.toUpperCase();
+            else if (name === 'TRANSP') transpVal = val.toUpperCase();
+        }
+
+        if (!dtStart) continue;
+        if (statusVal === 'CANCELLED') continue;
+        if (transpVal === 'TRANSPARENT') continue; // In Google Kalender als "Frei" markierte Notizen ignorieren
+
+        const start = dtStart.iso;
+        let end = start;
+        if (dtEnd) {
+            // Bei Ganztagesterminen ist DTEND laut RFC 5545 exklusiv (+1 Tag)
+            end = dtStart.isAllDay ? shiftIsoDate(dtEnd.iso, -1) : dtEnd.iso;
+            if (end < start) end = start;
+        }
+
+        if (end < minIso || start > maxIso) continue;
+
+        const isPending =
+            statusVal === 'TENTATIVE' ||
+            /\b(res\.?|reserviert|anfrage|option|vorbehalt|tentative)\b/i.test(summary) ||
+            summary.includes('?');
+
+        bookings.push({
+            start,
+            end,
+            status: isPending ? 'pending' : 'booked',
+            title: summary || '(Ohne Titel)',
+            notes: description
+        });
+    }
+
+    bookings.sort((a, b) => a.start.localeCompare(b.start) || a.end.localeCompare(b.end));
+    return bookings;
+}
+
+async function fetchCalendarCached(env, { ttlSeconds = 120, forceRefresh = false } = {}) {
+    const cache = caches.default;
+    const cacheKey = new Request('https://cache.denia.internal/gcal-v2', { method: 'GET' });
+
+    if (!forceRefresh) {
+        const cachedResp = await cache.match(cacheKey);
+        if (cachedResp) {
+            const data = await cachedResp.json();
+            return { data, cached: true };
+        }
+    }
+
+    const resp = await fetch(env.GCAL_ICS_URL, {
+        headers: { 'Cache-Control': 'no-cache' }
+    });
+    if (!resp.ok) {
+        throw new Error(`Google Kalender HTTP ${resp.status}`);
+    }
+    const rawIcs = await resp.text();
+    const bookings = parseIcsBookings(rawIcs);
+    const data = {
+        updated: new Date().toISOString(),
+        bookings
+    };
+
+    const toStore = new Response(JSON.stringify(data), {
+        headers: {
+            'Content-Type': 'application/json',
+            'Cache-Control': `public, max-age=${ttlSeconds}`
+        }
+    });
+    await cache.put(cacheKey, toStore);
+    return { data, cached: false };
+}
+
 export default {
     async fetch(request, env) {
         if (request.method === 'OPTIONS') {
@@ -129,12 +284,46 @@ export default {
         if (request.method !== 'GET') {
             return jsonResponse({ error: 'Method not allowed' }, 405, request);
         }
-        if (!env.SERPAPI_KEY) {
-            return jsonResponse({ error: 'SERPAPI_KEY ist im Worker nicht konfiguriert.' }, 500, request);
-        }
 
         const url = new URL(request.url);
         const path = url.pathname.replace(/\/+$/, '') || '/search';
+
+        // 0) Belegungskalender aus Google Kalender (.ics) – strikt nur mit Admin-Passwort!
+        if (path === '/calendar') {
+            if (!env.GCAL_ICS_URL) {
+                return jsonResponse({ error: 'GCAL_ICS_URL ist im Worker nicht konfiguriert.' }, 500, request);
+            }
+            if (!env.ADMIN_PIN) {
+                return jsonResponse({ error: 'ADMIN_PIN ist im Worker noch nicht hinterlegt.' }, 503, request);
+            }
+
+            const suppliedKey = request.headers.get('X-Admin-Key') || '';
+            if (!timingSafeEqual(suppliedKey, env.ADMIN_PIN)) {
+                return jsonResponse({ error: 'Falsches Admin-Passwort.' }, 401, request);
+            }
+
+            const forceRefresh = url.searchParams.get('refresh') === '1';
+
+            try {
+                const { data, cached } = await fetchCalendarCached(env, {
+                    ttlSeconds: 120, // 2 Min. Auto-Cache
+                    forceRefresh
+                });
+
+                return jsonResponse({
+                    admin: true,
+                    cached,
+                    updated: data.updated,
+                    bookings: data.bookings
+                }, 200, request, 0);
+            } catch (err) {
+                return jsonResponse({ error: err.message || 'Fehler beim Laden des Kalenders.' }, 502, request);
+            }
+        }
+
+        if (!env.SERPAPI_KEY) {
+            return jsonResponse({ error: 'SERPAPI_KEY ist im Worker nicht konfiguriert.' }, 500, request);
+        }
 
         const fromList = sanitizeAirports(url.searchParams.get('from') || 'FRA,STR,FKB', VALID_DEPARTURES);
         const toList = sanitizeAirports(url.searchParams.get('to') || 'ALC,VLC', VALID_ARRIVALS);

@@ -56,6 +56,24 @@ document.addEventListener('DOMContentLoaded', () => {
                     document.body.style.overflow = '';
                 }
             });
+
+            // Unauffälliger Admin-Zugang: Doppelklick / Doppeltipp auf „Hauptmenü“
+            const secretHeading = mainMenuPanel.querySelector('.menu-section h3');
+            if (secretHeading) {
+                secretHeading.style.userSelect = 'none';
+                secretHeading.addEventListener('dblclick', () => {
+                    window.location.href = 'verfuegbarkeit.html';
+                });
+                let lastTap = 0;
+                secretHeading.addEventListener('touchend', (e) => {
+                    const now = Date.now();
+                    if (now - lastTap > 0 && now - lastTap < 400) {
+                        e.preventDefault();
+                        window.location.href = 'verfuegbarkeit.html';
+                    }
+                    lastTap = now;
+                });
+            }
         }
     }
 
