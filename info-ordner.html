@@ -9,91 +9,737 @@
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
 
     <link rel="stylesheet" href="style.css">
+
+    <style>
+        .page-hero {
+            text-align: center;
+            padding: 95px 20px 35px 20px;
+            background: linear-gradient(180deg, #0f172a 0%, #1e293b 100%);
+            color: #ffffff;
+        }
+
+        .page-hero .eyebrow {
+            font-family: 'Lato', sans-serif;
+            font-size: 13px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: #f59e0b;
+            font-weight: 700;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .page-hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.2rem, 4.5vw, 3.4rem);
+            margin: 0 0 12px 0;
+            color: #ffffff;
+        }
+
+        .page-hero p {
+            font-family: 'Lato', sans-serif;
+            font-size: 1.08rem;
+            color: rgba(255, 255, 255, 0.85);
+            max-width: 650px;
+            margin: 0 auto 28px auto;
+            line-height: 1.6;
+        }
+
+        .vibe-filter-bar {
+            display: inline-flex;
+            gap: 8px;
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(10px);
+            padding: 8px;
+            border-radius: 50px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            max-width: 100%;
+            overflow-x: auto;
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        .vibe-filter-bar::-webkit-scrollbar { display: none; }
+
+        .vibe-btn {
+            background: transparent;
+            border: none;
+            color: rgba(255, 255, 255, 0.85);
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-family: 'Lato', sans-serif;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            white-space: nowrap;
+        }
+
+        .vibe-btn:hover {
+            background: rgba(255, 255, 255, 0.12);
+            color: #fff;
+        }
+
+        .vibe-btn.active {
+            background: #f59e0b;
+            color: #0f172a;
+            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4);
+        }
+
+        .info-container {
+            max-width: 1240px;
+            margin: 0 auto;
+            padding: 50px 20px;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 28px;
+        }
+
+        .info-card {
+            background: #ffffff;
+            border-radius: 22px;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(15, 23, 42, 0.08);
+            border: 1px solid rgba(15, 23, 42, 0.06);
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .info-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 22px 45px rgba(15, 23, 42, 0.13);
+        }
+
+        .info-card.hidden {
+            display: none;
+        }
+
+        .info-card-banner {
+            padding: 20px 24px;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+        }
+
+        .info-card-icon {
+            font-size: 1.9rem;
+            line-height: 1;
+        }
+
+        .info-badge {
+            background: rgba(255, 255, 255, 0.12);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #ffffff;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-family: 'Lato', sans-serif;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .info-badge.highlight {
+            background: #f59e0b;
+            color: #0f172a;
+            border-color: #f59e0b;
+        }
+
+        .info-badge.sky {
+            background: #38bdf8;
+            color: #0f172a;
+            border-color: #38bdf8;
+        }
+
+        .info-body {
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            text-align: left;
+        }
+
+        .info-category {
+            font-family: 'Lato', sans-serif;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #d97706;
+            margin-bottom: 6px;
+        }
+
+        .info-body h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.6rem;
+            margin: 0 0 12px 0;
+            color: #0f172a;
+        }
+
+        .info-desc {
+            font-family: 'Lato', sans-serif;
+            font-size: 0.96rem;
+            line-height: 1.6;
+            color: #475569;
+            margin: 0 0 16px 0;
+        }
+
+        .info-list {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 20px 0;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .info-list li {
+            position: relative;
+            padding-left: 22px;
+            font-size: 0.94rem;
+            line-height: 1.55;
+            color: #334155;
+        }
+
+        .info-list li::before {
+            content: '✔';
+            position: absolute;
+            left: 0;
+            top: 0;
+            color: #f59e0b;
+            font-weight: 700;
+        }
+
+        .info-list.icon-list li {
+            padding-left: 28px;
+        }
+
+        .info-list.icon-list li::before {
+            content: attr(data-icon);
+            font-weight: 400;
+            font-size: 1rem;
+        }
+
+        .insider-tip {
+            background: #fffbeb;
+            border-left: 4px solid #f59e0b;
+            padding: 14px 16px;
+            border-radius: 0 12px 12px 0;
+            margin-top: auto;
+        }
+
+        .insider-tip.sky-tip {
+            background: #f0f9ff;
+            border-left-color: #38bdf8;
+        }
+
+        .insider-tip > strong {
+            display: block;
+            font-family: 'Lato', sans-serif;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #b45309;
+            margin-bottom: 4px;
+        }
+
+        .insider-tip.sky-tip > strong {
+            color: #0369a1;
+        }
+
+        .insider-tip p {
+            margin: 0;
+            font-family: 'Lato', sans-serif;
+            font-size: 0.9rem;
+            color: #78350f;
+            line-height: 1.45;
+        }
+
+        .insider-tip.sky-tip p {
+            color: #0c4a6e;
+        }
+
+        .insider-tip.warn-tip {
+            background: #fef2f2;
+            border-left-color: #ef4444;
+        }
+
+        .insider-tip.warn-tip > strong {
+            color: #991b1b;
+        }
+
+        .insider-tip.warn-tip p {
+            color: #7f1d1d;
+        }
+
+        .detail-accordion {
+            margin-top: 14px;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 14px;
+            overflow: hidden;
+        }
+
+        .detail-accordion summary {
+            padding: 11px 15px;
+            font-family: 'Lato', sans-serif;
+            font-size: 0.88rem;
+            font-weight: 700;
+            color: #0f172a;
+            cursor: pointer;
+            list-style: none;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+            user-select: none;
+        }
+
+        .detail-accordion summary::-webkit-details-marker {
+            display: none;
+        }
+
+        .detail-accordion summary::after {
+            content: '▾';
+            color: #d97706;
+            font-size: 1rem;
+            transition: transform 0.2s ease;
+        }
+
+        .detail-accordion[open] summary::after {
+            transform: rotate(180deg);
+        }
+
+        .detail-accordion .accordion-body {
+            padding: 0 15px 13px 15px;
+            font-size: 0.88rem;
+            line-height: 1.55;
+            color: #475569;
+            border-top: 1px solid #e2e8f0;
+            padding-top: 11px;
+        }
+
+        .detail-accordion .accordion-body p {
+            margin: 0;
+        }
+
+        .detail-accordion .accordion-body p + p {
+            margin-top: 7px;
+        }
+
+        .card-actions {
+            display: flex;
+            gap: 10px;
+            padding-top: 16px;
+            margin-top: 16px;
+            border-top: 1px solid #f1f5f9;
+        }
+
+        .action-btn {
+            flex: 1;
+            text-align: center;
+            text-decoration: none;
+            padding: 10px 14px;
+            border-radius: 12px;
+            font-family: 'Lato', sans-serif;
+            font-size: 13.5px;
+            font-weight: 700;
+            transition: all 0.2s ease;
+        }
+
+        .action-btn.primary {
+            background: #0f172a;
+            color: #ffffff;
+        }
+
+        .action-btn.primary:hover {
+            background: #f59e0b;
+            color: #0f172a;
+        }
+
+        .action-btn.secondary {
+            background: #f1f5f9;
+            color: #334155;
+        }
+
+        .action-btn.secondary:hover {
+            background: #e2e8f0;
+        }
+
+        /* Dunkle Müll-Sektion analog zu timeline-section in kulinarisches.html */
+        .trash-section {
+            background: #0f172a;
+            color: #ffffff;
+            padding: 65px 20px;
+        }
+
+        .trash-section.hidden {
+            display: none;
+        }
+
+        .trash-header {
+            text-align: center;
+            max-width: 740px;
+            margin: 0 auto 36px auto;
+        }
+
+        .trash-header .eyebrow {
+            color: #f59e0b;
+            letter-spacing: 3px;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .trash-header h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.85rem, 3.5vw, 2.55rem);
+            color: #ffffff;
+            margin: 0 0 12px 0;
+        }
+
+        .trash-header p {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1rem;
+            line-height: 1.65;
+            margin: 0;
+        }
+
+        .trash-graphic-wrap {
+            max-width: 940px;
+            margin: 0 auto 38px auto;
+        }
+
+        .trash-graphic-wrap img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 20px;
+            box-shadow: 0 18px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .trash-rules-grid {
+            max-width: 940px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 20px;
+        }
+
+        .trash-rule-box {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 18px;
+            padding: 22px 24px;
+            text-align: left;
+        }
+
+        .trash-rule-tag {
+            font-family: 'Lato', sans-serif;
+            font-size: 11.5px;
+            font-weight: 700;
+            letter-spacing: 1.8px;
+            color: #f59e0b;
+            text-transform: uppercase;
+        }
+
+        .trash-rule-box h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.25rem;
+            margin: 6px 0 8px 0;
+            color: #ffffff;
+        }
+
+        .trash-rule-box p {
+            margin: 0;
+            font-size: 0.94rem;
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.55;
+        }
+
+        .trash-rule-box p + p {
+            margin-top: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .info-grid { grid-template-columns: 1fr; }
+            .vibe-filter-bar { justify-content: flex-start; width: 100%; }
+        }
+    </style>
 </head>
 
-<body>
+<body class="bg-light">
 
-    <!-- Burger-Menü Button (wird immer angezeigt) -->
     <button class="burger-menu-button" id="burger-menu-btn" title="Menü öffnen">
         <span class="burger-menu-bar"></span>
         <span class="burger-menu-bar"></span>
         <span class="burger-menu-bar"></span>
     </button>
-    
-    <!-- Hier lädt das JavaScript automatisch die zentralste menu.html -->
     <div id="menu-container"></div>
-    
-    <section class="hero" style="min-height: 45vh;">
-        <div class="hero-content">
-            <h1>Info-Ordner</h1>
-            <h1>* * * *</h1>
-            <p class="subtitle">Euer digitaler Ratgeber vor Ort</p>
-            <p>Alle wichtigen Details zu eurem Aufenthalt in der Casa</p>
+
+    <header class="page-hero">
+        <span class="eyebrow">Euer digitaler Ratgeber vor Ort</span>
+        <h1>Info-Ordner</h1>
+        <p>Alle wichtigen Details zu eurem Aufenthalt in der Casa Englers y Amigos – kompakt, übersichtlich und jederzeit griffbereit.</p>
+
+        <div class="vibe-filter-bar">
+            <button type="button" class="vibe-btn active" onclick="filterInfos('all', this)">✨ Alle Infos</button>
+            <button type="button" class="vibe-btn" onclick="filterInfos('reise', this)">🧳 An- &amp; Abreise</button>
+            <button type="button" class="vibe-btn" onclick="filterInfos('haus', this)">🏠 Wohnung &amp; Tipps</button>
+            <button type="button" class="vibe-btn" onclick="filterInfos('anlage', this)">🌴 Pool, Tore &amp; Müll</button>
+            <button type="button" class="vibe-btn" onclick="filterInfos('notfall', this)">🚨 Notfälle</button>
         </div>
-    </section>
+    </header>
 
     <main>
-        <!-- WLAN & Internet -->
-        <section class="content-section bg-light">
-            <div class="text-container" style="max-width: 800px; margin: 0 auto; text-align: left;">
-                <h2>📶 WLAN & Internet</h2>
-                <p>Damit ihr eure Urlaubsbilder sofort mit den Daheimgebliebenen teilen könnt (oder im Homeoffice neidisch machen), haben wir natürlich schnelles Internet vor Ort.</p>
-                <ul class="features">
-                    <li><strong>Netzwerk (SSID):</strong> Casa_Englers_Guest</li>
-                    <li><strong>Passwort:</strong> Findet ihr direkt auf dem Router im Wohnzimmer oder auf dem Infobild im Flur.</li>
-                </ul>
+        <section class="info-container">
+            <div class="info-grid">
+
+                <!-- 1. ANKOMMEN: STROM, WASSER & KÜHLSCHRANK -->
+                <article class="info-card" data-category="reise">
+                    <div class="info-card-banner">
+                        <span class="info-card-icon">💡</span>
+                        <span class="info-badge highlight">Erst-Check</span>
+                    </div>
+                    <div class="info-body">
+                        <span class="info-category">Erste Schritte bei Ankunft</span>
+                        <h2>Strom, Wasser &amp; Kühlschrank</h2>
+                        <p class="info-desc">
+                            Schön, dass ihr da seid! Falls bei eurer Ankunft noch kein Strom oder Wasser läuft, findet ihr alles im Kabuff (Abstellraum neben dem Bad):
+                        </p>
+                        <ul class="info-list">
+                            <li><strong>Strom:</strong> Der Sicherungskasten sitzt im Abstellraum direkt hinter der Tür.</li>
+                            <li><strong>Wasser:</strong> Der Absperrhebel ist an der Wand hinter der Waschmaschine – <em>spanisches Patent</em>: Hebel anheben, drehen und auf den kleinen Dorn setzen.</li>
+                            <li><strong>Kühlschrank:</strong> Startet automatisch mit dem Strom (sonst kurz <strong>ON</strong> drücken). Erstmal nur ein Teil (z. B. ein Getränk) mittig hineinstellen, Tür schließen und ca. <strong>30 Min. vorkühlen</strong> lassen, bevor der Großeinkauf einzieht.</li>
+                        </ul>
+                        <details class="detail-accordion">
+                            <summary>🔧 Läuft noch kein Wasser? (Hauptwasserhahn)</summary>
+                            <div class="accordion-body">
+                                <p>Ab und an stellen Handwerker in der Anlage dem ganzen Block kurz das Wasser ab.</p>
+                                <p>Am Wasserhebel im Kabuff hängt dafür ein <strong>Dreikant-Schlüssel</strong>. Damit runter zum Parkplatz: links an der Hauswand vor der <strong>Nr. 5</strong> sitzt der vergitterte Kasten mit den Hauptwasserhähnen. Aufschließen – der <strong>oberste Hahn</strong> ist unserer!</p>
+                            </div>
+                        </details>
+                    </div>
+                </article>
+
+                <!-- 2. CHECK-IN & ABREISE-CHECKLISTE -->
+                <article class="info-card" data-category="reise">
+                    <div class="info-card-banner">
+                        <span class="info-card-icon">🔑</span>
+                        <span class="info-badge">An- &amp; Abreise</span>
+                    </div>
+                    <div class="info-body">
+                        <span class="info-category">Zeiten, Schlüssel &amp; Checkliste</span>
+                        <h2>Check-in &amp; Abreise</h2>
+                        <p class="info-desc">
+                            <strong>Check-in ab 15:00 Uhr</strong> · <strong>Check-out bis 11:00 Uhr</strong>. Da die Endreinigung organisatorisch nicht immer sofort erfolgt, helfen uns diese Punkte enorm:
+                        </p>
+                        <ul class="info-list">
+                            <li><strong>Geschirr &amp; Müll:</strong> Bitte Geschirr spülen, Nespresso-Kapselbehälter leeren und keinen Müll in der Wohnung lassen.</li>
+                            <li><strong>Kühlschrank:</strong> Ca. <strong>4 Stunden vor Abreise</strong> ausschalten, nach dem Abtauen innen trocken reiben und die Tür <strong>offenstehen lassen</strong>.</li>
+                            <li><strong>Fenster &amp; Rollläden:</strong> Bitte alle Fenster und Rollläden komplett schließen.</li>
+                            <li><strong>Schlüssel-Rücksendung:</strong> Einen Satz Schlüssel inkl. Öffner fürs Straßentor mit nach Deutschland nehmen und binnen <strong>10 Tagen per Einschreiben</strong> zurückschicken.</li>
+                        </ul>
+                        <div class="insider-tip">
+                            <strong>✈️ Gute Heimreise!</strong>
+                            <p>Den Abreise-Müll könnt ihr entspannt auf dem Weg zum Flughafen an den Containern entlang der Hauptstraße einwerfen.</p>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- 3. WLAN & INTERNET -->
+                <article class="info-card" data-category="haus">
+                    <div class="info-card-banner">
+                        <span class="info-card-icon">📶</span>
+                        <span class="info-badge highlight">Neu ab 2027</span>
+                    </div>
+                    <div class="info-body">
+                        <span class="info-category">Internet in der Wohnung</span>
+                        <h2>WLAN &amp; Datenvolumen</h2>
+                        <p class="info-desc">
+                            Ab 2027 gibt es WLAN direkt in der Casa – perfekt für Urlaubsgrüße, Ausflugsplanung und entspanntes Surfen.
+                        </p>
+                        <ul class="info-list">
+                            <li><strong>Inklusiv-Volumen:</strong> Die ersten <strong>10 GB pro Woche</strong> sind für euch inklusive.</li>
+                            <li><strong>Mehr Volumen nötig?</strong> Weitere Pakete schalte ich euch auf Nachfrage gerne gegen Kostenerstattung frei.</li>
+                            <li><strong>Zugangsdaten:</strong> Netzwerkname (SSID) und Passwort findet ihr direkt am Router im Wohnzimmer oder auf dem Infobild im Flur.</li>
+                        </ul>
+                        <div class="insider-tip">
+                            <strong>💡 Englers Tipp:</strong>
+                            <p>Einfach kurz per WhatsApp Bescheid geben, wenn ihr für Streaming oder Homeoffice ein zusätzliches Paket benötigt.</p>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- 4. BEDIENUNG DER GERÄTE & GRILL -->
+                <article class="info-card" data-category="haus">
+                    <div class="info-card-banner">
+                        <span class="info-card-icon">⚡</span>
+                        <span class="info-badge">Küche &amp; Kabuff</span>
+                    </div>
+                    <div class="info-body">
+                        <span class="info-category">Haushaltshelfer vor Ort</span>
+                        <h2>Geräte &amp; Elektro-Grill</h2>
+                        <p class="info-desc">
+                            Unsere Hexenküche und das Kabuff neben dem Bad helfen euch entspannt durch den Urlaub:
+                        </p>
+                        <ul class="info-list">
+                            <li><strong>Nespresso-Maschine:</strong> Tank füllen, Kapsel rein, Hebel runter, Espresso genießen.</li>
+                            <li><strong>Spülmaschine (im Kabuff):</strong> Tabs stehen bereit. Nach dem Spülen die Tür gerne einen Spalt offen lassen.</li>
+                            <li><strong>Waschmaschine (im Kabuff):</strong> Bitte keine 90°-Kochwäsche – 30 bis 40 Grad reichen völlig für den Sangria-Fleck.</li>
+                            <li><strong>Elektro-Grill:</strong> Steht im Kabuff oben auf dem Schrank – bitte nach Benutzung gereinigt wieder dort verstauen.</li>
+                        </ul>
+                        <div class="insider-tip warn-tip">
+                            <strong>⚠️ Wichtig · Steckdose im Kabuff:</strong>
+                            <p>Bitte Waschmaschine und Geschirrspüler <strong>nicht gleichzeitig</strong> laufen lassen – sonst ist die Steckdose überfordert!</p>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- 5. STRAND, TERRASSE & VORRÄTE -->
+                <article class="info-card" data-category="haus">
+                    <div class="info-card-banner">
+                        <span class="info-card-icon">🏖️</span>
+                        <span class="info-badge sky">Ausstattung</span>
+                    </div>
+                    <div class="info-body">
+                        <span class="info-category">Urlaubs-Extras in der Casa</span>
+                        <h2>Strand, Terrasse &amp; Vorräte</h2>
+                        <p class="info-desc">
+                            Alles für Strandtage, Balkonabende und den ersten Durst wartet schon auf euch:
+                        </p>
+                        <ul class="info-list">
+                            <li><strong>Handtücher:</strong> Einfarbige Handtücher bitte nur in der Wohnung nutzen. <strong>Strandhandtücher</strong> stellen wir auf vorherige Anfrage bereit (vor Abreise bitte waschen &amp; im Kabuff aufhängen).</li>
+                            <li><strong>Strand-Ausrüstung:</strong> Im Kabuff stehen Liegen, Strandstühle &amp; Sonnenschirme; im Kinderzimmer lagern Spielsachen &amp; aufblasbare Wassertiere <em>(Nutzung auf eigene Gefahr 😉)</em>.</li>
+                            <li><strong>Terrassenmöbel:</strong> Stehen bei Anreise ggf. noch in der Wohnung – sucht ihnen einfach ein schönes Plätzchen draußen.</li>
+                            <li><strong>Vorräte &amp; Gewürze:</strong> Bedient euch gerne an vorhandenen Lebensmitteln &amp; Gewürzen (weniger Verschwendung!).</li>
+                        </ul>
+                        <div class="insider-tip sky-tip">
+                            <strong>🍺 Urlaubs-Karma:</strong>
+                            <p>Denkt gerne auch an die Urlauber nach euch – über eine kalte Cola oder ein Bier zur Ankunft freut sich jeder!</p>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- 6. WIND, RAUCHFREI & MISSGESCHICKE -->
+                <article class="info-card" data-category="haus">
+                    <div class="info-card-banner">
+                        <span class="info-card-icon">💨</span>
+                        <span class="info-badge">Gut zu wissen</span>
+                    </div>
+                    <div class="info-body">
+                        <span class="info-category">Rücksicht &amp; Küstenwetter</span>
+                        <h2>Wind, Rauchfrei &amp; Defekte</h2>
+                        <p class="info-desc">
+                            Ein paar kleine Hinweise, damit Wohnung, Terrasse und Urlaubslaune unversehrt bleiben:
+                        </p>
+                        <ul class="info-list icon-list">
+                            <li data-icon="🚭"><strong>Rauchfreie Zone:</strong> Bitte raucht nicht in der Wohnung – vielen Dank für eure Rücksicht!</li>
+                            <li data-icon="💨"><strong>Böiger Küstenwind:</strong> Oft weht es kräftig! Fast alle Fenster und die Haustür haben <strong>Haken &amp; Ösen</strong> gegen Zuschlagen. Sonnenschirm &amp; Markise bitte nie offen und unbeaufsichtigt lassen.</li>
+                            <li data-icon="🔧"><strong>Wenn mal etwas kaputt geht:</strong> Passiert jedem mal – überhaupt nicht schlimm! Gebt uns einfach kurz Bescheid, damit wir es schnell reparieren oder ersetzen können.</li>
+                        </ul>
+                        <div class="insider-tip">
+                            <strong>💬 Ehrlichkeit währt am längsten:</strong>
+                            <p>Meldet uns kleine Defekte am besten gleich während des Urlaubs, dann können wir oft direkt Abhilfe schaffen.</p>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- 7. POOLZEITEN, ANLAGE & FUSSGÄNGER-TORE -->
+                <article class="info-card" data-category="anlage">
+                    <div class="info-card-banner">
+                        <span class="info-card-icon">🏊</span>
+                        <span class="info-badge sky">10:00 – 22:00 Uhr</span>
+                    </div>
+                    <div class="info-body">
+                        <span class="info-category">Urbanisation Albatros</span>
+                        <h2>Pool, Anlage &amp; Tore</h2>
+                        <p class="info-desc">
+                            Zwei gepflegte Pools im Palmengarten und direkte Zugänge zu Straße und Strand:
+                        </p>
+                        <ul class="info-list">
+                            <li><strong>Offizielle Poolzeiten:</strong> Täglich <strong>10:00 – 22:00 Uhr</strong>. Auch nachts ist eine kurze Abkühlung kein Problem, solange ihr nicht zu laut seid.</li>
+                            <li><strong>Am Becken:</strong> Bitte keine Glasflaschen mitnehmen und nach dem Strand kurz den Sand abduschen.</li>
+                            <li><strong>Fußgänger-Tor (Straße):</strong> Öffnet mit dem Schlüssel mit <strong>grünem Etikett &amp; Herzanhänger</strong> (hängt am Schlüsselbrett).</li>
+                            <li><strong>Fußgänger-Tor (Strand):</strong> Öffnet per wechselndem <strong>Zahlencode</strong> – den aktuellen Code teilen wir euch vor Anreise mit (steht auch im Ordner vor Ort).</li>
+                        </ul>
+                        <div class="insider-tip sky-tip">
+                            <strong>🌴 Nachbarschafts-Tipp:</strong>
+                            <p>Ein kurzes „Hola“ auf dem Weg zum Pool kommt bei den spanischen Nachbarn immer super an!</p>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- 8. NOTFÄLLE & KONTAKT -->
+                <article class="info-card" data-category="notfall">
+                    <div class="info-card-banner">
+                        <span class="info-card-icon">🚨</span>
+                        <span class="info-badge highlight">Notruf 112</span>
+                    </div>
+                    <div class="info-body">
+                        <span class="info-category">Hilfe &amp; Wichtige Nummern</span>
+                        <h2>Notfälle &amp; Kontakt</h2>
+                        <p class="info-desc">
+                            Sollte es brennen, das Wasser knapp werden oder ihr den Weinkorkenzieher nicht finden:
+                        </p>
+                        <ul class="info-list">
+                            <li><strong>Notruf (Spanien gesamt):</strong> <strong>112</strong> (Polizei, Feuerwehr, Rettungsdienst – auch auf Deutsch/Englisch erreichbar).</li>
+                            <li><strong>Direkter Draht zu uns:</strong> Schreibt uns jederzeit per WhatsApp oder ruft kurz durch – wir helfen euch umgehend weiter!</li>
+                        </ul>
+                        <div class="card-actions">
+                            <a href="https://wa.me/491733045695" target="_blank" rel="noopener noreferrer" class="action-btn primary">💬 WhatsApp schreiben</a>
+                            <a href="tel:112" class="action-btn secondary">📞 Notruf 112</a>
+                        </div>
+                    </div>
+                </article>
+
             </div>
         </section>
 
-        <!-- Check-In & Check-Out -->
-        <section class="gallery-section bg-dark">
-            <h2>🔑 Check-in & Check-out</h2>
-            <p>Damit alles reibungslos abläuft, hier ein paar kurze Richtzeiten für die Schlüssel- und Wohnungsübergabe:</p>
-            <ul class="features">
-                <li><strong>Anreise (Check-in):</strong> Ab 15:00 Uhr ist die Bude bezugsfertig für euch.</li>
-                <li><strong>Abreise (Check-out):</strong> Bis 11:00 Uhr müsst ihr schweren Herzens die Schlüssel wieder abgeben.</li>
-                <li><strong>Schlüssel-Mission:</strong> Vergesst nicht, den Schlüssel nach eurer Abreise innerhalb von 10 Tagen per Einschreiben an uns zurückzusenden!</li>
-            </ul>
-        </section>
-
-        <!-- Geräte im Haus -->
-        <section class="content-section reverse bg-light">
-            <div class="text-container" style="max-width: 800px; margin: 0 auto; text-align: left;">
-                <h2>⚡ Bedienung der Geräte</h2>
-                <p>Unsere Hexenküche und Haushaltshelfer wollen richtig bedient werden:</p>
-                <ul class="features">
-                    <li><strong>Nespresso-Maschine:</strong> Tank füllen, Kapsel rein, Hebel runter, Espresso genießen. Bitte den Kapselbehälter bei Abreise leeren.</li>
-                    <li><strong>Spülmaschine:</strong> Tabs stehen bereit. Nach dem Spülen die Tür einen Spalt offen lassen.</li>
-                    <li><strong>Waschmaschine (im Bad):</strong> Bitte keine Kochwäsche bei 90 Grad starten – 30 bis 40 Grad reichen völlig für den Sangria-Fleck.</li>
-                    <li><strong>Klimaanlage / Heizung:</strong> Bitte schaltet die Klimaanlage aus, wenn ihr das Apartment verlasst oder die Fenster geöffnet sind. Die Umwelt (und unsere Stromrechnung) danken es euch!</li>
-                </ul>
+        <!-- DUNKLE FEATURE-SEKTION: MÜLLENTSORGUNG IN DÉNIA -->
+        <section id="trigger-whatsapp" class="trash-section" data-category="anlage">
+            <div class="trash-header">
+                <span class="eyebrow">Besonderheiten in Dénia</span>
+                <h2>🗑️ Müllentsorgung</h2>
+                <p>
+                    In Dénia gibt es keine privaten Mülltonnen direkt an der Anlage – stattdessen findet ihr große öffentliche <strong>Container-Inseln entlang der Carretera de les Marines in beiden Richtungen</strong> (jeweils nur ein kurzes Stück nach links oder rechts an der Hauptstraße).
+                </p>
             </div>
-        </section>
 
-        <!-- Müll & Pool -->
-        <section class="gallery-section bg-dark">
-            <h2>🗑️ Müllentsorgung & Urbanisation</h2>
-            <p>Ein paar kleine Regeln für ein harmonisches Miteinander in der Anlage:</p>
-            <ul class="features">
-                <li><strong>Müll:</strong> Die Müllcontainer stehen direkt unten an der Zufahrt zur Urbanisation. Bitte trennt Glas und Restmüll ein wenig. Lasst am Abreisetag bitte keinen Biomüll mehr in der Küche stehen.</li>
-                <li><strong>Pool-Regeln:</strong> Die Pools der Urbanisation Albatros stehen euch von morgens bis abends offen. Bitte nehmt Rücksicht auf andere Nachbarn, keine Glasflaschen mit an den Rand nehmen und nach dem Strandbesuch kurz den Sand abduschen.</li>
-            </ul>
-        </section>
+            <div class="trash-graphic-wrap">
+                <img src="images/muell-denia.svg" alt="Übersicht der Müllcontainer-Farben in Dénia: Grau (Restmüll), Gelb (Plastik, Alu, Dosen & Tetra Paks), Blau (Papier), Grün (Glas), Braun (Bio)">
+            </div>
 
-        <!-- Kontakt & Notfall -->
-        <section id="trigger-whatsapp" class="content-section bg-light">
-            <div class="text-container" style="max-width: 800px; margin: 0 auto; text-align: left;">
-                <h2>🚨 Notfälle & Wichtige Nummern</h2>
-                <p>Sollte es brennen, das Wasser knapp werden oder ihr den Weincorkenzieher nicht finden:</p>
-                <ul class="features">
-                    <li><strong>Notruf (Spanien gesamt):</strong> 112 (Polizei, Feuerwehr, Rettungsdienst)</li>
-                    <li><strong>Direkter Draht zu uns:</strong> Schreibt uns jederzeit über <a href="https://wa.me/491733045695" target="_blank">WhatsApp</a>. Wir helfen euch sofort weiter!</li>
-                </ul>
+            <div class="trash-rules-grid">
+                <div class="trash-rule-box">
+                    <span class="trash-rule-tag">Einwurfzeiten · Dénia</span>
+                    <h3>Rest- &amp; Biomüll: 21 – 24 Uhr</h3>
+                    <p><strong>Grau &amp; Braun</strong> dürfen abends von <strong>21:00 bis 24:00 Uhr</strong> eingeworfen werden <span style="opacity:0.75; font-size:0.88em;">(im Winter ab Ende Okt. schon ab 19:00 Uhr)</span>.</p>
+                    <p><strong>Gelb, Blau &amp; Grün</strong> könnt ihr <strong>jederzeit</strong> einwerfen (Glas aus Rücksicht am besten tagsüber).</p>
+                </div>
+                <div class="trash-rule-box">
+                    <span class="trash-rule-tag">Wichtig · Alu &amp; Regeln</span>
+                    <h3>Alu in Gelb · nichts daneben</h3>
+                    <p><strong>Alu-Müll</strong> (Getränke-/Konservendosen, Aluschalen, Alufolie) gehört in Dénia in den <strong>gelben Container</strong>.</p>
+                    <p>Ist ein brauner Bio-Container per Chip verschlossen, einfach den grauen Restmüll nutzen.</p>
+                    <p><strong>Bitte niemals Säcke neben die Container stellen (Bußgeldgefahr!).</strong></p>
+                </div>
+                <div class="trash-rule-box">
+                    <span class="trash-rule-tag">Abreise · Checkliste</span>
+                    <h3>Wohnung leer hinterlassen</h3>
+                    <p>Am Abreisetag bitte keinen Müll in der Wohnung zurücklassen – nehmt ihn einfach mit und werft ihn <strong>auf dem Weg zum Flughafen</strong> kurz an den Containern entlang der Hauptstraße ein.</p>
+                </div>
             </div>
         </section>
     </main>
-    
-    <!-- Schwebende Buttons & Wetter -->
+
     <a href="https://wa.me/491733045695" class="whatsapp-button" target="_blank" id="whatsapp-btn">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="#ffffff" d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.8 0-67.6-9.5-97.2-27.2l-6.7-4-71.7 18.7 19.3-68.6-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z" /></svg>
     </a>
@@ -105,8 +751,26 @@
     <div id="weather-overlay">
         <span id="temperature">--</span>°C
     </div>
-    
-    <script src="script.js" defer></script>
 
+    <script src="script.js" defer></script>
+    <script>
+        function filterInfos(category, btn) {
+            document.querySelectorAll('.vibe-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            document.querySelectorAll('.info-card').forEach(card => {
+                if (category === 'all' || card.dataset.category.includes(category)) {
+                    card.classList.remove('hidden');
+                } else {
+                    card.classList.add('hidden');
+                }
+            });
+
+            const trashSec = document.querySelector('.trash-section');
+            if (trashSec) {
+                trashSec.classList.toggle('hidden', category !== 'all' && category !== 'anlage');
+            }
+        }
+    </script>
 </body>
 </html>

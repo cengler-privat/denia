@@ -1,0 +1,89 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 270" width="920" height="270" role="img" aria-labelledby="muellTitle muellDesc">
+  <title id="muellTitle">Mülltrennung in Dénia – Übersicht der 5 Container-Farben</title>
+  <desc id="muellDesc">Grau für Restmüll, Gelb für Plastik und Dosen, Blau für Papier und Karton, Grün für Glas und Braun für Biomüll entlang der Carretera de les Marines in Dénia.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#1e293b"/>
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="125%">
+      <feDropShadow dx="0" dy="6" stdDeviation="6" flood-color="#000000" flood-opacity="0.35"/>
+    </filter>
+  </defs>
+
+  <rect width="920" height="270" rx="20" fill="url(#bg)" stroke="#334155" stroke-width="1.5"/>
+
+  <text x="460" y="34" text-anchor="middle" fill="#f59e0b" font-family="Lato, -apple-system, BlinkMacSystemFont, sans-serif" font-size="13" font-weight="700" letter-spacing="2.5">MÜLLTRENNUNG IN DÉNIA · CONTAINER-FARBEN</text>
+
+  <!-- 1. GRAU - RESTMÜLL -->
+  <g transform="translate(26, 56)" filter="url(#shadow)">
+    <rect width="160" height="190" rx="14" fill="#1e293b" stroke="#475569" stroke-width="1.2"/>
+    <!-- Container Icon -->
+    <rect x="46" y="24" width="68" height="10" rx="4" fill="#94a3b8"/>
+    <path d="M50 36 H110 L105 92 Q104 97 99 97 H61 Q56 97 55 92 Z" fill="#64748b"/>
+    <rect x="64" y="46" width="32" height="5" rx="2.5" fill="#cbd5e1" opacity="0.7"/>
+    <circle cx="80" cy="70" r="11" fill="#334155" opacity="0.45"/>
+    <text x="80" y="75" text-anchor="middle" fill="#f8fafc" font-family="Lato, sans-serif" font-size="13" font-weight="700">R</text>
+    <text x="80" y="122" text-anchor="middle" fill="#ffffff" font-family="Lato, sans-serif" font-size="15" font-weight="700">Grau · Resta</text>
+    <text x="80" y="143" text-anchor="middle" fill="#cbd5e1" font-family="Lato, sans-serif" font-size="12">Restmüll &amp;</text>
+    <text x="80" y="159" text-anchor="middle" fill="#cbd5e1" font-family="Lato, sans-serif" font-size="12">Hausmüll</text>
+    <text x="80" y="178" text-anchor="middle" fill="#94a3b8" font-family="Lato, sans-serif" font-size="10.5">Abends 21–24 Uhr</text>
+  </g>
+
+  <!-- 2. GELB - VERPACKUNGEN & ALU -->
+  <g transform="translate(203, 56)" filter="url(#shadow)">
+    <rect width="160" height="190" rx="14" fill="#1e293b" stroke="#eab308" stroke-width="1.2"/>
+    <rect x="46" y="24" width="68" height="10" rx="4" fill="#fde047"/>
+    <path d="M50 36 H110 L105 92 Q104 97 99 97 H61 Q56 97 55 92 Z" fill="#eab308"/>
+    <rect x="64" y="46" width="32" height="5" rx="2.5" fill="#fef9c3" opacity="0.85"/>
+    <circle cx="80" cy="70" r="11" fill="#713f12" opacity="0.35"/>
+    <text x="80" y="75" text-anchor="middle" fill="#fef9c3" font-family="Lato, sans-serif" font-size="13" font-weight="700">♻</text>
+    <text x="80" y="122" text-anchor="middle" fill="#fde047" font-family="Lato, sans-serif" font-size="15" font-weight="700">Gelb · Envases</text>
+    <text x="80" y="143" text-anchor="middle" fill="#cbd5e1" font-family="Lato, sans-serif" font-size="12">Plastik, Alu,</text>
+    <text x="80" y="159" text-anchor="middle" fill="#cbd5e1" font-family="Lato, sans-serif" font-size="12">Dosen &amp; Tetra Paks</text>
+    <text x="80" y="178" text-anchor="middle" fill="#94a3b8" font-family="Lato, sans-serif" font-size="10">Jederzeit · inkl. Alufolie</text>
+  </g>
+
+  <!-- 3. BLAU - PAPIER -->
+  <g transform="translate(380, 56)" filter="url(#shadow)">
+    <rect width="160" height="190" rx="14" fill="#1e293b" stroke="#3b82f6" stroke-width="1.2"/>
+    <rect x="46" y="24" width="68" height="10" rx="4" fill="#60a5fa"/>
+    <path d="M50 36 H110 L105 92 Q104 97 99 97 H61 Q56 97 55 92 Z" fill="#2563eb"/>
+    <rect x="62" y="46" width="36" height="5" rx="2.5" fill="#dbeafe" opacity="0.85"/>
+    <rect x="71" y="61" width="18" height="20" rx="2" fill="#eff6ff" opacity="0.9"/>
+    <line x1="74" y1="67" x2="86" y2="67" stroke="#2563eb" stroke-width="1.8"/>
+    <line x1="74" y1="72" x2="86" y2="72" stroke="#2563eb" stroke-width="1.8"/>
+    <line x1="74" y1="77" x2="82" y2="77" stroke="#2563eb" stroke-width="1.8"/>
+    <text x="80" y="122" text-anchor="middle" fill="#60a5fa" font-family="Lato, sans-serif" font-size="15" font-weight="700">Blau · Papel</text>
+    <text x="80" y="143" text-anchor="middle" fill="#cbd5e1" font-family="Lato, sans-serif" font-size="12">Papier, Zeitungen</text>
+    <text x="80" y="159" text-anchor="middle" fill="#cbd5e1" font-family="Lato, sans-serif" font-size="12">&amp; Kartons</text>
+    <text x="80" y="178" text-anchor="middle" fill="#94a3b8" font-family="Lato, sans-serif" font-size="10.5">Kartons klein falten</text>
+  </g>
+
+  <!-- 4. GRÜN - GLAS (IGLU) -->
+  <g transform="translate(557, 56)" filter="url(#shadow)">
+    <rect width="160" height="190" rx="14" fill="#1e293b" stroke="#22c55e" stroke-width="1.2"/>
+    <!-- Iglu-Form typisch für Spanien -->
+    <path d="M52 97 V62 Q52 26 80 26 Q108 26 108 62 V97 Z" fill="#16a34a"/>
+    <rect x="74" y="21" width="12" height="7" rx="3" fill="#4ade80"/>
+    <circle cx="80" cy="56" r="10" fill="#052e16" opacity="0.65"/>
+    <circle cx="80" cy="56" r="7" fill="none" stroke="#bbf7d0" stroke-width="1.5"/>
+    <text x="80" y="122" text-anchor="middle" fill="#4ade80" font-family="Lato, sans-serif" font-size="15" font-weight="700">Grün · Vidrio</text>
+    <text x="80" y="143" text-anchor="middle" fill="#cbd5e1" font-family="Lato, sans-serif" font-size="12">Glasflaschen &amp;</text>
+    <text x="80" y="159" text-anchor="middle" fill="#cbd5e1" font-family="Lato, sans-serif" font-size="12">Gläser (o. Deckel)</text>
+    <text x="80" y="178" text-anchor="middle" fill="#94a3b8" font-family="Lato, sans-serif" font-size="10.5">Einwurf tagsüber</text>
+  </g>
+
+  <!-- 5. BRAUN - BIO -->
+  <g transform="translate(734, 56)" filter="url(#shadow)">
+    <rect width="160" height="190" rx="14" fill="#1e293b" stroke="#a16207" stroke-width="1.2"/>
+    <rect x="46" y="24" width="68" height="10" rx="4" fill="#b45309"/>
+    <path d="M50 36 H110 L105 92 Q104 97 99 97 H61 Q56 97 55 92 Z" fill="#92400e"/>
+    <rect x="64" y="46" width="32" height="5" rx="2.5" fill="#fde68a" opacity="0.65"/>
+    <path d="M80 60 C89 60 91 71 80 79 C69 71 71 60 80 60 Z" fill="#fde68a" opacity="0.85"/>
+    <text x="80" y="122" text-anchor="middle" fill="#fbbf24" font-family="Lato, sans-serif" font-size="15" font-weight="700">Braun · Bio</text>
+    <text x="80" y="143" text-anchor="middle" fill="#cbd5e1" font-family="Lato, sans-serif" font-size="12">Organische</text>
+    <text x="80" y="159" text-anchor="middle" fill="#cbd5e1" font-family="Lato, sans-serif" font-size="12">Küchenabfälle</text>
+    <text x="80" y="178" text-anchor="middle" fill="#94a3b8" font-family="Lato, sans-serif" font-size="10.5">Teils mit Chip → sonst Grau</text>
+  </g>
+</svg>

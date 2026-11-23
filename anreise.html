@@ -1038,11 +1038,11 @@
 
                 <div class="map-card-footer">
                     <p class="map-address">
-                        <span id="mapAddressText"><strong>Ziel:</strong> Urbanización Albatros · Ctra. de les Marines a Dénia, km 3,5 · 03700 Dénia</span>
+                        <span id="mapAddressText"><strong>Ziel:</strong> Urbanización Albatros, Ctra. de les Marines a Dénia km 3.5, 03700 Dénia (38.8569, 0.0690)</span>
                         <button type="button" class="consent-revoke-btn" id="gmapsRevokeBtn" onclick="revokeGmapsConsent()">🔒 Karte ausblenden / Einwilligung widerrufen</button>
                     </p>
                     <div class="map-actions">
-                        <a id="openMapsBtn" href="https://www.google.com/maps/dir/?api=1&origin=Aeropuerto+de+Alicante-Elche+Miguel+Hernandez&destination=38.8569,0.0690&travelmode=driving" target="_blank" rel="noopener noreferrer" class="action-btn primary">📍 Navigation in Google Maps ↗</a>
+                        <a id="openMapsBtn" href="https://www.google.com/maps/dir/?api=1&origin=Aeropuerto+de+Alicante-Elche+Miguel+Hernandez&destination=Urbanizaci%C3%B3n+Albatros%2C+Ctra.+de+les+Marines+a+D%C3%A9nia+km+3.5%2C+03700+D%C3%A9nia&travelmode=driving" target="_blank" rel="noopener noreferrer" class="action-btn primary">📍 Navigation in Google Maps ↗</a>
                         <button type="button" class="action-btn secondary" id="copyCoordsBtn" onclick="copyDestination()">📋 Zieladresse kopieren</button>
                     </div>
                 </div>
@@ -1059,7 +1059,7 @@
                 </article>
                 <article class="tip-card">
                     <h3>🅿️ Parkplatz direkt an der Anlage</h3>
-                    <p>Euer Mietwagen steht sicher auf dem Gelände der <em>Urbanisation Albatros</em> – kein langes Parkplatzsuchen, direkt Koffer ausladen und ab an den Pool.</p>
+                    <p>Euer Mietwagen parkt direkt auf dem Gelände der <em>Urbanisation Albatros</em> – meistens völlig entspannt. Kleiner Disclaimer für den Hochsommer: Wenn halb Spanien gleichzeitig ans Meer will, wird das Einparken manchmal zum kleinen Tetris-Wettbewerb (ein wendiger Kleinwagen sammelt hier echte Bonuspunkte!).</p>
                 </article>
             </div>
 
@@ -1591,7 +1591,9 @@
         // =========================================
         //   2. Google Maps Auto-Route (ALC / VLC <-> Casa Englers)
         // =========================================
-        const CASA_COORDS = '38.8569,0.0690';
+        const CASA_ADDRESS = 'Urbanización Albatros, Ctra. de les Marines a Dénia km 3.5, 03700 Dénia (38.8569, 0.0690)';
+        const CASA_EMBED_DEST = encodeURIComponent('Urbanización Albatros, Ctra. de les Marines a Dénia km 3.5, 03700 Dénia');
+        const CASA_NAV_DEST = encodeURIComponent('Urbanización Albatros, Ctra. de les Marines a Dénia km 3.5, 03700 Dénia');
         const DRIVE_ROUTES = {
             ALC: {
                 name: 'Flughafen Alicante (ALC)',
@@ -1616,10 +1618,10 @@
 
         function buildDriveUrls(code, returnTrip) {
             const r = DRIVE_ROUTES[code] || DRIVE_ROUTES.ALC;
-            const saddr = returnTrip ? CASA_COORDS : r.query;
-            const daddr = returnTrip ? r.query : CASA_COORDS;
-            const origin = returnTrip ? CASA_COORDS : r.navOrigin;
-            const dest = returnTrip ? r.navOrigin : CASA_COORDS;
+            const saddr = returnTrip ? CASA_EMBED_DEST : r.query;
+            const daddr = returnTrip ? r.query : CASA_EMBED_DEST;
+            const origin = returnTrip ? CASA_NAV_DEST : r.navOrigin;
+            const dest = returnTrip ? r.navOrigin : CASA_NAV_DEST;
             return {
                 embedUrl: `https://maps.google.com/maps?saddr=${saddr}&daddr=${daddr}&dirflg=d&hl=de&output=embed`,
                 navUrl: `https://www.google.com/maps/dir/?api=1&origin=${origin}&destination=${dest}&travelmode=driving`
@@ -1681,8 +1683,8 @@
                 ? '🚪 Auffahrt: <strong>Nr. 62 (Ondara / Dénia)</strong>'
                 : '🚪 Ausfahrt: <strong>Nr. 62 (Ondara / Dénia)</strong>';
             document.getElementById('mapAddressText').innerHTML = isReturnTrip
-                ? `<strong>Heimflug-Route:</strong> Urbanización Albatros → ${r.name}`
-                : '<strong>Ziel:</strong> Urbanización Albatros · Ctra. de les Marines a Dénia, km 3,5 · 03700 Dénia';
+                ? `<strong>Heimflug-Route:</strong> ${CASA_ADDRESS} → ${r.name}`
+                : `<strong>Ziel:</strong> ${CASA_ADDRESS}`;
 
             const navBtn = document.getElementById('openMapsBtn');
             navBtn.href = urls.navUrl;
