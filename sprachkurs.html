@@ -1,0 +1,1401 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Mini-Sprachkurs – Casa Englers y Amigos</title>
+
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        /* Hero analog zu kulinarisches.html & info-ordner.html */
+        .page-hero {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: #ffffff;
+            text-align: center;
+            padding: 110px 20px 55px 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .page-hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -20%;
+            width: 140%;
+            height: 200%;
+            background: radial-gradient(circle at 50% 30%, rgba(245, 158, 11, 0.16), transparent 60%);
+            pointer-events: none;
+        }
+
+        .page-hero .eyebrow {
+            font-family: 'Lato', sans-serif;
+            font-size: 13px;
+            letter-spacing: 3.5px;
+            text-transform: uppercase;
+            color: #f59e0b;
+            font-weight: 700;
+            display: block;
+            margin-bottom: 12px;
+            position: relative;
+        }
+
+        .page-hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.4rem, 5vw, 3.8rem);
+            margin: 0 0 16px 0;
+            line-height: 1.15;
+            position: relative;
+        }
+
+        .page-hero p {
+            font-family: 'Lato', sans-serif;
+            font-size: 1.12rem;
+            color: rgba(255, 255, 255, 0.85);
+            max-width: 660px;
+            margin: 0 auto 30px auto;
+            line-height: 1.6;
+            position: relative;
+        }
+
+        /* Filter-Leiste */
+        .vibe-filter-bar {
+            display: inline-flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 8px;
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            padding: 8px;
+            border-radius: 50px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            position: relative;
+        }
+
+        .vibe-btn {
+            background: transparent;
+            color: rgba(255, 255, 255, 0.85);
+            border: none;
+            padding: 10px 18px;
+            border-radius: 40px;
+            font-family: 'Lato', sans-serif;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .vibe-btn:hover {
+            color: #ffffff;
+            background: rgba(255, 255, 255, 0.12);
+        }
+
+        .vibe-btn.active {
+            background: #f59e0b;
+            color: #0f172a;
+            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4);
+        }
+
+        .vibe-btn.quiz-jump {
+            border: 1px solid rgba(56, 189, 248, 0.45);
+            color: #7dd3fc;
+        }
+
+        .vibe-btn.quiz-jump:hover {
+            background: rgba(56, 189, 248, 0.18);
+            color: #ffffff;
+        }
+
+        /* Audio-Steuerleiste unter dem Hero */
+        .audio-toolbar {
+            max-width: 1240px;
+            margin: 34px auto 0 auto;
+            padding: 0 20px;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 14px;
+        }
+
+        .audio-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-family: 'Lato', sans-serif;
+            font-size: 0.92rem;
+            color: #475569;
+        }
+
+        .audio-status strong {
+            color: #0f172a;
+        }
+
+        .speed-toggle {
+            display: inline-flex;
+            background: #e2e8f0;
+            padding: 4px;
+            border-radius: 999px;
+            gap: 4px;
+        }
+
+        .speed-btn {
+            border: none;
+            background: transparent;
+            color: #475569;
+            font-family: 'Lato', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 700;
+            padding: 7px 14px;
+            border-radius: 999px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .speed-btn.active {
+            background: #0f172a;
+            color: #ffffff;
+            box-shadow: 0 2px 8px rgba(15, 23, 42, 0.2);
+        }
+
+        /* Phrasen-Grid */
+        .phrases-container {
+            max-width: 1240px;
+            margin: 24px auto 55px auto;
+            padding: 0 20px;
+        }
+
+        .phrases-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 24px;
+        }
+
+        .phrase-card {
+            background: #ffffff;
+            border-radius: 22px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(15, 23, 42, 0.06);
+            border: 1px solid rgba(15, 23, 42, 0.06);
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.3s ease, border-color 0.25s ease;
+        }
+
+        .phrase-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(15, 23, 42, 0.11);
+        }
+
+        .phrase-card.speaking {
+            border-color: #f59e0b;
+            box-shadow: 0 12px 34px rgba(245, 158, 11, 0.22);
+        }
+
+        .phrase-card.hidden {
+            display: none;
+        }
+
+        .phrase-top {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            padding: 18px 22px 20px 22px;
+            color: #ffffff;
+            position: relative;
+        }
+
+        .phrase-meta {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .phrase-cat {
+            font-family: 'Lato', sans-serif;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: #f59e0b;
+        }
+
+        .phrase-es {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.45rem;
+            line-height: 1.25;
+            margin: 0 0 12px 0;
+            color: #ffffff;
+        }
+
+        .phonetic-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(245, 158, 11, 0.16);
+            border: 1px solid rgba(245, 158, 11, 0.35);
+            color: #fde68a;
+            padding: 5px 12px;
+            border-radius: 10px;
+            font-family: 'Lato', sans-serif;
+            font-size: 0.86rem;
+            letter-spacing: 0.3px;
+        }
+
+        .phonetic-pill span.lbl {
+            opacity: 0.7;
+            font-size: 0.76rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .phrase-body {
+            padding: 18px 22px 20px 22px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+            gap: 12px;
+        }
+
+        .phrase-de {
+            font-family: 'Lato', sans-serif;
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: #0f172a;
+            margin: 0;
+        }
+
+        .phrase-note {
+            font-family: 'Lato', sans-serif;
+            font-size: 0.9rem;
+            color: #475569;
+            line-height: 1.5;
+            margin: 0;
+            flex-grow: 1;
+        }
+
+        .phrase-actions {
+            display: flex;
+            gap: 8px;
+            padding-top: 12px;
+            border-top: 1px solid #f1f5f9;
+        }
+
+        .speak-btn {
+            flex: 1;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 7px;
+            border: none;
+            border-radius: 12px;
+            padding: 10px 14px;
+            font-family: 'Lato', sans-serif;
+            font-size: 0.88rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .speak-btn.primary {
+            background: #0f172a;
+            color: #ffffff;
+        }
+
+        .speak-btn.primary:hover {
+            background: #f59e0b;
+            color: #0f172a;
+        }
+
+        .speak-btn.primary.is-playing {
+            background: #f59e0b;
+            color: #0f172a;
+        }
+
+        /* Aussprache-Spickzettel */
+        .cheatsheet-section {
+            max-width: 1240px;
+            margin: 0 auto 65px auto;
+            padding: 0 20px;
+        }
+
+        .cheatsheet-box {
+            background: #ffffff;
+            border-radius: 22px;
+            padding: 28px 30px;
+            border: 1px solid rgba(15, 23, 42, 0.06);
+            box-shadow: 0 10px 30px rgba(15, 23, 42, 0.05);
+        }
+
+        .cheatsheet-header {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: baseline;
+            justify-content: space-between;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .cheatsheet-header h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.65rem;
+            color: #0f172a;
+            margin: 0;
+        }
+
+        .cheatsheet-header span {
+            font-family: 'Lato', sans-serif;
+            font-size: 0.9rem;
+            color: #64748b;
+        }
+
+        .cheat-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+            gap: 14px;
+        }
+
+        .cheat-item {
+            background: #f8fafc;
+            border-radius: 14px;
+            padding: 14px 16px;
+            border-left: 4px solid #f59e0b;
+        }
+
+        .cheat-letter {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.35rem;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 4px;
+        }
+
+        .cheat-letter span {
+            color: #d97706;
+            font-family: 'Lato', sans-serif;
+            font-size: 0.92rem;
+            margin-left: 6px;
+        }
+
+        .cheat-item p {
+            margin: 0;
+            font-size: 0.88rem;
+            color: #475569;
+            line-height: 1.45;
+        }
+
+        /* Dunkle Quiz-Sektion analog zu timeline / trash-section */
+        .quiz-section {
+            background: #0f172a;
+            color: #ffffff;
+            padding: 70px 20px 80px 20px;
+        }
+
+        .quiz-wrap {
+            max-width: 780px;
+            margin: 0 auto;
+        }
+
+        .quiz-header {
+            text-align: center;
+            margin-bottom: 34px;
+        }
+
+        .quiz-header .eyebrow {
+            color: #f59e0b;
+            letter-spacing: 3px;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .quiz-header h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.9rem, 3.8vw, 2.7rem);
+            color: #ffffff;
+            margin: 0 0 12px 0;
+        }
+
+        .quiz-header p {
+            color: rgba(255, 255, 255, 0.78);
+            font-size: 1rem;
+            line-height: 1.6;
+            margin: 0 auto;
+            max-width: 580px;
+        }
+
+        .quiz-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 24px;
+            padding: 30px 30px 28px 30px;
+            box-shadow: 0 22px 50px rgba(0, 0, 0, 0.35);
+        }
+
+        .quiz-topbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 14px;
+            font-family: 'Lato', sans-serif;
+            font-size: 0.88rem;
+            color: rgba(255, 255, 255, 0.75);
+        }
+
+        .quiz-score-pill {
+            background: rgba(245, 158, 11, 0.18);
+            color: #fde68a;
+            border: 1px solid rgba(245, 158, 11, 0.35);
+            padding: 4px 12px;
+            border-radius: 999px;
+            font-weight: 700;
+        }
+
+        .quiz-progress-track {
+            width: 100%;
+            height: 7px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 999px;
+            overflow: hidden;
+            margin-bottom: 24px;
+        }
+
+        .quiz-progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #f59e0b, #fbbf24);
+            width: 12.5%;
+            border-radius: 999px;
+            transition: width 0.35s ease;
+        }
+
+        .quiz-badge {
+            display: inline-block;
+            font-family: 'Lato', sans-serif;
+            font-size: 11.5px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.6px;
+            color: #38bdf8;
+            margin-bottom: 8px;
+        }
+
+        .quiz-question {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.3rem, 2.5vw, 1.65rem);
+            color: #ffffff;
+            margin: 0 0 18px 0;
+            line-height: 1.35;
+        }
+
+        .quiz-audio-box {
+            margin-bottom: 20px;
+        }
+
+        .quiz-audio-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(56, 189, 248, 0.16);
+            border: 1px solid rgba(56, 189, 248, 0.45);
+            color: #bae6fd;
+            padding: 11px 18px;
+            border-radius: 14px;
+            font-family: 'Lato', sans-serif;
+            font-size: 0.94rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .quiz-audio-btn:hover {
+            background: #38bdf8;
+            color: #0f172a;
+        }
+
+        .quiz-options {
+            display: flex;
+            flex-direction: column;
+            gap: 11px;
+        }
+
+        .quiz-option {
+            width: 100%;
+            text-align: left;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1.5px solid rgba(255, 255, 255, 0.14);
+            color: #f8fafc;
+            border-radius: 14px;
+            padding: 14px 18px;
+            font-family: 'Lato', sans-serif;
+            font-size: 0.98rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+        }
+
+        .quiz-option:hover:not(:disabled) {
+            background: rgba(255, 255, 255, 0.13);
+            border-color: rgba(245, 158, 11, 0.6);
+            transform: translateX(3px);
+        }
+
+        .quiz-option:disabled {
+            cursor: default;
+        }
+
+        .quiz-option.correct {
+            background: rgba(34, 197, 94, 0.2);
+            border-color: #22c55e;
+            color: #dcfce7;
+        }
+
+        .quiz-option.wrong {
+            background: rgba(239, 68, 68, 0.2);
+            border-color: #ef4444;
+            color: #fee2e2;
+        }
+
+        .quiz-feedback {
+            margin-top: 18px;
+            padding: 15px 18px;
+            border-radius: 14px;
+            font-family: 'Lato', sans-serif;
+            font-size: 0.94rem;
+            line-height: 1.55;
+            display: none;
+        }
+
+        .quiz-feedback.show {
+            display: block;
+        }
+
+        .quiz-feedback.ok {
+            background: rgba(34, 197, 94, 0.14);
+            border-left: 4px solid #22c55e;
+            color: #dcfce7;
+        }
+
+        .quiz-feedback.nope {
+            background: rgba(245, 158, 11, 0.14);
+            border-left: 4px solid #f59e0b;
+            color: #fef3c7;
+        }
+
+        .quiz-footer {
+            margin-top: 20px;
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .quiz-next-btn {
+            background: #f59e0b;
+            color: #0f172a;
+            border: none;
+            border-radius: 12px;
+            padding: 12px 22px;
+            font-family: 'Lato', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform 0.2s ease, background 0.2s ease;
+            display: none;
+        }
+
+        .quiz-next-btn.show {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .quiz-next-btn:hover {
+            background: #fbbf24;
+            transform: translateY(-1px);
+        }
+
+        /* Ergebnis-Ansicht */
+        .quiz-result {
+            text-align: center;
+            padding: 16px 8px 6px 8px;
+            display: none;
+        }
+
+        .quiz-result.show {
+            display: block;
+        }
+
+        .result-trophy {
+            font-size: 3.6rem;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .quiz-result h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.9rem;
+            color: #ffffff;
+            margin: 0 0 10px 0;
+        }
+
+        .result-score-big {
+            font-family: 'Lato', sans-serif;
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: #f59e0b;
+            margin: 0 0 14px 0;
+        }
+
+        .quiz-result p {
+            color: rgba(255, 255, 255, 0.82);
+            font-size: 1rem;
+            line-height: 1.6;
+            max-width: 520px;
+            margin: 0 auto 24px auto;
+        }
+
+        .quiz-restart-btn {
+            background: #f59e0b;
+            color: #0f172a;
+            border: none;
+            border-radius: 14px;
+            padding: 13px 24px;
+            font-family: 'Lato', sans-serif;
+            font-size: 0.96rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .quiz-restart-btn:hover {
+            background: #fbbf24;
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 768px) {
+            .phrases-grid { grid-template-columns: 1fr; }
+            .vibe-filter-bar { justify-content: flex-start; width: 100%; border-radius: 22px; }
+            .audio-toolbar { justify-content: center; text-align: center; }
+            .quiz-card { padding: 22px 18px; }
+        }
+    </style>
+</head>
+
+<body class="bg-light">
+
+    <button class="burger-menu-button" id="burger-menu-btn" title="Menü öffnen">
+        <span class="burger-menu-bar"></span>
+        <span class="burger-menu-bar"></span>
+        <span class="burger-menu-bar"></span>
+    </button>
+    <div id="menu-container"></div>
+
+    <header class="page-hero">
+        <span class="eyebrow">Mini-Sprachkurs für Dénia</span>
+        <h1>¡Hola Amigos!</h1>
+        <p>Die wichtigsten spanischen Urlaubs-Floskeln für Bar, Strand, Nachbarn und Supermarkt – mit deutscher Lautschrift, Vorlesefunktion und kleinem Spaß-Test am Ende.</p>
+
+        <div class="vibe-filter-bar">
+            <button type="button" class="vibe-btn active" onclick="filterPhrases('all', this)">✨ Alle Floskeln</button>
+            <button type="button" class="vibe-btn" onclick="filterPhrases('hallo', this)">👋 Begrüßung</button>
+            <button type="button" class="vibe-btn" onclick="filterPhrases('bar', this)">🍷 Bar &amp; Tapas</button>
+            <button type="button" class="vibe-btn" onclick="filterPhrases('alltag', this)">🏖️ Strand &amp; Einkauf</button>
+            <button type="button" class="vibe-btn" onclick="filterPhrases('notfall', this)">🆘 Notfall &amp; Hilfe</button>
+            <a href="#trigger-whatsapp" class="vibe-btn quiz-jump">🎯 Zum Spaß-Test</a>
+        </div>
+    </header>
+
+    <main>
+        <div class="audio-toolbar">
+            <div class="audio-status" id="voice-status">
+                🔊 <span>Klicke auf <strong>Anhören</strong>, um jede Floskel auf Spanisch vorlesen zu lassen.</span>
+            </div>
+            <div class="speed-toggle" role="group" aria-label="Sprechgeschwindigkeit">
+                <button type="button" class="speed-btn active" id="speed-normal" onclick="setGlobalRate(0.95, this)">🗣️ Normal</button>
+                <button type="button" class="speed-btn" id="speed-slow" onclick="setGlobalRate(0.68, this)">🐢 Langsam</button>
+            </div>
+        </div>
+
+        <section class="phrases-container">
+            <div class="phrases-grid" id="phrases-grid">
+                <!-- Wird dynamisch aus PHRASES gerendert -->
+            </div>
+        </section>
+
+        <!-- AUSSPRACHE-SPICKZETTEL -->
+        <section class="cheatsheet-section">
+            <div class="cheatsheet-box">
+                <div class="cheatsheet-header">
+                    <h2>⚡ 30-Sekunden-Aussprache-Spickzettel</h2>
+                    <span>Großbuchstaben in der Lautschrift = betonte Silbe</span>
+                </div>
+                <div class="cheat-grid">
+                    <div class="cheat-item">
+                        <div class="cheat-letter">H <span>ist stumm</span></div>
+                        <p><strong>Hola</strong> spricht man <em>O-la</em>, <strong>Hasta</strong> wird zu <em>A-sta</em>.</p>
+                    </div>
+                    <div class="cheat-item">
+                        <div class="cheat-letter">LL <span>klingt wie J</span></div>
+                        <p><strong>Paella</strong> = <em>Pa-E-ja</em>, <strong>Botella</strong> = <em>Bo-TE-ja</em>.</p>
+                    </div>
+                    <div class="cheat-item">
+                        <div class="cheat-letter">J <span>klingt wie CH</span></div>
+                        <p>Wie in „Bach“: <strong>Tarjeta</strong> = <em>Tar-CHE-ta</em>, <strong>Jamón</strong> = <em>Cha-MON</em>.</p>
+                    </div>
+                    <div class="cheat-item">
+                        <div class="cheat-letter">Ñ <span>klingt wie NJ</span></div>
+                        <p><strong>Caña</strong> = <em>KAN-ja</em>, <strong>España</strong> = <em>Es-PAN-ja</em>, <strong>Baño</strong> = <em>BAN-jo</em>.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- DUNKLE FEATURE-SEKTION: LUSTIGER URLAUBS-SPANISCH-TEST -->
+        <section id="trigger-whatsapp" class="quiz-section">
+            <div class="quiz-wrap">
+                <div class="quiz-header">
+                    <span class="eyebrow">Mit Humor &amp; Hör-Checks</span>
+                    <h2>🎯 Der Dénia-Spanisch-Test</h2>
+                    <p>8 kurze, nicht ganz ernste Fragen aus dem echten Spanien-Urlaub – inklusive zwei Hör-Aufgaben. Schaffst du den Titel „Ehrenbürger von Dénia“?</p>
+                </div>
+
+                <div class="quiz-card">
+                    <div id="quiz-play-area">
+                        <div class="quiz-topbar">
+                            <span id="quiz-counter">Frage 1 von 8</span>
+                            <span class="quiz-score-pill" id="quiz-score">0 Punkte</span>
+                        </div>
+                        <div class="quiz-progress-track">
+                            <div class="quiz-progress-fill" id="quiz-progress"></div>
+                        </div>
+
+                        <span class="quiz-badge" id="quiz-badge"></span>
+                        <h3 class="quiz-question" id="quiz-question"></h3>
+
+                        <div class="quiz-audio-box" id="quiz-audio-box" style="display:none;">
+                            <button type="button" class="quiz-audio-btn" id="quiz-audio-btn">
+                                🔊 Satz auf Spanisch anhören
+                            </button>
+                        </div>
+
+                        <div class="quiz-options" id="quiz-options"></div>
+
+                        <div class="quiz-feedback" id="quiz-feedback"></div>
+
+                        <div class="quiz-footer">
+                            <button type="button" class="quiz-next-btn" id="quiz-next-btn" onclick="nextQuestion()">
+                                Nächste Frage →
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="quiz-result" id="quiz-result">
+                        <span class="result-trophy" id="result-trophy">🏆</span>
+                        <h3 id="result-title"></h3>
+                        <p class="result-score-big" id="result-score-big"></p>
+                        <p id="result-desc"></p>
+                        <button type="button" class="quiz-restart-btn" onclick="restartQuiz()">🔄 Nochmal spielen</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <a href="https://wa.me/491733045695" class="whatsapp-button" target="_blank" id="whatsapp-btn">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="#ffffff" d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.8 0-67.6-9.5-97.2-27.2l-6.7-4-71.7 18.7 19.3-68.6-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z" /></svg>
+    </a>
+
+    <button id="scroll-to-top-btn" class="scroll-to-top-button" title="Nach oben scrollen">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M246.6 41.4c-12.5-12.5-32.8-12.5-45.3 0l-160 160c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L224 109.3 361.4 246.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-160-160z" /></svg>
+    </button>
+
+    <div id="weather-overlay">
+        <span id="temperature">--</span>°C
+    </div>
+
+    <script src="script.js" defer></script>
+    <script>
+        /* =========================================================
+           1. FLOSKELN-DATENBANK (Dénia-Edition)
+        ========================================================= */
+        const PHRASES = [
+            // Begrüßung & Nachbarn
+            {
+                cat: 'hallo',
+                catLabel: '👋 Begrüßung',
+                es: '¡Hola! ¿Qué tal?',
+                speak: '¡Hola! ¿Qué tal?',
+                phonetic: 'O-la! ke tal?',
+                de: 'Hallo! Wie geht’s?',
+                note: 'Perfekt für den freundlichen Gruß auf dem Weg zum Pool – kommt bei den spanischen Nachbarn immer super an!'
+            },
+            {
+                cat: 'hallo',
+                catLabel: '👋 Begrüßung',
+                es: '¡Buenos días! / ¡Buenas tardes!',
+                speak: 'Buenos días. Buenas tardes.',
+                phonetic: 'BWE-nos DI-as / BWE-nas TAR-des',
+                de: 'Guten Morgen! / Guten Tag!',
+                note: 'Bis ca. 14 Uhr sagt man „Buenos días“, nach dem spanischen Mittagessen dann „Buenas tardes“.'
+            },
+            {
+                cat: 'hallo',
+                catLabel: '👋 Begrüßung',
+                es: '¡Hasta luego!',
+                speak: '¡Hasta luego!',
+                phonetic: 'A-sta LWE-go',
+                de: 'Bis später! / Tschüss!',
+                note: 'Spaniens liebster Abschied – man sagt es sogar zu Leuten, die man vermutlich nie wieder sieht.'
+            },
+            {
+                cat: 'hallo',
+                catLabel: '👋 Begrüßung',
+                es: 'Muchas gracias',
+                speak: 'Muchas gracias',
+                phonetic: 'MU-tschas GRA-ssias',
+                de: 'Vielen Dank',
+                note: 'Das „c“ vor „i“ wird in Spanien sanft gelispelt (fast wie ein englisches „th“).'
+            },
+            {
+                cat: 'hallo',
+                catLabel: '👋 Begrüßung',
+                es: '¡De nada!',
+                speak: '¡De nada!',
+                phonetic: 'de NA-da',
+                de: 'Gern geschehen!',
+                note: 'Wörtlich „Für nichts“ – die entspannte Antwort auf jedes „Gracias“.'
+            },
+            {
+                cat: 'hallo',
+                catLabel: '👋 Begrüßung',
+                es: '¡Perdón! / ¡Disculpe!',
+                speak: 'Perdón. Disculpe.',
+                phonetic: 'per-DON / dis-KUL-pe',
+                de: 'Entschuldigung!',
+                note: 'Nützlich im Supermarktgang oder wenn der Parkplatz im Hochsommer mal wieder nach Tetris aussieht.'
+            },
+
+            // Bar & Tapas
+            {
+                cat: 'bar',
+                catLabel: '🍷 Bar & Tapas',
+                es: 'Dos cañas bien frías, por favor.',
+                speak: 'Dos cañas bien frías, por favor.',
+                phonetic: 'dos KAN-jas bjen FRI-as, por fa-WOR',
+                de: 'Zwei gut gekühlte kleine Bier, bitte.',
+                note: 'Eine „caña“ ist ein kleines, frisch gezapftes Bier – das offizielle Lebenselixier an der Costa Blanca.'
+            },
+            {
+                cat: 'bar',
+                catLabel: '🍷 Bar & Tapas',
+                es: 'Un café con leche, por favor.',
+                speak: 'Un café con leche, por favor.',
+                phonetic: 'un ka-FE kon LE-tsche, por fa-WOR',
+                de: 'Einen Milchkaffee, bitte.',
+                note: 'Lust auf einen kleinen Espresso mit Schuss Milch? Dann einfach „un cortado“ bestellen!'
+            },
+            {
+                cat: 'bar',
+                catLabel: '🍷 Bar & Tapas',
+                es: 'Una botella de agua sin gas.',
+                speak: 'Una botella de agua sin gas.',
+                phonetic: 'u-na bo-TE-ja de A-gwa sin gas',
+                de: 'Eine Flasche stilles Wasser.',
+                note: 'Für Sprudelwasser einfach das Ende tauschen: „con gas“.'
+            },
+            {
+                cat: 'bar',
+                catLabel: '🍷 Bar & Tapas',
+                es: '¿Qué nos recomienda?',
+                speak: '¿Qué nos recomienda?',
+                phonetic: 'ke nos re-ko-MJEN-da?',
+                de: 'Was empfehlen Sie uns?',
+                note: 'Der Zaubersatz in jeder Tapas-Bar in der Calle Loreto – oft gibt es tolle Tagesgerichte außerhalb der Karte.'
+            },
+            {
+                cat: 'bar',
+                catLabel: '🍷 Bar & Tapas',
+                es: '¡Está buenísimo!',
+                speak: '¡Está buenísimo!',
+                phonetic: 'es-TA bwe-NI-ssi-mo',
+                de: 'Es schmeckt fantastisch!',
+                note: 'Garantiert ein riesiges Lächeln vom Kellner – und manchmal sogar einen kleinen Chupito aufs Haus.'
+            },
+            {
+                cat: 'bar',
+                catLabel: '🍷 Bar & Tapas',
+                es: 'La cuenta, por favor.',
+                speak: 'La cuenta, por favor.',
+                phonetic: 'la KWEN-ta, por fa-WOR',
+                de: 'Die Rechnung, bitte.',
+                note: 'Wichtig zu wissen: In Spanien bringt niemand ungefragt die Rechnung – das gälte als unhöflich!'
+            },
+
+            // Strand & Einkauf
+            {
+                cat: 'alltag',
+                catLabel: '🏖️ Strand & Einkauf',
+                es: '¿Cuánto cuesta esto?',
+                speak: '¿Cuánto cuesta esto?',
+                phonetic: 'KWAN-to KWE-sta ES-to?',
+                de: 'Wie viel kostet das?',
+                note: 'Ideal für den Wochenmarkt am Montag in Dénia oder beim Obststand um die Ecke.'
+            },
+            {
+                cat: 'alltag',
+                catLabel: '🏖️ Strand & Einkauf',
+                es: 'Con tarjeta, por favor.',
+                speak: 'Con tarjeta, por favor.',
+                phonetic: 'kon tar-CHE-ta, por fa-WOR',
+                de: 'Mit Karte, bitte.',
+                note: 'In Dénia geht fast überall Kartenzahlung. Bar zahlen heißt „en efectivo“.'
+            },
+            {
+                cat: 'alltag',
+                catLabel: '🏖️ Strand & Einkauf',
+                es: 'Una bolsa, por favor.',
+                speak: 'Una bolsa, por favor.',
+                phonetic: 'u-na BOL-sa, por fa-WOR',
+                de: 'Eine Tüte, bitte.',
+                note: 'An der Kasse bei Consum oder Mercadona wirst du fast immer gefragt: „¿Quieres bolsa?“'
+            },
+            {
+                cat: 'alltag',
+                catLabel: '🏖️ Strand & Einkauf',
+                es: '¿Dónde está la playa?',
+                speak: '¿Dónde está la playa?',
+                phonetic: 'DON-de es-TA la PLA-ja?',
+                de: 'Wo ist der Strand?',
+                note: 'Von der Casa aus zum Glück kinderleicht: einfach 60 Meter geradeaus durchs Gartentor!'
+            },
+            {
+                cat: 'alltag',
+                catLabel: '🏖️ Strand & Einkauf',
+                es: '¡Hace mucho calor hoy!',
+                speak: '¡Hace mucho calor hoy!',
+                phonetic: 'A-sse MU-tscho ka-LOR oj',
+                de: 'Heute ist es ganz schön heiß!',
+                note: 'Der perfekte Eisbrecher im Juli & August – da sind sich alle sofort einig.'
+            },
+            {
+                cat: 'alltag',
+                catLabel: '🏖️ Strand & Einkauf',
+                es: '¡Qué vistas tan bonitas!',
+                speak: '¡Qué vistas tan bonitas!',
+                phonetic: 'ke WI-stas tan bo-NI-tas',
+                de: 'Was für eine schöne Aussicht!',
+                note: 'Passt auf unserer Sonnenterrasse und oben auf der Burg von Dénia wie angegossen.'
+            },
+
+            // Notfall & Höflichkeit
+            {
+                cat: 'notfall',
+                catLabel: '🆘 Notfall & Hilfe',
+                es: 'No hablo mucho español.',
+                speak: 'No hablo mucho español.',
+                phonetic: 'no A-blo MU-tscho es-pan-JOL',
+                de: 'Ich spreche nicht viel Spanisch.',
+                note: 'Nimmt sofort den Druck raus – Spanier freuen sich riesig über jeden kleinen Versuch!'
+            },
+            {
+                cat: 'notfall',
+                catLabel: '🆘 Notfall & Hilfe',
+                es: 'Más despacio, por favor.',
+                speak: 'Más despacio, por favor.',
+                phonetic: 'mas des-PA-ssio, por fa-WOR',
+                de: 'Bitte etwas langsamer.',
+                note: 'Überlebenswichtig – das spanische Normaltempo entspricht ungefähr einem ICE.'
+            },
+            {
+                cat: 'notfall',
+                catLabel: '🆘 Notfall & Hilfe',
+                es: '¿Habla inglés o alemán?',
+                speak: '¿Habla inglés o alemán?',
+                phonetic: 'A-bla in-GLES o a-le-MAN?',
+                de: 'Sprechen Sie Englisch oder Deutsch?',
+                note: 'In Dénia hast du damit erstaunlich oft Glück!'
+            },
+            {
+                cat: 'notfall',
+                catLabel: '🆘 Notfall & Hilfe',
+                es: '¿Dónde están los baños?',
+                speak: '¿Dónde están los baños?',
+                phonetic: 'DON-de es-TAN los BAN-jos?',
+                de: 'Wo sind die Toiletten?',
+                note: 'Auch häufig auf Schildern zu lesen: „Aseos“ oder „Servicios“.'
+            },
+            {
+                cat: 'notfall',
+                catLabel: '🆘 Notfall & Hilfe',
+                es: 'Necesito una farmacia.',
+                speak: 'Necesito una farmacia.',
+                phonetic: 'ne-sse-SI-to u-na far-MA-ssia',
+                de: 'Ich brauche eine Apotheke.',
+                note: 'Apotheken erkennst du in Spanien schon von Weitem am blinkenden grünen Kreuz.'
+            },
+            {
+                cat: 'notfall',
+                catLabel: '🆘 Notfall & Hilfe',
+                es: '¡Socorro! Necesito ayuda.',
+                speak: '¡Socorro! Necesito ayuda.',
+                phonetic: 'so-KO-rro! ne-sse-SI-to a-JU-da',
+                de: 'Hilfe! Ich brauche Hilfe.',
+                note: 'Im echten Notfall gilt in ganz Spanien die 112 (auch auf Deutsch & Englisch).'
+            }
+        ];
+
+        /* =========================================================
+           2. WEB SPEECH API (SPANISCHE SPRACHAUSGABE)
+        ========================================================= */
+        let globalRate = 0.95;
+        let spanishVoice = null;
+        const hasSpeech = ('speechSynthesis' in window);
+
+        function pickSpanishVoice() {
+            if (!hasSpeech) return;
+            const voices = window.speechSynthesis.getVoices();
+            if (!voices.length) return;
+            // Bevorzugt es-ES (Spanien), sonst beliebiges es-*
+            spanishVoice =
+                voices.find(v => v.lang === 'es-ES' && /monica|jorge|marisol|lucia|google|siri|elena/i.test(v.name)) ||
+                voices.find(v => v.lang === 'es-ES') ||
+                voices.find(v => v.lang && v.lang.toLowerCase().startsWith('es')) ||
+                null;
+        }
+
+        if (hasSpeech) {
+            pickSpanishVoice();
+            window.speechSynthesis.onvoiceschanged = pickSpanishVoice;
+        } else {
+            document.getElementById('voice-status').innerHTML =
+                'ℹ️ <span>Dein Browser unterstützt leider keine direkte Sprachausgabe – die Lautschrift hilft dir trotzdem weiter!</span>';
+        }
+
+        function setGlobalRate(rate, btn) {
+            globalRate = rate;
+            document.querySelectorAll('.speed-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+        }
+
+        function speakSpanish(text, customRate, cardEl, btnEl) {
+            if (!hasSpeech) return;
+            window.speechSynthesis.cancel();
+            document.querySelectorAll('.phrase-card.speaking').forEach(c => c.classList.remove('speaking'));
+            document.querySelectorAll('.speak-btn.is-playing').forEach(b => b.classList.remove('is-playing'));
+
+            const utter = new SpeechSynthesisUtterance(text);
+            utter.lang = 'es-ES';
+            utter.rate = customRate || globalRate;
+            if (spanishVoice) utter.voice = spanishVoice;
+
+            if (cardEl) cardEl.classList.add('speaking');
+            if (btnEl) btnEl.classList.add('is-playing');
+
+            const cleanup = () => {
+                if (cardEl) cardEl.classList.remove('speaking');
+                if (btnEl) btnEl.classList.remove('is-playing');
+            };
+            utter.onend = cleanup;
+            utter.onerror = cleanup;
+
+            window.speechSynthesis.speak(utter);
+        }
+
+        /* =========================================================
+           3. PHRASEN-KARTEN RENDERN & FILTERN
+        ========================================================= */
+        function renderPhrases() {
+            const grid = document.getElementById('phrases-grid');
+            grid.innerHTML = '';
+
+            PHRASES.forEach((item, idx) => {
+                const card = document.createElement('article');
+                card.className = 'phrase-card';
+                card.dataset.category = item.cat;
+
+                card.innerHTML = `
+                    <div class="phrase-top">
+                        <div class="phrase-meta">
+                            <span class="phrase-cat">${item.catLabel}</span>
+                        </div>
+                        <h2 class="phrase-es">${item.es}</h2>
+                        <div class="phonetic-pill">
+                            <span class="lbl">Sprich:</span>
+                            <span>${item.phonetic}</span>
+                        </div>
+                    </div>
+                    <div class="phrase-body">
+                        <p class="phrase-de">${item.de}</p>
+                        <p class="phrase-note">${item.note}</p>
+                        <div class="phrase-actions">
+                            <button type="button" class="speak-btn primary" data-idx="${idx}">
+                                🔊 Anhören
+                            </button>
+                        </div>
+                    </div>
+                `;
+
+                const speakBtn = card.querySelector('.speak-btn');
+                speakBtn.addEventListener('click', () => speakSpanish(item.speak, globalRate, card, speakBtn));
+
+                grid.appendChild(card);
+            });
+        }
+
+        function filterPhrases(category, btn) {
+            document.querySelectorAll('.vibe-btn:not(.quiz-jump)').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            document.querySelectorAll('.phrase-card').forEach(card => {
+                if (category === 'all' || card.dataset.category === category) {
+                    card.classList.remove('hidden');
+                } else {
+                    card.classList.add('hidden');
+                }
+            });
+        }
+
+        /* =========================================================
+           4. LUSTIGER DÉNIA-SPANISCH-TEST
+        ========================================================= */
+        const QUIZ_QUESTIONS = [
+            {
+                badge: '🍷 Tapas-Bar-Klassiker',
+                question: 'Durst nach dem Strand! Du willst zwei kleine gezapfte Biere bestellen. Was sagst du?',
+                options: [
+                    'Dos cañas, por favor.',
+                    'Dos camas, por favor.',
+                    'Dos perros, por favor.'
+                ],
+                correct: 0,
+                ok: '¡Salud! „Dos cañas“ bringt zwei eiskalte kleine Biere. „Dos camas“ wären zwei Betten und „dos perros“ zwei Hunde – das gäbe verwirrte Blicke!',
+                nope: 'Fast! Richtig ist „Dos cañas, por favor.“ („camas“ = Betten, „perros“ = Hunde – die zapft der Wirt eher ungern.)'
+            },
+            {
+                badge: '🎧 Hör-Check · Im Restaurant',
+                question: 'Hör genau hin! Der Kellner kommt an euren Tisch und fragt etwas. Was will er wissen?',
+                audio: '¿Algo más?',
+                options: [
+                    'Ob ihr noch etwas bestellen möchtet',
+                    'Ob ihr aus dem Allgäu kommt',
+                    'Ob der Parkplatz frei ist'
+                ],
+                correct: 0,
+                ok: 'Volltreffer! „¿Algo más?“ („Al-go mas?“) heißt schlicht „Noch etwas?“ – perfekte Gelegenheit für einen Cortado oder Nachtisch!',
+                nope: 'Der Kellner hat „¿Algo más?“ gefragt – das bedeutet „Möchtet ihr noch etwas?“. Mit dem Allgäu hat es leider nichts zu tun.'
+            },
+            {
+                badge: '🚨 Falscher-Freund-Alarm!',
+                question: 'Achtung, Fettnäpfchen! Was bedeutet der spanische Satz „Estoy embarazada“?',
+                options: [
+                    'Mir ist das gerade total peinlich',
+                    'Ich bin schwanger',
+                    'Ich habe mich hoffnungslos verlaufen'
+                ],
+                correct: 1,
+                ok: 'Stark gewusst! Der berühmteste „falsche Freund“ im Spanischen: „embarazada“ heißt wirklich schwanger – nicht peinlich („tengo vergüenza“)!',
+                nope: 'Da tappen fast alle rein! „Estoy embarazada“ heißt tatsächlich „Ich bin schwanger“ – also lieber nicht sagen, wenn einem nur die Gabel runterfällt.'
+            },
+            {
+                badge: '🏊 Nachbarschafts-Etikette',
+                question: 'Um 16:30 Uhr triffst du auf dem Weg zum Pool den spanischen Nachbarn. Womit grüßt du am besten?',
+                options: [
+                    '¡Buenos días!',
+                    '¡Buenas tardes!',
+                    '¡La cuenta, por favor!'
+                ],
+                correct: 1,
+                ok: 'Perfekt! In Spanien beginnt der Nachmittag nach dem Mittagessen (ab ca. 14 Uhr) – „¡Buenas tardes!“ sitzt wie ein Maßanzug.',
+                nope: 'Um 16:30 Uhr sagt man in Spanien „¡Buenas tardes!“. („Buenos días“ klingt am späten Nachmittag nach einer extrem langen Siesta.)'
+            },
+            {
+                badge: '🎧 Hör-Check · Küstenwetter',
+                question: 'Du hörst auf der Terrasse diesen Zuruf. Was solltest du sofort tun?',
+                audio: '¡Cuidado con el viento!',
+                options: [
+                    'Sonnenschirm & Markise sichern – Vorsicht vor dem Wind!',
+                    'Schnell die Weingläser holen – es gibt Gratis-Wein!',
+                    'Es ist 21 Uhr – der Müll muss raus!'
+                ],
+                correct: 0,
+                ok: 'Super gehört! „¡Cuidado con el viento!“ heißt „Vorsicht vor dem Wind!“ – in Dénia ein echtes Lebensmotto für Sonnenschirme.',
+                nope: 'Gesagt wurde „¡Cuidado con el viento!“ = „Vorsicht vor dem Wind!“. (Wein wäre „vino“ – fast gleich, aber deutlich gemütlicher.)'
+            },
+            {
+                badge: '🛍️ Montagsmarkt in Dénia',
+                question: 'Du entdeckst auf dem Markt die perfekte Sonnenbrille und willst den Preis wissen. Was fragst du?',
+                options: [
+                    '¿Dónde está la playa?',
+                    '¿Cuánto cuesta esto?',
+                    'Una botella sin gas.'
+                ],
+                correct: 1,
+                ok: 'Genau richtig! „¿Cuánto cuesta esto?“ („KWAN-to KWE-sta ES-to?“) öffnet jede Preisverhandlung.',
+                nope: 'Die richtige Frage lautet „¿Cuánto cuesta esto?“ – wie viel kostet das?'
+            },
+            {
+                badge: '🥘 Paella-Profi-Wissen',
+                question: 'Wie spricht man das spanische Nationalgericht „Paella“ richtig aus?',
+                options: [
+                    'Pa-EL-la',
+                    'Pa-E-tscha',
+                    'Pa-E-ja'
+                ],
+                correct: 2,
+                ok: 'Bravissimo! Das Doppel-L klingt wie ein weiches J → „Pa-E-ja“. Bonus-Regel: In Valencia niemals nach Chorizo in der Paella fragen!',
+                nope: 'Fast! Im Spanischen wird „ll“ wie ein weiches „j“ gesprochen – also „Pa-E-ja“.'
+            },
+            {
+                badge: '✨ Das große Finale',
+                question: 'Das Essen war himmlisch und du möchtest dem Kellner ein begeistertes Kompliment machen. Was sagst du?',
+                options: [
+                    '¡Está buenísimo!',
+                    '¡Más despacio, por favor!',
+                    '¡Socorro!'
+                ],
+                correct: 0,
+                ok: '¡Ole! „¡Está buenísimo!“ zaubert jedem Wirt ein Strahlen ins Gesicht.',
+                nope: 'Mit „¡Está buenísimo!“ („Es schmeckt fantastisch!“) machst du das perfekte Kompliment – „¡Socorro!“ wäre eher für den Notfall.'
+            }
+        ];
+
+        let qIndex = 0;
+        let score = 0;
+        let answered = false;
+
+        function renderQuestion() {
+            const q = QUIZ_QUESTIONS[qIndex];
+            answered = false;
+
+            document.getElementById('quiz-counter').textContent = `Frage ${qIndex + 1} von ${QUIZ_QUESTIONS.length}`;
+            document.getElementById('quiz-score').textContent = `${score} ${score === 1 ? 'Punkt' : 'Punkte'}`;
+            document.getElementById('quiz-progress').style.width = `${((qIndex + 1) / QUIZ_QUESTIONS.length) * 100}%`;
+            document.getElementById('quiz-badge').textContent = q.badge;
+            document.getElementById('quiz-question').textContent = q.question;
+
+            const audioBox = document.getElementById('quiz-audio-box');
+            const audioBtn = document.getElementById('quiz-audio-btn');
+            if (q.audio) {
+                audioBox.style.display = 'block';
+                audioBtn.onclick = () => speakSpanish(q.audio, 0.85);
+            } else {
+                audioBox.style.display = 'none';
+            }
+
+            const optionsEl = document.getElementById('quiz-options');
+            optionsEl.innerHTML = '';
+            q.options.forEach((optText, i) => {
+                const btn = document.createElement('button');
+                btn.type = 'button';
+                btn.className = 'quiz-option';
+                btn.innerHTML = `<span>${optText}</span>`;
+                btn.addEventListener('click', () => handleAnswer(i, btn));
+                optionsEl.appendChild(btn);
+            });
+
+            const fb = document.getElementById('quiz-feedback');
+            fb.className = 'quiz-feedback';
+            fb.textContent = '';
+
+            const nextBtn = document.getElementById('quiz-next-btn');
+            nextBtn.classList.remove('show');
+            nextBtn.textContent = (qIndex === QUIZ_QUESTIONS.length - 1) ? 'Ergebnis anzeigen 🏆' : 'Nächste Frage →';
+        }
+
+        function handleAnswer(selectedIdx, clickedBtn) {
+            if (answered) return;
+            answered = true;
+
+            const q = QUIZ_QUESTIONS[qIndex];
+            const buttons = document.querySelectorAll('.quiz-option');
+            buttons.forEach((b, i) => {
+                b.disabled = true;
+                if (i === q.correct) {
+                    b.classList.add('correct');
+                    b.innerHTML += '<span>✔</span>';
+                }
+            });
+
+            const fb = document.getElementById('quiz-feedback');
+            if (selectedIdx === q.correct) {
+                score++;
+                fb.className = 'quiz-feedback show ok';
+                fb.textContent = q.ok;
+            } else {
+                clickedBtn.classList.add('wrong');
+                clickedBtn.innerHTML += '<span>✖</span>';
+                fb.className = 'quiz-feedback show nope';
+                fb.textContent = q.nope;
+            }
+
+            document.getElementById('quiz-score').textContent = `${score} ${score === 1 ? 'Punkt' : 'Punkte'}`;
+            document.getElementById('quiz-next-btn').classList.add('show');
+        }
+
+        function nextQuestion() {
+            if (qIndex < QUIZ_QUESTIONS.length - 1) {
+                qIndex++;
+                renderQuestion();
+            } else {
+                showResult();
+            }
+        }
+
+        function showResult() {
+            document.getElementById('quiz-play-area').style.display = 'none';
+            const res = document.getElementById('quiz-result');
+            res.classList.add('show');
+
+            let trophy = '🍺', title = '', desc = '';
+            if (score === QUIZ_QUESTIONS.length) {
+                trophy = '🏆';
+                title = 'Ehrenbürger von Dénia!';
+                desc = '¡Increíble! Alle Fragen abgeräumt – du darfst ab sofort die Paella für den ganzen Tisch bestellen und am Pool mit den Nachbarn fachsimpeln.';
+            } else if (score >= 6) {
+                trophy = '🌴';
+                title = 'Costa-Blanca-Profi!';
+                desc = 'Fast muttersprachlich! Noch ein kühles „Dos cañas, por favor“ auf der Sonnenterrasse und dein spanischer Akzent ist nicht mehr zu stoppen.';
+            } else if (score >= 4) {
+                trophy = '🏖️';
+                title = 'Solider Strand-Diplomat!';
+                desc = 'Du kommst locker durch Bar, Markt und Urlaubstag – und wo mal ein Wort fehlt, helfen ein freundliches „¡Hola!“ und ein Lächeln immer weiter.';
+            } else {
+                trophy = '🍺';
+                title = 'Charmante(r) Pantomime-Profi!';
+                desc = 'Macht gar nichts! Mit „Dos cañas, por favor“, „La cuenta“ und Händen & Füßen hat in Dénia noch jeder einen unvergesslichen Urlaub gehabt.';
+            }
+
+            document.getElementById('result-trophy').textContent = trophy;
+            document.getElementById('result-title').textContent = title;
+            document.getElementById('result-score-big').textContent = `${score} von ${QUIZ_QUESTIONS.length} Punkten erreicht`;
+            document.getElementById('result-desc').textContent = desc;
+        }
+
+        function restartQuiz() {
+            qIndex = 0;
+            score = 0;
+            document.getElementById('quiz-result').classList.remove('show');
+            document.getElementById('quiz-play-area').style.display = 'block';
+            renderQuestion();
+        }
+
+        // Initialisieren
+        renderPhrases();
+        renderQuestion();
+    </script>
+</body>
+
+</html>

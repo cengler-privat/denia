@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // =========================================
     const menuContainer = select('#menu-container');
     if (menuContainer) {
-        fetch('menu.html')
+        fetch('menu.html', { cache: 'no-cache' })
             .then(response => {
                 if (!response.ok) throw new Error('Netzwerkfehler beim Laden des Menüs');
                 return response.text();
