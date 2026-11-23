@@ -203,7 +203,7 @@
             margin-top: auto;
         }
 
-        .insider-tip strong {
+        .insider-tip > strong {
             display: block;
             font-family: 'Lato', sans-serif;
             font-size: 12px;
@@ -221,8 +221,15 @@
             line-height: 1.45;
         }
 
+        .insider-tip a {
+            color: #0369a1;
+            font-weight: 700;
+            text-decoration: underline;
+        }
+
         .spot-actions {
             display: flex;
+            flex-wrap: wrap;
             gap: 10px;
             padding-top: 14px;
             border-top: 1px solid #f1f5f9;
@@ -247,6 +254,16 @@
 
         .action-btn.primary:hover {
             background: #38bdf8;
+            color: #0f172a;
+        }
+
+        .action-btn.secondary {
+            background: #f1f5f9;
+            color: #334155;
+        }
+
+        .action-btn.secondary:hover {
+            background: #e2e8f0;
             color: #0f172a;
         }
 
@@ -331,26 +348,28 @@
                     </div>
                 </article>
 
-                <!-- 3. LES ROTES & COVA TALLADA -->
+                <!-- 3. LES ROTES, TORRE DEL GERRO & COVA TALLADA -->
                 <article class="spot-card" data-category="wasser natur">
                     <div class="spot-visual" style="background-image: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80');">
                         <div class="spot-badges">
                             <span class="spot-badge highlight">🤿 Schnorcheln</span>
+                            <span class="spot-badge">🗼 Torre del Gerro</span>
                             <span class="spot-badge">🌊 Felsküste</span>
                         </div>
                     </div>
                     <div class="spot-body">
-                        <span class="spot-category">Klippen, Schnorcheln & Meereshöhle</span>
-                        <h2>Les Rotes & Cova Tallada</h2>
+                        <span class="spot-category">Klippen, Wachturm &amp; Meereshöhle</span>
+                        <h2>Les Rotes, Torre del Gerro &amp; Cova Tallada</h2>
                         <p class="spot-desc">
-                            Im Süden von Dénia wechselt der Sandstrand in die geschützte Felsküste <em>Les Rotes</em> mit glasklarem Wasser und der Meereshöhle <em>Cova Tallada</em>.
+                            Im Süden von Dénia wechselt der Sandstrand in die geschützte Felsküste <em>Les Rotes</em> mit glasklarem Wasser. Hoch über dem Ende der Promenade thront der historische Piraten-Wachturm <em>Torre del Gerro</em> (16. Jh.) mit weitem Meerblick – direkt dahinter startet der Pfad zur berühmten Meereshöhle <em>Cova Tallada</em>.
                         </p>
                         <div class="insider-tip">
                             <strong>💡 Englers Insider-Tipp:</strong>
-                            <p>Der Uferpromenaden-Spaziergang zum Sonnenuntergang ist traumhaft! Für die Höhle im Sommer ein Online-Ticket reservieren.</p>
+                            <p>Der kurze Aufstieg zum <em>Torre del Gerro</em> lohnt sich besonders zum Sonnenuntergang! Für die <em>Cova Tallada</em> ist in der Saison (Ostern bis Herbst) eine vorherige Online-Anmeldung erforderlich – alle Infos &amp; Buchung unter <a href="https://www.covatalladadenia.com/de/reservat-cova-tallada/" target="_blank" rel="noopener noreferrer">covatalladadenia.com</a>.</p>
                         </div>
                         <div class="spot-actions">
-                            <a href="https://www.google.com/maps/search/?api=1&query=Mirador+de+Les+Rotes+Denia" target="_blank" class="action-btn primary">📍 Route nach Les Rotes</a>
+                            <a href="https://www.covatalladadenia.com/de/reservat-cova-tallada/" target="_blank" rel="noopener noreferrer" class="action-btn primary">🎫 Cova Tallada anmelden</a>
+                            <a href="https://www.google.com/maps/search/?api=1&query=Torre+del+Gerro+Denia" target="_blank" rel="noopener noreferrer" class="action-btn secondary">📍 Torre del Gerro / Les Rotes</a>
                         </div>
                     </div>
                 </article>
@@ -375,6 +394,56 @@
                         </div>
                         <div class="spot-actions">
                             <a href="https://www.google.com/maps/search/?api=1&query=Via+Verde+de+Denia" target="_blank" class="action-btn primary">📍 Startpunkt Vía Verde</a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- 5. WANDERUNG ZUR CALA LLEBEIG -->
+                <article class="spot-card" data-category="natur wasser">
+                    <div class="spot-visual" style="background-image: url('https://images.unsplash.com/photo-1506929562872-bb421503ef21?auto=format&fit=crop&w=800&q=80');">
+                        <div class="spot-badges">
+                            <span class="spot-badge highlight">🥾 Klippenpfad</span>
+                            <span class="spot-badge">🌊 Versteckte Bucht</span>
+                        </div>
+                    </div>
+                    <div class="spot-body">
+                        <span class="spot-category">Küstenwanderung · Benitatxell</span>
+                        <h2>Wanderung zur Cala Llebeig</h2>
+                        <p class="spot-desc">
+                            Spektakulärer Klippenpfad (<em>Ruta de los Acantilados</em>, ca. 4 km Hin &amp; Rück) von der Cala del Moraig hoch über dem türkisblauen Meer bis in die autofreie Schmugglerbucht <em>Cala Llebeig</em> mit urigen Fischerhütten.
+                        </p>
+                        <div class="insider-tip">
+                            <strong>🅿️ Park-Tipp (Cala Moraig):</strong>
+                            <p>Am Startpunkt an der Cala del Moraig sind die Stellplätze in der Saison begrenzt – bucht euch vorab online einen Parkplatz über <a href="https://calamoraig.es/tienda/" target="_blank" rel="noopener noreferrer">calamoraig.es/tienda</a>! Feste Schuhe, Wasser &amp; Schnorchel nicht vergessen.</p>
+                        </div>
+                        <div class="spot-actions">
+                            <a href="https://calamoraig.es/tienda/" target="_blank" rel="noopener noreferrer" class="action-btn primary">🅿️ Parkplatz buchen</a>
+                            <a href="https://www.google.com/maps/search/?api=1&query=Cala+del+Moraig+Benitachell" target="_blank" rel="noopener noreferrer" class="action-btn secondary">📍 Startpunkt Route</a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- 6. CALA CLÉMENCE DEL PORTITXOL -->
+                <article class="spot-card" data-category="wasser kultur">
+                    <div class="spot-visual" style="background-image: url('https://images.unsplash.com/photo-1533105079780-92b9be482077?auto=format&fit=crop&w=800&q=80');">
+                        <div class="spot-badges">
+                            <span class="spot-badge highlight">📸 Postkarten-Bucht</span>
+                            <span class="spot-badge">🍹 Beach-Restaurant</span>
+                        </div>
+                    </div>
+                    <div class="spot-body">
+                        <span class="spot-category">Traumbucht &amp; Genuss · Jávea</span>
+                        <h2>Cala Clémence del Portitxol</h2>
+                        <p class="spot-desc">
+                            Die berühmte Kieselbucht <em>Cala del Portitxol (La Barraca)</em> in Jávea begeistert mit ihren weiß-blauen Fischerhäuschen, türkisblauem Wasser und dem stilvollen Beach-Restaurant <em>Cala Clémence</em> direkt über dem Meer.
+                        </p>
+                        <div class="insider-tip">
+                            <strong>💡 Englers Insider-Tipp:</strong>
+                            <p>Im Sommer früh losfahren (bei vollem Parkplatz wird die Zufahrt gesperrt) und Badeschuhe einpacken. Fürs <em>Cala Clémence</em> gilt: <strong>Am Wochenende nur mit Reservierung!</strong></p>
+                        </div>
+                        <div class="spot-actions">
+                            <a href="https://calaclemence.com/" target="_blank" rel="noopener noreferrer" class="action-btn primary">🍽️ Cala Clémence</a>
+                            <a href="https://www.google.com/maps/search/?api=1&query=Cala+Clemence+del+Portitxol+Javea" target="_blank" rel="noopener noreferrer" class="action-btn secondary">📍 Route zur Bucht</a>
                         </div>
                     </div>
                 </article>

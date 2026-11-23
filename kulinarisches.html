@@ -204,7 +204,7 @@
             margin-top: auto;
         }
 
-        .insider-tip strong {
+        .insider-tip > strong {
             display: block;
             font-family: 'Lato', sans-serif;
             font-size: 12px;
@@ -222,8 +222,13 @@
             line-height: 1.45;
         }
 
+        .insider-tip p + p {
+            margin-top: 7px;
+        }
+
         .spot-actions {
             display: flex;
+            flex-wrap: wrap;
             gap: 10px;
             padding-top: 14px;
             border-top: 1px solid #f1f5f9;
@@ -355,10 +360,13 @@
         <p>In Dénia schlecht zu essen ist fast unmöglich – aber hier sind unsere handverlesenen Favoriten!</p>
 
         <div class="vibe-filter-bar">
-            <button class="vibe-btn active" onclick="filterSpots('all', this)">✨ Alle Favoriten</button>
-            <button class="vibe-btn" onclick="filterSpots('tapas', this)">🍤 Tapas & Altstadt</button>
-            <button class="vibe-btn" onclick="filterSpots('location', this)">🥂 Location & Cross-Over</button>
-            <button class="vibe-btn" onclick="filterSpots('meer', this)">🥘 Paella & Meer</button>
+            <button type="button" class="vibe-btn active" onclick="filterSpots('all', this)">✨ Alle Favoriten</button>
+            <button type="button" class="vibe-btn" onclick="filterSpots('fruehstueck', this)">☕ Frühstück</button>
+            <button type="button" class="vibe-btn" onclick="filterSpots('tapas', this)">🍤 Tapas &amp; Altstadt</button>
+            <button type="button" class="vibe-btn" onclick="filterSpots('location', this)">🥂 Location &amp; Cross-Over</button>
+            <button type="button" class="vibe-btn" onclick="filterSpots('meer', this)">🥘 Paella &amp; Meer</button>
+            <button type="button" class="vibe-btn" onclick="filterSpots('chiringuito', this)">🏖️ Chiringuitos</button>
+            <button type="button" class="vibe-btn" onclick="filterSpots('ausserhalb', this)">🚗 Außerhalb Dénias</button>
         </div>
     </header>
 
@@ -366,27 +374,28 @@
         <section class="spots-container">
             <div class="spots-grid">
 
-                <!-- 1. LA SUCRERIA DE LA PLAÇA -->
-                <article class="spot-card" data-category="tapas">
+                <!-- 1. LA SUCRERIA DE LA PLAÇA (XÀBIA / JÁVEA) -->
+                <article class="spot-card" data-category="tapas ausserhalb">
                     <div class="spot-visual" style="background-image: url('https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=800&q=80');">
                         <div class="spot-badges">
                             <span class="spot-badge highlight">⭐ Englers Favorit</span>
                             <span class="spot-badge">🍤 Kreative Tapas</span>
-                            <span class="spot-badge">📍 Plaça del Convent</span>
+                            <span class="spot-badge">🚗 Xàbia (Jávea)</span>
                         </div>
                     </div>
                     <div class="spot-body">
-                        <span class="spot-category">Tapas & Platz-Atmosphäre</span>
+                        <span class="spot-category">Außerhalb Dénias · Altstadt Jávea</span>
                         <h2>La Sucreria de la Plaça</h2>
                         <p class="spot-desc">
-                            Wunderschön gelegen an der Plaça del Convent. Hier sitzt ihr entspannt draußen auf dem Platz und bekommt fantastische, modern interpretierte Tapas zum Teilen.
+                            Wunderschön gelegen in der historischen Altstadt von Jávea direkt an der <em>Plaça de l'Església</em>. Hier sitzt ihr entspannt draußen auf dem Kirchplatz und bekommt fantastische, modern interpretierte Tapas zum Teilen.
                         </p>
                         <div class="insider-tip">
                             <strong>💡 Englers Insider-Tipp:</strong>
-                            <p>Sichert euch abends rechtzeitig einen Tisch draußen auf dem Platz – die Stimmung, wenn die Lichter angehen, ist unschlagbar.</p>
+                            <p>Sichert euch abends rechtzeitig einen Tisch draußen auf dem Platz – die Stimmung, wenn die Lichter angehen, ist den kurzen Abstecher über den Montgó absolut wert!</p>
                         </div>
                         <div class="spot-actions">
-                            <a href="https://www.google.com/maps/search/?api=1&query=La+Sucreria+de+la+Placa+Denia" target="_blank" class="action-btn primary">📍 Route in Google Maps</a>
+                            <a href="https://widget.thefork.com/es/d4004ab4-2bcf-427d-9eb0-c3b3e2ab154d?step=date&utm_source=google.com" target="_blank" rel="noopener noreferrer" class="action-btn primary">🍽️ Tisch reservieren</a>
+                            <a href="https://www.google.com/maps/search/?api=1&query=La+Sucreria+de+la+Placa+Javea" target="_blank" rel="noopener noreferrer" class="action-btn secondary">📍 Google Maps</a>
                         </div>
                     </div>
                 </article>
@@ -410,7 +419,8 @@
                             <p>Kommt am besten kurz vor dem großen spanischen Ansturm gegen 20:00 Uhr und lasst euch von der Tageskarte an der Tafel inspirieren!</p>
                         </div>
                         <div class="spot-actions">
-                            <a href="https://www.google.com/maps/search/?api=1&query=Pepa+Teresa+Calle+Loreto+Denia" target="_blank" class="action-btn primary">📍 Route in Google Maps</a>
+                            <a href="https://calapepateresa.com/reservar/" target="_blank" rel="noopener noreferrer" class="action-btn primary">🍽️ Tisch reservieren</a>
+                            <a href="https://www.google.com/maps/search/?api=1&query=Pepa+Teresa+Calle+Loreto+Denia" target="_blank" rel="noopener noreferrer" class="action-btn secondary">📍 Google Maps</a>
                         </div>
                     </div>
                 </article>
@@ -435,7 +445,34 @@
                             <p>Ideal für einen besonderen Abend! Kommt zum Sonnenuntergang auf einen Drink auf die Terrasse am Wasser und bleibt direkt zum Dinner.</p>
                         </div>
                         <div class="spot-actions">
-                            <a href="https://www.google.com/maps/search/?api=1&query=Republic+Marina+de+Denia" target="_blank" class="action-btn primary">📍 Route in Google Maps</a>
+                            <a href="https://republicdenia.com/" target="_blank" rel="noopener noreferrer" class="action-btn primary">🍽️ Website &amp; Reservierung</a>
+                            <a href="https://www.google.com/maps/search/?api=1&query=Republic+Marina+de+Denia" target="_blank" rel="noopener noreferrer" class="action-btn secondary">📍 Google Maps</a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- 4. MALA VITA (MARINA DE DÉNIA) -->
+                <article class="spot-card" data-category="location">
+                    <div class="spot-visual" style="background-image: url('https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=800&q=80');">
+                        <div class="spot-badges">
+                            <span class="spot-badge highlight">🍹 Cocktails &amp; Sundowner</span>
+                            <span class="spot-badge">🛥️ Marina de Dénia</span>
+                            <span class="spot-badge">✨ Ohne Reservierung</span>
+                        </div>
+                    </div>
+                    <div class="spot-body">
+                        <span class="spot-category">Hafen-Terrasse · Drinks &amp; Atmosphäre</span>
+                        <h2>Mala Vita</h2>
+                        <p class="spot-desc">
+                            Lässige Location direkt am Wasser in der <em>Marina de Dénia</em> mit entspanntem Hafen-Flair und Blick auf die Yachten – perfekt für gute Cocktails, Drinks und laue Abende am Meer.
+                        </p>
+                        <div class="insider-tip">
+                            <strong>💡 Englers Insider-Tipp:</strong>
+                            <p>Eher unser Tipp für einen richtig guten <strong>Cocktail oder Sundowner</strong> am Hafen als fürs große Essen! Da es ohne Reservierung läuft, ideal für den spontanen Drink vor oder nach dem Dinner.</p>
+                        </div>
+                        <div class="spot-actions">
+                            <a href="https://malavitadenia.com/" target="_blank" rel="noopener noreferrer" class="action-btn primary">🌐 Website &amp; Karte</a>
+                            <a href="https://www.google.com/maps/search/?api=1&query=Mala+Vita+Marina+de+Denia" target="_blank" rel="noopener noreferrer" class="action-btn secondary">📍 Google Maps</a>
                         </div>
                     </div>
                 </article>
@@ -464,6 +501,213 @@
                     </div>
                 </article>
 
+                <!-- 5. RESTAURANTE PRIMERA LÍNEA (DÉNIA) -->
+                <article class="spot-card" data-category="meer location">
+                    <div class="spot-visual" style="background-image: url('https://images.unsplash.com/photo-1534080564583-6be75777b70a?auto=format&fit=crop&w=800&q=80');">
+                        <div class="spot-badges">
+                            <span class="spot-badge highlight">⭐ Englers Paella-Tipp</span>
+                            <span class="spot-badge">🖤 Arroz Negro</span>
+                            <span class="spot-badge">🌊 1. Strandlinie</span>
+                        </div>
+                    </div>
+                    <div class="spot-body">
+                        <span class="spot-category">Paella, Arroz &amp; Meerblick · Les Marines</span>
+                        <h2>Restaurante Primera Línea</h2>
+                        <p class="spot-desc">
+                            Der Name ist Programm: Direkt in der Düne in erster Strandlinie an der Carretera de Les Marines (Km 1) genießt ihr traditionelle valencianische Küche, frische Meeresfrüchte und erstklassige Reisgerichte direkt am Meer.
+                        </p>
+                        <div class="insider-tip">
+                            <strong>💡 Englers Paella-Tipp:</strong>
+                            <p>Unsere Top-Empfehlung für Paella und Arroz – insbesondere der <strong>Arroz Negro</strong> ist ein Traum!</p>
+                            <p><strong>Achtung:</strong> Paella &amp; Reisgerichte isst man in Spanien traditionell nur <strong>mittags</strong>, nicht abends.</p>
+                        </div>
+                        <div class="spot-actions">
+                            <a href="https://restaurantprimeralinea.com/" target="_blank" rel="noopener noreferrer" class="action-btn primary">🌐 Website &amp; Reservierung</a>
+                            <a href="https://www.google.com/maps/search/?api=1&query=Restaurante+Primera+Linea+Denia" target="_blank" rel="noopener noreferrer" class="action-btn secondary">📍 Google Maps</a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- 6. RESTAURANTE SUR (CALA GRANADELLA / JÁVEA) -->
+                <article class="spot-card" data-category="meer ausserhalb">
+                    <div class="spot-visual" style="background-image: url('https://images.unsplash.com/photo-1514933651103-005eec06c04b?auto=format&fit=crop&w=800&q=80');">
+                        <div class="spot-badges">
+                            <span class="spot-badge highlight">⭐ Kult seit 50+ Jahren</span>
+                            <span class="spot-badge">🥘 Paella &amp; Fisch</span>
+                            <span class="spot-badge">🚗 Cala Granadella</span>
+                        </div>
+                    </div>
+                    <div class="spot-body">
+                        <span class="spot-category">Außerhalb Dénias · Cala Granadella (Jávea)</span>
+                        <h2>Restaurante Sur</h2>
+                        <p class="spot-desc">
+                            Traditionsreiches Familienrestaurant direkt am Strand der berühmten <em>Cala Granadella</em> in Jávea. Fangfrischer Fisch aus der Region, klassische Paellas und cremige Reisgerichte (<em>Arroces Melosos</em>) mit Blick aufs türkisblaue Wasser.
+                        </p>
+                        <div class="insider-tip">
+                            <strong>💡 Englers Insider-Tipp:</strong>
+                            <p>Unbedingt vorab reservieren (Reisgerichte mindestens 24 Std. vorher mitbestellen) – die Reservierungsbestätigung hilft im Hochsommer auch direkt bei der Zufahrtskontrolle zur Cala Granadella!</p>
+                        </div>
+                        <div class="spot-actions">
+                            <a href="https://restaurantesur.com/reservas/" target="_blank" rel="noopener noreferrer" class="action-btn primary">🍽️ Tisch reservieren</a>
+                            <a href="https://www.google.com/maps/search/?api=1&query=Restaurante+Sur+Cala+Granadella+Javea" target="_blank" rel="noopener noreferrer" class="action-btn secondary">📍 Google Maps</a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- 7. CALA CLÉMENCE DEL PORTITXOL (JÁVEA) -->
+                <article class="spot-card" data-category="location ausserhalb">
+                    <div class="spot-visual" style="background-image: url('https://images.unsplash.com/photo-1533105079780-92b9be482077?auto=format&fit=crop&w=800&q=80');">
+                        <div class="spot-badges">
+                            <span class="spot-badge highlight">📸 Insta-Tipp</span>
+                            <span class="spot-badge">🍹 Beach-Restaurant</span>
+                            <span class="spot-badge">🚗 Jávea</span>
+                        </div>
+                    </div>
+                    <div class="spot-body">
+                        <span class="spot-category">Außerhalb Dénias · Cala del Portitxol (Jávea)</span>
+                        <h2>Cala Clémence del Portitxol</h2>
+                        <p class="spot-desc">
+                            Absolutes Postkarten-Flair direkt über der berühmten weiß-blauen Bucht <em>Cala del Portitxol</em> in Jávea: mediterrane Küche, frische Cocktails und eine der fotogensten Terrassen an der gesamten Costa Blanca.
+                        </p>
+                        <div class="insider-tip">
+                            <strong>📸 Englers Insta-Tipp:</strong>
+                            <p>Der perfekte Spot für unvergessliche Urlaubsfotos &amp; Drinks mit Meerblick! <strong>Wichtig:</strong> Am <strong>Wochenende nur mit Reservierung</strong> – am besten frühzeitig online buchen.</p>
+                        </div>
+                        <div class="spot-actions">
+                            <a href="https://calaclemence.com/" target="_blank" rel="noopener noreferrer" class="action-btn primary">🍽️ Website &amp; Reservierung</a>
+                            <a href="https://www.google.com/maps/search/?api=1&query=Cala+Clemence+del+Portitxol+Javea" target="_blank" rel="noopener noreferrer" class="action-btn secondary">📍 Google Maps</a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- 7. TONA BEACH BAR (CHIRINGUITO) -->
+                <article class="spot-card" data-category="chiringuito">
+                    <div class="spot-visual" style="background-image: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80');">
+                        <div class="spot-badges">
+                            <span class="spot-badge highlight">🏖️ Strandbar</span>
+                            <span class="spot-badge">🚶 Wenige Meter entfernt</span>
+                            <span class="spot-badge">🍷 Caña &amp; Sangría</span>
+                        </div>
+                    </div>
+                    <div class="spot-body">
+                        <span class="spot-category">Chiringuito · Direkt neben unserer Casa</span>
+                        <h2>Tona Beach Bar</h2>
+                        <p class="spot-desc">
+                            Entspannte Beach-Bar direkt am Meer – nur wenige Meter von unserer Unterkunft entfernt. Kleine Snacks, Tapas und eiskalte Drinks direkt am Strand.
+                        </p>
+                        <div class="insider-tip">
+                            <strong>💡 Englers Insider-Tipp:</strong>
+                            <p>Unser absoluter Favorit für eine schnelle „Caña“, einen <em>Tinto de Verano</em> oder eine <em>Sangría</em> – egal ob vor oder nach der Siesta!</p>
+                        </div>
+                        <div class="spot-actions">
+                            <a href="https://tonabeachbar.es/" target="_blank" rel="noopener noreferrer" class="action-btn primary">🌐 tonabeachbar.es</a>
+                            <a href="https://www.google.com/maps/search/?api=1&query=Tona+Beach+Bar+Denia" target="_blank" rel="noopener noreferrer" class="action-btn secondary">📍 Google Maps</a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- 7. EL CHIRINGÜITO -->
+                <article class="spot-card" data-category="chiringuito">
+                    <div class="spot-visual" style="background-image: url('https://images.unsplash.com/photo-1544148103-0773bf10d330?auto=format&fit=crop&w=800&q=80');">
+                        <div class="spot-badges">
+                            <span class="spot-badge highlight">🏖️ Strandbar</span>
+                            <span class="spot-badge">👣 Füße im Sand</span>
+                            <span class="spot-badge">📍 Playa Les Marines</span>
+                        </div>
+                    </div>
+                    <div class="spot-body">
+                        <span class="spot-category">Chiringuito · Strand-Klassiker</span>
+                        <h2>El Chiringüito</h2>
+                        <p class="spot-desc">
+                            Echtes spanisches Strandbar-Feeling direkt im Sand an der Playa de Les Marines: eiskalte <em>Cañas</em>, Tinto de Verano, kleine Snacks und entspannte Urlaubsstimmung direkt am Wasser.
+                        </p>
+                        <div class="insider-tip">
+                            <strong>💡 Englers Insider-Tipp:</strong>
+                            <p>Ein wunderschöner Strandspaziergang Richtung Westen von unserer Casa aus – ideal für den Sundowner nach dem Baden!</p>
+                        </div>
+                        <div class="spot-actions">
+                            <a href="https://www.google.com/maps/place/El+Chiring%C3%BCito/@38.8618908,-0.0810601,31201m/data=!3m1!1e3!4m10!1m3!11m2!2snWsTd3meFCjRp-hnSywe0MAEadV__g!3e3!3m5!1s0x129e1cf552265b01:0x38a17d5c07fea702!8m2!3d38.8618908!4d0.0555747!16s%2Fg%2F1jkxz5249?hl=de&entry=ttu&g_ep=EgoyMDI2MTExOC4xIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noopener noreferrer" class="action-btn primary">📍 Route in Google Maps</a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- 8. CHIRINGUITO MOJITO DÉNIA -->
+                <article class="spot-card" data-category="chiringuito">
+                    <div class="spot-visual" style="background-image: url('https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&w=800&q=80');">
+                        <div class="spot-badges">
+                            <span class="spot-badge highlight">🍹 Mojito &amp; Drinks</span>
+                            <span class="spot-badge">🏖️ Direkt am Strand</span>
+                            <span class="spot-badge">🚶 Nah an der Casa</span>
+                        </div>
+                    </div>
+                    <div class="spot-body">
+                        <span class="spot-category">Chiringuito · Cocktail-Stopp am Strand</span>
+                        <h2>Chiringuito Mojito Dénia</h2>
+                        <p class="spot-desc">
+                            Der Name ist Programm! Direkt am Sandstrand ganz in der Nähe unserer Casa warten frisch gemixte Mojitos, kühle Getränke und pures Mittelmeer-Feeling.
+                        </p>
+                        <div class="insider-tip">
+                            <strong>💡 Englers Insider-Tipp:</strong>
+                            <p>Nur rund 10 Minuten zu Fuß am Strand entlang von der Casa – perfekt für den spontanen Nachmittags-Mojito oder zum Sonnenuntergang!</p>
+                        </div>
+                        <div class="spot-actions">
+                            <a href="https://www.instagram.com/chiringuitomojitodenia/" target="_blank" rel="noopener noreferrer" class="action-btn primary">📸 Instagram</a>
+                            <a href="https://www.google.com/maps/place/Chiringuito+Mojito+Denia/@38.8621052,0.0450404,3125m/data=!3m1!1e3!4m10!1m3!11m2!2snWsTd3meFCjRp-hnSywe0MAEadV__g!3e3!3m5!1s0x129e1d20f18a0079:0x431c559091f4ab0e!8m2!3d38.8605295!4d0.062584!16s%2Fg%2F11f90vs39n?hl=de&entry=ttu&g_ep=EgoyMDI2MTExOC4xIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noopener noreferrer" class="action-btn secondary">📍 Google Maps</a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- 11. CHIRINGUITO EL DE LA MARINETA -->
+                <article class="spot-card" data-category="chiringuito fruehstueck">
+                    <div class="spot-visual" style="background-image: url('https://images.unsplash.com/photo-1504754524776-8f4f37790ca0?auto=format&fit=crop&w=800&q=80');">
+                        <div class="spot-badges">
+                            <span class="spot-badge highlight">🏖️ Strandbar</span>
+                            <span class="spot-badge">🥐 Frühstück &amp; Sundowner</span>
+                            <span class="spot-badge">🏃 Promenade</span>
+                        </div>
+                    </div>
+                    <div class="spot-body">
+                        <span class="spot-category">Chiringuito · Playa de la Marineta Cassiana</span>
+                        <h2>Chiringuito El de la Marineta</h2>
+                        <p class="spot-desc">
+                            Direkt am Sandstrand der <em>Marineta Cassiana</em> am Beginn der schönen Küstenpromenade Richtung Les Rotes. In der Saison schon ab dem frühen Morgen bis spät abends geöffnet – ganz entspannt ohne Reservierung.
+                        </p>
+                        <div class="insider-tip">
+                            <strong>💡 Englers Insider-Tipp:</strong>
+                            <p>Perfekt für das <strong>wohlverdiente Frühstück nach einer Jogging-Runde</strong> entlang der Promenade (Länge variabel von 2 bis 8 km) – oder abends ganz entspannt für den <strong>Sundowner</strong> direkt am Meer!</p>
+                        </div>
+                        <div class="spot-actions">
+                            <a href="https://www.google.com/maps/search/?api=1&query=Chiringuito+El+de+la+Marineta+Denia" target="_blank" rel="noopener noreferrer" class="action-btn primary">📍 Route in Google Maps</a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- 12. MI VILLA Nº 1 & BAR CARRIÓ (FRÜHSTÜCK) -->
+                <article class="spot-card" data-category="fruehstueck tapas">
+                    <div class="spot-visual" style="background-image: url('https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=800&q=80');">
+                        <div class="spot-badges">
+                            <span class="spot-badge highlight">☕ Spanisches Frühstück</span>
+                            <span class="spot-badge">🍊 Zumo &amp; Tostada</span>
+                            <span class="spot-badge">📍 Marqués de Campo</span>
+                        </div>
+                    </div>
+                    <div class="spot-body">
+                        <span class="spot-category">Typisches Frühstück · Zentrum Dénia</span>
+                        <h2>Mi Villa Nº 1 &amp; Bar Carrió</h2>
+                        <p class="spot-desc">
+                            Direkt nebeneinander am Beginn der Flaniermeile <em>Calle Marqués de Campo</em> (Nr. 1 &amp; Nr. 3) liegen diese beiden Dénia-Klassiker mit schönen Terrassen – ideal, um morgens das spanische Stadtleben zu beobachten.
+                        </p>
+                        <div class="insider-tip">
+                            <strong>💡 Englers Frühstücks-Tipp:</strong>
+                            <p>Einfach bestellen wie die Einheimischen: ein <strong>Café solo</strong> oder <strong>Café con leche</strong>, ein frisch gepresster <strong>Zumo</strong> (Orangensaft) und eine knusprige <strong>Tostada</strong> (mit Tomate &amp; Olivenöl)!</p>
+                        </div>
+                        <div class="spot-actions">
+                            <a href="https://www.google.com/maps/search/?api=1&query=Mi+Villa+Numero+1+Marques+de+Campo+Denia" target="_blank" rel="noopener noreferrer" class="action-btn primary">📍 Mi Villa Nº 1</a>
+                            <a href="https://www.google.com/maps/search/?api=1&query=Bar+Carrio+Marques+de+Campo+Denia" target="_blank" rel="noopener noreferrer" class="action-btn secondary">📍 Bar Carrió</a>
+                        </div>
+                    </div>
+                </article>
+
             </div>
         </section>
 
@@ -476,19 +720,19 @@
 
             <div class="timeline-wrapper">
                 <div class="timeline-step">
-                    <span class="timeline-time">19:00 Uhr – Sundowner am Hafen</span>
-                    <h3>Aperitif im Republic</h3>
-                    <p>Startet entspannt in der Marina de Dénia, wenn die Sonne hinter dem Montgó versinkt.</p>
+                    <span class="timeline-time">18:00 Uhr – Füße im Sand</span>
+                    <h3>Sundowner am Chiringuito</h3>
+                    <p>Startet entspannt mit einem Mojito oder einer kühlen Caña direkt am Strand – nur ein paar Minuten von der Casa.</p>
                 </div>
                 <div class="timeline-step">
-                    <span class="timeline-time">20:30 Uhr – Tapas-Runde #1</span>
-                    <h3>Pepa Teresa in der Calle Loreto</h3>
-                    <p>Spaziert rüber in die Altstadt und stürzt euch ins bunte Treiben der Schlemmergasse.</p>
+                    <span class="timeline-time">20:00 Uhr – Hafen oder Altstadt</span>
+                    <h3>Republic oder Calle Loreto</h3>
+                    <p>Weiter geht’s zum Dinner in die Marina de Dénia (<em>Republic</em>) oder ins bunte Treiben bei <em>Pepa Teresa</em> in der Calle Loreto.</p>
                 </div>
                 <div class="timeline-step">
-                    <span class="timeline-time">22:00 Uhr – Ausklang auf dem Platz</span>
-                    <h3>La Sucreria de la Plaça</h3>
-                    <p>Zum krönenden Abschluss noch ein Glas Wein und feine Kleinigkeiten unter freiem Himmel.</p>
+                    <span class="timeline-time">22:30 Uhr – Ausklang unter Sternen</span>
+                    <h3>Eis &amp; Copa in der Altstadt</h3>
+                    <p>Zum krönenden Abschluss noch ein Glas Wein oder ein Eis beim Bummel durch die warmen Gassen von Dénia – und an einem anderen Abend wartet Jávea mit <em>La Sucreria</em>!</p>
                 </div>
             </div>
         </section>
