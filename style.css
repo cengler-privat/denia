@@ -387,13 +387,11 @@ ul.features li {
 }
 
 ul.features li::before {
-    content: '✔';
-    position: absolute;
-    left: 0;
-    top: 0;
-    color: var(--color-accent);
-    font-weight: bold;
+    position: static !important;
+    display: inline-block;
+    margin-right: 10px;
 }
+
 
 /* -------------------
  * 6. Bild-Layouts & Galerie
