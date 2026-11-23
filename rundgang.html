@@ -307,6 +307,239 @@
             100% { transform: scale(1.9); opacity: 0; }
         }
 
+        /* =========================================================
+           🚢✈️ RADAR-HOTSPOTS & GLASSMORPHISM-MODAL (TERRASSE)
+           ========================================================= */
+        .radar-hotspot {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: rgba(15, 23, 42, 0.78);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 2px solid #38bdf8;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.45);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: transform 0.2s ease, background-color 0.2s ease;
+        }
+
+        .radar-hotspot:hover {
+            transform: scale(1.18);
+            background: rgba(15, 23, 42, 0.95);
+        }
+
+        .radar-hotspot-ship {
+            border-color: #38bdf8;
+        }
+
+        .radar-hotspot-ship::before {
+            content: '🚢';
+            font-size: 19px;
+            line-height: 1;
+        }
+
+        .radar-hotspot-flight {
+            border-color: #f59e0b;
+        }
+
+        .radar-hotspot-flight::before {
+            content: '✈️';
+            font-size: 19px;
+            line-height: 1;
+        }
+
+        .radar-hotspot::after {
+            content: '';
+            position: absolute;
+            inset: -6px;
+            border-radius: 50%;
+            border: 2px solid currentColor;
+            animation: pulseRing 2.4s infinite ease-out;
+            pointer-events: none;
+        }
+
+        .radar-hotspot-ship::after {
+            color: rgba(56, 189, 248, 0.8);
+        }
+
+        .radar-hotspot-flight::after {
+            color: rgba(245, 158, 11, 0.85);
+        }
+
+        .radar-modal-backdrop {
+            position: fixed;
+            inset: 0;
+            z-index: 100005;
+            background: rgba(15, 23, 42, 0.72);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .radar-modal-backdrop.is-open {
+            display: flex;
+        }
+
+        .radar-modal {
+            width: min(1020px, 100%);
+            max-height: 90vh;
+            background: rgba(15, 23, 42, 0.94);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            border-radius: 22px;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.55);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            color: #ffffff;
+        }
+
+        .radar-modal-header {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            padding: 16px 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+        }
+
+        .radar-modal-tabs {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .radar-modal-tab {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.16);
+            color: rgba(255, 255, 255, 0.88);
+            padding: 8px 16px;
+            border-radius: 24px;
+            font-family: 'Lato', sans-serif;
+            font-size: 13.5px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .radar-modal-tab:hover {
+            background: rgba(255, 255, 255, 0.18);
+        }
+
+        .radar-modal-tab.active-ship {
+            background: #38bdf8;
+            color: #0f172a;
+            border-color: #38bdf8;
+        }
+
+        .radar-modal-tab.active-flight {
+            background: #f59e0b;
+            color: #0f172a;
+            border-color: #f59e0b;
+        }
+
+        .radar-modal-close {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.1);
+            color: #ffffff;
+            font-size: 18px;
+            line-height: 1;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s ease;
+        }
+
+        .radar-modal-close:hover {
+            background: rgba(255, 255, 255, 0.24);
+        }
+
+        .radar-modal-body {
+            position: relative;
+            width: 100%;
+            height: 60vh;
+            min-height: 380px;
+            background: #0b1220;
+        }
+
+        .radar-modal-body iframe {
+            width: 100%;
+            height: 100%;
+            border: 0;
+            display: block;
+        }
+
+        .radar-modal-footer {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            padding: 14px 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.12);
+            background: rgba(2, 6, 23, 0.65);
+        }
+
+        .radar-modal-caption {
+            font-family: 'Lato', sans-serif;
+            font-size: 0.88rem;
+            color: rgba(255, 255, 255, 0.78);
+            margin: 0;
+        }
+
+        .radar-modal-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .radar-modal-btn {
+            text-decoration: none;
+            padding: 9px 16px;
+            border-radius: 12px;
+            font-family: 'Lato', sans-serif;
+            font-size: 13px;
+            font-weight: 700;
+            transition: all 0.2s ease;
+        }
+
+        .radar-modal-btn.primary {
+            background: #f59e0b;
+            color: #0f172a;
+        }
+
+        .radar-modal-btn.primary:hover {
+            background: #fbbf24;
+        }
+
+        .radar-modal-btn.primary-ship {
+            background: #38bdf8;
+            color: #0f172a;
+        }
+
+        .radar-modal-btn.primary-ship:hover {
+            background: #7dd3fc;
+        }
+
+        .radar-modal-btn.secondary {
+            background: rgba(255, 255, 255, 0.14);
+            color: #ffffff;
+        }
+
+        .radar-modal-btn.secondary:hover {
+            background: rgba(255, 255, 255, 0.24);
+        }
+
         @media (max-width: 768px) {
             .tour-page-header {
                 padding: 75px 15px 10px 15px;
@@ -446,6 +679,29 @@
         <span id="temperature">--</span>°C
     </div>
 
+    <!-- 🚢✈️ LIVE BALKON-RADAR MODAL -->
+    <div class="radar-modal-backdrop" id="radarModalBackdrop" role="dialog" aria-modal="true" aria-labelledby="radarModalTitle">
+        <div class="radar-modal" onclick="event.stopPropagation()">
+            <div class="radar-modal-header">
+                <div class="radar-modal-tabs" id="radarModalTitle">
+                    <button class="radar-modal-tab" id="modalTabShips" onclick="setRadarModalMode('ships')">🚢 Schiffsradar (VesselFinder)</button>
+                    <button class="radar-modal-tab" id="modalTabFlights" onclick="setRadarModalMode('flights')">✈️ Flugradar (Himmel über Dénia)</button>
+                </div>
+                <button class="radar-modal-close" onclick="closeRadarModal()" title="Schließen" aria-label="Radar schließen">✕</button>
+            </div>
+            <div class="radar-modal-body">
+                <iframe id="radarModalIframe" title="Live Balkon-Radar" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+            </div>
+            <div class="radar-modal-footer">
+                <p class="radar-modal-caption" id="radarModalCaption">Live-Schiffe vor der Sonnenterrasse in Dénia.</p>
+                <div class="radar-modal-actions">
+                    <a id="radarModalExternal" href="https://www.vesselfinder.com/?lat=38.865&lon=0.115&zoom=12" target="_blank" rel="noopener noreferrer" class="radar-modal-btn primary">🚢 In VesselFinder öffnen ↗</a>
+                    <a id="radarModalPageLink" href="radar.html#schiffe" class="radar-modal-btn secondary">🗺️ Große Radar-Seite</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="script.js" defer></script>
 
     <script>
@@ -489,7 +745,23 @@
                             "text": "Ins Wohnzimmer",
                             "sceneId": "wohnzimmer",
                             "cssClass": "custom-hotspot pulse-effect"
-                        },     
+                        },
+                        {
+                            "pitch": -1.5,
+                            "yaw": -98.5,
+                            "type": "info",
+                            "text": "🚢 Live-Schiffsradar (VesselFinder)",
+                            "cssClass": "radar-hotspot radar-hotspot-ship",
+                            "clickHandlerFunc": function() { openRadarModal('ships'); }
+                        },
+                        {
+                            "pitch": 25.0,
+                            "yaw": -72.0,
+                            "type": "info",
+                            "text": "✈️ Flugzeuge über Dénia (Flightradar24)",
+                            "cssClass": "radar-hotspot radar-hotspot-flight",
+                            "clickHandlerFunc": function() { openRadarModal('flights'); }
+                        }
                     ]
                 },
 
@@ -663,6 +935,59 @@
             card.classList.toggle('collapsed');
             btn.textContent = card.classList.contains('collapsed') ? '+' : '−';
         }
+
+        // 🚢✈️ Live-Radar Modal-Steuerung (On-Demand Iframe)
+        const radarModalBackdrop = document.getElementById('radarModalBackdrop');
+        const radarModalIframe = document.getElementById('radarModalIframe');
+        const radarModalCaption = document.getElementById('radarModalCaption');
+        const radarModalExternal = document.getElementById('radarModalExternal');
+        const radarModalPageLink = document.getElementById('radarModalPageLink');
+        const modalTabShips = document.getElementById('modalTabShips');
+        const modalTabFlights = document.getElementById('modalTabFlights');
+
+        function setRadarModalMode(mode) {
+            const isFlights = mode === 'flights';
+            modalTabShips.className = 'radar-modal-tab' + (isFlights ? '' : ' active-ship');
+            modalTabFlights.className = 'radar-modal-tab' + (isFlights ? ' active-flight' : '');
+
+            if (isFlights) {
+                radarModalIframe.src = 'https://globe.adsbexchange.com/?lat=38.865&lon=0.085&zoom=12&hideSidebar&hideButtons';
+                radarModalCaption.textContent = 'Live-Flüge direkt über dem Balkon in Dénia (ADS-B Exchange) – für Details direkt zu Flightradar24 wechseln.';
+                radarModalExternal.href = 'https://www.flightradar24.com/38.865,0.085/12';
+                radarModalExternal.textContent = '✈️ In Flightradar24 öffnen ↗';
+                radarModalExternal.className = 'radar-modal-btn primary';
+                radarModalPageLink.href = 'radar.html#fluege';
+            } else {
+                const ra = encodeURIComponent(window.location.href.startsWith('http') ? window.location.href : 'https://denia.englers.win/rundgang.html');
+                radarModalIframe.src = `https://www.vesselfinder.com/aismap?zoom=12&lat=38.865&lon=0.085&width=100%25&height=520&names=true&track=false&fleet=false&fleet_name=false&fleet_hide_old_positions=false&clicktoact=false&store_pos=false&ra=${ra}`;
+                radarModalCaption.textContent = 'Live-Schiffe direkt vor unserer Sonnenterrasse in Dénia (VesselFinder).';
+                radarModalExternal.href = 'https://www.vesselfinder.com/?lat=38.865&lon=0.085&zoom=12';
+                radarModalExternal.textContent = '🚢 In VesselFinder öffnen ↗';
+                radarModalExternal.className = 'radar-modal-btn primary-ship';
+                radarModalPageLink.href = 'radar.html#schiffe';
+            }
+        }
+
+        function openRadarModal(mode) {
+            setRadarModalMode(mode || 'ships');
+            radarModalBackdrop.classList.add('is-open');
+            document.body.style.overflow = 'hidden';
+            try { myViewer.stopAutoRotate(); } catch (_) {}
+        }
+
+        function closeRadarModal() {
+            radarModalBackdrop.classList.remove('is-open');
+            radarModalIframe.src = 'about:blank';
+            document.body.style.overflow = '';
+            try { myViewer.startAutoRotate(-2); } catch (_) {}
+        }
+
+        radarModalBackdrop.addEventListener('click', closeRadarModal);
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && radarModalBackdrop.classList.contains('is-open')) {
+                closeRadarModal();
+            }
+        });
 
         window.addEventListener('resize', () => {
             myViewer.resize();

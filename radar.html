@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Balkon-Radar – Schiffe & Flüge live – Casa Englers y Amigos</title>
+
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,600&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        .page-hero {
+            text-align: center;
+            padding: 95px 20px 35px 20px;
+            background: linear-gradient(180deg, #0f172a 0%, #1e293b 100%);
+            color: #ffffff;
+        }
+
+        .page-hero .eyebrow {
+            font-family: 'Lato', sans-serif;
+            font-size: 13px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: #38bdf8;
+            font-weight: 700;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .page-hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.2rem, 4.5vw, 3.4rem);
+            margin: 0 0 12px 0;
+            color: #ffffff;
+        }
+
+        .page-hero p {
+            font-family: 'Lato', sans-serif;
+            font-size: 1.08rem;
+            color: rgba(255, 255, 255, 0.85);
+            max-width: 680px;
+            margin: 0 auto 28px auto;
+            line-height: 1.6;
+        }
+
+        .vibe-filter-bar {
+            display: inline-flex;
+            gap: 8px;
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(10px);
+            padding: 8px;
+            border-radius: 50px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            max-width: 100%;
+            overflow-x: auto;
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        .vibe-filter-bar::-webkit-scrollbar { display: none; }
+
+        .vibe-btn {
+            background: transparent;
+            border: none;
+            color: rgba(255, 255, 255, 0.88);
+            padding: 10px 22px;
+            border-radius: 30px;
+            font-family: 'Lato', sans-serif;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            white-space: nowrap;
+        }
+
+        .vibe-btn:hover {
+            background: rgba(255, 255, 255, 0.12);
+            color: #fff;
+        }
+
+        .vibe-btn.active {
+            background: #f59e0b;
+            color: #0f172a;
+            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4);
+        }
+
+        .vibe-btn.ship-tab.active {
+            background: #38bdf8;
+            color: #0f172a;
+            box-shadow: 0 4px 15px rgba(56, 189, 248, 0.4);
+        }
+
+        .radar-section {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px 65px 20px;
+        }
+
+        .radar-panel {
+            display: none;
+        }
+
+        .radar-panel.active {
+            display: block;
+        }
+
+        .radar-card {
+            background: #ffffff;
+            border-radius: 22px;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(15, 23, 42, 0.09);
+            border: 1px solid rgba(15, 23, 42, 0.07);
+            margin-bottom: 32px;
+        }
+
+        .radar-card-header {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 14px;
+            padding: 20px 24px;
+            background: #0f172a;
+            color: #ffffff;
+        }
+
+        .radar-title-group {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .live-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #22c55e;
+            box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7);
+            animation: livePulse 2s infinite;
+            flex-shrink: 0;
+        }
+
+        @keyframes livePulse {
+            0% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(34, 197, 94, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
+        }
+
+        .radar-title-group h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.45rem;
+            margin: 0;
+            color: #ffffff;
+        }
+
+        .preset-bar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .preset-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            color: rgba(255, 255, 255, 0.9);
+            padding: 7px 14px;
+            border-radius: 20px;
+            font-family: 'Lato', sans-serif;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .preset-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .preset-btn.active {
+            background: #38bdf8;
+            color: #0f172a;
+            border-color: #38bdf8;
+        }
+
+        #panel-flights .preset-btn.active {
+            background: #f59e0b;
+            color: #0f172a;
+            border-color: #f59e0b;
+        }
+
+        .radar-frame-wrap {
+            position: relative;
+            width: 100%;
+            height: 560px;
+            background: #0b1220;
+        }
+
+        .radar-frame-wrap iframe {
+            width: 100%;
+            height: 100%;
+            border: 0;
+            display: block;
+        }
+
+        .radar-card-footer {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 14px;
+            padding: 18px 24px;
+            background: #f8fafc;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        .radar-note {
+            font-family: 'Lato', sans-serif;
+            font-size: 0.9rem;
+            color: #475569;
+            margin: 0;
+        }
+
+        .radar-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .action-btn {
+            text-decoration: none;
+            padding: 10px 18px;
+            border-radius: 12px;
+            font-family: 'Lato', sans-serif;
+            font-size: 13.5px;
+            font-weight: 700;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .action-btn.primary {
+            background: #0f172a;
+            color: #ffffff;
+        }
+
+        .action-btn.primary:hover {
+            background: #38bdf8;
+            color: #0f172a;
+        }
+
+        .action-btn.ship {
+            background: #38bdf8;
+            color: #0f172a;
+        }
+
+        .action-btn.ship:hover {
+            background: #0284c7;
+            color: #ffffff;
+        }
+
+        .action-btn.fr24 {
+            background: #f59e0b;
+            color: #0f172a;
+        }
+
+        .action-btn.fr24:hover {
+            background: #d97706;
+            color: #ffffff;
+        }
+
+        .action-btn.secondary {
+            background: #e2e8f0;
+            color: #1e293b;
+        }
+
+        .action-btn.secondary:hover {
+            background: #cbd5e1;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 22px;
+        }
+
+        .info-card {
+            background: #ffffff;
+            border-radius: 18px;
+            padding: 22px 24px;
+            box-shadow: 0 10px 25px rgba(15, 23, 42, 0.06);
+            border: 1px solid rgba(15, 23, 42, 0.06);
+            text-align: left;
+        }
+
+        .info-card h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.25rem;
+            color: #0f172a;
+            margin: 0 0 8px 0;
+        }
+
+        .info-card p {
+            font-family: 'Lato', sans-serif;
+            font-size: 0.95rem;
+            line-height: 1.55;
+            color: #475569;
+            margin: 0;
+        }
+
+        @media (max-width: 768px) {
+            .radar-frame-wrap {
+                height: 62vh;
+                min-height: 420px;
+            }
+
+            .radar-card-header,
+            .radar-card-footer {
+                padding: 16px;
+            }
+
+            .radar-actions {
+                width: 100%;
+            }
+
+            .action-btn {
+                flex: 1;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-light">
+
+    <button class="burger-menu-button" id="burger-menu-btn" title="Menü öffnen">
+        <span class="burger-menu-bar"></span>
+        <span class="burger-menu-bar"></span>
+        <span class="burger-menu-bar"></span>
+    </button>
+    <div id="menu-container"></div>
+
+    <header class="page-hero">
+        <span class="eyebrow">Live-Blick von der Sonnenterrasse</span>
+        <h1>Balkon-Radar</h1>
+        <p>Schau live nach, welche Fähren und Yachten gerade vor unserer Terrasse vorbeiziehen – und welche Flugzeuge hoch oben Kurs auf die Costa Blanca oder die Balearen nehmen.</p>
+
+        <div class="vibe-filter-bar" role="tablist">
+            <button class="vibe-btn ship-tab active" id="tab-btn-ships" onclick="switchRadarTab('ships')">🚢 Schiffsradar (Meer)</button>
+            <button class="vibe-btn flight-tab" id="tab-btn-flights" onclick="switchRadarTab('flights')">✈️ Flugradar (Himmel)</button>
+        </div>
+    </header>
+
+    <main>
+        <section class="radar-section">
+
+            <!-- TAB 1: SCHIFFSRADAR -->
+            <div class="radar-panel active" id="panel-ships">
+                <div class="radar-card">
+                    <div class="radar-card-header">
+                        <div class="radar-title-group">
+                            <span class="live-dot" aria-hidden="true"></span>
+                            <h2>VesselFinder Live – Meer vor Dénia</h2>
+                        </div>
+                        <div class="preset-bar">
+                            <button class="preset-btn active" onclick="setShipView(38.865, 0.085, 12, this)">🌊 Direkt vorm Balkon</button>
+                            <button class="preset-btn" onclick="setShipView(38.865, 0.115, 11, this)">⚓ Hafen Dénia &amp; Küste</button>
+                            <button class="preset-btn" onclick="setShipView(38.90, 0.55, 9, this)">🏝️ Fährroute Ibiza</button>
+                        </div>
+                    </div>
+
+                    <div class="radar-frame-wrap">
+                        <iframe
+                            id="ships-iframe"
+                            title="VesselFinder Live-Schiffsradar vor Dénia"
+                            loading="lazy"
+                            referrerpolicy="no-referrer-when-downgrade"
+                            allowfullscreen>
+                        </iframe>
+                    </div>
+
+                    <div class="radar-card-footer">
+                        <p class="radar-note">Klicke auf ein Schiffssymbol für Name, Kurs &amp; Geschwindigkeit (Quelle: VesselFinder).</p>
+                        <div class="radar-actions">
+                            <a id="ships-external-link" href="https://www.vesselfinder.com/?lat=38.865&lon=0.085&zoom=12" target="_blank" rel="noopener noreferrer" class="action-btn ship">🚢 In VesselFinder öffnen ↗</a>
+                            <a href="rundgang.html" class="action-btn secondary">🔄 Zum 360°-Balkonblick</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="info-grid">
+                    <article class="info-card">
+                        <h3>⛴️ Baleària-Schnellfähren</h3>
+                        <p>Mehrmals täglich starten vom Hafen Dénia die großen Fähren nach Ibiza, Formentera und Palma de Mallorca – oft perfekt von der Terrasse aus sichtbar.</p>
+                    </article>
+                    <article class="info-card">
+                        <h3>⛵ Yachten &amp; Segelboote</h3>
+                        <p>Rund um die <em>Marina de Dénia</em> und das Kap San Antonio tummeln sich besonders bei gutem Wind zahlreiche Segler und Motoryachten.</p>
+                    </article>
+                    <article class="info-card">
+                        <h3>🎣 Dénias Fischerflotte</h3>
+                        <p>Am späten Nachmittag kehren die Fischerboote Richtung Hafen zurück – häufig mit fangfrischer <em>Gamba Roja de Dénia</em> an Bord.</p>
+                    </article>
+                </div>
+            </div>
+
+            <!-- TAB 2: FLUGRADAR -->
+            <div class="radar-panel" id="panel-flights">
+                <div class="radar-card">
+                    <div class="radar-card-header">
+                        <div class="radar-title-group">
+                            <span class="live-dot" aria-hidden="true"></span>
+                            <h2>Live-Flugradar – Himmel über Dénia</h2>
+                        </div>
+                        <div class="preset-bar">
+                            <button class="preset-btn active" onclick="setFlightView(38.865, 0.085, 12, this)">☁️ Direkt über dem Balkon</button>
+                            <button class="preset-btn" onclick="setFlightView(38.95, -0.20, 8, this)">🛫 Alicante &amp; Valencia</button>
+                            <button class="preset-btn" onclick="setFlightView(39.15, 1.10, 8, this)">🏝️ Kurs Balearen</button>
+                        </div>
+                    </div>
+
+                    <div class="radar-frame-wrap">
+                        <iframe
+                            id="flights-iframe"
+                            title="Live-Flugradar über Dénia (ADS-B Exchange)"
+                            loading="lazy"
+                            referrerpolicy="no-referrer-when-downgrade"
+                            allowfullscreen>
+                        </iframe>
+                    </div>
+
+                    <div class="radar-card-footer">
+                        <p class="radar-note">Live-Karte via ADS-B Exchange – für Flugdetails &amp; die Handy-App direkt zu Flightradar24 wechseln.</p>
+                        <div class="radar-actions">
+                            <a id="fr24-external-link" href="https://www.flightradar24.com/38.865,0.085/12" target="_blank" rel="noopener noreferrer" class="action-btn fr24">✈️ In Flightradar24 öffnen ↗</a>
+                            <a id="airplanes-external-link" href="https://globe.adsbexchange.com/?lat=38.865&lon=0.085&zoom=12" target="_blank" rel="noopener noreferrer" class="action-btn secondary">🌐 Vollbild-Karte ↗</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="info-grid">
+                    <article class="info-card">
+                        <h3>🛫 Route Alicante &amp; Valencia</h3>
+                        <p>Dénia liegt genau zwischen den Flughäfen Alicante (ALC) und Valencia (VLC) – viele Urlaubsflieger aus Deutschland und der Schweiz ziehen direkt über die Küste.</p>
+                    </article>
+                    <article class="info-card">
+                        <h3>🏝️ Balearen-Korridor</h3>
+                        <p>Richtung Osten über dem Meer siehst du häufig Maschinen im An- oder Abflug auf Ibiza (IBZ) und Palma de Mallorca (PMI).</p>
+                    </article>
+                    <article class="info-card">
+                        <h3>📱 Tipp für Flightradar24</h3>
+                        <p>Da Flightradar24 kein direktes Einbetten erlaubt, öffnet der goldene Button oben exakt diesen Kartenausschnitt über Dénia (auf dem Handy oft direkt in der FR24-App).</p>
+                    </article>
+                </div>
+            </div>
+
+            <div id="trigger-whatsapp" style="height: 1px;"></div>
+        </section>
+    </main>
+
+    <a href="https://wa.me/491733045695" class="whatsapp-button" target="_blank" id="whatsapp-btn">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="#ffffff" d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.8 0-67.6-9.5-97.2-27.2l-6.7-4-71.7 18.7 19.3-68.6-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z" /></svg>
+    </a>
+
+    <button id="scroll-to-top-btn" class="scroll-to-top-button" title="Nach oben scrollen">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M246.6 41.4c-12.5-12.5-32.8-12.5-45.3 0l-160 160c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L224 109.3 361.4 246.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-160-160z" /></svg>
+    </button>
+
+    <div id="weather-overlay">
+        <span id="temperature">--</span>°C
+    </div>
+
+    <script src="script.js" defer></script>
+    <script>
+        let shipsLoaded = false;
+        let flightsLoaded = false;
+
+        function buildShipUrl(lat, lon, zoom) {
+            const ra = encodeURIComponent(window.location.href.startsWith('http') ? window.location.href : 'https://denia.englers.win/radar.html');
+            return `https://www.vesselfinder.com/aismap?zoom=${zoom}&lat=${lat}&lon=${lon}&width=100%25&height=560&names=true&track=false&fleet=false&fleet_name=false&fleet_hide_old_positions=false&clicktoact=false&store_pos=false&ra=${ra}`;
+        }
+
+        function buildFlightUrl(lat, lon, zoom) {
+            return `https://globe.adsbexchange.com/?lat=${lat}&lon=${lon}&zoom=${zoom}&hideSidebar&hideButtons`;
+        }
+
+        function setShipView(lat, lon, zoom, btn) {
+            if (btn) {
+                document.querySelectorAll('#panel-ships .preset-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+            }
+            document.getElementById('ships-iframe').src = buildShipUrl(lat, lon, zoom);
+            document.getElementById('ships-external-link').href = `https://www.vesselfinder.com/?lat=${lat}&lon=${lon}&zoom=${zoom}`;
+            shipsLoaded = true;
+        }
+
+        function setFlightView(lat, lon, zoom, btn) {
+            if (btn) {
+                document.querySelectorAll('#panel-flights .preset-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+            }
+            document.getElementById('flights-iframe').src = buildFlightUrl(lat, lon, zoom);
+            document.getElementById('fr24-external-link').href = `https://www.flightradar24.com/${lat},${lon}/${zoom}`;
+            document.getElementById('airplanes-external-link').href = `https://globe.adsbexchange.com/?lat=${lat}&lon=${lon}&zoom=${zoom}`;
+            flightsLoaded = true;
+        }
+
+        function switchRadarTab(tab) {
+            const isFlights = tab === 'flights';
+            document.getElementById('panel-ships').classList.toggle('active', !isFlights);
+            document.getElementById('panel-flights').classList.toggle('active', isFlights);
+            document.getElementById('tab-btn-ships').classList.toggle('active', !isFlights);
+            document.getElementById('tab-btn-flights').classList.toggle('active', isFlights);
+
+            if (isFlights) {
+                if (!flightsLoaded) setFlightView(38.865, 0.085, 12);
+                history.replaceState(null, '', '#fluege');
+            } else {
+                if (!shipsLoaded) setShipView(38.865, 0.085, 12);
+                history.replaceState(null, '', '#schiffe');
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            if (window.location.hash === '#fluege') {
+                switchRadarTab('flights');
+            } else {
+                setShipView(38.865, 0.085, 12);
+            }
+        });
+    </script>
+</body>
+</html>
