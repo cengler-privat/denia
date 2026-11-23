@@ -198,7 +198,7 @@
                 </p>
                 <p>
                     <strong>Lokale Schriftarten (kein Google Fonts):</strong> Alle verwendeten Schriftarten (<em>Playfair Display</em> und <em>Lato</em>) werden lokal direkt von unserem Webserver bereitgestellt. Es findet beim Seitenaufruf keine Verbindung zu Servern von Google Fonts statt.<br>
-                    <strong>Google Maps (2-Klick-Lösung):</strong> Die interaktive Anfahrtskarte auf der Anreise-Seite wird erst geladen, nachdem Sie dies aktiv per Klick bestätigen. Erst dann wird Ihre IP-Adresse an die Google Ireland Limited (Gordon House, Barrow Street, Dublin 4, Irland) übermittelt.<br>
+                    <strong>Google Maps &amp; Entdecker-Karte (2-Klick-Lösung):</strong> Die interaktive Anfahrtskarte (Google Maps) auf der Anreise-Seite sowie die Entdecker-Karte (OpenStreetMap / Esri Satellit über Leaflet) werden erst geladen, nachdem Sie dies aktiv per Klick bestätigen. Erst dann wird Ihre IP-Adresse an den jeweiligen Kartenanbieter übertragen.<br>
                     <strong>Open-Meteo Wetter-API (inkl. Link zu meteoblue):</strong> Zur Anzeige der aktuellen Temperatur und 5-Tage-Vorhersage für Dénia wird beim Laden der Seite eine Anfrage an die offene Wetter-Schnittstelle Open-Meteo (open-meteo.com) gesendet. Über einen optionalen Link im Wetter-Overlay gelangt man zur ausführlichen Vorhersage bei meteoblue.com.<br>
                     <strong>Externe Skripte &amp; Bilder (jsDelivr CDN, Unsplash):</strong> Für den 360°-Rundgang wird die Bibliothek Pannellum über das Content-Delivery-Network jsDelivr (cdn.jsdelivr.net) geladen; auf den Unterseiten zu Kulinarik und Ausflügen werden zudem Bilder über Unsplash (images.unsplash.com) eingebunden.<br>
                     <strong>Schiffs- &amp; Flugradar (2-Klick-Lösung – VesselFinder, ADS-B Exchange, Flightradar24):</strong> Auf der Balkon-Radar-Seite sowie beim Öffnen der Radar-Hotspots im 360°-Rundgang werden Live-Karten von VesselFinder (vesselfinder.com) bzw. ADS-B Exchange (globe.adsbexchange.com) erst nach Ihrem aktiven Klick geladen; zudem bestehen externe Links zu Flightradar24 (flightradar24.com).<br>
@@ -234,7 +234,7 @@
     <script src="script.js" defer></script>
     <script>
         (function() {
-            const keys = ['denia_consent_gmaps', 'denia_consent_vesselfinder', 'denia_consent_adsb'];
+            const keys = ['denia_consent_gmaps', 'denia_consent_vesselfinder', 'denia_consent_adsb', 'denia_map_consent'];
             const btn = document.getElementById('resetAllConsentsBtn');
             const status = document.getElementById('resetConsentStatus');
             const updateStatus = () => {

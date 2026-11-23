@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+  <Document>
+    <name>Casa Englers y Amigos – Dénia &amp; Umgebung</name>
+    <description>Alle unsere Lieblings-Spots rund um die Casa Englers y Amigos in Dénia: Restaurants, Frühstück, Chiringuitos und Ausflüge.</description>
+
+    <Style id="style-casa">
+      <IconStyle><color>ff0b9ef5</color><scale>1.3</scale><Icon><href>http://maps.google.com/mapfiles/kml/paddle/ylw-stars.png</href></Icon></IconStyle>
+    </Style>
+    <Style id="style-kulinarik">
+      <IconStyle><color>ff0c58ea</color><scale>1.1</scale><Icon><href>http://maps.google.com/mapfiles/kml/paddle/orange-circle.png</href></Icon></IconStyle>
+    </Style>
+    <Style id="style-chiringuito">
+      <IconStyle><color>ffd4b606</color><scale>1.1</scale><Icon><href>http://maps.google.com/mapfiles/kml/paddle/ltblu-circle.png</href></Icon></IconStyle>
+    </Style>
+    <Style id="style-ausflug">
+      <IconStyle><color>ff81b910</color><scale>1.1</scale><Icon><href>http://maps.google.com/mapfiles/kml/paddle/grn-circle.png</href></Icon></IconStyle>
+    </Style>
+
+    <Folder>
+      <name>🏠 Casa Englers y Amigos</name>
+      <Placemark>
+        <name>Casa Englers y Amigos</name>
+        <styleUrl>#style-casa</styleUrl>
+        <description><![CDATA[Urbanización Albatros, Ctra. de les Marines a Dénia km 3.5, 03700 Dénia – unsere Ferienwohnung, nur 60 m vom Sandstrand entfernt.]]></description>
+        <Point><coordinates>0.06900,38.85690,0</coordinates></Point>
+      </Placemark>
+    </Folder>
+
+    <Folder>
+      <name>🍽️ Restaurants &amp; Frühstück</name>
+      <Placemark>
+        <name>Restaurante Primera Línea</name>
+        <styleUrl>#style-kulinarik</styleUrl>
+        <description><![CDATA[Englers Top-Tipp für Paella & Arroz (besonders Arroz Negro!) direkt in 1. Strandlinie. Achtung: Paella & Reisgerichte isst man in Spanien nur mittags!<br><a href="https://restaurantprimeralinea.com/">restaurantprimeralinea.com</a>]]></description>
+        <Point><coordinates>0.09257,38.85361,0</coordinates></Point>
+      </Placemark>
+      <Placemark>
+        <name>Pepa Teresa (Calle Loreto)</name>
+        <styleUrl>#style-kulinarik</styleUrl>
+        <description><![CDATA[Kult-Tapas mitten in der autofreien Schlemmergasse Calle Loreto. Tipp: Kurz vor 20 Uhr kommen!<br><a href="https://calapepateresa.com/reservar/">Tisch reservieren</a>]]></description>
+        <Point><coordinates>0.10650,38.84150,0</coordinates></Point>
+      </Placemark>
+      <Placemark>
+        <name>Republic Dénia (Marina)</name>
+        <styleUrl>#style-kulinarik</styleUrl>
+        <description><![CDATA[Top-Location direkt im Yachthafen Marina de Dénia mit moderner Cross-Over-Küche und Blick aufs Wasser.<br><a href="https://republicdenia.com/">republicdenia.com</a>]]></description>
+        <Point><coordinates>0.12104,38.83992,0</coordinates></Point>
+      </Placemark>
+      <Placemark>
+        <name>Mala Vita (Marina)</name>
+        <styleUrl>#style-kulinarik</styleUrl>
+        <description><![CDATA[Eher unser Tipp für einen richtig guten Cocktail oder Sundowner am Hafen als fürs große Essen – arbeitet ohne Reservierung!<br><a href="https://malavitadenia.com/">malavitadenia.com</a>]]></description>
+        <Point><coordinates>0.12135,38.83969,0</coordinates></Point>
+      </Placemark>
+      <Placemark>
+        <name>Mi Villa Nº 1 &amp; Bar Carrió (Frühstück)</name>
+        <styleUrl>#style-kulinarik</styleUrl>
+        <description><![CDATA[Calle Marqués de Campo 1 &amp; 3: Perfekt für typisch spanisches Frühstück mit Café solo/con leche, frischem Zumo und Tostada!]]></description>
+        <Point><coordinates>0.10698,38.84002,0</coordinates></Point>
+      </Placemark>
+      <Placemark>
+        <name>La Sucreria de la Plaça (Jávea)</name>
+        <styleUrl>#style-kulinarik</styleUrl>
+        <description><![CDATA[Außerhalb Dénias: Kreative Tapas auf der Plaça de l'Església in der Altstadt von Jávea. Abends rechtzeitig draußen reservieren!<br><a href="https://widget.thefork.com/es/d4004ab4-2bcf-427d-9eb0-c3b3e2ab154d?step=date&amp;utm_source=google.com">Tisch reservieren (TheFork)</a>]]></description>
+        <Point><coordinates>0.16375,38.78928,0</coordinates></Point>
+      </Placemark>
+      <Placemark>
+        <name>Restaurante Sur (Cala Granadella, Jávea)</name>
+        <styleUrl>#style-kulinarik</styleUrl>
+        <description><![CDATA[Außerhalb Dénias: Traditions-Restaurant seit 50+ Jahren direkt in der Cala Granadella. Reisgerichte 24h vorher bestellen – Reservierung hilft bei der Sommer-Zufahrtskontrolle!<br><a href="https://restaurantesur.com/reservas/">Tisch reservieren</a>]]></description>
+        <Point><coordinates>0.19587,38.72972,0</coordinates></Point>
+      </Placemark>
+      <Placemark>
+        <name>Cala Clémence del Portitxol (Jávea)</name>
+        <styleUrl>#style-kulinarik</styleUrl>
+        <description><![CDATA[Englers Insta-Tipp direkt über der weiß-blauen Bucht Cala del Portitxol! Wichtig: Am Wochenende nur mit Reservierung!<br><a href="https://calaclemence.com/">calaclemence.com</a>]]></description>
+        <Point><coordinates>0.22397,38.75216,0</coordinates></Point>
+      </Placemark>
+    </Folder>
+
+    <Folder>
+      <name>🏖️ Chiringuitos (Strandbars)</name>
+      <Placemark>
+        <name>Tona Beach Bar</name>
+        <styleUrl>#style-chiringuito</styleUrl>
+        <description><![CDATA[Nur wenige Meter von unserer Casa! Unser Tipp für eine schnelle Caña, einen Tinto de Verano oder eine Sangría vor oder nach der Siesta.<br><a href="https://tonabeachbar.es/">tonabeachbar.es</a>]]></description>
+        <Point><coordinates>0.07154,38.85699,0</coordinates></Point>
+      </Placemark>
+      <Placemark>
+        <name>Chiringuito Mojito Dénia</name>
+        <styleUrl>#style-chiringuito</styleUrl>
+        <description><![CDATA[Ca. 10 Minuten zu Fuß am Strand entlang von der Casa – frisch gemixte Mojitos und Drinks direkt im Sand.<br><a href="https://www.instagram.com/chiringuitomojitodenia/">Instagram</a>]]></description>
+        <Point><coordinates>0.06258,38.86053,0</coordinates></Point>
+      </Placemark>
+      <Placemark>
+        <name>El Chiringüito (Playa Les Marines)</name>
+        <styleUrl>#style-chiringuito</styleUrl>
+        <description><![CDATA[Echtes spanisches Strandbar-Feeling direkt im Sand – schöner Strandspaziergang Richtung Westen von der Casa.]]></description>
+        <Point><coordinates>0.05557,38.86189,0</coordinates></Point>
+      </Placemark>
+      <Placemark>
+        <name>Chiringuito El de la Marineta</name>
+        <styleUrl>#style-chiringuito</styleUrl>
+        <description><![CDATA[Playa de la Marineta Cassiana: Wohlverdientes Frühstück nach einer Jogging-Runde entlang der Promenade (2–8 km) oder abends zum Sundowner!]]></description>
+        <Point><coordinates>0.12325,38.83415,0</coordinates></Point>
+      </Placemark>
+    </Folder>
+
+    <Folder>
+      <name>🧭 Ausflüge &amp; Buchten</name>
+      <Placemark>
+        <name>Castillo de Dénia &amp; Baix la Mar</name>
+        <styleUrl>#style-ausflug</styleUrl>
+        <description><![CDATA[Historische Burg über dem Hafen mit 360°-Ausblick – beim Abstieg unbedingt durch das alte Fischerviertel Baix la Mar schlendern.]]></description>
+        <Point><coordinates>0.10749,38.84300,0</coordinates></Point>
+      </Placemark>
+      <Placemark>
+        <name>Naturpark El Montgó (Startpunkt Pare Pere)</name>
+        <styleUrl>#style-ausflug</styleUrl>
+        <description><![CDATA[Unser Hausberg (753 m): Panoramapfad oder Gipfelsturm. Im Sommer früh starten, reichlich Wasser &amp; feste Schuhe mitnehmen.]]></description>
+        <Point><coordinates>0.11750,38.82520,0</coordinates></Point>
+      </Placemark>
+      <Placemark>
+        <name>Les Rotes, Torre del Gerro &amp; Cova Tallada</name>
+        <styleUrl>#style-ausflug</styleUrl>
+        <description><![CDATA[Geschützte Felsküste, historischer Piraten-Wachturm (16. Jh.) und Einstieg zur Meereshöhle Cova Tallada. In der Saison Anmeldung nötig!<br><a href="https://www.covatalladadenia.com/de/reservat-cova-tallada/">Cova Tallada anmelden</a>]]></description>
+        <Point><coordinates>0.15954,38.81985,0</coordinates></Point>
+      </Placemark>
+      <Placemark>
+        <name>Vía Verde de Dénia</name>
+        <styleUrl>#style-ausflug</styleUrl>
+        <description><![CDATA[Flacher Rad- und Spazierweg auf einer alten Bahntrasse mitten durch Orangen- und Mandelhaine – Einstieg ganz nah bei der Casa.]]></description>
+        <Point><coordinates>0.08584,38.84332,0</coordinates></Point>
+      </Placemark>
+      <Placemark>
+        <name>Startpunkt &amp; Parkplatz Cala del Moraig (für Cala Llebeig)</name>
+        <styleUrl>#style-ausflug</styleUrl>
+        <description><![CDATA[Startpunkt der Klippenwanderung zur Cala Llebeig (ca. 4 km Hin &amp; Rück). Parkplatz vorab online buchen!<br><a href="https://calamoraig.es/tienda/">Parkplatz buchen (calamoraig.es)</a>]]></description>
+        <Point><coordinates>0.16519,38.70775,0</coordinates></Point>
+      </Placemark>
+      <Placemark>
+        <name>Cala Llebeig (Ziel der Klippenwanderung)</name>
+        <styleUrl>#style-ausflug</styleUrl>
+        <description><![CDATA[Autofreie ehemalige Schmugglerbucht mit urigen Fischerhütten und kristallklarem Wasser, erreichbar über die Ruta de los Acantilados ab Cala del Moraig.]]></description>
+        <Point><coordinates>0.15578,38.69865,0</coordinates></Point>
+      </Placemark>
+    </Folder>
+  </Document>
+</kml>

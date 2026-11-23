@@ -85,6 +85,17 @@
             box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4);
         }
 
+        .vibe-btn.map-jump {
+            text-decoration: none;
+            border: 1px solid rgba(56, 189, 248, 0.45);
+            color: #7dd3fc;
+        }
+
+        .vibe-btn.map-jump:hover {
+            background: rgba(56, 189, 248, 0.2);
+            color: #ffffff;
+        }
+
         .spots-container {
             max-width: 1240px;
             margin: 0 auto;
@@ -367,6 +378,7 @@
             <button type="button" class="vibe-btn" onclick="filterSpots('meer', this)">🥘 Paella &amp; Meer</button>
             <button type="button" class="vibe-btn" onclick="filterSpots('chiringuito', this)">🏖️ Chiringuitos</button>
             <button type="button" class="vibe-btn" onclick="filterSpots('ausserhalb', this)">🚗 Außerhalb Dénias</button>
+            <a href="karte.html?filter=kulinarik" class="vibe-btn map-jump">🗺️ Auf der Karte</a>
         </div>
     </header>
 
