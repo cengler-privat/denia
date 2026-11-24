@@ -5,7 +5,7 @@
     <description>Alle unsere Lieblings-Spots rund um die Casa Englers y Amigos in Dénia: Restaurants, Frühstück, Chiringuitos und Ausflüge.</description>
 
     <Style id="style-casa">
-      <IconStyle><color>ff0b9ef5</color><scale>1.3</scale><Icon><href>http://maps.google.com/mapfiles/kml/paddle/ylw-stars.png</href></Icon></IconStyle>
+      <IconStyle><color>ff2626dc</color><scale>1.3</scale><Icon><href>http://maps.google.com/mapfiles/kml/paddle/red-stars.png</href></Icon></IconStyle>
     </Style>
     <Style id="style-kulinarik">
       <IconStyle><color>ff0c58ea</color><scale>1.1</scale><Icon><href>http://maps.google.com/mapfiles/kml/paddle/orange-circle.png</href></Icon></IconStyle>
@@ -30,6 +30,12 @@
     <Folder>
       <name>🍽️ Restaurants &amp; Frühstück</name>
       <Placemark>
+        <name>Quique Dacosta Restaurante (3 Michelin-Sterne)</name>
+        <styleUrl>#style-kulinarik</styleUrl>
+        <description><![CDATA[ca. 4 Min. Auto: Vermutlich bester Koch Spaniens (3 Michelin-Sterne), wenn es etwas wirklich Außergewöhnliches sein soll. Englers konnten sich das bisher nicht leisten ;-) €€€€€<br><a href="https://www.quiquedacosta.es/">quiquedacosta.es</a>]]></description>
+        <Point><coordinates>0.08500,38.85380,0</coordinates></Point>
+      </Placemark>
+      <Placemark>
         <name>Restaurante Primera Línea</name>
         <styleUrl>#style-kulinarik</styleUrl>
         <description><![CDATA[Englers Top-Tipp für Paella & Arroz (besonders Arroz Negro!) direkt in 1. Strandlinie. Achtung: Paella & Reisgerichte isst man in Spanien nur mittags!<br><a href="https://restaurantprimeralinea.com/">restaurantprimeralinea.com</a>]]></description>
@@ -40,6 +46,12 @@
         <styleUrl>#style-kulinarik</styleUrl>
         <description><![CDATA[Kult-Tapas mitten in der autofreien Schlemmergasse Calle Loreto. Tipp: Kurz vor 20 Uhr kommen!<br><a href="https://calapepateresa.com/reservar/">Tisch reservieren</a>]]></description>
         <Point><coordinates>0.10650,38.84150,0</coordinates></Point>
+      </Placemark>
+      <Placemark>
+        <name>Dexcaro Experience</name>
+        <styleUrl>#style-kulinarik</styleUrl>
+        <description><![CDATA[ca. 10 Min. Auto: Außergewöhnliche, kreative Gourmet- &amp; Fusionsküche von Chef Carlos Moreno (Dexcaro &amp; Ossadía) mitten in Dénia – unbedingt vorab reservieren!<br><a href="https://dexcaro.es/">dexcaro.es</a>]]></description>
+        <Point><coordinates>0.10570,38.84080,0</coordinates></Point>
       </Placemark>
       <Placemark>
         <name>Republic Dénia (Marina)</name>
@@ -105,6 +117,12 @@
         <description><![CDATA[Playa de la Marineta Cassiana: Wohlverdientes Frühstück nach einer Jogging-Runde entlang der Promenade (2–8 km) oder abends zum Sundowner!]]></description>
         <Point><coordinates>0.12325,38.83415,0</coordinates></Point>
       </Placemark>
+      <Placemark>
+        <name>Mandala Beach Bar (Cala de la Fustera, Benissa)</name>
+        <styleUrl>#style-chiringuito</styleUrl>
+        <description><![CDATA[ca. 35 Min. Auto: Entspannte Boho-Beach-Bar direkt über der malerischen Cala de la Fustera (Benissa) – perfekte Kombi aus Baden, Küstenpfad und Sundowner.]]></description>
+        <Point><coordinates>0.08777,38.66500,0</coordinates></Point>
+      </Placemark>
     </Folder>
 
     <Folder>
@@ -116,16 +134,46 @@
         <Point><coordinates>0.10749,38.84300,0</coordinates></Point>
       </Placemark>
       <Placemark>
+        <name>Jardín de l’Albarda (Pedreguer)</name>
+        <styleUrl>#style-ausflug</styleUrl>
+        <description><![CDATA[ca. 12 Min. Auto: 50.000 m² großer mediterraner Renaissance-Garten (Urb. La Sella, Pedreguer) mit über 700 heimischen Pflanzenarten, Pergolen und herrlicher Ruhe.<br><a href="https://www.jardinalbarda.com/">jardinalbarda.com</a>]]></description>
+        <Point><coordinates>0.05790,38.80860,0</coordinates></Point>
+      </Placemark>
+      <Placemark>
         <name>Naturpark El Montgó (Startpunkt Pare Pere)</name>
         <styleUrl>#style-ausflug</styleUrl>
         <description><![CDATA[Unser Hausberg (753 m): Panoramapfad oder Gipfelsturm. Im Sommer früh starten, reichlich Wasser &amp; feste Schuhe mitnehmen.]]></description>
         <Point><coordinates>0.11750,38.82520,0</coordinates></Point>
       </Placemark>
       <Placemark>
+        <name>Höhenweg Montgó (Abendwanderung – Parken R494+MR9 Campusos)</name>
+        <styleUrl>#style-ausflug</styleUrl>
+        <description><![CDATA[ca. 14 Min. Auto: Traumhafter Höhenweg am Montgó-Hang. Am besten abends starten – mindestens 2 Std. vor Sonnenuntergang! Parken: Plus-Code R494+MR9 Campusos, Spanien.]]></description>
+        <Point><coordinates>0.10711,38.81916,0</coordinates></Point>
+      </Placemark>
+      <Placemark>
+        <name>Kite45 (Platja de les Deveses)</name>
+        <styleUrl>#style-ausflug</styleUrl>
+        <description><![CDATA[ca. 15 Min. Auto: Top Kitesurf- &amp; Wingfoil-Spot am Naturstrand Platja de les Deveses mit zuverlässigem thermischem Garbí-Wind.<br><a href="https://kite45.com/">kite45.com</a>]]></description>
+        <Point><coordinates>-0.03531,38.88331,0</coordinates></Point>
+      </Placemark>
+      <Placemark>
         <name>Les Rotes, Torre del Gerro &amp; Cova Tallada</name>
         <styleUrl>#style-ausflug</styleUrl>
         <description><![CDATA[Geschützte Felsküste, historischer Piraten-Wachturm (16. Jh.) und Einstieg zur Meereshöhle Cova Tallada. In der Saison Anmeldung nötig!<br><a href="https://www.covatalladadenia.com/de/reservat-cova-tallada/">Cova Tallada anmelden</a>]]></description>
         <Point><coordinates>0.15954,38.81985,0</coordinates></Point>
+      </Placemark>
+      <Placemark>
+        <name>Cova de les Calaveres (Benidoleig)</name>
+        <styleUrl>#style-ausflug</styleUrl>
+        <description><![CDATA[ca. 18 Min. Auto: Eindrucksvolle Tropfsteinhöhle bei Benidoleig mit prähistorischen Funden und kleinem unterirdischem See – ganzjährig angenehm kühl!<br><a href="https://cuevadelascalaveras.com/">cuevadelascalaveras.com</a>]]></description>
+        <Point><coordinates>-0.01730,38.79320,0</coordinates></Point>
+      </Placemark>
+      <Placemark>
+        <name>Nationalpark Marjal de Pego-Oliva</name>
+        <styleUrl>#style-ausflug</styleUrl>
+        <description><![CDATA[ca. 20 Min. Auto: Naturpark mit glasklarem Fluss (Río Bullent), der warmen Quelle Font Salada zum Baden, Reisfeldern &amp; Wasservögeln.]]></description>
+        <Point><coordinates>-0.06420,38.87110,0</coordinates></Point>
       </Placemark>
       <Placemark>
         <name>Vía Verde de Dénia</name>
@@ -144,6 +192,78 @@
         <styleUrl>#style-ausflug</styleUrl>
         <description><![CDATA[Autofreie ehemalige Schmugglerbucht mit urigen Fischerhütten und kristallklarem Wasser, erreichbar über die Ruta de los Acantilados ab Cala del Moraig.]]></description>
         <Point><coordinates>0.15578,38.69865,0</coordinates></Point>
+      </Placemark>
+      <Placemark>
+        <name>Wanderung Peñón de Ifach (Calpe)</name>
+        <styleUrl>#style-ausflug</styleUrl>
+        <description><![CDATA[ca. 38 Min. Auto: Wahrzeichen der Costa Blanca (332 m) mit Felstunnel und Gipfel-Panorama. Kostenlose Online-Reservierung vorab nötig!<br><a href="https://parquesnaturales.gva.es/es/web/pn-penyal-d-ifac">Gratis-Ticket reservieren</a>]]></description>
+        <Point><coordinates>0.07640,38.63420,0</coordinates></Point>
+      </Placemark>
+      <Placemark>
+        <name>Coll de Rates (Panoramastraße)</name>
+        <styleUrl>#style-ausflug</styleUrl>
+        <description><![CDATA[ca. 38 Min. Auto: Tolle Panoramastraße (628 m) durchs Hinterland &amp; legendäres Trainingsrevier der Radprofis mit Panoramarestaurant und Weitblick bis zum Meer.]]></description>
+        <Point><coordinates>-0.05940,38.72360,0</coordinates></Point>
+      </Placemark>
+      <Placemark>
+        <name>Altea (Weiße Altstadt)</name>
+        <styleUrl>#style-ausflug</styleUrl>
+        <description><![CDATA[ca. 45 Min. Auto: Malerische weiße Altstadt mit Kopfsteinpflaster, Künstler-Boutiquen und der berühmten blauen Kirchenkuppel hoch über der Bucht.]]></description>
+        <Point><coordinates>-0.05140,38.59890,0</coordinates></Point>
+      </Placemark>
+      <Placemark>
+        <name>Benidorm (abschreckender Kontrast 😄)</name>
+        <styleUrl>#style-ausflug</styleUrl>
+        <description><![CDATA[ca. 50 Min. Auto: Das „Manhattan der Costa Blanca“ – bewusst als abschreckender Kontrast! Einmal vom Balcón del Mediterráneo schauen und danach unser entspanntes Dénia noch mehr lieben.]]></description>
+        <Point><coordinates>-0.13150,38.53320,0</coordinates></Point>
+      </Placemark>
+      <Placemark>
+        <name>Fonts de l’Algar (Wasserfälle)</name>
+        <styleUrl>#style-ausflug</styleUrl>
+        <description><![CDATA[ca. 52 Min. Auto: Kristallklare Wasserfälle und natürliche Felsenpools zum Baden – am besten früh morgens hin und ideal kombinierbar mit Guadalest!]]></description>
+        <Point><coordinates>-0.09600,38.65935,0</coordinates></Point>
+      </Placemark>
+      <Placemark>
+        <name>El Castell de Guadalest</name>
+        <styleUrl>#style-ausflug</styleUrl>
+        <description><![CDATA[ca. 1 Std. Auto: Spektakuläres Bergdorf wie ein Adlerhorst auf einem Felsen mit Burg, Museen und Blick auf den türkisblauen Stausee.]]></description>
+        <Point><coordinates>-0.19877,38.67564,0</coordinates></Point>
+      </Placemark>
+      <Placemark>
+        <name>Pasarela de Relleu</name>
+        <styleUrl>#style-ausflug</styleUrl>
+        <description><![CDATA[ca. 1 Std. 15 Min. Auto: Spektakulärer Holzsteg hoch an der Felswand einer Schlucht mit Glasboden-Aussichtsplattform. Zeitfenster-Ticket vorab online buchen!<br><a href="https://pasareladerelleu.es/">pasareladerelleu.es</a>]]></description>
+        <Point><coordinates>-0.28846,38.56296,0</coordinates></Point>
+      </Placemark>
+      <Placemark>
+        <name>L’Oceanogràfic (Valencia)</name>
+        <styleUrl>#style-ausflug</styleUrl>
+        <description><![CDATA[ca. 1 Std. 15 Min. Auto: Europas größtes Aquarium mit Unterwassertunnel, Haien, Belugas &amp; futuristischer Architektur in der Ciudad de las Artes y las Ciencias.<br><a href="https://www.oceanografic.org/">oceanografic.org</a>]]></description>
+        <Point><coordinates>-0.34812,39.45279,0</coordinates></Point>
+      </Placemark>
+      <Placemark>
+        <name>Cap de Sant Antoni</name>
+        <styleUrl>#style-ausflug</styleUrl>
+        <description><![CDATA[ca. 22 Min. Auto: Spektakuläres Kap &amp; Meeresschutzgebiet zwischen Dénia und Jávea mit weißem Leuchtturm und Blick über die gesamte Bucht von Jávea.]]></description>
+        <Point><coordinates>0.19730,38.80316,0</coordinates></Point>
+      </Placemark>
+      <Placemark>
+        <name>Cap de la Nau</name>
+        <styleUrl>#style-ausflug</styleUrl>
+        <description><![CDATA[ca. 30 Min. Auto: Östlichster Punkt der Provinz Alicante mit weißem Leuchtturm über dramatischen Kalkklippen – bei klarer Sicht sieht man bis Ibiza!]]></description>
+        <Point><coordinates>0.23011,38.73306,0</coordinates></Point>
+      </Placemark>
+      <Placemark>
+        <name>Alicante (Rambla &amp; Castillo de Santa Bárbara)</name>
+        <styleUrl>#style-ausflug</styleUrl>
+        <description><![CDATA[ca. 1 Std. 5 Min. Auto: Tagesausflug nach Alicante – über Rambla &amp; Explanada bummeln und hoch aufs Castillo de Santa Bárbara (auch per Aufzug im Fels!).]]></description>
+        <Point><coordinates>-0.47800,38.34890,0</coordinates></Point>
+      </Placemark>
+      <Placemark>
+        <name>Ibiza &amp; Formentera (Schnellfähre ab Baleària Port Dénia)</name>
+        <styleUrl>#style-ausflug</styleUrl>
+        <description><![CDATA[10 Min. zum Hafen + ca. 2 Std. Schnellfähre: Tagesausflug oder besser mit 1–2 Übernachtungen direkt ab dem Fährhafen Dénia nach Ibiza &amp; Formentera!<br><a href="https://www.balearia.com/de">balearia.com</a>]]></description>
+        <Point><coordinates>0.11380,38.84550,0</coordinates></Point>
       </Placemark>
     </Folder>
   </Document>

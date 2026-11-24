@@ -86,6 +86,9 @@
         }
 
         .vibe-btn.map-jump {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
             text-decoration: none;
             border: 1px solid rgba(56, 189, 248, 0.45);
             color: #7dd3fc;
@@ -370,15 +373,26 @@
         <h1>Unsere Lieblingsrestaurants</h1>
         <p>In Dénia schlecht zu essen ist fast unmöglich – aber hier sind unsere handverlesenen Favoriten!</p>
 
-        <div class="vibe-filter-bar">
-            <button type="button" class="vibe-btn active" onclick="filterSpots('all', this)">✨ Alle Favoriten</button>
-            <button type="button" class="vibe-btn" onclick="filterSpots('fruehstueck', this)">☕ Frühstück</button>
-            <button type="button" class="vibe-btn" onclick="filterSpots('tapas', this)">🍤 Tapas &amp; Altstadt</button>
-            <button type="button" class="vibe-btn" onclick="filterSpots('location', this)">🥂 Location &amp; Cross-Over</button>
-            <button type="button" class="vibe-btn" onclick="filterSpots('meer', this)">🥘 Paella &amp; Meer</button>
-            <button type="button" class="vibe-btn" onclick="filterSpots('chiringuito', this)">🏖️ Chiringuitos</button>
-            <button type="button" class="vibe-btn" onclick="filterSpots('ausserhalb', this)">🚗 Außerhalb Dénias</button>
-            <a href="karte.html?filter=kulinarik" class="vibe-btn map-jump">🗺️ Auf der Karte</a>
+        <div class="filter-stack">
+            <div class="vibe-filter-bar">
+                <button type="button" class="vibe-btn active" onclick="filterSpots('all', this)">✨ Alle Favoriten</button>
+                <button type="button" class="vibe-btn" onclick="filterSpots('fruehstueck', this)">☕ Frühstück</button>
+                <button type="button" class="vibe-btn" onclick="filterSpots('tapas', this)">🍤 Tapas &amp; Altstadt</button>
+                <button type="button" class="vibe-btn" onclick="filterSpots('location', this)">🥂 Location &amp; Cross-Over</button>
+                <button type="button" class="vibe-btn" onclick="filterSpots('meer', this)">🥘 Paella &amp; Meer</button>
+                <button type="button" class="vibe-btn" onclick="filterSpots('chiringuito', this)">🏖️ Chiringuitos</button>
+                <button type="button" class="vibe-btn" onclick="filterSpots('ausserhalb', this)">🚗 Außerhalb Dénias</button>
+            </div>
+
+            <div class="distance-filter-bar" role="group" aria-label="Entfernung und Anfahrtsdauer ab Casa">
+                <span class="dist-filter-label">Anfahrt:</span>
+                <button type="button" class="dist-btn active" data-dist="all" onclick="filterByDistance('all', this)">🌍 Alle</button>
+                <button type="button" class="dist-btn" data-dist="walk" onclick="filterByDistance('walk', this)">🚶 Zu Fuß (&lt; 2 km)</button>
+                <button type="button" class="dist-btn" data-dist="20" onclick="filterByDistance('20', this)">🚗 Bis 20 Min.</button>
+                <button type="button" class="dist-btn" data-dist="45" onclick="filterByDistance('45', this)">🚗 Bis 45 Min.</button>
+                <span class="dist-divider" aria-hidden="true"></span>
+                <button type="button" class="dist-map-btn" onclick="openSpotMapOverlay({ cat: 'kulinarik', dist: getActivePageDistFilter() })"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9.5"/><polygon points="16.2 7.8 14.1 14.1 7.8 16.2 9.9 9.9 16.2 7.8" fill="#f59e0b" stroke="#f59e0b" stroke-width="1.2"/></svg> Entdecker-Karte</button>
+            </div>
         </div>
     </header>
 
@@ -387,8 +401,8 @@
             <div class="spots-grid">
 
                 <!-- 1. LA SUCRERIA DE LA PLAÇA (XÀBIA / JÁVEA) -->
-                <article class="spot-card" data-category="tapas ausserhalb">
-                    <div class="spot-visual" style="background-image: url('https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=800&q=80');">
+                <article class="spot-card" data-category="tapas ausserhalb" data-spot-id="sucreria">
+                    <div class="spot-visual" style="background-image: url('images/spots/javea-placa.jpg');">
                         <div class="spot-badges">
                             <span class="spot-badge highlight">⭐ Englers Favorit</span>
                             <span class="spot-badge">🍤 Kreative Tapas</span>
@@ -406,14 +420,14 @@
                             <p>Sichert euch abends rechtzeitig einen Tisch draußen auf dem Platz – die Stimmung, wenn die Lichter angehen, ist den kurzen Abstecher über den Montgó absolut wert!</p>
                         </div>
                         <div class="spot-actions">
-                            <a href="https://widget.thefork.com/es/d4004ab4-2bcf-427d-9eb0-c3b3e2ab154d?step=date&utm_source=google.com" target="_blank" rel="noopener noreferrer" class="action-btn primary">🍽️ Tisch reservieren</a>
-                            <a href="https://www.google.com/maps/search/?api=1&query=La+Sucreria+de+la+Placa+Javea" target="_blank" rel="noopener noreferrer" class="action-btn secondary">📍 Google Maps</a>
+                            <a href="https://widget.thefork.com/es/d4004ab4-2bcf-427d-9eb0-c3b3e2ab154d?step=date&utm_source=google.com" target="_blank" rel="noopener noreferrer" class="action-btn primary">🍽️ Reservieren</a>
+                            <a href="https://www.google.com/maps/search/?api=1&query=La+Sucreria+de+la+Placa+Javea" target="_blank" rel="noopener noreferrer" class="action-btn secondary" data-icon="gmaps">Route nach Jávea</a>
                         </div>
                     </div>
                 </article>
 
                 <!-- 2. PEPA TERESA -->
-                <article class="spot-card" data-category="tapas">
+                <article class="spot-card" data-category="tapas" data-spot-id="pepa-teresa">
                     <div class="spot-visual" style="background-image: url('https://images.unsplash.com/photo-1515443961218-a51367888e4b?auto=format&fit=crop&w=800&q=80');">
                         <div class="spot-badges">
                             <span class="spot-badge highlight">🔥 Kult-Tapas</span>
@@ -431,14 +445,14 @@
                             <p>Kommt am besten kurz vor dem großen spanischen Ansturm gegen 20:00 Uhr und lasst euch von der Tageskarte an der Tafel inspirieren!</p>
                         </div>
                         <div class="spot-actions">
-                            <a href="https://calapepateresa.com/reservar/" target="_blank" rel="noopener noreferrer" class="action-btn primary">🍽️ Tisch reservieren</a>
-                            <a href="https://www.google.com/maps/search/?api=1&query=Pepa+Teresa+Calle+Loreto+Denia" target="_blank" rel="noopener noreferrer" class="action-btn secondary">📍 Google Maps</a>
+                            <a href="https://calapepateresa.com/reservar/" target="_blank" rel="noopener noreferrer" class="action-btn primary">🍽️ Reservieren</a>
+                            <a href="https://www.google.com/maps/search/?api=1&query=Pepa+Teresa+Calle+Loreto+Denia" target="_blank" rel="noopener noreferrer" class="action-btn secondary" data-icon="gmaps">Route zum Lokal</a>
                         </div>
                     </div>
                 </article>
 
                 <!-- 3. REPUBLIC DÉNIA -->
-                <article class="spot-card" data-category="location">
+                <article class="spot-card" data-category="location" data-spot-id="republic">
                     <div class="spot-visual" style="background-image: url('images/kulinarik-republic.jpg'); background-position: center 45%;">
                         <div class="spot-badges">
                             <span class="spot-badge highlight">🛥️ Top-Location</span>
@@ -457,14 +471,14 @@
                             <p>Ideal für einen besonderen Abend! Kommt zum Sonnenuntergang auf einen Drink auf die Terrasse am Wasser und bleibt direkt zum Dinner.</p>
                         </div>
                         <div class="spot-actions">
-                            <a href="https://republicdenia.com/" target="_blank" rel="noopener noreferrer" class="action-btn primary">🍽️ Website &amp; Reservierung</a>
-                            <a href="https://www.google.com/maps/search/?api=1&query=Republic+Marina+de+Denia" target="_blank" rel="noopener noreferrer" class="action-btn secondary">📍 Google Maps</a>
+                            <a href="https://republicdenia.com/" target="_blank" rel="noopener noreferrer" class="action-btn primary">🍽️ Reservieren</a>
+                            <a href="https://www.google.com/maps/search/?api=1&query=Republic+Marina+de+Denia" target="_blank" rel="noopener noreferrer" class="action-btn secondary" data-icon="gmaps">Route zum Hafen</a>
                         </div>
                     </div>
                 </article>
 
                 <!-- 4. MALA VITA (MARINA DE DÉNIA) -->
-                <article class="spot-card" data-category="location">
+                <article class="spot-card" data-category="location" data-spot-id="mala-vita">
                     <div class="spot-visual" style="background-image: url('images/kulinarik-mala-vita.jpg'); background-position: center 68%;">
                         <div class="spot-badges">
                             <span class="spot-badge highlight">🍹 Cocktails &amp; Sundowner</span>
@@ -483,15 +497,15 @@
                             <p>Eher unser Tipp für einen richtig guten <strong>Cocktail oder Sundowner</strong> am Hafen als fürs große Essen! Da es ohne Reservierung läuft, ideal für den spontanen Drink vor oder nach dem Dinner.</p>
                         </div>
                         <div class="spot-actions">
-                            <a href="https://malavitadenia.com/" target="_blank" rel="noopener noreferrer" class="action-btn primary">🌐 Website &amp; Karte</a>
-                            <a href="https://www.google.com/maps/search/?api=1&query=Mala+Vita+Marina+de+Denia" target="_blank" rel="noopener noreferrer" class="action-btn secondary">📍 Google Maps</a>
+                            <a href="https://malavitadenia.com/" target="_blank" rel="noopener noreferrer" class="action-btn primary">🌐 Website</a>
+                            <a href="https://www.google.com/maps/search/?api=1&query=Mala+Vita+Marina+de+Denia" target="_blank" rel="noopener noreferrer" class="action-btn secondary" data-icon="gmaps">Route zum Hafen</a>
                         </div>
                     </div>
                 </article>
 
                 <!-- 4. GAMBA ROJA & PAELLA -->
                 <article class="spot-card" data-category="meer">
-                    <div class="spot-visual" style="background-image: url('https://images.unsplash.com/photo-1533777857889-4be7c70b33f7?auto=format&fit=crop&w=800&q=80');">
+                    <div class="spot-visual" style="background-image: url('images/spots/gamba-roja.jpg');">
                         <div class="spot-badges">
                             <span class="spot-badge">🦐 Gamba Roja</span>
                             <span class="spot-badge">🥘 Reisgerichte</span>
@@ -514,8 +528,8 @@
                 </article>
 
                 <!-- 5. RESTAURANTE PRIMERA LÍNEA (DÉNIA) -->
-                <article class="spot-card" data-category="meer location">
-                    <div class="spot-visual" style="background-image: url('https://images.unsplash.com/photo-1534080564583-6be75777b70a?auto=format&fit=crop&w=800&q=80');">
+                <article class="spot-card" data-category="meer location" data-spot-id="primera-linea">
+                    <div class="spot-visual" style="background-image: url('images/spots/les-marines-restaurant.jpg');">
                         <div class="spot-badges">
                             <span class="spot-badge highlight">⭐ Englers Paella-Tipp</span>
                             <span class="spot-badge">🖤 Arroz Negro</span>
@@ -534,15 +548,15 @@
                             <p><strong>Achtung:</strong> Paella &amp; Reisgerichte isst man in Spanien traditionell nur <strong>mittags</strong>, nicht abends.</p>
                         </div>
                         <div class="spot-actions">
-                            <a href="https://restaurantprimeralinea.com/" target="_blank" rel="noopener noreferrer" class="action-btn primary">🌐 Website &amp; Reservierung</a>
-                            <a href="https://www.google.com/maps/search/?api=1&query=Restaurante+Primera+Linea+Denia" target="_blank" rel="noopener noreferrer" class="action-btn secondary">📍 Google Maps</a>
+                            <a href="https://restaurantprimeralinea.com/" target="_blank" rel="noopener noreferrer" class="action-btn primary">🌐 Website</a>
+                            <a href="https://www.google.com/maps/search/?api=1&query=Restaurante+Primera+Linea+Denia" target="_blank" rel="noopener noreferrer" class="action-btn secondary" data-icon="gmaps">Route zum Lokal</a>
                         </div>
                     </div>
                 </article>
 
                 <!-- 6. RESTAURANTE SUR (CALA GRANADELLA / JÁVEA) -->
-                <article class="spot-card" data-category="meer ausserhalb">
-                    <div class="spot-visual" style="background-image: url('https://images.unsplash.com/photo-1514933651103-005eec06c04b?auto=format&fit=crop&w=800&q=80');">
+                <article class="spot-card" data-category="meer ausserhalb" data-spot-id="sur">
+                    <div class="spot-visual" style="background-image: url('images/spots/granadella.jpg');">
                         <div class="spot-badges">
                             <span class="spot-badge highlight">⭐ Kult seit 50+ Jahren</span>
                             <span class="spot-badge">🥘 Paella &amp; Fisch</span>
@@ -560,14 +574,14 @@
                             <p>Unbedingt vorab reservieren (Reisgerichte mindestens 24 Std. vorher mitbestellen) – die Reservierungsbestätigung hilft im Hochsommer auch direkt bei der Zufahrtskontrolle zur Cala Granadella!</p>
                         </div>
                         <div class="spot-actions">
-                            <a href="https://restaurantesur.com/reservas/" target="_blank" rel="noopener noreferrer" class="action-btn primary">🍽️ Tisch reservieren</a>
-                            <a href="https://www.google.com/maps/search/?api=1&query=Restaurante+Sur+Cala+Granadella+Javea" target="_blank" rel="noopener noreferrer" class="action-btn secondary">📍 Google Maps</a>
+                            <a href="https://restaurantesur.com/reservas/" target="_blank" rel="noopener noreferrer" class="action-btn primary">🍽️ Reservieren</a>
+                            <a href="https://www.google.com/maps/search/?api=1&query=Restaurante+Sur+Cala+Granadella+Javea" target="_blank" rel="noopener noreferrer" class="action-btn secondary" data-icon="gmaps">Route zur Bucht</a>
                         </div>
                     </div>
                 </article>
 
                 <!-- 7. CALA CLÉMENCE DEL PORTITXOL (JÁVEA) -->
-                <article class="spot-card" data-category="location ausserhalb">
+                <article class="spot-card" data-category="location ausserhalb" data-spot-id="cala-clemence">
                     <div class="spot-visual" style="background-image: url('images/kulinarik-cala-clemence.jpg'); background-position: center 45%;">
                         <div class="spot-badges">
                             <span class="spot-badge highlight">📸 Insta-Tipp</span>
@@ -586,14 +600,14 @@
                             <p>Der perfekte Spot für unvergessliche Urlaubsfotos &amp; Drinks mit Meerblick! <strong>Wichtig:</strong> Am <strong>Wochenende nur mit Reservierung</strong> – am besten frühzeitig online buchen.</p>
                         </div>
                         <div class="spot-actions">
-                            <a href="https://calaclemence.com/" target="_blank" rel="noopener noreferrer" class="action-btn primary">🍽️ Website &amp; Reservierung</a>
-                            <a href="https://www.google.com/maps/search/?api=1&query=Cala+Clemence+del+Portitxol+Javea" target="_blank" rel="noopener noreferrer" class="action-btn secondary">📍 Google Maps</a>
+                            <a href="https://calaclemence.com/" target="_blank" rel="noopener noreferrer" class="action-btn primary">🍽️ Reservieren</a>
+                            <a href="https://www.google.com/maps/search/?api=1&query=Cala+Clemence+del+Portitxol+Javea" target="_blank" rel="noopener noreferrer" class="action-btn secondary" data-icon="gmaps">Route zur Bucht</a>
                         </div>
                     </div>
                 </article>
 
                 <!-- 7. TONA BEACH BAR (CHIRINGUITO) -->
-                <article class="spot-card" data-category="chiringuito">
+                <article class="spot-card" data-category="chiringuito" data-spot-id="tona">
                     <div class="spot-visual" style="background-image: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80');">
                         <div class="spot-badges">
                             <span class="spot-badge highlight">🏖️ Strandbar</span>
@@ -612,14 +626,14 @@
                             <p>Unser absoluter Favorit für eine schnelle „Caña“, einen <em>Tinto de Verano</em> oder eine <em>Sangría</em> – egal ob vor oder nach der Siesta!</p>
                         </div>
                         <div class="spot-actions">
-                            <a href="https://tonabeachbar.es/" target="_blank" rel="noopener noreferrer" class="action-btn primary">🌐 tonabeachbar.es</a>
-                            <a href="https://www.google.com/maps/search/?api=1&query=Tona+Beach+Bar+Denia" target="_blank" rel="noopener noreferrer" class="action-btn secondary">📍 Google Maps</a>
+                            <a href="https://tonabeachbar.es/" target="_blank" rel="noopener noreferrer" class="action-btn primary">🌐 Website</a>
+                            <a href="https://www.google.com/maps/search/?api=1&query=Tona+Beach+Bar+Denia" target="_blank" rel="noopener noreferrer" class="action-btn secondary" data-icon="gmaps">Route zur Bar</a>
                         </div>
                     </div>
                 </article>
 
                 <!-- 7. EL CHIRINGÜITO -->
-                <article class="spot-card" data-category="chiringuito">
+                <article class="spot-card" data-category="chiringuito" data-spot-id="elchiringuito">
                     <div class="spot-visual" style="background-image: url('images/kulinarik-chiringuito.jpg'); background-position: center 55%;">
                         <div class="spot-badges">
                             <span class="spot-badge highlight">🏖️ Strandbar</span>
@@ -638,13 +652,13 @@
                             <p>Ein wunderschöner Strandspaziergang Richtung Westen von unserer Casa aus – ideal für den Sundowner nach dem Baden!</p>
                         </div>
                         <div class="spot-actions">
-                            <a href="https://www.google.com/maps/place/El+Chiring%C3%BCito/@38.8618908,-0.0810601,31201m/data=!3m1!1e3!4m10!1m3!11m2!2snWsTd3meFCjRp-hnSywe0MAEadV__g!3e3!3m5!1s0x129e1cf552265b01:0x38a17d5c07fea702!8m2!3d38.8618908!4d0.0555747!16s%2Fg%2F1jkxz5249?hl=de&entry=ttu&g_ep=EgoyMDI2MTExOC4xIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noopener noreferrer" class="action-btn primary">📍 Route in Google Maps</a>
+                            <a href="https://www.google.com/maps/place/El+Chiring%C3%BCito/@38.8618908,-0.0810601,31201m/data=!3m1!1e3!4m10!1m3!11m2!2snWsTd3meFCjRp-hnSywe0MAEadV__g!3e3!3m5!1s0x129e1cf552265b01:0x38a17d5c07fea702!8m2!3d38.8618908!4d0.0555747!16s%2Fg%2F1jkxz5249?hl=de&entry=ttu&g_ep=EgoyMDI2MTExOC4xIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noopener noreferrer" class="action-btn primary" data-icon="gmaps">Route zur Strandbar</a>
                         </div>
                     </div>
                 </article>
 
                 <!-- 8. CHIRINGUITO MOJITO DÉNIA -->
-                <article class="spot-card" data-category="chiringuito">
+                <article class="spot-card" data-category="chiringuito" data-spot-id="mojito">
                     <div class="spot-visual" style="background-image: url('https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&w=800&q=80');">
                         <div class="spot-badges">
                             <span class="spot-badge highlight">🍹 Mojito &amp; Drinks</span>
@@ -664,14 +678,14 @@
                         </div>
                         <div class="spot-actions">
                             <a href="https://www.instagram.com/chiringuitomojitodenia/" target="_blank" rel="noopener noreferrer" class="action-btn primary">📸 Instagram</a>
-                            <a href="https://www.google.com/maps/place/Chiringuito+Mojito+Denia/@38.8621052,0.0450404,3125m/data=!3m1!1e3!4m10!1m3!11m2!2snWsTd3meFCjRp-hnSywe0MAEadV__g!3e3!3m5!1s0x129e1d20f18a0079:0x431c559091f4ab0e!8m2!3d38.8605295!4d0.062584!16s%2Fg%2F11f90vs39n?hl=de&entry=ttu&g_ep=EgoyMDI2MTExOC4xIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noopener noreferrer" class="action-btn secondary">📍 Google Maps</a>
+                            <a href="https://www.google.com/maps/place/Chiringuito+Mojito+Denia/@38.8621052,0.0450404,3125m/data=!3m1!1e3!4m10!1m3!11m2!2snWsTd3meFCjRp-hnSywe0MAEadV__g!3e3!3m5!1s0x129e1d20f18a0079:0x431c559091f4ab0e!8m2!3d38.8605295!4d0.062584!16s%2Fg%2F11f90vs39n?hl=de&entry=ttu&g_ep=EgoyMDI2MTExOC4xIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noopener noreferrer" class="action-btn secondary" data-icon="gmaps">Route zur Bar</a>
                         </div>
                     </div>
                 </article>
 
                 <!-- 11. CHIRINGUITO EL DE LA MARINETA -->
-                <article class="spot-card" data-category="chiringuito fruehstueck">
-                    <div class="spot-visual" style="background-image: url('https://images.unsplash.com/photo-1504754524776-8f4f37790ca0?auto=format&fit=crop&w=800&q=80');">
+                <article class="spot-card" data-category="chiringuito fruehstueck" data-spot-id="marineta">
+                    <div class="spot-visual" style="background-image: url('images/spots/marineta.jpg');">
                         <div class="spot-badges">
                             <span class="spot-badge highlight">🏖️ Strandbar</span>
                             <span class="spot-badge">🥐 Frühstück &amp; Sundowner</span>
@@ -689,14 +703,14 @@
                             <p>Perfekt für das <strong>wohlverdiente Frühstück nach einer Jogging-Runde</strong> entlang der Promenade (Länge variabel von 2 bis 8 km) – oder abends ganz entspannt für den <strong>Sundowner</strong> direkt am Meer!</p>
                         </div>
                         <div class="spot-actions">
-                            <a href="https://www.google.com/maps/search/?api=1&query=Chiringuito+El+de+la+Marineta+Denia" target="_blank" rel="noopener noreferrer" class="action-btn primary">📍 Route in Google Maps</a>
+                            <a href="https://www.google.com/maps/search/?api=1&query=Chiringuito+El+de+la+Marineta+Denia" target="_blank" rel="noopener noreferrer" class="action-btn primary" data-icon="gmaps">Route zur Promenade</a>
                         </div>
                     </div>
                 </article>
 
                 <!-- 12. MI VILLA Nº 1 & BAR CARRIÓ (FRÜHSTÜCK) -->
-                <article class="spot-card" data-category="fruehstueck tapas">
-                    <div class="spot-visual" style="background-image: url('https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=800&q=80');">
+                <article class="spot-card" data-category="fruehstueck tapas" data-spot-id="mivilla-carrio">
+                    <div class="spot-visual" style="background-image: url('images/spots/marques-campo.jpg');">
                         <div class="spot-badges">
                             <span class="spot-badge highlight">☕ Spanisches Frühstück</span>
                             <span class="spot-badge">🍊 Zumo &amp; Tostada</span>
@@ -714,8 +728,83 @@
                             <p>Einfach bestellen wie die Einheimischen: ein <strong>Café solo</strong> oder <strong>Café con leche</strong>, ein frisch gepresster <strong>Zumo</strong> (Orangensaft) und eine knusprige <strong>Tostada</strong> (mit Tomate &amp; Olivenöl)!</p>
                         </div>
                         <div class="spot-actions">
-                            <a href="https://www.google.com/maps/search/?api=1&query=Mi+Villa+Numero+1+Marques+de+Campo+Denia" target="_blank" rel="noopener noreferrer" class="action-btn primary">📍 Mi Villa Nº 1</a>
-                            <a href="https://www.google.com/maps/search/?api=1&query=Bar+Carrio+Marques+de+Campo+Denia" target="_blank" rel="noopener noreferrer" class="action-btn secondary">📍 Bar Carrió</a>
+                            <a href="https://www.google.com/maps/search/?api=1&query=Mi+Villa+Numero+1+Marques+de+Campo+Denia" target="_blank" rel="noopener noreferrer" class="action-btn primary" data-icon="gmaps">Mi Villa Nº 1</a>
+                            <a href="https://www.google.com/maps/search/?api=1&query=Bar+Carrio+Marques+de+Campo+Denia" target="_blank" rel="noopener noreferrer" class="action-btn secondary" data-icon="gmaps">Bar Carrió</a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- 13. DEXCARO EXPERIENCE (DÉNIA) -->
+                <article class="spot-card" data-category="location" data-spot-id="dexcaro">
+                    <div class="spot-visual" style="background-image: url('https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=800&q=80');">
+                        <div class="spot-badges">
+                            <span class="spot-badge highlight">✨ Außergewöhnliche Küche</span>
+                            <span class="spot-badge">👨‍🍳 Chef Carlos Moreno</span>
+                        </div>
+                    </div>
+                    <div class="spot-body">
+                        <span class="spot-category">Kreativ-Küche &amp; Fine Dining · Dénia</span>
+                        <h2>Dexcaro Experience</h2>
+                        <p class="spot-desc">
+                            Ein echtes kulinarisches Erlebnis mitten in Dénia (<em>Carrer Abu-S-Salt, 1</em>): Chef Carlos Moreno verbindet mediterrane Spitzenprodukte mit überraschenden internationalen Aromen – modern, mutig und absolut außergewöhnlich.
+                        </p>
+                        <div class="insider-tip">
+                            <strong>💡 Englers Insider-Tipp:</strong>
+                            <p>Perfekt für einen ganz besonderen Abend – unbedingt rechtzeitig online über <em>dexcaro.es</em> reservieren und sich auf das Degustationsmenü einlassen!</p>
+                        </div>
+                        <div class="spot-actions">
+                            <a href="https://dexcaro.es/" target="_blank" rel="noopener noreferrer" class="action-btn primary">🍽️ dexcaro.es</a>
+                            <a href="https://www.google.com/maps/search/?api=1&query=Dexcaro+Experience+Carrer+Abu-S-Salt+1+Denia" target="_blank" rel="noopener noreferrer" class="action-btn secondary" data-icon="gmaps">Route zum Lokal</a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- 14. MANDALA BEACH BAR (CALA DE LA FUSTERA / BENISSA) -->
+                <article class="spot-card" data-category="chiringuito ausserhalb" data-spot-id="mandala-beach-bar">
+                    <div class="spot-visual" style="background-image: url('images/spots/fustera.jpg');">
+                        <div class="spot-badges">
+                            <span class="spot-badge highlight">🌴 Boho Beach Bar</span>
+                            <span class="spot-badge">🏖️ Cala de la Fustera</span>
+                            <span class="spot-badge">🚗 Benissa</span>
+                        </div>
+                    </div>
+                    <div class="spot-body">
+                        <span class="spot-category">Außerhalb Dénias · Cala de la Fustera (Benissa)</span>
+                        <h2>Mandala Beach Bar</h2>
+                        <p class="spot-desc">
+                            Lässige Strandbar im Boho-Stil direkt über der kleinen, türkisblauen <em>Cala de la Fustera</em> zwischen Moraira und Calpe – ideal für gute Drinks, entspannte Musik und Urlaubsfeeling pur direkt am Meer.
+                        </p>
+                        <div class="insider-tip">
+                            <strong>💡 Englers Insider-Tipp:</strong>
+                            <p>Lässt sich perfekt mit dem schönen Küstenpfad <em>Paseo Ecológico de Benissa</em> oder einem Ausflug Richtung Calpe / Peñón de Ifach kombinieren!</p>
+                        </div>
+                        <div class="spot-actions">
+                            <a href="https://www.google.com/maps/search/?api=1&query=Mandala+Beach+Bar+Cala+de+la+Fustera+Benissa" target="_blank" rel="noopener noreferrer" class="action-btn primary" data-icon="gmaps">Route zur Bar</a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- 15. QUIQUE DACOSTA RESTAURANTE (3 MICHELIN-STERNE) -->
+                <article class="spot-card" data-category="location" data-spot-id="quique-dacosta">
+                    <div class="spot-visual" style="background-color:#1e293b; background-image: url('images/spots/quique-dacosta.jpg');">
+                        <div class="spot-badges">
+                            <span class="spot-badge highlight">⭐⭐⭐ 3 Michelin-Sterne</span>
+                            <span class="spot-badge">€€€€€</span>
+                        </div>
+                    </div>
+                    <div class="spot-body">
+                        <span class="spot-category">Spitzengastronomie · Les Marines, Dénia</span>
+                        <h2>Restaurant Quique Dacosta</h2>
+                        <p class="spot-desc">
+                            Vermutlich der beste Koch Spaniens – direkt in unserer Nachbarschaft an der <em>Carretera de les Marines</em>! Weltberühmte Avantgarde-Küche auf 3-Sterne-Niveau, wenn es etwas wirklich Außergewöhnliches sein soll.
+                        </p>
+                        <div class="insider-tip">
+                            <strong>💡 Englers ehrlicher Tipp:</strong>
+                            <p>Englers konnten sich das bisher nicht leisten 😉 <strong>€€€€€</strong> – falls ihr es euch gönnt, unbedingt Monate im Voraus reservieren und uns danach alles erzählen!</p>
+                        </div>
+                        <div class="spot-actions">
+                            <a href="https://www.quiquedacosta.es/" target="_blank" rel="noopener noreferrer" class="action-btn primary">🌐 Website</a>
+                            <a href="https://www.google.com/maps/search/?api=1&query=Quique+Dacosta+Restaurante+Carrer+Rascassa+1+Denia" target="_blank" rel="noopener noreferrer" class="action-btn secondary" data-icon="gmaps">Route zum Lokal</a>
                         </div>
                     </div>
                 </article>
@@ -763,19 +852,6 @@
     </div>
 
     <script src="script.js" defer></script>
-    <script>
-        function filterSpots(category, btn) {
-            document.querySelectorAll('.vibe-btn').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-
-            document.querySelectorAll('.spot-card').forEach(card => {
-                if (category === 'all' || card.dataset.category.includes(category)) {
-                    card.classList.remove('hidden');
-                } else {
-                    card.classList.add('hidden');
-                }
-            });
-        }
-    </script>
+    <script src="spots-map.js" defer></script>
 </body>
 </html>

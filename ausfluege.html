@@ -86,6 +86,9 @@
         }
 
         .vibe-btn.map-jump {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
             text-decoration: none;
             border: 1px solid rgba(56, 189, 248, 0.45);
             color: #7dd3fc;
@@ -299,12 +302,23 @@
         <h1>Unsere Ausflugstipps</h1>
         <p>Falls ihr es doch mal schafft, euch von der Sonnenterrasse und dem Pool loszureißen!</p>
 
-        <div class="vibe-filter-bar">
-            <button class="vibe-btn active" onclick="filterSpots('all', this)">🧭 Alle Erlebnisse</button>
-            <button class="vibe-btn" onclick="filterSpots('kultur', this)">🏰 Altstadt & Kultur</button>
-            <button class="vibe-btn" onclick="filterSpots('natur', this)">🥾 Bergziegen & Aktiv</button>
-            <button class="vibe-btn" onclick="filterSpots('wasser', this)">🌊 Buchten & Meer</button>
-            <a href="karte.html?filter=ausflug" class="vibe-btn map-jump">🗺️ Auf der Karte</a>
+        <div class="filter-stack">
+            <div class="vibe-filter-bar">
+                <button type="button" class="vibe-btn active" onclick="filterSpots('all', this)">🧭 Alle Erlebnisse</button>
+                <button type="button" class="vibe-btn" onclick="filterSpots('kultur', this)">🏰 Altstadt &amp; Kultur</button>
+                <button type="button" class="vibe-btn" onclick="filterSpots('natur', this)">🥾 Bergziegen &amp; Aktiv</button>
+                <button type="button" class="vibe-btn" onclick="filterSpots('wasser', this)">🌊 Buchten &amp; Meer</button>
+            </div>
+
+            <div class="distance-filter-bar" role="group" aria-label="Entfernung und Anfahrtsdauer ab Casa">
+                <span class="dist-filter-label">Anfahrt:</span>
+                <button type="button" class="dist-btn active" data-dist="all" onclick="filterByDistance('all', this)">🌍 Alle</button>
+                <button type="button" class="dist-btn" data-dist="20" onclick="filterByDistance('20', this)">🚗 Bis 20 Min.</button>
+                <button type="button" class="dist-btn" data-dist="45" onclick="filterByDistance('45', this)">🚗 Bis 45 Min.</button>
+                <button type="button" class="dist-btn" data-dist="daytrip" onclick="filterByDistance('daytrip', this)">🛣️ Tagesausflug (45+ Min.)</button>
+                <span class="dist-divider" aria-hidden="true"></span>
+                <button type="button" class="dist-map-btn" onclick="openSpotMapOverlay({ cat: 'ausflug', dist: getActivePageDistFilter() })"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9.5"/><polygon points="16.2 7.8 14.1 14.1 7.8 16.2 9.9 9.9 16.2 7.8" fill="#f59e0b" stroke="#f59e0b" stroke-width="1.2"/></svg> Entdecker-Karte</button>
+            </div>
         </div>
     </header>
 
@@ -313,7 +327,7 @@
             <div class="spots-grid">
 
                 <!-- 1. BURG VON DÉNIA -->
-                <article class="spot-card" data-category="kultur">
+                <article class="spot-card" data-category="kultur" data-spot-id="castillo">
                     <div class="spot-visual" style="background-image: url('images/ausflug-castillo.jpg'); background-position: center 35%;">
                         <div class="spot-badges">
                             <span class="spot-badge highlight">🏰 Pflichtprogramm</span>
@@ -331,14 +345,14 @@
                             <p>Schlendert beim Abstieg unbedingt durch das alte Fischerviertel <em>Baix la Mar</em> direkt unterhalb der Burgmauern.</p>
                         </div>
                         <div class="spot-actions">
-                            <a href="https://www.google.com/maps/search/?api=1&query=Castillo+de+Denia" target="_blank" class="action-btn primary">📍 Zum Burgeingang</a>
+                            <a href="https://www.google.com/maps/search/?api=1&query=Castillo+de+Denia" target="_blank" rel="noopener noreferrer" class="action-btn primary" data-icon="gmaps">Route zur Burg</a>
                         </div>
                     </div>
                 </article>
 
                 <!-- 2. DER HAUSBERG MONTGÓ -->
-                <article class="spot-card" data-category="natur">
-                    <div class="spot-visual" style="background-image: url('https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=800&q=80');">
+                <article class="spot-card" data-category="natur" data-spot-id="montgo">
+                    <div class="spot-visual" style="background-image: url('images/spots/montgo.jpg');">
                         <div class="spot-badges">
                             <span class="spot-badge highlight">⛰️ 753 Meter</span>
                             <span class="spot-badge">🥾 Naturpark</span>
@@ -355,14 +369,14 @@
                             <p>Startet im Sommer früh morgens, nehmt reichlich Wasser mit und tragt feste Schuhe.</p>
                         </div>
                         <div class="spot-actions">
-                            <a href="https://www.google.com/maps/search/?api=1&query=Pare+Pere+Camino+de+la+Colonia+Denia" target="_blank" class="action-btn primary">📍 Startpunkt Wanderung</a>
+                            <a href="https://www.google.com/maps/search/?api=1&query=Pare+Pere+Camino+de+la+Colonia+Denia" target="_blank" rel="noopener noreferrer" class="action-btn primary" data-icon="gmaps">Route zum Start</a>
                         </div>
                     </div>
                 </article>
 
                 <!-- 3. LES ROTES, TORRE DEL GERRO & COVA TALLADA -->
-                <article class="spot-card" data-category="wasser natur">
-                    <div class="spot-visual" style="background-image: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80');">
+                <article class="spot-card" data-category="wasser natur" data-spot-id="torre-gerro">
+                    <div class="spot-visual" style="background-image: url('images/spots/torre-gerro.jpg');">
                         <div class="spot-badges">
                             <span class="spot-badge highlight">🤿 Schnorcheln</span>
                             <span class="spot-badge">🗼 Torre del Gerro</span>
@@ -380,15 +394,15 @@
                             <p>Der kurze Aufstieg zum <em>Torre del Gerro</em> lohnt sich besonders zum Sonnenuntergang! Für die <em>Cova Tallada</em> ist in der Saison (Ostern bis Herbst) eine vorherige Online-Anmeldung erforderlich – alle Infos &amp; Buchung unter <a href="https://www.covatalladadenia.com/de/reservat-cova-tallada/" target="_blank" rel="noopener noreferrer">covatalladadenia.com</a>.</p>
                         </div>
                         <div class="spot-actions">
-                            <a href="https://www.covatalladadenia.com/de/reservat-cova-tallada/" target="_blank" rel="noopener noreferrer" class="action-btn primary">🎫 Cova Tallada anmelden</a>
-                            <a href="https://www.google.com/maps/search/?api=1&query=Torre+del+Gerro+Denia" target="_blank" rel="noopener noreferrer" class="action-btn secondary">📍 Torre del Gerro / Les Rotes</a>
+                            <a href="https://www.covatalladadenia.com/de/reservat-cova-tallada/" target="_blank" rel="noopener noreferrer" class="action-btn primary">🎫 Cova Tallada</a>
+                            <a href="https://www.google.com/maps/search/?api=1&query=Torre+del+Gerro+Denia" target="_blank" rel="noopener noreferrer" class="action-btn secondary" data-icon="gmaps">Route zum Turm</a>
                         </div>
                     </div>
                 </article>
 
                 <!-- 4. VÍA VERDE -->
-                <article class="spot-card" data-category="natur">
-                    <div class="spot-visual" style="background-image: url('https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&w=800&q=80');">
+                <article class="spot-card" data-category="natur" data-spot-id="via-verde">
+                    <div class="spot-visual" style="background-image: url('images/spots/via-verde.jpg');">
                         <div class="spot-badges">
                             <span class="spot-badge">🚲 Flach & Entspannt</span>
                             <span class="spot-badge">🍊 Orangenhaine</span>
@@ -405,13 +419,13 @@
                             <p>Der Einstieg liegt ganz in der Nähe unserer Urbanisation – ideal für eine lockere Runde am Vormittag.</p>
                         </div>
                         <div class="spot-actions">
-                            <a href="https://www.google.com/maps/search/?api=1&query=Via+Verde+de+Denia" target="_blank" class="action-btn primary">📍 Startpunkt Vía Verde</a>
+                            <a href="https://www.google.com/maps/search/?api=1&query=Via+Verde+de+Denia" target="_blank" rel="noopener noreferrer" class="action-btn primary" data-icon="gmaps">Route zum Start</a>
                         </div>
                     </div>
                 </article>
 
                 <!-- 5. WANDERUNG ZUR CALA LLEBEIG -->
-                <article class="spot-card" data-category="natur wasser">
+                <article class="spot-card" data-category="natur wasser" data-spot-id="cala-llebeig">
                     <div class="spot-visual" style="background-image: url('images/ausflug-cala-llebeig.jpg'); background-position: center 55%;">
                         <div class="spot-badges">
                             <span class="spot-badge highlight">🥾 Klippenpfad</span>
@@ -429,14 +443,14 @@
                             <p>Am Startpunkt an der Cala del Moraig sind die Stellplätze in der Saison begrenzt – bucht euch vorab online einen Parkplatz über <a href="https://calamoraig.es/tienda/" target="_blank" rel="noopener noreferrer">calamoraig.es/tienda</a>! Feste Schuhe, Wasser &amp; Schnorchel nicht vergessen.</p>
                         </div>
                         <div class="spot-actions">
-                            <a href="https://calamoraig.es/tienda/" target="_blank" rel="noopener noreferrer" class="action-btn primary">🅿️ Parkplatz buchen</a>
-                            <a href="https://www.google.com/maps/search/?api=1&query=Cala+del+Moraig+Benitachell" target="_blank" rel="noopener noreferrer" class="action-btn secondary">📍 Startpunkt Route</a>
+                            <a href="https://calamoraig.es/tienda/" target="_blank" rel="noopener noreferrer" class="action-btn primary" data-icon="parking">Parkplatz buchen</a>
+                            <a href="https://www.google.com/maps/search/?api=1&query=Cala+del+Moraig+Benitachell" target="_blank" rel="noopener noreferrer" class="action-btn secondary" data-icon="parking">Parkplatz Start</a>
                         </div>
                     </div>
                 </article>
 
                 <!-- 6. CALA CLÉMENCE DEL PORTITXOL -->
-                <article class="spot-card" data-category="wasser kultur">
+                <article class="spot-card" data-category="wasser kultur" data-spot-id="cala-clemence">
                     <div class="spot-visual" style="background-image: url('images/ausflug-portitxol.jpg'); background-position: center 55%;">
                         <div class="spot-badges">
                             <span class="spot-badge highlight">📸 Postkarten-Bucht</span>
@@ -454,8 +468,423 @@
                             <p>Im Sommer früh losfahren (bei vollem Parkplatz wird die Zufahrt gesperrt) und Badeschuhe einpacken. Fürs <em>Cala Clémence</em> gilt: <strong>Am Wochenende nur mit Reservierung!</strong></p>
                         </div>
                         <div class="spot-actions">
-                            <a href="https://calaclemence.com/" target="_blank" rel="noopener noreferrer" class="action-btn primary">🍽️ Cala Clémence</a>
-                            <a href="https://www.google.com/maps/search/?api=1&query=Cala+Clemence+del+Portitxol+Javea" target="_blank" rel="noopener noreferrer" class="action-btn secondary">📍 Route zur Bucht</a>
+                            <a href="https://calaclemence.com/" target="_blank" rel="noopener noreferrer" class="action-btn primary">🍽️ Website</a>
+                            <a href="https://www.google.com/maps/search/?api=1&query=Cala+Clemence+del+Portitxol+Javea" target="_blank" rel="noopener noreferrer" class="action-btn secondary" data-icon="gmaps">Route zur Bucht</a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- 7. HÖHENWEG MONTGÓ (ABENDWANDERUNG) -->
+                <article class="spot-card" data-category="natur" data-spot-id="hoehenweg-montgo">
+                    <div class="spot-visual" style="background-color:#1e293b; background-image: url('images/spots/hoehenweg-montgo.jpg');">
+                        <div class="spot-badges">
+                            <span class="spot-badge highlight">🌅 Sunset-Tipp</span>
+                            <span class="spot-badge">🥾 Höhenweg Montgó</span>
+                        </div>
+                    </div>
+                    <div class="spot-body">
+                        <span class="spot-category">Abendwanderung · Montgó-Hang</span>
+                        <h2>Höhenweg Montgó</h2>
+                        <p class="spot-desc">
+                            Wunderschöner Panorama-Höhenweg entlang der Flanke unseres Hausbergs mit traumhaften Ausblicken über die Küste von Dénia – im goldenen Abendlicht ein absolutes Highlight.
+                        </p>
+                        <div class="insider-tip">
+                            <strong>💡 Englers Insider-Tipp:</strong>
+                            <p>Am besten <strong>abends – mindestens 2 Stunden vor Sonnenuntergang</strong> starten, dann leuchtet der ganze Küstenabschnitt in warmem Gold!</p>
+                        </div>
+                        <div class="spot-actions">
+                            <a href="https://www.google.com/maps/search/?api=1&query=38.819162,0.107109" target="_blank" rel="noopener noreferrer" class="action-btn primary" data-icon="parking">Parkmöglichkeit Einstieg Wanderung</a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- 8. JARDÍN DE L'ALBARDA -->
+                <article class="spot-card" data-category="natur kultur" data-spot-id="jardin-albarda">
+                    <div class="spot-visual" style="background-color:#1e293b; background-image: url('images/spots/jardin-albarda.jpg');">
+                        <div class="spot-badges">
+                            <span class="spot-badge highlight">🌺 Botanischer Garten</span>
+                            <span class="spot-badge">🌿 700+ Pflanzenarten</span>
+                        </div>
+                    </div>
+                    <div class="spot-body">
+                        <span class="spot-category">Gartenkunst &amp; Ruhe · Pedreguer (La Sella)</span>
+                        <h2>Jardín de l’Albarda</h2>
+                        <p class="spot-desc">
+                            Ein 50.000 m² großer mediterraner Renaissance-Garten der FUNDEM-Stiftung am Fuße des Montgó – mit schattigen Pergolen, Brunnen, Rosengarten und über 700 heimischen Pflanzenarten.
+                        </p>
+                        <div class="insider-tip">
+                            <strong>💡 Englers Insider-Tipp:</strong>
+                            <p>Nur einen Katzensprung von der Casa entfernt und ideal für einen entspannten Vormittag im Grünen – Öffnungszeiten vorab kurz auf <em>jardinalbarda.com</em> checken.</p>
+                        </div>
+                        <div class="spot-actions">
+                            <a href="https://www.jardinalbarda.com/" target="_blank" rel="noopener noreferrer" class="action-btn primary">🌐 Website</a>
+                            <a href="https://www.google.com/maps/search/?api=1&query=Jardin+de+l+Albarda+Pedreguer" target="_blank" rel="noopener noreferrer" class="action-btn secondary" data-icon="gmaps">Route zum Garten</a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- 9. KITE45 (PLATJA DE LES DEVESES) -->
+                <article class="spot-card" data-category="wasser natur" data-spot-id="kite45">
+                    <div class="spot-visual" style="background-color:#1e293b; background-image: url('images/spots/kite45.jpg');">
+                        <div class="spot-badges">
+                            <span class="spot-badge highlight">🪁 Kitesurf &amp; Wingfoil</span>
+                            <span class="spot-badge">💨 Garbí-Wind</span>
+                        </div>
+                    </div>
+                    <div class="spot-body">
+                        <span class="spot-category">Wassersport &amp; Naturstrand · Les Deveses</span>
+                        <h2>Kite45 (Platja de les Deveses)</h2>
+                        <p class="spot-desc">
+                            Einer der besten Kitesurf- und Wingfoil-Spots der gesamten spanischen Mittelmeerküste am breiten, feinsandigen Naturstrand <em>Platja de les Deveses</em> an der Grenze zu Oliva.
+                        </p>
+                        <div class="insider-tip">
+                            <strong>💡 Englers Insider-Tipp:</strong>
+                            <p>Nachmittags frischt hier regelmäßig der thermische <em>Garbí</em>-Wind auf – ob selbst aufs Board oder einfach entspannt den bunten Kites am Himmel zuschauen!</p>
+                        </div>
+                        <div class="spot-actions">
+                            <a href="https://kite45.com/" target="_blank" rel="noopener noreferrer" class="action-btn primary">🌐 Website</a>
+                            <a href="https://www.google.com/maps/search/?api=1&query=Kite45+Platja+de+les+Deveses+Denia" target="_blank" rel="noopener noreferrer" class="action-btn secondary" data-icon="gmaps">Route zum Strand</a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- 10. COVA DE LES CALAVERES -->
+                <article class="spot-card" data-category="natur kultur" data-spot-id="cova-calaveres">
+                    <div class="spot-visual" style="background-color:#1e293b; background-image: url('images/spots/cova-calaveres.jpg');">
+                        <div class="spot-badges">
+                            <span class="spot-badge highlight">🦇 Tropfsteinhöhle</span>
+                            <span class="spot-badge">❄️ Angenehm kühl</span>
+                        </div>
+                    </div>
+                    <div class="spot-body">
+                        <span class="spot-category">Höhle &amp; Urgeschichte · Benidoleig</span>
+                        <h2>Cova de les Calaveres</h2>
+                        <p class="spot-desc">
+                            Beeindruckende, über 400 Meter tief begehbare Tropfsteinhöhle im Hinterland von Dénia mit prähistorischen Funden, gewaltigen Hallen und einem kleinen unterirdischen See am Ende des Rundgangs.
+                        </p>
+                        <div class="insider-tip">
+                            <strong>💡 Englers Insider-Tipp:</strong>
+                            <p>Im Inneren herrschen das ganze Jahr angenehme ~18 °C – ein genialer Kontrast-Ausflug an besonders heißen Sommertagen oder falls es mal kurz wolkig ist!</p>
+                        </div>
+                        <div class="spot-actions">
+                            <a href="https://cuevadelascalaveras.com/" target="_blank" rel="noopener noreferrer" class="action-btn primary">🌐 Infos</a>
+                            <a href="https://www.google.com/maps/search/?api=1&query=Cova+de+les+Calaveres+Benidoleig" target="_blank" rel="noopener noreferrer" class="action-btn secondary" data-icon="gmaps">Route zur Höhle</a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- 11. NATIONALPARK MARJAL DE PEGO-OLIVA -->
+                <article class="spot-card" data-category="natur wasser" data-spot-id="marjal-pego">
+                    <div class="spot-visual" style="background-color:#1e293b; background-image: url('images/spots/marjal-pego.jpg');">
+                        <div class="spot-badges">
+                            <span class="spot-badge highlight">🦩 Naturpark</span>
+                            <span class="spot-badge">💧 Font Salada</span>
+                        </div>
+                    </div>
+                    <div class="spot-body">
+                        <span class="spot-category">Feuchtgebiet &amp; Thermalquelle · Pego</span>
+                        <h2>Nationalpark Marjal de Pego-Oliva</h2>
+                        <p class="spot-desc">
+                            Ein weitläufiges Naturschutzgebiet voller Reisfelder, Schilfkanäle, glasklarer Quellen (<em>Río Bullent</em>) und seltener Wasservögel – mitten zwischen Küste und Bergen.
+                        </p>
+                        <div class="insider-tip">
+                            <strong>💡 Englers Insider-Tipp:</strong>
+                            <p>Ein besonderer Geheimtipp im Park ist die natürliche, ganzjährig warme Quelle <em>Font Salada</em> zum Baden – und die flachen Wege sind auch perfekt für eine Radtour!</p>
+                        </div>
+                        <div class="spot-actions">
+                            <a href="https://www.google.com/maps/search/?api=1&query=Parque+Natural+Marjal+de+Pego-Oliva" target="_blank" rel="noopener noreferrer" class="action-btn primary" data-icon="gmaps">Route zum Park</a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- 12. WANDERUNG PEÑÓN DE IFACH (CALPE) -->
+                <article class="spot-card" data-category="natur wasser" data-spot-id="penon-ifach">
+                    <div class="spot-visual" style="background-color:#1e293b; background-image: url('images/spots/penon-ifach.jpg');">
+                        <div class="spot-badges">
+                            <span class="spot-badge highlight">⛰️ 332 m Felsen</span>
+                            <span class="spot-badge">🎫 Gratis-Ticket nötig</span>
+                        </div>
+                    </div>
+                    <div class="spot-body">
+                        <span class="spot-category">Gipfelwanderung · Calpe</span>
+                        <h2>Wanderung Peñón de Ifach</h2>
+                        <p class="spot-desc">
+                            Das berühmteste Wahrzeichen der Costa Blanca ragt 332 Meter steil aus dem Meer. Der Weg führt erst gemütlich hinauf zum Felstunnel und dahinter aussichtsreich weiter bis auf den Gipfel.
+                        </p>
+                        <div class="insider-tip">
+                            <strong>💡 Englers Insider-Tipp:</strong>
+                            <p>Für die obere Route ist eine <strong>kostenlose Online-Reservierung</strong> vorab Pflicht (begrenzte Tageskontingente). Hinter dem Tunnel unbedingt feste Schuhe &amp; Trittsicherheit mitbringen!</p>
+                        </div>
+                        <div class="spot-actions">
+                            <a href="https://parquesnaturales.gva.es/es/web/pn-penyal-d-ifac" target="_blank" rel="noopener noreferrer" class="action-btn primary">🎫 Gratis-Ticket</a>
+                            <a href="https://www.google.com/maps/search/?api=1&query=Penon+de+Ifach+Calpe" target="_blank" rel="noopener noreferrer" class="action-btn secondary" data-icon="gmaps">Route zum Felsen</a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- 13. COLL DE RATES (PANORAMASTRASSE) -->
+                <article class="spot-card" data-category="natur" data-spot-id="coll-de-rates">
+                    <div class="spot-visual" style="background-color:#1e293b; background-image: url('images/spots/coll-de-rates.jpg');">
+                        <div class="spot-badges">
+                            <span class="spot-badge highlight">🚴 Radprofi-Pass</span>
+                            <span class="spot-badge">🛣️ Panoramastraße</span>
+                        </div>
+                    </div>
+                    <div class="spot-body">
+                        <span class="spot-category">Passstraße &amp; Weitblick · Parcent / Tàrbena</span>
+                        <h2>Coll de Rates</h2>
+                        <p class="spot-desc">
+                            Eine traumhafte kurvige Panoramastraße (628 m) durch das bergige Hinterland der Marina Alta – berühmt als legendäres Trainingsrevier der WorldTour-Radprofis im Winter und Frühjahr.
+                        </p>
+                        <div class="insider-tip">
+                            <strong>💡 Englers Insider-Tipp:</strong>
+                            <p>Oben auf der Passhöhe unbedingt einen Kaffee-Stopp am <em>Mirador / Restaurante Coll de Rates</em> einlegen – bei klarer Sicht schaut man über die Täler bis weit hinaus aufs Meer!</p>
+                        </div>
+                        <div class="spot-actions">
+                            <a href="https://www.google.com/maps/search/?api=1&query=Coll+de+Rates+Parcent+Alicante" target="_blank" rel="noopener noreferrer" class="action-btn primary" data-icon="gmaps">Route zum Pass</a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- 14. ALTEA (WEISSE ALTSTADT) -->
+                <article class="spot-card" data-category="kultur" data-spot-id="altea">
+                    <div class="spot-visual" style="background-color:#1e293b; background-image: url('images/spots/altea.jpg');">
+                        <div class="spot-badges">
+                            <span class="spot-badge highlight">⛪ Blaue Kuppel</span>
+                            <span class="spot-badge">🎨 Künstler-Altstadt</span>
+                        </div>
+                    </div>
+                    <div class="spot-body">
+                        <span class="spot-category">Altstadt-Perle · Costa Blanca</span>
+                        <h2>Altea</h2>
+                        <p class="spot-desc">
+                            Eines der schönsten Küstendörfer Spaniens: schneeweiße Häuser, blumengeschmückte Kopfsteinpflastergassen, kleine Kunstgalerien und oben auf dem Hügel die berühmte Kirche mit blau-weißer Kuppel.
+                        </p>
+                        <div class="insider-tip">
+                            <strong>💡 Englers Insider-Tipp:</strong>
+                            <p>Am späten Nachmittag durch die Altstadt hinauf zum Kirchplatz schlendern, den Blick über die Bucht genießen und abends in einer der kleinen Gassen essen gehen!</p>
+                        </div>
+                        <div class="spot-actions">
+                            <a href="https://www.google.com/maps/search/?api=1&query=Casco+Antiguo+Altea+Alicante" target="_blank" rel="noopener noreferrer" class="action-btn primary" data-icon="gmaps">Route zur Altstadt</a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- 15. BENIDORM (ABSCHRECKENDER KONTRAST) -->
+                <article class="spot-card" data-category="kultur" data-spot-id="benidorm">
+                    <div class="spot-visual" style="background-color:#1e293b; background-image: url('images/spots/benidorm.jpg');">
+                        <div class="spot-badges">
+                            <span class="spot-badge highlight">😄 Abschreckend</span>
+                            <span class="spot-badge">🏙️ Skyline-Kontrast</span>
+                        </div>
+                    </div>
+                    <div class="spot-body">
+                        <span class="spot-category">Humorvoller Kontrast-Tipp · Costa Blanca</span>
+                        <h2>Benidorm</h2>
+                        <p class="spot-desc">
+                            Das „Manhattan der Costa Blanca“ – eine der höchsten Hochhausdichten Europas direkt am Strand. Kein klassisches Idyll, aber als kurioser Kontrast wirklich einmal sehenswert!
+                        </p>
+                        <div class="insider-tip">
+                            <strong>💡 Englers Insider-Tipp:</strong>
+                            <p>Bewusst als <strong>abschreckender Kontrast</strong> auf unserer Liste: Einmal vom <em>Balcón del Mediterráneo</em> die Wolkenkratzer-Kulisse auf sich wirken lassen – und auf der Rückfahrt unser entspanntes Dénia noch mehr lieben!</p>
+                        </div>
+                        <div class="spot-actions">
+                            <a href="https://www.google.com/maps/search/?api=1&query=Balcon+del+Mediterraneo+Benidorm" target="_blank" rel="noopener noreferrer" class="action-btn primary" data-icon="gmaps">Route zur Skyline</a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- 16. FONTS DE L'ALGAR -->
+                <article class="spot-card" data-category="wasser natur" data-spot-id="fonts-algar">
+                    <div class="spot-visual" style="background-color:#1e293b; background-image: url('images/spots/fonts-algar.jpg');">
+                        <div class="spot-badges">
+                            <span class="spot-badge highlight">💦 Wasserfälle</span>
+                            <span class="spot-badge">🏊 Naturpools</span>
+                        </div>
+                    </div>
+                    <div class="spot-body">
+                        <span class="spot-category">Wasserfälle &amp; Baden · Callosa d’en Sarrià</span>
+                        <h2>Fonts de l’Algar</h2>
+                        <p class="spot-desc">
+                            Kristallklare Wasserfälle, kleine Kaskaden und natürliche smaragdgrüne Felsenpools mitten in den Bergen – ein herrlich erfrischendes Naturbad abseits des Meeres.
+                        </p>
+                        <div class="insider-tip">
+                            <strong>💡 Englers Insider-Tipp:</strong>
+                            <p>Unbedingt <strong>Badeschuhe</strong> einpacken (glatte Steine!) und im Sommer möglichst früh morgens da sein. Lässt sich perfekt als Tagestour mit <strong>Guadalest</strong> kombinieren!</p>
+                        </div>
+                        <div class="spot-actions">
+                            <a href="https://www.google.com/maps/search/?api=1&query=Fonts+de+l+Algar+Callosa+den+Sarria" target="_blank" rel="noopener noreferrer" class="action-btn primary" data-icon="gmaps">Route zum Wasserfall</a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- 17. EL CASTELL DE GUADALEST -->
+                <article class="spot-card" data-category="kultur natur" data-spot-id="guadalest">
+                    <div class="spot-visual" style="background-color:#1e293b; background-image: url('images/spots/guadalest.jpg');">
+                        <div class="spot-badges">
+                            <span class="spot-badge highlight">🏰 Bergdorf &amp; Burg</span>
+                            <span class="spot-badge">💎 Türkis-Stausee</span>
+                        </div>
+                    </div>
+                    <div class="spot-body">
+                        <span class="spot-category">Adlerhorst-Bergdorf · Hinterland</span>
+                        <h2>El Castell de Guadalest</h2>
+                        <p class="spot-desc">
+                            Spektakulär auf einem steilen Felsen thronendes Bergdorf, erreichbar durch einen in den Fels geschlagenen Tunnel – mit alter Burg, skurrilen kleinen Museen und Traumblick auf den leuchtend türkisblauen Stausee.
+                        </p>
+                        <div class="insider-tip">
+                            <strong>💡 Englers Insider-Tipp:</strong>
+                            <p>Perfekte Kombi-Tagestour: morgens erst an den <em>Fonts de l’Algar</em> abkühlen und danach hoch nach Guadalest zum Bummeln &amp; Ausblick genießen!</p>
+                        </div>
+                        <div class="spot-actions">
+                            <a href="https://www.google.com/maps/search/?api=1&query=El+Castell+de+Guadalest+Alicante" target="_blank" rel="noopener noreferrer" class="action-btn primary" data-icon="gmaps">Route zur Burg</a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- 18. PASARELA DE RELLEU -->
+                <article class="spot-card" data-category="natur" data-spot-id="pasarela-relleu">
+                    <div class="spot-visual" style="background-color:#1e293b; background-image: url('https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=800&q=80');">
+                        <div class="spot-badges">
+                            <span class="spot-badge highlight">🌉 Schlucht-Holzsteg</span>
+                            <span class="spot-badge">🎫 Ticket vorab</span>
+                        </div>
+                    </div>
+                    <div class="spot-body">
+                        <span class="spot-category">Abenteuer-Wanderung · Relleu</span>
+                        <h2>Pasarela de Relleu</h2>
+                        <p class="spot-desc">
+                            Der „Caminito del Rey“ der Costa Blanca: Ein spektakulärer Holzsteg hängt in luftiger Höhe direkt an der Felswand einer Schlucht am alten Staudamm – inklusive Glasboden-Aussichtsplattform!
+                        </p>
+                        <div class="insider-tip">
+                            <strong>💡 Englers Insider-Tipp:</strong>
+                            <p>Die gesamte Wanderung ab dem Dorf Relleu beträgt ca. 10 km (Hin &amp; Rück). Das günstige <strong>Zeitfenster-Ticket</strong> unbedingt vorab online unter <em>pasareladerelleu.es</em> reservieren!</p>
+                        </div>
+                        <div class="spot-actions">
+                            <a href="https://pasareladerelleu.es/" target="_blank" rel="noopener noreferrer" class="action-btn primary">🎫 Tickets</a>
+                            <a href="https://www.google.com/maps/search/?api=1&query=Pasarela+de+Relleu+Alicante" target="_blank" rel="noopener noreferrer" class="action-btn secondary" data-icon="gmaps">Route zum Steg</a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- 19. L'OCEANOGRÀFIC (VALENCIA) -->
+                <article class="spot-card" data-category="kultur wasser" data-spot-id="oceanografic">
+                    <div class="spot-visual" style="background-color:#1e293b; background-image: url('images/spots/oceanografic.jpg');">
+                        <div class="spot-badges">
+                            <span class="spot-badge highlight">🐬 Größtes Aquarium Europas</span>
+                            <span class="spot-badge">🏙️ Tagesausflug Valencia</span>
+                        </div>
+                    </div>
+                    <div class="spot-body">
+                        <span class="spot-category">Tagesausflug · Ciudad de las Artes, Valencia</span>
+                        <h2>L’Oceanogràfic</h2>
+                        <p class="spot-desc">
+                            Europas größtes Aquarium mitten in der futuristischen <em>Ciudad de las Artes y las Ciencias</em> in Valencia – mit riesigem Unterwassertunnel, Haien, Rochen, Belugas und spektakulärer Architektur.
+                        </p>
+                        <div class="insider-tip">
+                            <strong>💡 Englers Insider-Tipp:</strong>
+                            <p>Ein toller Tagesausflug (auch super mit Kindern oder bei einem seltenen Regentag!) – Tickets vorab online sichern, um die Warteschlange zu umgehen, und danach noch durch Valencias Altstadt schlendern!</p>
+                        </div>
+                        <div class="spot-actions">
+                            <a href="https://www.oceanografic.org/" target="_blank" rel="noopener noreferrer" class="action-btn primary">🎫 Tickets</a>
+                            <a href="https://www.google.com/maps/search/?api=1&query=Oceanografic+Valencia" target="_blank" rel="noopener noreferrer" class="action-btn secondary" data-icon="gmaps">Route nach Valencia</a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- 20. CAP DE SANT ANTONI -->
+                <article class="spot-card" data-category="wasser natur" data-spot-id="cap-de-sant-antoni">
+                    <div class="spot-visual" style="background-color:#1e293b; background-image: url('images/spots/cap-sant-antoni.jpg');">
+                        <div class="spot-badges">
+                            <span class="spot-badge highlight">🌊 Leuchtturm &amp; Kap</span>
+                            <span class="spot-badge">📸 Blick auf Jávea</span>
+                        </div>
+                    </div>
+                    <div class="spot-body">
+                        <span class="spot-category">Meeresschutzgebiet · Zwischen Dénia &amp; Jávea</span>
+                        <h2>Cap de Sant Antoni</h2>
+                        <p class="spot-desc">
+                            Steil über dem geschützten Meeresschutzgebiet zwischen Dénia und Jávea thront der historische Leuchtturm am <em>Cap de Sant Antoni</em> mit atemberaubendem Panoramablick über die gesamte Bucht von Jávea.
+                        </p>
+                        <div class="insider-tip">
+                            <strong>💡 Englers Insider-Tipp:</strong>
+                            <p>Perfekter Zwischenstopp auf dem Weg nach Jávea oder am späten Nachmittag zum Sonnenuntergang – direkt nebenan stehen die alten historischen Windmühlen <em>Molins de la Plana</em>!</p>
+                        </div>
+                        <div class="spot-actions">
+                            <a href="https://www.google.com/maps/search/?api=1&query=Faro+del+Cabo+de+San+Antonio+Javea" target="_blank" rel="noopener noreferrer" class="action-btn primary" data-icon="gmaps">Route zum Kap</a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- 21. CAP DE LA NAU -->
+                <article class="spot-card" data-category="wasser natur" data-spot-id="cap-de-la-nau">
+                    <div class="spot-visual" style="background-color:#1e293b; background-image: url('images/spots/cap-la-nau.jpg');">
+                        <div class="spot-badges">
+                            <span class="spot-badge highlight">⚓ Östlichstes Kap</span>
+                            <span class="spot-badge">🔭 Blick bis Ibiza</span>
+                        </div>
+                    </div>
+                    <div class="spot-body">
+                        <span class="spot-category">Steilküste &amp; Leuchtturm · Jávea</span>
+                        <h2>Cap de la Nau</h2>
+                        <p class="spot-desc">
+                            Der östlichste Punkt der Provinz Alicante: Ein weißer Leuchtturm hoch über dramatischen, schneeweißen Kalkklippen und glasklaren Buchten – bei klarer Sicht reicht der Blick übers Meer bis nach Ibiza!
+                        </p>
+                        <div class="insider-tip">
+                            <strong>💡 Englers Insider-Tipp:</strong>
+                            <p>Lässt sich perfekt mit einem Besuch in der nahen <em>Cala del Portitxol (Cala Clémence)</em> oder der <em>Cala Granadella</em> verbinden – direkt am Leuchtturm gibt es auch eine schöne Aussichtsterrasse!</p>
+                        </div>
+                        <div class="spot-actions">
+                            <a href="https://www.google.com/maps/search/?api=1&query=Faro+del+Cabo+de+la+Nao+Javea" target="_blank" rel="noopener noreferrer" class="action-btn primary" data-icon="gmaps">Route zum Kap</a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- 22. ALICANTE (RAMBLA & CASTILLO DE SANTA BÁRBARA) -->
+                <article class="spot-card" data-category="kultur" data-spot-id="alicante">
+                    <div class="spot-visual" style="background-color:#1e293b; background-image: url('images/spots/alicante.jpg');">
+                        <div class="spot-badges">
+                            <span class="spot-badge highlight">🏰 Castillo Santa Bárbara</span>
+                            <span class="spot-badge">🌴 Rambla &amp; Altstadt</span>
+                        </div>
+                    </div>
+                    <div class="spot-body">
+                        <span class="spot-category">Tagesausflug · Provinzhauptstadt</span>
+                        <h2>Alicante (Rambla &amp; Burg)</h2>
+                        <p class="spot-desc">
+                            Ein abwechslungsreicher Städtetrip mit mediterranem Großstadt-Flair: über die berühmte Mosaik-Promenade <em>Explanada de España</em> und die <em>Rambla</em> flanieren, das bunte Viertel <em>Santa Cruz</em> erkunden und hinauf aufs mächtige <em>Castillo de Santa Bárbara</em>!
+                        </p>
+                        <div class="insider-tip">
+                            <strong>💡 Englers Insider-Tipp:</strong>
+                            <p>Die Burg thront 166 m hoch auf dem Monte Benacantil – wer sich den steilen Aufstieg sparen möchte, fährt bequem mit dem <strong>Aufzug direkt durch den Felsen</strong> gegenüber der Playa del Postiguet nach oben!</p>
+                        </div>
+                        <div class="spot-actions">
+                            <a href="https://www.google.com/maps/search/?api=1&query=Castillo+de+Santa+Barbara+Alicante" target="_blank" rel="noopener noreferrer" class="action-btn primary" data-icon="gmaps">Route zur Burg</a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- 23. IBIZA & FORMENTERA (SCHNELLFÄHRE AB DÉNIA) -->
+                <article class="spot-card" data-category="wasser kultur" data-spot-id="ibiza-formentera">
+                    <div class="spot-visual" style="background-color:#1e293b; background-image: url('images/spots/ibiza-formentera.jpg');">
+                        <div class="spot-badges">
+                            <span class="spot-badge highlight">⛴️ Direkt ab Dénia</span>
+                            <span class="spot-badge">🏝️ Ibiza &amp; Formentera</span>
+                        </div>
+                    </div>
+                    <div class="spot-body">
+                        <span class="spot-category">Insel-Trip · Balearen ab Baleària Port</span>
+                        <h2>Ibiza &amp; Formentera</h2>
+                        <p class="spot-desc">
+                            Ein riesiger Vorteil von Dénia: Vom Fährhafen <em>Baleària Port</em> bringt euch die Schnellfähre in nur rund 2 Stunden direkt ins türkisblaue Paradies nach <strong>Ibiza</strong> oder <strong>Formentera</strong> – sogar mit eigenem Auto oder ganz entspannt zu Fuß!
+                        </p>
+                        <div class="insider-tip">
+                            <strong>💡 Englers Insider-Tipp:</strong>
+                            <p>Funktioniert als sportlicher <strong>Tagesausflug</strong> (früh hin, spät zurück) – aber noch deutlich entspannter mit <strong>1–2 Übernachtungen</strong>, um die magischen Sonnenuntergänge und die karibischen Strände von Formentera richtig auszukosten!</p>
+                        </div>
+                        <div class="spot-actions">
+                            <a href="https://www.balearia.com/de" target="_blank" rel="noopener noreferrer" class="action-btn primary">⛴️ Baleària Fähren</a>
+                            <a href="https://www.google.com/maps/search/?api=1&query=Balearia+Port+Estacion+Maritima+Denia" target="_blank" rel="noopener noreferrer" class="action-btn secondary" data-icon="gmaps">Zum Fährhafen</a>
                         </div>
                     </div>
                 </article>
@@ -477,19 +906,6 @@
     </div>
 
     <script src="script.js" defer></script>
-    <script>
-        function filterSpots(category, btn) {
-            document.querySelectorAll('.vibe-btn').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-
-            document.querySelectorAll('.spot-card').forEach(card => {
-                if (category === 'all' || card.dataset.category.includes(category)) {
-                    card.classList.remove('hidden');
-                } else {
-                    card.classList.add('hidden');
-                }
-            });
-        }
-    </script>
+    <script src="spots-map.js" defer></script>
 </body>
 </html>
