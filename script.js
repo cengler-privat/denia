@@ -104,6 +104,26 @@ document.addEventListener('DOMContentLoaded', () => {
     const scrollToTopBtn = select('#scroll-to-top-btn');
     const triggerSection = select('#trigger-whatsapp');
 
+    // WhatsApp-URL dynamisch per JS zusammenbauen (Crawler- & Spam-Schutz)
+    const buildWhatsAppUrl = (text) => {
+        const num = atob('NDkxNzMzMDQ1Njk1');
+        const base = 'https://' + 'wa' + '.me/' + num;
+        return text ? `${base}?text=${encodeURIComponent(text)}` : base;
+    };
+    window.buildCasaWhatsAppUrl = buildWhatsAppUrl;
+    window.openCasaWhatsApp = (text) => {
+        window.open(buildWhatsAppUrl(text), '_blank', 'noopener,noreferrer');
+    };
+
+    // Globaler Klick-Handler für alle WhatsApp-Trigger auf der Seite
+    document.addEventListener('click', (e) => {
+        const target = e.target.closest('#whatsapp-btn, .whatsapp-button, [data-wa]');
+        if (!target) return;
+        e.preventDefault();
+        const prefill = target.getAttribute('data-wa-text') || '';
+        window.openCasaWhatsApp(prefill);
+    });
+
     if (scrollToTopBtn) {
         const toggleScrollToTopButton = () => {
             scrollToTopBtn.classList.toggle('visible', window.scrollY > 300);

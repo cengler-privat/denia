@@ -18,6 +18,10 @@
         return `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 2.5 14.3 9.2 21 11.5l-6.7 2.3L12 20.5l-2.3-6.7L3 11.5l6.7-2.3L12 2.5Z" fill="#f59e0b" stroke="#d97706" stroke-width="1.2" stroke-linejoin="round"/><path d="M19 3.5 19.7 5.3 21.5 6 19.7 6.7 19 8.5 18.3 6.7 16.5 6 18.3 5.3 19 3.5Z" fill="#38bdf8"/></svg>`;
     }
 
+    function newChatSvg(size) {
+        return `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>`;
+    }
+
     function injectStyles() {
         if (document.getElementById('casa-concierge-styles')) return;
         const style = document.createElement('style');
@@ -56,10 +60,10 @@
                 cursor: pointer;
                 box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
                 transition: transform 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
-                animation: fadeInButton 0.3s ease-out 0.2s both;
+                animation: fadeInButton 0.35s ease-out 0.1s both;
             }
             body.home-page .concierge-trigger-btn {
-                animation: fadeInButton 0.5s ease-out 2.5s both;
+                animation: fadeInButton 0.45s ease-out 1.4s both;
             }
             .concierge-trigger-btn:hover {
                 background: #ffffff;
@@ -157,6 +161,7 @@
                 display: inline-flex;
                 align-items: center;
                 justify-content: center;
+                gap: 5px;
                 transition: background 0.2s ease;
             }
             .cc-icon-btn:hover { background: rgba(255, 255, 255, 0.24); }
@@ -249,6 +254,14 @@
                 background: #fff1f2;
                 color: #9f1239;
                 border: 1px solid #fecdd3;
+            }
+            .cc-msg.error a.cc-wa-inline {
+                color: #15803d;
+                font-weight: 700;
+                text-decoration: underline;
+            }
+            .cc-msg.error a.cc-wa-inline:hover {
+                color: #166534;
             }
             .cc-msg.bot p { margin: 0 0 8px 0; }
             .cc-msg.bot p:last-child { margin-bottom: 0; }
@@ -371,13 +384,18 @@
             .replace(/"/g, '&quot;');
     }
 
-    function formatMarkdownSafe(rawText) {
+    function formatMarkdownSafe(rawText, userQuestion) {
         const escaped = escapeHtml(rawText);
 
         // Links [label](url) sicher umwandeln (nur https://, http://, mailto:, tel: oder lokale .html)
         const withLinks = escaped.replace(/\[([^\]]+)\]\(([^)\s]+)\)/g, (_, label, url) => {
-            const safeUrl = /^(https?:\/\/|mailto:|tel:|[a-z0-9_-]+\.html(?:#[a-z0-9_-]+)?$)/i.test(url) ? url : '';
+            let safeUrl = /^(https?:\/\/|mailto:|tel:|[a-z0-9_-]+\.html(?:#[a-z0-9_-]+)?$)/i.test(url) ? url : '';
             if (!safeUrl) return label;
+            // Bei WhatsApp-Links dynamisch behandeln (keine Rohdaten im HTML)
+            if (/wa\.me/i.test(safeUrl) || /whatsapp/i.test(safeUrl)) {
+                const prefill = userQuestion ? `Hola! Ich habe eine Frage zur Casa Englers y Amigos:\n\n"${userQuestion}"` : '';
+                return `<a href="#" class="cc-wa-inline" data-wa="1"${prefill ? ` data-wa-text="${escapeHtml(prefill)}"` : ''}>${label}</a>`;
+            }
             const isExt = /^https?:\/\//i.test(safeUrl);
             const attrs = isExt ? ' target="_blank" rel="noopener noreferrer"' : '';
             return `<a href="${safeUrl}"${attrs}>${label}</a>`;
@@ -461,7 +479,7 @@
                         </div>
                     </div>
                     <div class="cc-head-btns">
-                        <button type="button" class="cc-icon-btn" id="cc-reset-btn" title="Neues Gespräch">↺ Neu</button>
+                        <button type="button" class="cc-icon-btn" id="cc-reset-btn" title="Neuen Chat starten">${newChatSvg(14)}<span>Neu</span></button>
                         <button type="button" class="cc-icon-btn" id="cc-close-btn" title="Schließen" aria-label="Schließen">✕</button>
                     </div>
                 </div>
@@ -563,7 +581,7 @@
                 throw new Error(data.error || `Fehler (HTTP ${resp.status})`);
             }
 
-            let html = formatMarkdownSafe(data.reply);
+            let html = formatMarkdownSafe(data.reply, text);
             if (Array.isArray(data.sources) && data.sources.length > 0) {
                 const chips = data.sources.map(s =>
                     `<a href="${escapeHtml(s.url)}" target="_blank" rel="noopener noreferrer" class="cc-source-chip">🌐 ${escapeHtml(s.title)} ↗</a>`
@@ -575,12 +593,15 @@
             history.push({ role: 'user', text });
             history.push({ role: 'model', text: data.reply });
         } catch (err) {
+            console.warn('Casa-Concierge Fehler:', err);
             typingMsg.className = 'cc-msg error';
             const msg = String(err.message || '');
+            const waText = `Hola! Ich habe eine Frage zur Casa Englers y Amigos:\n\n"${text}"`;
+            const waLink = `<a href="#" class="cc-wa-inline" data-wa="1" data-wa-text="${escapeHtml(waText)}">WhatsApp</a>`;
             if (msg.includes('503') || msg.includes('UNAVAILABLE') || msg.includes('429')) {
-                typingMsg.textContent = 'Der Casa-Concierge ist bei Google gerade kurz überlastet – probier es in ein paar Sekunden einfach noch einmal oder schreib uns direkt per WhatsApp!';
+                typingMsg.innerHTML = `Der Casa-Concierge ist bei Google gerade kurz überlastet – probier es gleich noch einmal oder schreib uns direkt per ${waLink}!`;
             } else {
-                typingMsg.textContent = 'Hoppla – der Casa-Concierge konnte gerade nicht antworten. Probier es kurz nochmal oder schreib uns direkt per WhatsApp!';
+                typingMsg.innerHTML = `Hoppla – der Casa-Concierge konnte gerade nicht antworten. Probier es kurz nochmal oder schreib uns direkt per ${waLink}!`;
             }
         } finally {
             isBusy = false;
