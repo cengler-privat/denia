@@ -461,8 +461,516 @@
         }
 
         /* =========================================================
-           💶 PREISÜBERSICHT-OVERLAY (Glassmorphism-Modal)
+           ✈️ FLUG-PREISVERGLEICH (HAUPTFOKUS)
            ========================================================= */
+        .flight-compare-section {
+            margin: 10px 0 32px 0;
+        }
+
+        .flight-compare-card {
+            background: rgba(15, 23, 42, 0.96);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            border-radius: 22px;
+            box-shadow: 0 18px 45px rgba(15, 23, 42, 0.18);
+            color: #ffffff;
+            overflow: visible;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .fcc-header {
+            padding: 22px 26px 18px 26px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0) 100%);
+            border-radius: 22px 22px 0 0;
+        }
+
+        .fcc-eyebrow {
+            font-size: 11.5px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #f59e0b;
+            font-weight: 700;
+            display: block;
+            margin-bottom: 6px;
+        }
+
+        .fcc-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.4rem, 2.8vw, 1.85rem);
+            margin: 0 0 6px 0;
+            color: #ffffff;
+        }
+
+        .fcc-desc {
+            font-family: 'Lato', sans-serif;
+            font-size: 0.95rem;
+            color: rgba(255, 255, 255, 0.82);
+            margin: 0;
+            line-height: 1.5;
+        }
+
+        .fcc-controls {
+            padding: 20px 24px;
+            background: rgba(255, 255, 255, 0.03);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .fcc-control-block {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.09);
+            border-radius: 16px;
+            padding: 16px 18px;
+        }
+
+        .fcc-block-title {
+            font-size: 11.5px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: #fde68a;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* 📅 REISEZEITRAUM (Range Picker) */
+        .fcc-range-layout {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 12px 18px;
+        }
+
+        .fcc-range-wrap {
+            position: relative;
+            flex: 0 0 auto;
+            max-width: 100%;
+        }
+
+        .fcc-range-display {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.22);
+            color: #ffffff;
+            padding: 10px 14px;
+            border-radius: 12px;
+            font-family: 'Lato', sans-serif;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            width: auto;
+            min-width: 260px;
+            max-width: 100%;
+            transition: all 0.2s ease;
+            user-select: none;
+        }
+
+        .fcc-range-display:hover,
+        .fcc-range-display:focus {
+            outline: none;
+            background: rgba(255, 255, 255, 0.16);
+            border-color: #f59e0b;
+            box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.15);
+        }
+
+        .range-left-content {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .range-icon {
+            font-size: 1.15rem;
+        }
+
+        .range-text {
+            color: #ffffff;
+            letter-spacing: 0.3px;
+        }
+
+        .range-nights-badge {
+            background: rgba(56, 189, 248, 0.18);
+            border: 1px solid rgba(56, 189, 248, 0.35);
+            color: #38bdf8;
+            font-size: 11.5px;
+            font-weight: 800;
+            padding: 3px 9px;
+            border-radius: 20px;
+            white-space: nowrap;
+        }
+
+        .range-arrow {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 12px;
+            transition: transform 0.2s ease;
+        }
+
+        .range-calendar-popover {
+            position: absolute;
+            top: calc(100% + 8px);
+            left: 0;
+            z-index: 1000;
+            background: #0f172a;
+            border: 1px solid rgba(255, 255, 255, 0.22);
+            border-radius: 18px;
+            padding: 16px;
+            box-shadow: 0 20px 45px rgba(0, 0, 0, 0.6);
+            width: min(340px, 92vw);
+            display: none;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .range-calendar-popover.is-open {
+            display: flex;
+        }
+
+        .cal-nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .cal-nav-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #ffffff;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            font-size: 16px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background 0.15s ease;
+        }
+
+        .cal-nav-btn:hover {
+            background: rgba(255, 255, 255, 0.22);
+        }
+
+        .cal-month-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.05rem;
+            color: #fde68a;
+            font-weight: 700;
+        }
+
+        .cal-weekdays {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            text-align: center;
+            font-size: 11px;
+            font-weight: 700;
+            color: rgba(255, 255, 255, 0.55);
+        }
+
+        .cal-days-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 3px;
+        }
+
+        .cal-day {
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12.5px;
+            font-weight: 700;
+            border-radius: 8px;
+            cursor: pointer;
+            color: rgba(255, 255, 255, 0.9);
+            transition: all 0.15s ease;
+            user-select: none;
+        }
+
+        .cal-day:hover:not(.disabled) {
+            background: rgba(245, 158, 11, 0.35);
+            color: #ffffff;
+        }
+
+        .cal-day.disabled {
+            color: rgba(255, 255, 255, 0.2);
+            cursor: not-allowed;
+        }
+
+        .cal-day.range-start,
+        .cal-day.range-end {
+            background: #f59e0b !important;
+            color: #0f172a !important;
+            font-weight: 900;
+        }
+
+        .cal-day.in-range {
+            background: rgba(245, 158, 11, 0.18);
+            color: #fde68a;
+            border-radius: 0;
+        }
+
+        .cal-popover-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+            padding-top: 8px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 11.5px;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .cal-close-btn {
+            background: #f59e0b;
+            border: none;
+            color: #0f172a;
+            font-size: 11.5px;
+            font-weight: 800;
+            padding: 4px 10px;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .fcc-quick-pills-stack {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .fcc-quick-pills-line {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .fcc-mini-pill {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            color: rgba(255, 255, 255, 0.88);
+            padding: 4px 10px;
+            border-radius: 14px;
+            font-family: 'Lato', sans-serif;
+            font-size: 11.5px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.18s ease;
+        }
+
+        .fcc-mini-pill:hover {
+            background: rgba(255, 255, 255, 0.2);
+            color: #ffffff;
+        }
+
+        .fcc-mini-pill.active {
+            background: #f59e0b;
+            border-color: #f59e0b;
+            color: #0f172a;
+        }
+
+        /* ⚙️ FILTER & OPTIONEN (Kompakte Zeile) */
+        .fcc-filters-compact-row {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .fcc-dropdown-wrap {
+            position: relative;
+        }
+
+        .fcc-dropdown-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.22);
+            color: #ffffff;
+            padding: 7px 12px;
+            border-radius: 10px;
+            font-family: 'Lato', sans-serif;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: background 0.2s ease, border-color 0.2s ease;
+        }
+
+        .fcc-dropdown-btn:hover {
+            background: rgba(255, 255, 255, 0.18);
+            border-color: rgba(255, 255, 255, 0.35);
+        }
+
+        .dropdown-caret {
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .fcc-dropdown-menu {
+            position: absolute;
+            top: calc(100% + 6px);
+            left: 0;
+            z-index: 1000;
+            background: #0f172a;
+            border: 1px solid rgba(255, 255, 255, 0.22);
+            border-radius: 12px;
+            padding: 8px 10px;
+            min-width: 195px;
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.55);
+            display: none;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .fcc-dropdown-menu.is-open {
+            display: flex;
+        }
+
+        .dropdown-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.9);
+            cursor: pointer;
+            padding: 5px 6px;
+            border-radius: 6px;
+            user-select: none;
+            transition: background 0.15s ease;
+        }
+
+        .dropdown-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .dropdown-item input[type="checkbox"] {
+            accent-color: #f59e0b;
+            width: 15px;
+            height: 15px;
+        }
+
+        .fcc-results {
+            padding: 20px 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            min-height: 120px;
+        }
+
+        .fcc-footer {
+            padding: 12px 24px;
+            background: rgba(2, 6, 23, 0.55);
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            font-size: 0.82rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        /* =========================================================
+           ℹ️ ZUGEKLAPPTER BEREICH: ABFLUGHAFEN-DETAILS & WOCHENEND-TIPP
+           ========================================================= */
+        .airport-collapse-section {
+            margin: 28px 0 44px 0;
+            background: #ffffff;
+            border-radius: 18px;
+            border: 1px solid rgba(15, 23, 42, 0.08);
+            box-shadow: 0 4px 18px rgba(15, 23, 42, 0.04);
+            overflow: hidden;
+            transition: box-shadow 0.25s ease;
+        }
+
+        .airport-collapse-section[open] {
+            box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+        }
+
+        .airport-collapse-summary {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 18px 24px;
+            font-family: 'Lato', sans-serif;
+            color: #0f172a;
+            cursor: pointer;
+            user-select: none;
+            list-style: none;
+            background: #f8fafc;
+            border-bottom: 1px solid transparent;
+            transition: background 0.2s ease, border-color 0.2s ease;
+        }
+
+        .airport-collapse-summary::-webkit-details-marker {
+            display: none;
+        }
+
+        .airport-collapse-summary:hover {
+            background: #f1f5f9;
+        }
+
+        .airport-collapse-section[open] .airport-collapse-summary {
+            border-bottom-color: rgba(15, 23, 42, 0.08);
+            background: #ffffff;
+        }
+
+        .summary-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .summary-icon {
+            font-size: 1.4rem;
+        }
+
+        .summary-left strong {
+            display: block;
+            font-size: 1.02rem;
+            color: #0f172a;
+        }
+
+        .summary-left small {
+            display: block;
+            font-size: 0.83rem;
+            color: #64748b;
+            margin-top: 2px;
+        }
+
+        .airport-collapse-icon {
+            font-size: 1.25rem;
+            color: #d97706;
+            transition: transform 0.25s ease;
+            font-weight: 700;
+        }
+
+        .airport-collapse-section[open] .airport-collapse-icon {
+            transform: rotate(180deg);
+        }
+
+        .airport-collapse-content {
+            padding: 24px 22px 28px 22px;
+        }
+
+        .airport-collapse-content .airport-grid {
+            margin-top: 0;
+            margin-bottom: 24px;
+        }
+
+        .airport-collapse-content .price-banner {
+            margin-top: 0;
+            margin-bottom: 0;
+        }
+
+        /* Glassmorphism-Modal Fallback (falls als Popup geöffnet) */
         .price-modal-backdrop {
             position: fixed;
             inset: 0;
@@ -839,6 +1347,7 @@
             background: rgba(2, 6, 23, 0.55);
             font-size: 0.82rem;
             color: rgba(255, 255, 255, 0.68);
+            border-radius: 0 0 22px 22px;
         }
 
         .mobile-filter-toggle {
@@ -994,7 +1503,7 @@
         <p>Von Frankfurt, Stuttgart oder dem Baden-Airpark in gut zwei Stunden nach Alicante oder Valencia – und dann entspannt in rund 70 Minuten über die mautfreie AP-7 direkt ans Meer.</p>
 
         <div class="hero-actions">
-            <button type="button" class="hero-cta primary" onclick="openPriceModal('ALL')">💶 Preisübersicht kommendes Wochenende</button>
+            <a href="#flug-preisvergleich" class="hero-cta primary">✈️ Zum Flug-Preisvergleich</a>
             <a href="#auto-route" class="hero-cta secondary">🚗 Auto-Route ab Flughafen</a>
         </div>
     </header>
@@ -1002,103 +1511,230 @@
     <main>
         <section class="travel-container">
 
-            <!-- 1. FLUGMÖGLICHKEITEN -->
-            <div class="section-heading">
+            <!-- 1. FLUGMÖGLICHKEITEN & PREISVERGLEICH -->
+            <div id="flug-preisvergleich" class="section-heading">
                 <span class="sub-eyebrow">1. Mit dem Flugzeug</span>
-                <h2>Abflughäfen &amp; Direktverbindungen</h2>
-                <p>Dénia liegt genau in der Mitte zwischen den Flughäfen <strong>Alicante (ALC)</strong> und <strong>Valencia (VLC)</strong> – ihr könnt also flexibel den günstigsten Flug wählen.</p>
+                <h2>Flug-Preisvergleich für euren Reisezeitraum</h2>
+                <p>Vergleicht direkt alle 6 vordefinierten Flugverbindungen ab <strong>Frankfurt, Stuttgart und Baden-Airpark</strong> nach <strong>Alicante und Valencia</strong> – immer inklusive Handgepäck.</p>
             </div>
 
-            <div class="airport-grid">
-                <!-- FRANKFURT -->
-                <article class="airport-card">
-                    <div class="airport-top">
-                        <span class="iata-badge">FRA</span>
-                        <span class="airport-tag">Häufigste Verbindungen</span>
+            <!-- ✈️ FLUG-PREISVERGLEICH CARD (HAUPTFOKUS) -->
+            <div class="flight-compare-section">
+                <div class="flight-compare-card">
+                    <div class="fcc-header">
+                        <span class="fcc-eyebrow">✈️ Flug-Preisvergleich · Alle Flüge immer inkl. 1 Handgepäck p. P.</span>
+                        <h3 class="fcc-title">Günstigste Flüge nach Dénia finden</h3>
+                        <p class="fcc-desc">Vergleicht alle Direktflüge ab Frankfurt, Stuttgart &amp; Baden-Airpark nach Alicante &amp; Valencia für euren Reisezeitraum.</p>
                     </div>
-                    <h3>Frankfurt am Main</h3>
-                    <p class="airport-desc">Ideal für maximale Flexibilität: <strong>Lufthansa</strong> fliegt beide Zielflughäfen direkt an – Valencia oft sogar mehrfach täglich.</p>
-                    <div class="route-pills">
-                        <div class="route-pill">
-                            <div>
-                                <strong>FRA → Valencia (VLC)</strong>
-                                <small>Lufthansa · Direkt · ca. 2 Std. 20 Min.</small>
-                            </div>
-                            <span class="route-price-hint">ca. 120–240 €</span>
-                        </div>
-                        <div class="route-pill">
-                            <div>
-                                <strong>FRA → Alicante (ALC)</strong>
-                                <small>Lufthansa · Direkt · ca. 2 Std. 30 Min.</small>
-                            </div>
-                            <span class="route-price-hint">ca. 130–260 €</span>
-                        </div>
-                    </div>
-                    <button type="button" class="card-price-btn" onclick="openPriceModal('FRA')">💶 Wochenend-Preise ab Frankfurt</button>
-                </article>
 
-                <!-- STUTTGART -->
-                <article class="airport-card">
-                    <div class="airport-top">
-                        <span class="iata-badge">STR</span>
-                        <span class="airport-tag">Komfortabel &amp; direkt</span>
-                    </div>
-                    <h3>Stuttgart</h3>
-                    <p class="airport-desc">Entspannter Flughafen im Süden mit direkten Urlaubsverbindungen durch <strong>Eurowings</strong> (je nach Saison an ausgewählten Wochentagen).</p>
-                    <div class="route-pills">
-                        <div class="route-pill">
-                            <div>
-                                <strong>STR → Valencia (VLC)</strong>
-                                <small>Eurowings · Direkt · ca. 2 Std. 10 Min.</small>
-                            </div>
-                            <span class="route-price-hint">ca. 100–210 €</span>
-                        </div>
-                        <div class="route-pill">
-                            <div>
-                                <strong>STR → Alicante (ALC)</strong>
-                                <small>Eurowings · Direkt · ca. 2 Std. 25 Min.</small>
-                            </div>
-                            <span class="route-price-hint">ca. 110–230 €</span>
-                        </div>
-                    </div>
-                    <button type="button" class="card-price-btn" onclick="openPriceModal('STR')">💶 Wochenend-Preise ab Stuttgart</button>
-                </article>
+                    <div class="fcc-controls">
+                        <!-- BLOCK 1: REISEZEITRAUM & DAUER -->
+                        <div class="fcc-control-block">
+                            <div class="fcc-block-title">📅 Reisezeitraum</div>
+                            
+                            <!-- Versteckte Daten-Inputs für Skript & Kalender-Sync -->
+                            <input type="hidden" id="flightOutDate">
+                            <input type="hidden" id="flightRetDate">
 
-                <!-- BADEN-AIRPARK -->
-                <article class="airport-card">
-                    <div class="airport-top">
-                        <span class="iata-badge">FKB</span>
-                        <span class="airport-tag">⭐ Preis-Leistungs-Tipp</span>
-                    </div>
-                    <h3>Baden-Airpark (Karlsruhe)</h3>
-                    <p class="airport-desc">Kurze Wege, stressfreier Check-in und günstiges Parken: <strong>Ryanair</strong> fliegt beide Flughäfen regelmäßig direkt und oft sehr preiswert an.</p>
-                    <div class="route-pills">
-                        <div class="route-pill">
-                            <div>
-                                <strong>FKB → Alicante (ALC)</strong>
-                                <small>Ryanair · Direkt · ca. 2 Std. 20 Min.</small>
-                            </div>
-                            <span class="route-price-hint">ca. 60–160 €</span>
-                        </div>
-                        <div class="route-pill">
-                            <div>
-                                <strong>FKB → Valencia (VLC)</strong>
-                                <small>Ryanair · Direkt · ca. 2 Std. 10 Min.</small>
-                            </div>
-                            <span class="route-price-hint">ca. 55–150 €</span>
-                        </div>
-                    </div>
-                    <button type="button" class="card-price-btn" onclick="openPriceModal('FKB')">💶 Wochenend-Preise ab Baden-Airpark</button>
-                </article>
-            </div>
+                            <!-- Modernes Reisezeitraum-Feld & Schnellwahl-Buttons in zwei Zeilen daneben -->
+                            <div class="fcc-range-layout">
+                                <div class="fcc-range-wrap">
+                                    <div class="fcc-range-display" id="dateRangeTrigger" tabindex="0" role="button" aria-haspopup="dialog" aria-expanded="false" onclick="toggleRangeCalendar()">
+                                        <div class="range-left-content">
+                                            <span class="range-icon">📅</span>
+                                            <span class="range-text" id="rangeText">Fr, 27.11. – Fr, 04.12.</span>
+                                            <span class="range-nights-badge" id="rangeNightsBadge">7 Nächte</span>
+                                        </div>
+                                        <span class="range-arrow">▾</span>
+                                    </div>
 
-            <div class="price-banner">
-                <div>
-                    <h3>Kommendes Wochenende + 1 Woche Sonne?</h3>
-                    <p id="bannerWeekendText">Öffne die kompakte Preisübersicht für alle 6 Strecken mit vorausgewählten Wochenend-Daten.</p>
+                                    <!-- Integrierter Datums-Kalender (Pop-up) -->
+                                    <div class="range-calendar-popover" id="rangeCalendarPopover" role="dialog" aria-label="Reisezeitraum auswählen">
+                                        <div class="cal-nav">
+                                            <button type="button" class="cal-nav-btn" id="calPrevBtn" onclick="navCalendarMonth(-1)" aria-label="Vorheriger Monat">‹</button>
+                                            <span class="cal-month-title" id="calMonthTitle">November 2026</span>
+                                            <button type="button" class="cal-nav-btn" id="calNextBtn" onclick="navCalendarMonth(1)" aria-label="Nächster Monat">›</button>
+                                        </div>
+                                        <div class="cal-weekdays">
+                                            <span>Mo</span><span>Di</span><span>Mi</span><span>Do</span><span>Fr</span><span>Sa</span><span>So</span>
+                                        </div>
+                                        <div class="cal-days-grid" id="calDaysGrid"></div>
+                                        <div class="cal-popover-footer">
+                                            <span id="calHintText">Klicke Anreise- und Abreisetag an</span>
+                                            <button type="button" class="cal-close-btn" onclick="toggleRangeCalendar(false)">Schließen ✓</button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Schnellwahl-Buttons in zwei Zeilen neben dem Reisezeitraum -->
+                                <div class="fcc-quick-pills-stack">
+                                    <div class="fcc-quick-pills-line">
+                                        <button type="button" class="fcc-mini-pill" id="btnPresetFri" onclick="applyDatePreset('fri')">Kommender Fr</button>
+                                        <button type="button" class="fcc-mini-pill" id="btnPresetSat" onclick="applyDatePreset('sat')">Kommendes WE (Sa)</button>
+                                    </div>
+                                    <div class="fcc-quick-pills-line">
+                                        <button type="button" class="fcc-mini-pill" data-nights="4" onclick="applyNightsDuration(4)">4 Nächte</button>
+                                        <button type="button" class="fcc-mini-pill active" data-nights="7" onclick="applyNightsDuration(7)">1 Woche (7 N)</button>
+                                        <button type="button" class="fcc-mini-pill" data-nights="10" onclick="applyNightsDuration(10)">10 Nächte</button>
+                                        <button type="button" class="fcc-mini-pill" data-nights="14" onclick="applyNightsDuration(14)">2 Wochen (14 N)</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- BLOCK 2: FILTER & OPTIONEN (Kompakt auf einer Zeile) -->
+                        <div class="fcc-control-block">
+                            <div class="fcc-block-title">⚙️ Filter &amp; Optionen</div>
+                            <div class="fcc-filters-compact-row">
+                                <!-- Abflug Dropdown -->
+                                <div class="fcc-dropdown-wrap">
+                                    <button type="button" class="fcc-dropdown-btn" id="originDropdownBtn" onclick="toggleDropdown('origin')">
+                                        <span id="originDropdownLabel">Abflug: Alle 3 Flughäfen</span>
+                                        <span class="dropdown-caret">▾</span>
+                                    </button>
+                                    <div class="fcc-dropdown-menu" id="originDropdownMenu">
+                                        <label class="dropdown-item"><input type="checkbox" id="chk-FRA" checked onchange="onOriginCheckboxChange('FRA')"> <span>Frankfurt (FRA)</span></label>
+                                        <label class="dropdown-item"><input type="checkbox" id="chk-STR" checked onchange="onOriginCheckboxChange('STR')"> <span>Stuttgart (STR)</span></label>
+                                        <label class="dropdown-item"><input type="checkbox" id="chk-FKB" checked onchange="onOriginCheckboxChange('FKB')"> <span>Baden-Airpark (FKB)</span></label>
+                                    </div>
+                                </div>
+
+                                <!-- Ziel Dropdown -->
+                                <div class="fcc-dropdown-wrap">
+                                    <button type="button" class="fcc-dropdown-btn" id="destDropdownBtn" onclick="toggleDropdown('dest')">
+                                        <span id="destDropdownLabel">Ziel: Beide (ALC &amp; VLC)</span>
+                                        <span class="dropdown-caret">▾</span>
+                                    </button>
+                                    <div class="fcc-dropdown-menu" id="destDropdownMenu">
+                                        <label class="dropdown-item"><input type="checkbox" id="chk-ALC" checked onchange="onDestCheckboxChange('ALC')"> <span>Alicante (ALC)</span></label>
+                                        <label class="dropdown-item"><input type="checkbox" id="chk-VLC" checked onchange="onDestCheckboxChange('VLC')"> <span>Valencia (VLC)</span></label>
+                                    </div>
+                                </div>
+
+                                <!-- Passagiere -->
+                                <select id="flightAdults" class="modal-select" aria-label="Passagiere" onchange="runFlightSearch()">
+                                    <option value="1" selected>1 Person</option>
+                                    <option value="2">2 Personen</option>
+                                    <option value="3">3 Personen</option>
+                                    <option value="4">4 Personen</option>
+                                </select>
+
+                                <!-- Direktflüge -->
+                                <label class="modal-check">
+                                    <input type="checkbox" id="flightNonstop" checked onchange="runFlightSearch()">
+                                    <span>Nur Direktflüge</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ERGEBNIS-LISTE -->
+                    <div class="fcc-results" id="fareListContainer"></div>
+
+                    <!-- FOOTER -->
+                    <div class="fcc-footer" id="priceModalFooter">
+                        Richtwerte gelten inkl. 1 Handgepäck p. P. (Hin &amp; Rück). Der <strong>KAYAK-Kombi-Link</strong> vergleicht alle gewählten Flughäfen gleichzeitig.
+                    </div>
                 </div>
-                <button type="button" class="hero-cta primary" onclick="openPriceModal('ALL')">✈️ Live-Preise im Overlay öffnen</button>
             </div>
+
+            <!-- ZUGEKLAPPTER BEREICH: KACHELN -->
+            <details class="airport-collapse-section">
+                <summary class="airport-collapse-summary">
+                    <div class="summary-left">
+                        <span class="summary-icon">ℹ️</span>
+                        <div>
+                            <strong>Details zu den 3 Abflughäfen (FRA, STR, FKB) anzeigen</strong>
+                            <small>Airlines, Flugzeiten, Preis-Richtwerte &amp; Flughafen-Infos</small>
+                        </div>
+                    </div>
+                    <span class="airport-collapse-icon">▾</span>
+                </summary>
+                <div class="airport-collapse-content">
+                    <div class="airport-grid">
+                        <!-- FRANKFURT -->
+                        <article class="airport-card">
+                            <div class="airport-top">
+                                <span class="iata-badge">FRA</span>
+                                <span class="airport-tag">Häufigste Verbindungen</span>
+                            </div>
+                            <h3>Frankfurt am Main</h3>
+                            <p class="airport-desc">Ideal für maximale Flexibilität: <strong>Lufthansa</strong> fliegt beide Zielflughäfen direkt an – Valencia oft sogar mehrfach täglich.</p>
+                            <div class="route-pills">
+                                <div class="route-pill">
+                                    <div>
+                                        <strong>FRA → Valencia (VLC)</strong>
+                                        <small>Lufthansa · Direkt · ca. 2 Std. 20 Min.</small>
+                                    </div>
+                                    <span class="route-price-hint">ca. 120–240 €</span>
+                                </div>
+                                <div class="route-pill">
+                                    <div>
+                                        <strong>FRA → Alicante (ALC)</strong>
+                                        <small>Lufthansa · Direkt · ca. 2 Std. 30 Min.</small>
+                                    </div>
+                                    <span class="route-price-hint">ca. 130–260 €</span>
+                                </div>
+                            </div>
+                            <button type="button" class="card-price-btn" onclick="openPriceModal('FRA')">💶 Preise ab Frankfurt vergleichen</button>
+                        </article>
+
+                        <!-- STUTTGART -->
+                        <article class="airport-card">
+                            <div class="airport-top">
+                                <span class="iata-badge">STR</span>
+                                <span class="airport-tag">Komfortabel &amp; direkt</span>
+                            </div>
+                            <h3>Stuttgart</h3>
+                            <p class="airport-desc">Entspannter Flughafen im Süden mit direkten Urlaubsverbindungen durch <strong>Eurowings</strong> (je nach Saison an ausgewählten Wochentagen).</p>
+                            <div class="route-pills">
+                                <div class="route-pill">
+                                    <div>
+                                        <strong>STR → Valencia (VLC)</strong>
+                                        <small>Eurowings · Direkt · ca. 2 Std. 10 Min.</small>
+                                    </div>
+                                    <span class="route-price-hint">ca. 100–210 €</span>
+                                </div>
+                                <div class="route-pill">
+                                    <div>
+                                        <strong>STR → Alicante (ALC)</strong>
+                                        <small>Eurowings · Direkt · ca. 2 Std. 25 Min.</small>
+                                    </div>
+                                    <span class="route-price-hint">ca. 110–230 €</span>
+                                </div>
+                            </div>
+                            <button type="button" class="card-price-btn" onclick="openPriceModal('STR')">💶 Preise ab Stuttgart vergleichen</button>
+                        </article>
+
+                        <!-- BADEN-AIRPARK -->
+                        <article class="airport-card">
+                            <div class="airport-top">
+                                <span class="iata-badge">FKB</span>
+                                <span class="airport-tag">⭐ Preis-Leistungs-Tipp</span>
+                            </div>
+                            <h3>Baden-Airpark (Karlsruhe)</h3>
+                            <p class="airport-desc">Kurze Wege, stressfreier Check-in und günstiges Parken: <strong>Ryanair</strong> fliegt beide Flughäfen regelmäßig direkt und oft sehr preiswert an.</p>
+                            <div class="route-pills">
+                                <div class="route-pill">
+                                    <div>
+                                        <strong>FKB → Alicante (ALC)</strong>
+                                        <small>Ryanair · Direkt · ca. 2 Std. 20 Min.</small>
+                                    </div>
+                                    <span class="route-price-hint">ca. 60–160 €</span>
+                                </div>
+                                <div class="route-pill">
+                                    <div>
+                                        <strong>FKB → Valencia (VLC)</strong>
+                                        <small>Ryanair · Direkt · ca. 2 Std. 10 Min.</small>
+                                    </div>
+                                    <span class="route-price-hint">ca. 55–150 €</span>
+                                </div>
+                            </div>
+                            <button type="button" class="card-price-btn" onclick="openPriceModal('FKB')">💶 Preise ab Baden-Airpark vergleichen</button>
+                        </article>
+                    </div>
+                </div>
+            </details>
 
             <!-- 2. AUTO-ANREISE MIT GOOGLE MAPS -->
             <div id="auto-route" class="section-heading">
@@ -1174,80 +1810,6 @@
             <div id="trigger-whatsapp" style="height: 1px;"></div>
         </section>
     </main>
-
-    <!-- 💶 FLUGSUCHE & PREISÜBERSICHT OVERLAY -->
-    <div class="price-modal-backdrop" id="priceModalBackdrop" role="dialog" aria-modal="true" aria-labelledby="priceModalTitle">
-        <div class="price-modal" onclick="event.stopPropagation()">
-            <div class="price-modal-header">
-                <div>
-                    <span class="eyebrow">Flugsuche &amp; Preisvergleich · immer inkl. 1 Handgepäck</span>
-                    <h2 id="priceModalTitle">Günstigste Flüge nach Dénia finden</h2>
-                </div>
-                <button type="button" class="price-modal-close" onclick="closePriceModal()" aria-label="Preisübersicht schließen">✕</button>
-            </div>
-
-            <button type="button" class="mobile-filter-toggle" id="mobileFilterToggle" onclick="toggleMobileFlightFilters()" aria-expanded="false" aria-controls="priceModalControls">
-                <span class="mf-summary" id="mobileFilterSummary">✈️ Alle Flughäfen · 1 P.</span>
-                <span class="mf-action" id="mobileFilterAction">⚙️ Filter ▾</span>
-            </button>
-
-            <div class="price-modal-controls" id="priceModalControls">
-                <!-- Zeile 1: Zeitraum -->
-                <div class="control-row">
-                    <div class="control-group">
-                        <span class="control-label">Zeitraum:</span>
-                        <input type="date" id="flightOutDate" class="modal-date-input" aria-label="Hinflug-Datum" onchange="onFlightDateChange()">
-                        <span style="color: rgba(255,255,255,0.6);">→</span>
-                        <input type="date" id="flightRetDate" class="modal-date-input" aria-label="Rückflug-Datum" onchange="onFlightDateChange()">
-                    </div>
-                    <div class="control-group">
-                        <button type="button" class="modal-pill active" id="btnPresetSat" onclick="applyDatePreset('sat')">Kommendes WE (Sa→Sa)</button>
-                        <button type="button" class="modal-pill" id="btnPresetFri" onclick="applyDatePreset('fri')">Fr→Fr</button>
-                        <button type="button" class="modal-pill" id="btnPreset14" onclick="applyDatePreset('14d')">+14 Tage</button>
-                    </div>
-                </div>
-
-                <!-- Zeile 2: Flughafen-Kombi -->
-                <div class="control-row">
-                    <div class="control-group" id="modalOriginFilters">
-                        <span class="control-label">Abflug:</span>
-                        <button type="button" class="modal-pill active" data-origin="FRA" onclick="toggleOriginAirport('FRA')">Frankfurt (FRA)</button>
-                        <button type="button" class="modal-pill active" data-origin="STR" onclick="toggleOriginAirport('STR')">Stuttgart (STR)</button>
-                        <button type="button" class="modal-pill active" data-origin="FKB" onclick="toggleOriginAirport('FKB')">Baden-Airpark (FKB)</button>
-                    </div>
-                    <div class="control-group" id="modalDestFilters">
-                        <span class="control-label">Ziel:</span>
-                        <button type="button" class="modal-pill dest-pill active" data-dest="ALC" onclick="toggleDestAirport('ALC')">Alicante (ALC)</button>
-                        <button type="button" class="modal-pill dest-pill active" data-dest="VLC" onclick="toggleDestAirport('VLC')">Valencia (VLC)</button>
-                    </div>
-                </div>
-
-                <!-- Zeile 3: Optionen & Such-Button -->
-                <div class="control-row">
-                    <div class="control-group">
-                        <select id="flightAdults" class="modal-select" aria-label="Passagiere" onchange="runFlightSearch()">
-                            <option value="1" selected>1 Person</option>
-                            <option value="2">2 Personen</option>
-                            <option value="3">3 Personen</option>
-                            <option value="4">4 Personen</option>
-                        </select>
-                        <label class="modal-check">
-                            <input type="checkbox" id="flightNonstop" checked onchange="runFlightSearch()">
-                            <span>Nur Direktflüge</span>
-                        </label>
-                        <span class="baggage-badge">🧳 inkl. 1 Handgepäck p. P.</span>
-                    </div>
-                    <button type="button" class="modal-search-btn" onclick="runFlightSearch(true)">🔍 Günstigste suchen</button>
-                </div>
-            </div>
-
-            <div class="price-modal-body" id="fareListContainer"></div>
-
-            <div class="price-modal-footer" id="priceModalFooter">
-                Alle Suchlinks enthalten automatisch den Filter <strong>inkl. 1 Handgepäck</strong> und sind nach dem günstigsten Preis sortiert.
-            </div>
-        </div>
-    </div>
 
     <a href="#" class="whatsapp-button" id="whatsapp-btn" title="WhatsApp schreiben">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="#ffffff" d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.8 0-67.6-9.5-97.2-27.2l-6.7-4-71.7 18.7 19.3-68.6-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z" /></svg>
@@ -1332,28 +1894,148 @@
             return `https://www.lufthansa.com/de/de/homepage`;
         }
 
-        function syncFilterPills() {
-            document.querySelectorAll('#modalOriginFilters .modal-pill').forEach(btn => {
-                btn.classList.toggle('active', selectedOrigins.has(btn.dataset.origin));
+        const AIRPORT_NAMES = {
+            FRA: 'Frankfurt',
+            STR: 'Stuttgart',
+            FKB: 'Baden-Airpark',
+            ALC: 'Alicante',
+            VLC: 'Valencia'
+        };
+
+        function syncDropdownUI() {
+            ['FRA', 'STR', 'FKB'].forEach(code => {
+                const chk = document.getElementById(`chk-${code}`);
+                if (chk) chk.checked = selectedOrigins.has(code);
             });
-            document.querySelectorAll('#modalDestFilters .modal-pill').forEach(btn => {
-                btn.classList.toggle('active', selectedDests.has(btn.dataset.dest));
+            ['ALC', 'VLC'].forEach(code => {
+                const chk = document.getElementById(`chk-${code}`);
+                if (chk) chk.checked = selectedDests.has(code);
             });
+
+            const originLabel = document.getElementById('originDropdownLabel');
+            if (originLabel) {
+                if (selectedOrigins.size === 3) {
+                    originLabel.textContent = 'Abflug: Alle 3 Flughäfen';
+                } else if (selectedOrigins.size === 1) {
+                    const only = [...selectedOrigins][0];
+                    originLabel.textContent = `Abflug: ${AIRPORT_NAMES[only]} (${only})`;
+                } else {
+                    originLabel.textContent = `Abflug: ${[...selectedOrigins].join(', ')}`;
+                }
+            }
+
+            const destLabel = document.getElementById('destDropdownLabel');
+            if (destLabel) {
+                if (selectedDests.size === 2) {
+                    destLabel.textContent = 'Ziel: Beide (ALC & VLC)';
+                } else {
+                    const only = [...selectedDests][0];
+                    destLabel.textContent = `Ziel: ${AIRPORT_NAMES[only]} (${only})`;
+                }
+            }
         }
 
-        function toggleOriginAirport(code) {
-            if (selectedOrigins.has(code) && selectedOrigins.size === 1) return; // Mind. 1 aktiv
-            if (selectedOrigins.has(code)) selectedOrigins.delete(code);
-            else selectedOrigins.add(code);
-            syncFilterPills();
+        function syncFilterPills() {
+            syncDropdownUI();
+        }
+
+        function closeAllDropdowns() {
+            document.getElementById('originDropdownMenu')?.classList.remove('is-open');
+            document.getElementById('destDropdownMenu')?.classList.remove('is-open');
+        }
+
+        function closeRangeCalendar() {
+            const popover = document.getElementById('rangeCalendarPopover');
+            const trigger = document.getElementById('dateRangeTrigger');
+            popover?.classList.remove('is-open');
+            trigger?.setAttribute('aria-expanded', 'false');
+        }
+
+        function toggleDropdown(type) {
+            closeRangeCalendar();
+            const originMenu = document.getElementById('originDropdownMenu');
+            const destMenu = document.getElementById('destDropdownMenu');
+            if (type === 'origin') {
+                destMenu?.classList.remove('is-open');
+                originMenu?.classList.toggle('is-open');
+            } else if (type === 'dest') {
+                originMenu?.classList.remove('is-open');
+                destMenu?.classList.toggle('is-open');
+            } else {
+                closeAllDropdowns();
+            }
+        }
+
+        function onOriginCheckboxChange(code) {
+            if (selectedOrigins.has(code)) {
+                if (selectedOrigins.size === 1) {
+                    document.getElementById(`chk-${code}`).checked = true;
+                    return;
+                }
+                selectedOrigins.delete(code);
+            } else {
+                selectedOrigins.add(code);
+            }
+            syncDropdownUI();
             runFlightSearch();
         }
 
-        function toggleDestAirport(code) {
-            if (selectedDests.has(code) && selectedDests.size === 1) return; // Mind. 1 aktiv
-            if (selectedDests.has(code)) selectedDests.delete(code);
-            else selectedDests.add(code);
-            syncFilterPills();
+        function onDestCheckboxChange(code) {
+            if (selectedDests.has(code)) {
+                if (selectedDests.size === 1) {
+                    document.getElementById(`chk-${code}`).checked = true;
+                    return;
+                }
+                selectedDests.delete(code);
+            } else {
+                selectedDests.add(code);
+            }
+            syncDropdownUI();
+            runFlightSearch();
+        }
+
+        function updateRangeDisplay() {
+            const outVal = document.getElementById('flightOutDate')?.value;
+            const retVal = document.getElementById('flightRetDate')?.value;
+            if (!outVal || !retVal) return;
+
+            const dOut = new Date(outVal + 'T12:00:00');
+            const dRet = new Date(retVal + 'T12:00:00');
+            const diffMs = dRet.getTime() - dOut.getTime();
+            const nights = Math.max(1, Math.round(diffMs / (1000 * 60 * 60 * 24)));
+
+            const rangeTextEl = document.getElementById('rangeText');
+            const badgeEl = document.getElementById('rangeNightsBadge');
+            if (rangeTextEl) {
+                rangeTextEl.textContent = `${fmtDE(dOut)} – ${fmtDE(dRet)}`;
+            }
+            if (badgeEl) {
+                badgeEl.textContent = `${nights} ${nights === 1 ? 'Nacht' : 'Nächte'}`;
+            }
+
+            // Duration pills hervorheben
+            document.querySelectorAll('.fcc-mini-pill[data-nights]').forEach(pill => {
+                const n = parseInt(pill.dataset.nights, 10);
+                pill.classList.toggle('active', n === nights);
+            });
+        }
+
+        function applyNightsDuration(nights) {
+            const outEl = document.getElementById('flightOutDate');
+            if (!outEl || !outEl.value) {
+                const { depart } = getUpcomingWeekendDates('fri');
+                outEl.value = fmtISO(depart);
+            }
+            const dOut = new Date(outEl.value + 'T12:00:00');
+            const dRet = new Date(dOut);
+            dRet.setDate(dRet.getDate() + nights);
+            document.getElementById('flightRetDate').value = fmtISO(dRet);
+
+            document.getElementById('btnPresetFri')?.classList.remove('active');
+            document.getElementById('btnPresetSat')?.classList.remove('active');
+
+            updateRangeDisplay();
+            renderCalendar();
             runFlightSearch();
         }
 
@@ -1361,25 +2043,156 @@
             const { depart, ret } = getUpcomingWeekendDates(mode);
             document.getElementById('flightOutDate').value = fmtISO(depart);
             document.getElementById('flightRetDate').value = fmtISO(ret);
-            document.getElementById('btnPresetSat').classList.toggle('active', mode === 'sat');
-            document.getElementById('btnPresetFri').classList.toggle('active', mode === 'fri');
-            document.getElementById('btnPreset14').classList.toggle('active', mode === '14d');
+
+            document.getElementById('btnPresetFri')?.classList.toggle('active', mode === 'fri');
+            document.getElementById('btnPresetSat')?.classList.toggle('active', mode === 'sat');
+
+            updateRangeDisplay();
+            renderCalendar();
             runFlightSearch();
         }
 
-        function onFlightDateChange() {
+        // --- Range Calendar Popover ---
+        let calViewDate = new Date();
+        let calPickStep = 0; // 0: Startdatum wählen, 1: Rückreisedatum wählen
+
+        function toggleRangeCalendar(forceOpen) {
+            const popover = document.getElementById('rangeCalendarPopover');
+            const trigger = document.getElementById('dateRangeTrigger');
+            if (!popover) return;
+
+            closeAllDropdowns();
+
+            const isOpen = (typeof forceOpen === 'boolean')
+                ? forceOpen
+                : !popover.classList.contains('is-open');
+
+            popover.classList.toggle('is-open', isOpen);
+            trigger?.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+
+            if (isOpen) {
+                const outVal = document.getElementById('flightOutDate')?.value;
+                calViewDate = outVal ? new Date(outVal + 'T12:00:00') : new Date();
+                calPickStep = 0;
+                const hintEl = document.getElementById('calHintText');
+                if (hintEl) hintEl.textContent = 'Klicke Anreise- und Abreisetag an';
+                renderCalendar();
+            }
+        }
+
+        function navCalendarMonth(delta) {
+            calViewDate.setMonth(calViewDate.getMonth() + delta);
+            renderCalendar();
+        }
+
+        const CAL_MONTH_NAMES = [
+            'Januar', 'Februar', 'März', 'April', 'Mai', 'Juni',
+            'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'
+        ];
+
+        function renderCalendar() {
+            const titleEl = document.getElementById('calMonthTitle');
+            const gridEl = document.getElementById('calDaysGrid');
+            if (!titleEl || !gridEl) return;
+
+            const y = calViewDate.getFullYear();
+            const m = calViewDate.getMonth();
+            titleEl.textContent = `${CAL_MONTH_NAMES[m]} ${y}`;
+
+            gridEl.innerHTML = '';
+
+            const firstDay = new Date(y, m, 1);
+            const lastDay = new Date(y, m + 1, 0);
+            const daysInMonth = lastDay.getDate();
+
+            // Mo = 0, So = 6
+            let startDayOfWeek = (firstDay.getDay() + 6) % 7;
+            for (let i = 0; i < startDayOfWeek; i++) {
+                const emptyCell = document.createElement('div');
+                emptyCell.className = 'cal-day empty';
+                gridEl.appendChild(emptyCell);
+            }
+
+            const today = new Date();
+            const todayStr = fmtISO(new Date(today.getFullYear(), today.getMonth(), today.getDate()));
+            const outVal = document.getElementById('flightOutDate')?.value || '';
+            const retVal = document.getElementById('flightRetDate')?.value || '';
+
+            for (let day = 1; day <= daysInMonth; day++) {
+                const d = new Date(y, m, day);
+                const iso = fmtISO(d);
+                const cell = document.createElement('div');
+                cell.className = 'cal-day';
+                cell.textContent = String(day);
+
+                if (iso < todayStr) {
+                    cell.classList.add('disabled');
+                } else {
+                    if (iso === outVal) cell.classList.add('range-start');
+                    if (iso === retVal) cell.classList.add('range-end');
+                    if (outVal && retVal && iso > outVal && iso < retVal) {
+                        cell.classList.add('in-range');
+                    }
+
+                    cell.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        onCalendarDayClick(iso);
+                    });
+                }
+
+                gridEl.appendChild(cell);
+            }
+        }
+
+        function onCalendarDayClick(iso) {
             const outEl = document.getElementById('flightOutDate');
             const retEl = document.getElementById('flightRetDate');
-            if (outEl.value && (!retEl.value || retEl.value <= outEl.value)) {
-                const d = new Date(outEl.value + 'T12:00:00');
-                d.setDate(d.getDate() + 7);
-                retEl.value = fmtISO(d);
+            const hintEl = document.getElementById('calHintText');
+
+            if (calPickStep === 0) {
+                outEl.value = iso;
+                if (!retEl.value || retEl.value <= iso) {
+                    const d = new Date(iso + 'T12:00:00');
+                    d.setDate(d.getDate() + 7);
+                    retEl.value = fmtISO(d);
+                }
+                calPickStep = 1;
+                if (hintEl) hintEl.textContent = 'Jetzt Abreisetag wählen';
+                document.getElementById('btnPresetFri')?.classList.remove('active');
+                document.getElementById('btnPresetSat')?.classList.remove('active');
+                updateRangeDisplay();
+                renderCalendar();
+            } else {
+                if (iso <= outEl.value) {
+                    outEl.value = iso;
+                    const d = new Date(iso + 'T12:00:00');
+                    d.setDate(d.getDate() + 7);
+                    retEl.value = fmtISO(d);
+                    calPickStep = 1;
+                    if (hintEl) hintEl.textContent = 'Jetzt Abreisetag wählen';
+                } else {
+                    retEl.value = iso;
+                    calPickStep = 0;
+                    if (hintEl) hintEl.textContent = 'Klicke Anreise- und Abreisetag an';
+                    toggleRangeCalendar(false);
+                    runFlightSearch();
+                }
+                document.getElementById('btnPresetFri')?.classList.remove('active');
+                document.getElementById('btnPresetSat')?.classList.remove('active');
+                updateRangeDisplay();
+                renderCalendar();
             }
-            ['btnPresetSat', 'btnPresetFri', 'btnPreset14'].forEach(id => {
-                document.getElementById(id).classList.remove('active');
-            });
-            runFlightSearch();
         }
+
+        // Globaler Klick-Handler zum Schließen von Kalender & Dropdowns beim Klick außerhalb
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.fcc-range-wrap')) {
+                closeRangeCalendar();
+            }
+            if (!e.target.closest('.fcc-dropdown-wrap')) {
+                closeAllDropdowns();
+            }
+        });
 
         function getSearchState() {
             const out = document.getElementById('flightOutDate').value;
@@ -1709,27 +2522,23 @@
                 selectedOrigins = new Set(['FRA', 'STR', 'FKB']);
             }
             selectedDests = new Set(['ALC', 'VLC']);
-            syncFilterPills();
+            syncDropdownUI();
 
-            toggleMobileFlightFilters(false);
             if (!document.getElementById('flightOutDate').value) {
-                applyDatePreset('sat');
+                applyDatePreset('fri');
             } else {
                 runFlightSearch();
             }
-            document.getElementById('priceModalBackdrop').classList.add('is-open');
-            document.body.style.overflow = 'hidden';
+
+            const targetSection = document.getElementById('flug-preisvergleich');
+            if (targetSection) {
+                targetSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
         }
 
         function closePriceModal() {
-            document.getElementById('priceModalBackdrop').classList.remove('is-open');
-            document.body.style.overflow = '';
+            // No-op da der Preisvergleich nun direkt in der Seite eingebettet ist
         }
-
-        document.getElementById('priceModalBackdrop').addEventListener('click', closePriceModal);
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') closePriceModal();
-        });
 
         // =========================================
         //   2. Google Maps Auto-Route (ALC / VLC <-> Casa Englers)
@@ -1851,10 +2660,8 @@
         }
 
         document.addEventListener('DOMContentLoaded', () => {
-            const { depart, ret } = getUpcomingWeekendDates('sat');
-            document.getElementById('bannerWeekendText').textContent =
-                `Kommendes Wochenende (${fmtDE(depart)} → ${fmtDE(ret)}): Vergleiche alle 6 Strecken ab Frankfurt, Stuttgart & Baden-Airpark kompakt im Overlay.`;
             selectDriveRoute('ALC');
+            syncDropdownUI();
 
             // Direktstart der Flugsuche, wenn ?out=YYYY-MM-DD&ret=YYYY-MM-DD übergeben wurde (z. B. aus dem Kalender)
             const urlParams = new URLSearchParams(window.location.search);
@@ -1863,10 +2670,18 @@
             if (/^\d{4}-\d{2}-\d{2}$/.test(paramOut) && /^\d{4}-\d{2}-\d{2}$/.test(paramRet) && paramRet > paramOut) {
                 document.getElementById('flightOutDate').value = paramOut;
                 document.getElementById('flightRetDate').value = paramRet;
-                ['btnPresetSat', 'btnPresetFri', 'btnPreset14'].forEach(id => {
-                    document.getElementById(id).classList.remove('active');
-                });
-                openPriceModal('ALL');
+                updateRangeDisplay();
+                if (urlParams.get('origin')) {
+                    selectedOrigins = new Set([urlParams.get('origin')]);
+                    syncDropdownUI();
+                }
+                runFlightSearch(true);
+                setTimeout(() => {
+                    document.getElementById('flug-preisvergleich')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }, 150);
+            } else {
+                // Initialer Start mit voreingestelltem Freitag (Fr + 7 Nächte)
+                applyDatePreset('fri');
             }
         });
     </script>
