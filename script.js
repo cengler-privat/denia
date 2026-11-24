@@ -62,14 +62,14 @@ document.addEventListener('DOMContentLoaded', () => {
             if (secretHeading) {
                 secretHeading.style.userSelect = 'none';
                 secretHeading.addEventListener('dblclick', () => {
-                    window.location.href = 'verfuegbarkeit.html';
+                    window.location.href = 'admin.html';
                 });
                 let lastTap = 0;
                 secretHeading.addEventListener('touchend', (e) => {
                     const now = Date.now();
                     if (now - lastTap > 0 && now - lastTap < 400) {
                         e.preventDefault();
-                        window.location.href = 'verfuegbarkeit.html';
+                        window.location.href = 'admin.html';
                     }
                     lastTap = now;
                 });

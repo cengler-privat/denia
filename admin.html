@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <meta name="robots" content="noindex, nofollow">
-    <title>Admin-Kalender – Casa Englers y Amigos</title>
+    <title>Admin-Bereich – Casa Englers y Amigos</title>
 
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <link rel="stylesheet" href="style.css">
@@ -1042,6 +1042,165 @@
             color: #0f172a;
             text-decoration: underline;
         }
+
+        /* SerpApi-Kontingent Pill & Admin-Karte */
+        .serp-pill {
+            display: none;
+            align-items: center;
+            gap: 6px;
+            background: #ecfdf5;
+            color: #065f46;
+            border: 1px solid #a7f3d0;
+            border-radius: 10px;
+            padding: 6px 11px;
+            font-family: 'Lato', sans-serif;
+            font-size: 0.82rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .serp-pill:hover {
+            filter: brightness(0.95);
+        }
+
+        .serp-pill.warn {
+            background: #fffbeb;
+            color: #92400e;
+            border-color: #fde68a;
+        }
+
+        .serp-pill.danger {
+            background: #fff1f2;
+            color: #9f1239;
+            border-color: #fecdd3;
+        }
+
+        .serp-pill.muted {
+            background: #f1f5f9;
+            color: #475569;
+            border-color: #cbd5e1;
+        }
+
+        .serp-card {
+            background: #ffffff;
+            border: 1.5px solid rgba(15, 23, 42, 0.08);
+            border-radius: 20px;
+            padding: 20px 24px;
+            margin-top: 28px;
+            box-shadow: 0 10px 28px rgba(15, 23, 42, 0.05);
+            font-family: 'Lato', sans-serif;
+        }
+
+        .serp-card-head {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .serp-card-head h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            color: #0f172a;
+            margin: 0 0 2px 0;
+        }
+
+        .serp-card-sub {
+            font-size: 0.85rem;
+            color: #64748b;
+        }
+
+        .serp-dash-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: #f1f5f9;
+            color: #0f172a;
+            text-decoration: none;
+            padding: 8px 14px;
+            border-radius: 10px;
+            font-size: 0.84rem;
+            font-weight: 700;
+            border: 1px solid #cbd5e1;
+        }
+
+        .serp-dash-link:hover {
+            background: #0f172a;
+            color: #ffffff;
+            border-color: #0f172a;
+        }
+
+        .serp-stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+            gap: 12px;
+            margin-bottom: 14px;
+        }
+
+        .serp-stat-box {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 14px;
+            padding: 13px 16px;
+        }
+
+        .serp-stat-label {
+            display: block;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.8px;
+            text-transform: uppercase;
+            color: #64748b;
+            margin-bottom: 4px;
+        }
+
+        .serp-stat-value {
+            font-size: 1.45rem;
+            font-weight: 800;
+            color: #0f172a;
+            line-height: 1.2;
+        }
+
+        .serp-stat-value small {
+            font-size: 0.88rem;
+            font-weight: 700;
+            color: #64748b;
+        }
+
+        .serp-progress-track {
+            width: 100%;
+            height: 10px;
+            background: #e2e8f0;
+            border-radius: 999px;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+
+        .serp-progress-fill {
+            height: 100%;
+            width: 0%;
+            border-radius: 999px;
+            background: linear-gradient(90deg, #10b981, #22c55e);
+            transition: width 0.4s ease;
+        }
+
+        .serp-progress-fill.warn {
+            background: linear-gradient(90deg, #f59e0b, #fbbf24);
+        }
+
+        .serp-progress-fill.danger {
+            background: linear-gradient(90deg, #ef4444, #f43f5e);
+        }
+
+        .serp-card-note {
+            font-size: 0.82rem;
+            color: #64748b;
+            margin: 0;
+            line-height: 1.45;
+        }
     </style>
 </head>
 
@@ -1071,9 +1230,9 @@
 
     <div id="protected-content">
     <header class="page-hero">
-        <span class="eyebrow">Casa Englers y Amigos · Admin-Kalender</span>
-        <h1>Verfügbarkeit</h1>
-        <p>Interne Belegungsübersicht direkt aus Google Kalender – inklusive Details, Wechseltagen und Schnell-Anlage.</p>
+        <span class="eyebrow">Casa Englers y Amigos · Intern</span>
+        <h1>Admin-Bereich</h1>
+        <p>Interne Belegungsübersicht direkt aus Google Kalender, Schnell-Anlage &amp; Live-Status der SerpApi-Flugsuche.</p>
 
         <div class="vibe-filter-bar" id="season-bar">
             <!-- Dynamisch für aktuelles & nächstes Jahr befüllt -->
@@ -1090,7 +1249,8 @@
                 </div>
                 <div class="sync-actions">
                     <span id="sync-detail">Synchronisation mit Google Kalender</span>
-                    <button type="button" class="sync-mini-btn" id="refresh-btn" onclick="manualRefresh()" title="Kalender sofort frisch von Google laden">
+                    <button type="button" class="serp-pill" id="serp-top-pill" onclick="scrollToSerpCard()" title="Zum SerpApi-Kontingent springen">✈️ SerpApi: –</button>
+                    <button type="button" class="sync-mini-btn" id="refresh-btn" onclick="manualRefresh()" title="Kalender &amp; SerpApi-Kontingent sofort frisch laden">
                         <span class="spin-icon">↻</span> Aktualisieren
                     </button>
                     <button type="button" class="sync-mini-btn admin-active" id="admin-toggle-btn" onclick="logoutAdmin()" title="Admin-Modus beenden">
@@ -1149,6 +1309,37 @@
                     </div>
                 </div>
                 <div class="admin-list" id="admin-list"></div>
+            </div>
+
+            <!-- SerpApi-Kontingent (Live-Flugsuche) -->
+            <div class="serp-card" id="serp-usage-card">
+                <div class="serp-card-head">
+                    <div>
+                        <h3>✈️ SerpApi-Anfragen (Live-Flugsuche)</h3>
+                        <span class="serp-card-sub" id="serp-plan-sub">Monatskontingent wird geladen …</span>
+                    </div>
+                    <a href="https://serpapi.com/dashboard" target="_blank" rel="noopener noreferrer" class="serp-dash-link">📊 SerpApi Dashboard ↗</a>
+                </div>
+                <div class="serp-stats-grid" id="serp-stats-grid">
+                    <div class="serp-stat-box">
+                        <span class="serp-stat-label">Diesen Monat genutzt</span>
+                        <div class="serp-stat-value" id="serp-used">–</div>
+                    </div>
+                    <div class="serp-stat-box">
+                        <span class="serp-stat-label">Noch verfügbar</span>
+                        <div class="serp-stat-value" id="serp-left">–</div>
+                    </div>
+                    <div class="serp-stat-box">
+                        <span class="serp-stat-label">Letzte Stunde</span>
+                        <div class="serp-stat-value" id="serp-hour">–</div>
+                    </div>
+                </div>
+                <div class="serp-progress-track">
+                    <div class="serp-progress-fill" id="serp-progress-fill"></div>
+                </div>
+                <p class="serp-card-note" id="serp-card-note">
+                    Die Kontingent-Abfrage bei SerpApi ist kostenlos (verbraucht keine Suchen). Flug-Ergebnisse werden im Worker 4 Stunden zwischengespeichert.
+                </p>
             </div>
         </section>
 
@@ -1818,6 +2009,66 @@
         /* =========================================================
            DATEN LADEN (STRIKT NUR FÜR AUTHENTIFIZIERTE ADMINS)
         ========================================================= */
+        function scrollToSerpCard() {
+            const el = document.getElementById('serp-usage-card');
+            if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
+        function renderSerpApiUsage(serpapi, serpapiError) {
+            const pill = document.getElementById('serp-top-pill');
+            const sub = document.getElementById('serp-plan-sub');
+            const usedEl = document.getElementById('serp-used');
+            const leftEl = document.getElementById('serp-left');
+            const hourEl = document.getElementById('serp-hour');
+            const fill = document.getElementById('serp-progress-fill');
+            const note = document.getElementById('serp-card-note');
+
+            if (!serpapi) {
+                pill.style.display = 'inline-flex';
+                pill.className = 'serp-pill muted';
+                pill.textContent = '✈️ SerpApi: –';
+                usedEl.textContent = '–';
+                leftEl.textContent = '–';
+                hourEl.textContent = '–';
+                fill.style.width = '0%';
+                fill.className = 'serp-progress-fill';
+                if (serpapiError) {
+                    sub.textContent = `Fehler beim Abruf: ${serpapiError}`;
+                } else {
+                    sub.textContent = 'Cloudflare Worker noch nicht aktualisiert';
+                    note.textContent = 'Bitte die aktualisierte cloudflare-worker/worker.js einmalig im Cloudflare Dashboard deployen – danach werden hier live alle SerpApi-Anfragen angezeigt.';
+                }
+                return;
+            }
+
+            const used = Number(serpapi.this_month_usage || 0);
+            const limit = Number(serpapi.searches_per_month || 0);
+            const left = Number(serpapi.total_searches_left ?? serpapi.plan_searches_left ?? 0);
+            const hour = Number(serpapi.this_hour_searches || 0);
+            const pct = limit > 0 ? Math.min(100, Math.round((used / limit) * 100)) : 0;
+
+            let levelClass = '';
+            if (pct >= 90 || left <= 10) levelClass = 'danger';
+            else if (pct >= 70) levelClass = 'warn';
+
+            pill.style.display = 'inline-flex';
+            pill.className = `serp-pill ${levelClass}`.trim();
+            pill.textContent = limit > 0
+                ? `✈️ SerpApi: ${used} / ${limit}`
+                : `✈️ SerpApi: ${used} Anfragen`;
+
+            sub.textContent = `${serpapi.plan_name || 'SerpApi'} · ${pct}% des Monatskontingents verbraucht`;
+            usedEl.innerHTML = limit > 0
+                ? `${used} <small>/ ${limit}</small>`
+                : `${used}`;
+            leftEl.innerHTML = `${left} <small>frei</small>`;
+            hourEl.textContent = String(hour);
+
+            fill.style.width = `${pct}%`;
+            fill.className = `serp-progress-fill ${levelClass}`.trim();
+            note.textContent = 'Die Kontingent-Abfrage bei SerpApi ist kostenlos (verbraucht keine Suchen). Flug-Ergebnisse werden im Worker 4 Stunden zwischengespeichert.';
+        }
+
         function applyLiveData(data) {
             const banner = document.getElementById('sync-banner');
             const dot = document.getElementById('sync-dot');
@@ -1834,6 +2085,7 @@
             detail.textContent = `Stand: ${pad2(updatedDate.getDate())}.${pad2(updatedDate.getMonth() + 1)}.${updatedDate.getFullYear()}, ${pad2(updatedDate.getHours())}:${pad2(updatedDate.getMinutes())} Uhr`;
             renderCalendars();
             renderAdminPanel();
+            renderSerpApiUsage(data.serpapi, data.serpapi_error);
             updateInquiryBar();
         }
 
