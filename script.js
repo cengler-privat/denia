@@ -274,4 +274,15 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         setInterval(getWeatherData, 3600000);
     }
+
+    // =========================================
+    //   5. Casa-Concierge (KI-Assistent links vom Wetter-Icon)
+    // =========================================
+    if (!document.getElementById('casa-concierge-script')) {
+        const ccScript = document.createElement('script');
+        ccScript.id = 'casa-concierge-script';
+        ccScript.src = 'concierge.js';
+        ccScript.defer = true;
+        document.body.appendChild(ccScript);
+    }
 });
