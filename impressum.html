@@ -69,6 +69,37 @@
             border-bottom: 2px solid #f1f5f9;
         }
 
+        .legal-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 18px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #f1f5f9;
+        }
+
+        .legal-card-header h2 {
+            margin: 0;
+            padding: 0;
+            border-bottom: none;
+        }
+
+        .legal-updated-badge {
+            font-family: 'Lato', sans-serif;
+            font-size: 0.84rem;
+            color: #475569;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
         .legal-card h3 {
             font-family: 'Lato', sans-serif;
             font-size: 1.05rem;
@@ -135,7 +166,10 @@
 
             <!-- IMPRESSUM -->
             <article class="legal-card">
-                <h2>Impressum</h2>
+                <div class="legal-card-header">
+                    <h2>Impressum</h2>
+                    <span class="legal-updated-badge">📅 Letzte Änderung: 24. November 2026</span>
+                </div>
 
                 <h3>Angaben gemäß § 5 DDG</h3>
                 <div class="contact-box">
@@ -251,6 +285,10 @@
                     Sie haben im Rahmen der geltenden gesetzlichen Bestimmungen jederzeit das Recht auf unentgeltliche Auskunft über Ihre gespeicherten personenbezogenen Daten, deren Herkunft und Empfänger und den Zweck der Datenverarbeitung sowie ggf. ein Recht auf Berichtigung oder Löschung dieser Daten.
                 </p>
             </article>
+
+            <div style="text-align: center; margin-top: 10px; font-size: 0.86rem; color: #64748b; font-family: 'Lato', sans-serif;">
+                Letzte Aktualisierung der Website: <strong>24. November 2026</strong>
+            </div>
 
         </section>
     </main>
