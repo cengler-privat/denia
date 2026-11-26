@@ -102,7 +102,7 @@
         .spots-container {
             max-width: 1240px;
             margin: 0 auto;
-            padding: 50px 20px;
+            padding: 18px 20px 50px 20px;
         }
 
         .spots-grid {
@@ -152,21 +152,31 @@
             position: relative;
             z-index: 2;
             display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
+            gap: 6px;
+            flex-wrap: nowrap;
+            align-items: center;
             width: 100%;
+            overflow: hidden;
         }
 
         .spot-badge {
             background: rgba(15, 23, 42, 0.8);
             backdrop-filter: blur(8px);
             color: #fff;
-            padding: 5px 12px;
+            padding: 4px 10px;
             border-radius: 20px;
             font-family: 'Lato', sans-serif;
-            font-size: 12px;
+            font-size: 11px;
             font-weight: 700;
             border: 1px solid rgba(255, 255, 255, 0.2);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            min-width: 0;
+        }
+
+        .spot-badge:nth-child(n+4) {
+            display: none;
         }
 
         .spot-badge.highlight {
@@ -351,6 +361,448 @@
             line-height: 1.55;
         }
 
+        .vibe-btn.discover-jump {
+            border: 1px solid rgba(245, 158, 11, 0.55);
+            color: #fde68a;
+            background: rgba(245, 158, 11, 0.14);
+        }
+
+        .vibe-btn.discover-jump:hover {
+            background: #f59e0b;
+            color: #0f172a;
+            border-color: #f59e0b;
+        }
+
+        /* =========================================================
+           ✨ LIVE-NEUENTDECKUNG IN DÉNIA (VOLLE BREITE · DARK LUXURY)
+           ========================================================= */
+        .spot-card.discovery-card {
+            position: relative;
+            grid-column: 1 / -1;
+            display: grid;
+            grid-template-columns: 1.08fr 1fr;
+            background: radial-gradient(circle at 0% 0%, rgba(245, 158, 11, 0.16) 0%, transparent 45%), linear-gradient(145deg, #0b1325 0%, #14223d 55%, #1e293b 100%);
+            border: 1.5px solid rgba(245, 158, 11, 0.55);
+            box-shadow: 0 24px 58px rgba(15, 23, 42, 0.28), 0 0 0 1px rgba(245, 158, 11, 0.14);
+            color: #ffffff;
+            margin-top: 8px;
+        }
+
+        .spot-card.discovery-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #f59e0b 0%, #fde68a 50%, #38bdf8 100%);
+            z-index: 5;
+        }
+
+        .spot-card.discovery-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 30px 68px rgba(15, 23, 42, 0.36), 0 0 0 1px rgba(245, 158, 11, 0.35);
+        }
+
+        .discovery-left {
+            display: flex;
+            flex-direction: column;
+            min-width: 0;
+        }
+
+        .discovery-visual {
+            height: 205px;
+            background-color: #0f172a;
+            background-size: cover;
+            background-position: center;
+            border-bottom: 1px solid rgba(245, 158, 11, 0.22);
+            transition: background-image 0.35s ease;
+        }
+
+        .discovery-visual::before {
+            background: linear-gradient(180deg, rgba(11, 19, 37, 0.12) 0%, rgba(11, 19, 37, 0.78) 100%);
+        }
+
+        .discovery-card .spot-body {
+            background: transparent;
+        }
+
+        .discovery-card .spot-category {
+            color: #fbbf24;
+            letter-spacing: 2.2px;
+        }
+
+        .discovery-card .spot-body h2 {
+            color: #ffffff;
+            font-size: 1.82rem;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.25);
+        }
+
+        .discovery-card .spot-desc {
+            color: rgba(255, 255, 255, 0.86);
+        }
+
+        .discovery-card .insider-tip {
+            background: rgba(245, 158, 11, 0.12);
+            border: 1px solid rgba(245, 158, 11, 0.28);
+            border-left: 4px solid #f59e0b;
+        }
+
+        .discovery-card .insider-tip > strong {
+            color: #fde68a;
+        }
+
+        .discovery-card .insider-tip p {
+            color: rgba(254, 243, 199, 0.92);
+        }
+
+        .discovery-card .spot-actions {
+            border-top: 1px solid rgba(255, 255, 255, 0.12);
+        }
+
+        .discovery-card .action-btn {
+            flex: 1 1 140px;
+            cursor: pointer;
+            border: none;
+        }
+
+        .discovery-card .action-btn.primary {
+            background: #f59e0b;
+            color: #0f172a;
+        }
+
+        .discovery-card .action-btn.primary:hover {
+            background: #fbbf24;
+            color: #0f172a;
+        }
+
+        .discovery-card .action-btn.secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+        }
+
+        .discovery-card .action-btn.secondary:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .discovery-card .action-btn.secondary.is-active-mode {
+            background: rgba(56, 189, 248, 0.22);
+            border-color: rgba(56, 189, 248, 0.55);
+            color: #bae6fd;
+        }
+
+        .discovery-refresh-btn {
+            background: #f59e0b;
+            color: #0f172a;
+            border: 1px solid #f59e0b !important;
+            cursor: pointer;
+        }
+
+        .discovery-refresh-btn:hover:not(:disabled) {
+            background: #fbbf24;
+            color: #0f172a;
+            border-color: #fbbf24 !important;
+        }
+
+        .discovery-refresh-btn:disabled {
+            opacity: 0.65;
+            cursor: wait;
+        }
+
+        .discovery-card.is-loading .discovery-spin {
+            display: inline-block;
+            animation: discSpin 0.85s linear infinite;
+        }
+
+        @keyframes discSpin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .discovery-footer-bar {
+            position: relative;
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 10px;
+            margin-top: 10px;
+            align-items: stretch;
+        }
+
+        .discovery-history-wrap {
+            position: relative;
+            display: flex;
+        }
+
+        .discovery-history-trigger {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            color: rgba(255, 255, 255, 0.9);
+            padding: 10px 12px;
+            border-radius: 12px;
+            font-family: 'Lato', sans-serif;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            white-space: nowrap;
+            transition: all 0.2s ease;
+        }
+
+        .discovery-history-trigger:hover,
+        .discovery-history-trigger[aria-expanded="true"] {
+            background: rgba(255, 255, 255, 0.16);
+            border-color: rgba(245, 158, 11, 0.55);
+            color: #ffffff;
+        }
+
+        .discovery-history-popover {
+            position: absolute;
+            bottom: calc(100% + 10px);
+            right: 0;
+            left: auto;
+            width: 310px;
+            max-width: calc(100vw - 64px);
+            z-index: 50;
+            background: rgba(15, 23, 42, 0.94);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            border-radius: 18px;
+            padding: 14px 16px;
+            box-shadow: 0 18px 42px rgba(0, 0, 0, 0.45);
+            font-family: 'Lato', sans-serif;
+            opacity: 0;
+            transform: translateY(6px) scale(0.98);
+            pointer-events: none;
+            transition: opacity 0.2s ease, transform 0.2s ease;
+            text-align: left;
+        }
+
+        .discovery-history-popover.is-open {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            pointer-events: auto;
+        }
+
+        .disc-hist-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .disc-hist-label {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 1.6px;
+            text-transform: uppercase;
+            color: #f59e0b;
+        }
+
+        .disc-hist-close {
+            background: rgba(255, 255, 255, 0.12);
+            border: none;
+            color: rgba(255, 255, 255, 0.85);
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            font-size: 12px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .disc-hist-close:hover {
+            background: rgba(255, 255, 255, 0.22);
+        }
+
+        .disc-hist-list {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            max-height: 215px;
+            overflow-y: auto;
+            padding-right: 2px;
+        }
+
+        .disc-hist-item {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.09);
+            border-radius: 12px;
+            padding: 8px 11px;
+            color: #ffffff;
+            text-align: left;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+            transition: all 0.18s ease;
+            font-family: 'Lato', sans-serif;
+        }
+
+        .disc-hist-item:hover {
+            background: rgba(245, 158, 11, 0.18);
+            border-color: rgba(245, 158, 11, 0.45);
+        }
+
+        .disc-hist-item.is-current {
+            background: rgba(245, 158, 11, 0.22);
+            border-color: rgba(245, 158, 11, 0.65);
+        }
+
+        .disc-hist-item-title {
+            font-size: 13px;
+            font-weight: 700;
+            color: #ffffff;
+            display: block;
+        }
+
+        .disc-hist-item-sub {
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.65);
+            display: block;
+            margin-top: 1px;
+        }
+
+        .disc-hist-item-badge {
+            font-size: 11px;
+            font-weight: 700;
+            color: #fde68a;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        .disc-hist-footer {
+            margin-top: 10px;
+            padding-top: 8px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .discovery-reset-btn {
+            background: none;
+            border: none;
+            color: #fbbf24;
+            font-family: 'Lato', sans-serif;
+            font-size: 11.5px;
+            font-weight: 700;
+            cursor: pointer;
+            padding: 0;
+            text-decoration: underline;
+        }
+
+        .discovery-reset-btn:hover {
+            color: #ffffff;
+        }
+
+        .discovery-map-pane {
+            position: relative;
+            min-height: 410px;
+            background: #0b1325;
+            border-left: 1px solid rgba(245, 158, 11, 0.25);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .discovery-map-frame-wrap {
+            position: relative;
+            flex: 1;
+            min-height: 410px;
+            display: flex;
+        }
+
+        #discoveryGoogleMapIframe {
+            width: 100%;
+            height: 100%;
+            min-height: 410px;
+            border: 0;
+            display: block;
+            flex: 1;
+        }
+
+        .discovery-map-consent {
+            position: absolute;
+            inset: 0;
+            z-index: 10;
+            background: radial-gradient(circle at top right, rgba(245, 158, 11, 0.18), transparent 55%), linear-gradient(160deg, #0f172a 0%, #1e293b 100%);
+            color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 26px 22px;
+            gap: 12px;
+        }
+
+        .discovery-map-consent.hidden {
+            display: none;
+        }
+
+        .discovery-map-consent h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.25rem;
+            margin: 0;
+            color: #ffffff;
+        }
+
+        .discovery-map-consent p {
+            font-family: 'Lato', sans-serif;
+            font-size: 0.88rem;
+            color: rgba(255, 255, 255, 0.78);
+            max-width: 310px;
+            line-height: 1.5;
+            margin: 0;
+        }
+
+        .discovery-map-consent a {
+            color: #7dd3fc;
+        }
+
+        .discovery-map-unlock-btn {
+            background: #f59e0b;
+            color: #0f172a;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 12px;
+            font-family: 'Lato', sans-serif;
+            font-size: 13.5px;
+            font-weight: 800;
+            cursor: pointer;
+            transition: background 0.2s ease, transform 0.2s ease;
+        }
+
+        .discovery-map-unlock-btn:hover {
+            background: #fbbf24;
+            transform: translateY(-1px);
+        }
+
+        @media (max-width: 860px) {
+            .spot-card.discovery-card {
+                grid-column: span 1;
+                grid-template-columns: 1fr;
+            }
+            .discovery-map-pane {
+                min-height: 320px;
+                border-left: none;
+                border-top: 1px solid rgba(15, 23, 42, 0.08);
+            }
+            .discovery-map-frame-wrap,
+            #discoveryGoogleMapIframe {
+                min-height: 280px;
+            }
+        }
+
         @media (max-width: 768px) {
             .spots-grid { grid-template-columns: 1fr; }
             .vibe-filter-bar { justify-content: center; width: 100%; border-radius: 22px; gap: 6px; }
@@ -375,29 +827,29 @@
 
         <div class="filter-stack">
             <div class="vibe-filter-bar">
-                <button type="button" class="vibe-btn active" onclick="filterSpots('all', this)">✨ Alle Favoriten</button>
+                <button type="button" class="vibe-btn active" onclick="filterSpots('all', this)">✨ Alle</button>
                 <button type="button" class="vibe-btn" onclick="filterSpots('fruehstueck', this)">☕ Frühstück</button>
+                <button type="button" class="vibe-btn" onclick="filterSpots('chiringuito', this)">🏖️ Chiringuito &amp; Strandbar</button>
                 <button type="button" class="vibe-btn" onclick="filterSpots('tapas', this)">🍤 Tapas &amp; Altstadt</button>
-                <button type="button" class="vibe-btn" onclick="filterSpots('location', this)">🥂 Location &amp; Cross-Over</button>
                 <button type="button" class="vibe-btn" onclick="filterSpots('meer', this)">🥘 Paella &amp; Meer</button>
-                <button type="button" class="vibe-btn" onclick="filterSpots('chiringuito', this)">🏖️ Chiringuitos</button>
-                <button type="button" class="vibe-btn" onclick="filterSpots('ausserhalb', this)">🚗 Außerhalb Dénias</button>
-            </div>
-
-            <div class="distance-filter-bar" role="group" aria-label="Entfernung und Anfahrtsdauer ab Casa">
-                <span class="dist-filter-label">Anfahrt:</span>
-                <button type="button" class="dist-btn active" data-dist="all" onclick="filterByDistance('all', this)">🌍 Alle</button>
-                <button type="button" class="dist-btn" data-dist="walk" onclick="filterByDistance('walk', this)">🚶 Zu Fuß (&lt; 2 km)</button>
-                <button type="button" class="dist-btn" data-dist="20" onclick="filterByDistance('20', this)">🚗 Bis 20 Min.</button>
-                <button type="button" class="dist-btn" data-dist="45" onclick="filterByDistance('45', this)">🚗 Bis 45 Min.</button>
-                <span class="dist-divider" aria-hidden="true"></span>
-                <button type="button" class="dist-map-btn" onclick="openSpotMapOverlay({ cat: 'kulinarik', dist: getActivePageDistFilter() })"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9.5"/><polygon points="16.2 7.8 14.1 14.1 7.8 16.2 9.9 9.9 16.2 7.8" fill="#f59e0b" stroke="#f59e0b" stroke-width="1.2"/></svg> Entdecker-Karte</button>
+                <button type="button" class="vibe-btn discover-jump" id="btnFilterDiscovery" onclick="filterSpots('discovery', this)">✨ Neuentdeckung</button>
             </div>
         </div>
     </header>
 
     <main>
         <section class="spots-container">
+            <div class="spots-top-tools">
+                <button type="button" class="dist-toggle-btn" aria-expanded="false" onclick="toggleDistanceFilterBar(this)">🚗 Nach Entfernung filtern ▾</button>
+                <div class="distance-filter-bar collapsible" role="group" aria-label="Entfernung und Anfahrtsdauer ab Casa">
+                    <span class="dist-filter-label">Anfahrt:</span>
+                    <button type="button" class="dist-btn active" data-dist="all" onclick="filterByDistance('all', this)">🌍 Alle</button>
+                    <button type="button" class="dist-btn" data-dist="walk" onclick="filterByDistance('walk', this)">🚶 Zu Fuß (&lt; 2 km)</button>
+                    <button type="button" class="dist-btn" data-dist="20" onclick="filterByDistance('20', this)">🚗 Bis 20 Min.</button>
+                    <button type="button" class="dist-btn" data-dist="45" onclick="filterByDistance('45', this)">🚗 Bis 45 Min.</button>
+                </div>
+            </div>
+
             <div class="spots-grid">
 
                 <!-- 1. LA SUCRERIA DE LA PLAÇA (XÀBIA / JÁVEA) -->
@@ -481,9 +933,9 @@
                 <article class="spot-card" data-category="location" data-spot-id="mala-vita">
                     <div class="spot-visual" style="background-image: url('images/kulinarik-mala-vita.jpg'); background-position: center 68%;">
                         <div class="spot-badges">
-                            <span class="spot-badge highlight">🍹 Cocktails &amp; Sundowner</span>
-                            <span class="spot-badge">🛥️ Marina de Dénia</span>
-                            <span class="spot-badge">✨ Ohne Reservierung</span>
+                            <span class="spot-badge highlight" data-full-title="Cocktails &amp; Sundowner">🍹 Sundowner</span>
+                            <span class="spot-badge">🛥️ Marina Dénia</span>
+                            <span class="spot-badge" data-full-title="Ohne Reservierung">✨ Ohne Res.</span>
                         </div>
                     </div>
                     <div class="spot-body">
@@ -611,7 +1063,7 @@
                     <div class="spot-visual" style="background-image: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80');">
                         <div class="spot-badges">
                             <span class="spot-badge highlight">🏖️ Strandbar</span>
-                            <span class="spot-badge">🚶 Wenige Meter entfernt</span>
+                            <span class="spot-badge" data-full-title="Wenige Meter von der Casa entfernt">🚶 Ganz nah</span>
                             <span class="spot-badge">🍷 Caña &amp; Sangría</span>
                         </div>
                     </div>
@@ -688,7 +1140,7 @@
                     <div class="spot-visual" style="background-image: url('images/spots/marineta.jpg');">
                         <div class="spot-badges">
                             <span class="spot-badge highlight">🏖️ Strandbar</span>
-                            <span class="spot-badge">🥐 Frühstück &amp; Sundowner</span>
+                            <span class="spot-badge" data-full-title="Frühstück &amp; Sundowner">🥐 Frühstück</span>
                             <span class="spot-badge">🏃 Promenade</span>
                         </div>
                     </div>
@@ -712,9 +1164,9 @@
                 <article class="spot-card" data-category="fruehstueck tapas" data-spot-id="mivilla-carrio">
                     <div class="spot-visual" style="background-image: url('images/spots/marques-campo.jpg');">
                         <div class="spot-badges">
-                            <span class="spot-badge highlight">☕ Spanisches Frühstück</span>
+                            <span class="spot-badge highlight" data-full-title="Spanisches Frühstück">☕ Frühstück</span>
                             <span class="spot-badge">🍊 Zumo &amp; Tostada</span>
-                            <span class="spot-badge">📍 Marqués de Campo</span>
+                            <span class="spot-badge" data-full-title="Marqués de Campo (Zentrum)">📍 Zentrum</span>
                         </div>
                     </div>
                     <div class="spot-body">
@@ -809,6 +1261,69 @@
                     </div>
                 </article>
 
+                <!-- 16. LIVE-NEUENTDECKUNG IN DÉNIA (EIGENE ZEILE · VOLLE BREITE + GOOGLE MAPS) -->
+                <article class="spot-card discovery-card" id="restaurantDiscoveryCard" data-category="discovery">
+                    <div class="discovery-left">
+                        <div class="spot-visual discovery-visual" id="discVisual" style="background-image: url('images/kulinarik-hafen.jpg');">
+                            <div class="spot-badges">
+                                <span class="spot-badge highlight">✨ Online-Neuentdeckung</span>
+                                <span class="spot-badge" id="discBadgePrice">€€</span>
+                                <span class="spot-badge" id="discBadgeDist">🚗 ca. -- Min. ab Casa</span>
+                            </div>
+                        </div>
+                        <div class="spot-body">
+                            <span class="spot-category" id="discCategory">Geheimtipp in Dénia · Noch nicht auf der Liste</span>
+                            <h2 id="discTitle">Suche Neuentdeckung in Dénia…</h2>
+                            <p class="spot-desc" id="discDesc">
+                                Wir suchen gerade online ein echtes Restaurant in Dénia heraus, das perfekt zu unseren bisherigen Favoriten passt – aber noch nicht oben aufgeführt ist.
+                            </p>
+                            <div class="insider-tip">
+                                <strong>💡 Warum es zu unseren Favoriten passt:</strong>
+                                <p id="discTip">Einen kleinen Moment – der kulinarische Scout prüft gerade aktuelle Empfehlungen in Dénia…</p>
+                            </div>
+                            <div class="spot-actions">
+                                <a href="#" target="_blank" rel="noopener noreferrer" class="action-btn secondary" id="discWebsiteBtn">🔍 Google-Eintrag</a>
+                                <a href="https://www.google.com/maps/search/?api=1&query=Denia+Restaurant" target="_blank" rel="noopener noreferrer" class="action-btn secondary" id="discMapsBtn" data-icon="gmaps">Route in Maps</a>
+                                <button type="button" class="action-btn secondary" id="discMapToggleBtn" onclick="toggleDiscoveryMapMode()">🚗 Route auf Karte</button>
+                            </div>
+                            <div class="discovery-footer-bar">
+                                <button type="button" class="action-btn discovery-refresh-btn" id="discRefreshBtn" onclick="discoverNewRestaurant(true)">
+                                    <span class="discovery-spin">🔄</span> Neu entdecken
+                                </button>
+                                <div class="discovery-history-wrap">
+                                    <button type="button" class="discovery-history-trigger" id="discHistoryBtn" aria-expanded="false" onclick="toggleDiscoveryHistory()">
+                                        <span id="discHistoryInfo">Entdeckt (0)</span>
+                                        <span>▾</span>
+                                    </button>
+                                    <div class="discovery-history-popover" id="discHistoryPopover" role="dialog" aria-label="Bereits entdeckte Restaurants">
+                                        <div class="disc-hist-header">
+                                            <span class="disc-hist-label">Entdeckte Lokale</span>
+                                            <button type="button" class="disc-hist-close" onclick="toggleDiscoveryHistory(false)" aria-label="Schließen">✕</button>
+                                        </div>
+                                        <div class="disc-hist-list" id="discHistoryList"></div>
+                                        <div class="disc-hist-footer">
+                                            <button type="button" class="discovery-reset-btn" id="discResetBtn" onclick="resetDiscoveryHistory()">↺ Verlauf zurücksetzen</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="discovery-map-pane">
+                        <div class="discovery-map-frame-wrap">
+                            <iframe id="discoveryGoogleMapIframe" title="Google Maps – Restaurant-Neuentdeckung in Dénia" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen src="about:blank"></iframe>
+
+                            <div class="discovery-map-consent" id="discMapConsentGate">
+                                <div style="font-size: 2rem;">🗺️</div>
+                                <h3>Lage in Google Maps anzeigen</h3>
+                                <p>Mit Klick auf den Button wird <strong>Google Maps</strong> geladen, um das Lokal (inkl. Route ab der Casa) direkt hier einzublenden (<a href="impressum.html">Datenschutz</a>).</p>
+                                <button type="button" class="discovery-map-unlock-btn" onclick="unlockDiscoveryMap()">🗺️ Google Maps einblenden</button>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
             </div>
         </section>
 
@@ -853,5 +1368,716 @@
 
     <script src="script.js" defer></script>
     <script src="spots-map.js" defer></script>
+    <script>
+        (function () {
+            'use strict';
+
+            const WORKER_BASE = 'https://denia-flights.cf-5a7.workers.dev';
+            const STORAGE_KEY = 'denia_discovery_history_v1';
+            const MAP_CONSENT_KEY = 'denia_consent_gmaps';
+            const CASA_LAT = 38.85690;
+            const CASA_LON = 0.06900;
+            const CASA_EMBED_ORIGIN = encodeURIComponent('Urbanización Albatros, Ctra. de les Marines a Dénia km 3.5, 03700 Dénia');
+
+            const EXISTING_RESTAURANTS = [
+                'La Sucreria de la Plaça', 'Pepa Teresa', 'Republic Dénia', 'Mala Vita',
+                'Restaurante Primera Línea', 'Restaurante Sur', 'Cala Clémence del Portitxol',
+                'Tona Beach Bar', 'El Chiringüito', 'Chiringuito Mojito Dénia',
+                'Chiringuito El de la Marineta', 'Mi Villa Nº 1', 'Bar Carrió',
+                'Dexcaro Experience', 'Mandala Beach Bar', 'Restaurant Quique Dacosta'
+            ];
+
+            // Kuratierter Backup-Pool echter Top-Lokale in Dénia (falls API kurzzeitig nicht erreichbar)
+            const BACKUP_DISCOVERIES = [
+                {
+                    name: 'Peix & Brases',
+                    area: 'Hafen & Baix la Mar · Dénia',
+                    cuisine: 'Mediterrane Küche & Holzkohlegrill',
+                    priceRange: '€€€',
+                    description: 'Modernes Spitzenlokal direkt am Hafen von Dénia (1 Michelin-Stern & Repsol-Sonnen) mit Fokus auf fangfrischen Fisch, Gamba Roja und Aromen vom Holzkohlegrill – dazu eine herrliche Dachterrasse.',
+                    tip: 'Perfekt für einen besonderen Abend zwischen Republic und Quique Dacosta. Unbedingt vorab einen Tisch auf der Dachterrasse reservieren!',
+                    address: 'Plaça de Benidorm, 18, 03700 Dénia, Alicante',
+                    lat: 38.8422,
+                    lon: 0.1116,
+                    website: 'https://www.peixibrases.com/'
+                },
+                {
+                    name: 'El Baret de Miquel',
+                    area: 'Altstadt · Dénia',
+                    cuisine: 'Kreative Marktküche & Tapas',
+                    priceRange: '€€',
+                    description: 'Kult-Adresse von Spitzenkoch Miquel Ruiz in der Altstadt: unkomplizierte Bar-Atmosphäre trifft auf geniale, täglich wechselnde Kreationen mit frischen Zutaten vom Markt in Dénia.',
+                    tip: 'Extrem beliebt bei Einheimischen – unbedingt mehrere Wochen im Voraus online reservieren und das legendäre Figatell de Sepia probieren!',
+                    address: 'Carrer d’Historiador Palau, 1, 03700 Dénia, Alicante',
+                    lat: 38.8404,
+                    lon: 0.1086,
+                    website: ''
+                },
+                {
+                    name: 'La Xerna del Mar',
+                    area: 'Zentrum · Dénia',
+                    cuisine: 'Moderne Tapas & Meeresfrüchte',
+                    priceRange: '€€',
+                    description: 'Stilvolles, lebendiges Restaurant im Herzen Dénias mit offener Küche, kreativen Meeres-Tapas und exzellenten Reisgerichten – eine tolle Alternative, wenn ihr die Calle Loreto schon kennt.',
+                    tip: 'Ideal zum Teilen in der Runde: Probiert unbedingt die Kroketten, das Thunfisch-Tatar und einen trockenen Weißwein aus der Region Alicante.',
+                    address: 'Carrer de Sandunga, 54, 03700 Dénia, Alicante',
+                    lat: 38.8411,
+                    lon: 0.1101,
+                    website: 'https://laxernadelmar.com/'
+                },
+                {
+                    name: 'El Faralló',
+                    area: 'Les Rotes · Dénia',
+                    cuisine: 'Traditionelle Fischküche & Gamba Roja',
+                    priceRange: '€€€',
+                    description: 'Legendäres Traditionsrestaurant an der Felsküste von Les Rotes, berühmt für die vielleicht beste gekochte Gamba Roja de Dénia und authentische Reisgerichte der Marina Alta.',
+                    tip: 'Lässt sich perfekt mit einem Spaziergang entlang der Promenade von Les Rotes Richtung Torre del Gerro verbinden!',
+                    address: 'Carrer del Fènix, 10, 03700 Dénia, Alicante',
+                    lat: 38.8266,
+                    lon: 0.1436,
+                    website: 'https://www.elfarallo.com/'
+                },
+                {
+                    name: 'Casa Federico',
+                    area: 'Punta del Raset · Dénia',
+                    cuisine: 'Klassische Paella & Arroz a Banda',
+                    priceRange: '€€',
+                    description: 'Seit Jahrzehnten eine Institution für authentische Reisgerichte in Strandnähe – schnörkellos, herzlich und bei Familien aus Dénia am Wochenende heiß begehrt.',
+                    tip: 'Kommt mittags für einen echten Arroz a Banda oder Arroz del Senyoret – von der Casa aus in wenigen Minuten Richtung Hafen erreichbar.',
+                    address: 'Carrer d’Ausiàs March, 22, 03700 Dénia, Alicante',
+                    lat: 38.8482,
+                    lon: 0.1023,
+                    website: 'https://www.casafederico.es/'
+                },
+                {
+                    name: 'Els Magazinos',
+                    area: 'Baix la Mar · Dénia',
+                    cuisine: 'Gastronomischer Markt & Tapas-Höfe',
+                    priceRange: '€€',
+                    description: 'Wunderschön restaurierter Innenhof-Markt im alten Fischerviertel Baix la Mar mit über 20 kleinen Ständen, Kunst, Musik und entspanntem Open-Air-Flair.',
+                    tip: 'Super, wenn jeder in der Gruppe Lust auf etwas anderes hat – von frischen Austern über Tapas bis zu handgemachten Empanadas.',
+                    address: 'Carrer del Pont, 19, 03700 Dénia, Alicante',
+                    lat: 38.8427,
+                    lon: 0.1095,
+                    website: 'https://elsmagazinos.com/'
+                },
+                {
+                    name: 'El Raset',
+                    area: 'Hafenpromenade · Dénia',
+                    cuisine: 'Gehobene Mittelmeerküche',
+                    priceRange: '€€€',
+                    description: 'Elegantes Restaurant direkt an der Hafenfront gegenüber den Fischerbooten – moderne Interpretationen der valencianischen Küche mit erstklassigem Service.',
+                    tip: 'Vorher kurz am Hafen entlangschlendern und abends das Degustationsmenü oder frischen Fisch aus der Bucht genießen.',
+                    address: 'Carrer de Bellavista, 7, 03700 Dénia, Alicante',
+                    lat: 38.8434,
+                    lon: 0.1112,
+                    website: 'https://www.grupoelraset.com/'
+                },
+                {
+                    name: 'Tasca Les Monges',
+                    area: 'Calle Loreto · Dénia',
+                    cuisine: 'Authentische Tapas-Bar',
+                    priceRange: '€€',
+                    description: 'Gemütliche, sehr authentische Tapas-Tasca mitten in der beliebten Calle Loreto mit liebevoll zubereiteten Klassikern, toller Weinauswahl und entspannter Altstadt-Stimmung.',
+                    tip: 'Wenn bei Pepa Teresa kein Platz mehr frei ist, ist das der perfekte nächste Halt in derselben Gasse!',
+                    address: 'Carrer de Loreto, 17, 03700 Dénia, Alicante',
+                    lat: 38.8407,
+                    lon: 0.1066,
+                    website: ''
+                },
+                {
+                    name: 'Restaurante Mena',
+                    area: 'Les Rotes · Dénia',
+                    cuisine: 'Traditionelle Paella & Meeresfrüchte',
+                    priceRange: '€€€',
+                    description: 'Legendäre Familien-Institution direkt auf den Klippen am Ende von Les Rotes mit spektakulärem Panoramablick übers Mittelmeer – seit über 70 Jahren eine Top-Adresse für Paella und Fideuà.',
+                    tip: 'Unbedingt frühzeitig einen Tisch direkt an der Terrassen-Brüstung fürs Mittagessen reservieren und den Blick aufs Meer genießen!',
+                    address: 'Final de Les Rotes, 03700 Dénia, Alicante',
+                    lat: 38.8172,
+                    lon: 0.1563,
+                    website: ''
+                },
+                {
+                    name: 'Restaurante El Pegolí',
+                    area: 'Les Rotes · Dénia',
+                    cuisine: 'Gamba Roja & Fisch-Klassiker',
+                    priceRange: '€€€',
+                    description: 'Historisches Küstenlokal direkt am Wasser in Les Rotes – unter Kennern einer der berühmtesten Orte überhaupt für fangfrische Gamba Roja de Dénia und klassische Fischgerichte.',
+                    tip: 'Perfekt für ein genussvolles Mittagessen direkt am Meer – ein echter Klassiker der Marina Alta.',
+                    address: 'Carrer del Fènix, 13, 03700 Dénia, Alicante',
+                    lat: 38.8261,
+                    lon: 0.1442,
+                    website: ''
+                },
+                {
+                    name: 'Tasca Eulalia',
+                    area: 'Altstadt · Dénia',
+                    cuisine: 'Traditionelle Tapas seit 1892',
+                    priceRange: '€€',
+                    description: 'Urige, lebendige Traditions-Tasca mit Geschichte seit 1892 im Herzen Dénias – beliebt bei Einheimischen für ehrliche Tapas, gegrillten Thunfisch und hervorragenden Jamón Ibérico.',
+                    tip: 'Ideal für einen geselligen Abend rund um Marqués de Campo & die Altstadt – einfach durch verschiedene Tapas probieren.',
+                    address: 'Carrer de Marqués de Campo, 39, 03700 Dénia, Alicante',
+                    lat: 38.8408,
+                    lon: 0.1088,
+                    website: ''
+                },
+                {
+                    name: 'Pont Sec',
+                    area: 'Camí de Gandia · Dénia',
+                    cuisine: 'Arrocería & Traditionelle Küche',
+                    priceRange: '€€',
+                    description: 'Geheimtipp von Reis-Meister Pep Romany etwas abseits des Trubels: Hier werden traditionelle trockene Reisgerichte und regionale Cocas noch authentisch über Rebenholz zubereitet.',
+                    tip: 'Unbedingt vorher reservieren und schon bei der Buchung nach dem gewünschten Reisgericht fragen – genau so machen es die Einheimischen!',
+                    address: 'Camí de Gandia, km 1, 03700 Dénia, Alicante',
+                    lat: 38.8442,
+                    lon: 0.0895,
+                    website: ''
+                },
+                {
+                    name: 'El Marino Rotes',
+                    area: 'Les Rotes · Dénia',
+                    cuisine: 'Authentische Bar & Meeres-Tapas',
+                    priceRange: '€€',
+                    description: 'Lebendige, herrlich authentische Einheimischen-Bar an der Küstenstraße von Les Rotes – perfekt für einen Mittags-Wermut, hausgemachte Figatells, Sepionet und fangfrische Meeres-Tapas.',
+                    tip: 'Super entspannt nach einem Spaziergang an der Promenade von Les Rotes – unkompliziert, ehrlich und voller lokaler Atmosphäre.',
+                    address: 'Ctra. Barranc del Monyo, 96, 03700 Dénia, Alicante',
+                    lat: 38.8235,
+                    lon: 0.1418,
+                    website: ''
+                },
+                {
+                    name: 'L’Eriçó del Trampolí',
+                    area: 'Les Rotes · Dénia',
+                    cuisine: 'Meerblick-Terrasse & Tapas',
+                    priceRange: '€€',
+                    description: 'Traumhaft gelegene Terrasse direkt über dem kristallklaren Felsstrand El Trampolí in Les Rotes – entspannte Atmosphäre mit frischem Fisch, Tapas und Urlaubsgefühl pur.',
+                    tip: 'Am besten mit Badesachen kombinieren: erst in der Bucht El Trampolí schnorcheln, danach direkt auf die Terrasse!',
+                    address: 'Carrer del Fènix, 2, 03700 Dénia, Alicante',
+                    lat: 38.8271,
+                    lon: 0.1431,
+                    website: ''
+                }
+            ];
+
+            let discMapMode = 'place'; // 'place' = Lokal-Ansicht, 'route' = Route ab Casa Englers
+            let currentRestaurant = null;
+            let isFetching = false;
+
+            function normalizeName(str) {
+                return String(str || '')
+                    .toLowerCase()
+                    .normalize('NFD')
+                    .replace(/[\u0300-\u036f]/g, '')
+                    .replace(/\b(restaurante|restaurant|bar|chiringuito|tasca|experience|beach|denia|de|del|la|el|y|i|und)\b/g, ' ')
+                    .replace(/[^a-z0-9]/g, '');
+            }
+
+            const EXISTING_CORE_LIST = EXISTING_RESTAURANTS.map(normalizeName).filter(Boolean);
+
+            function namesMatch(a, b) {
+                const na = normalizeName(a);
+                const nb = normalizeName(b);
+                if (!na || !nb) return false;
+                if (na === nb) return true;
+                if (na.length >= 5 && nb.length >= 5 && (na.includes(nb) || nb.includes(na))) return true;
+                return false;
+            }
+
+            function isExistingFavorite(name) {
+                const norm = normalizeName(name);
+                if (!norm) return true;
+                return EXISTING_CORE_LIST.some(ex => ex === norm || (norm.length >= 5 && ex.length >= 5 && (norm.includes(ex) || ex.includes(norm))));
+            }
+
+            function getTodayISO() {
+                const d = new Date();
+                const y = d.getFullYear();
+                const m = String(d.getMonth() + 1).padStart(2, '0');
+                const day = String(d.getDate()).padStart(2, '0');
+                return `${y}-${m}-${day}`;
+            }
+
+            function loadHistory() {
+                try {
+                    const raw = localStorage.getItem(STORAGE_KEY);
+                    if (raw) {
+                        const parsed = JSON.parse(raw);
+                        return {
+                            seen: Array.isArray(parsed.seen) ? parsed.seen : [],
+                            items: Array.isArray(parsed.items) ? parsed.items : [],
+                            current: parsed.current || null
+                        };
+                    }
+                } catch (_) {}
+                return { seen: [], items: [], current: null };
+            }
+
+            function saveHistory(hist) {
+                try {
+                    localStorage.setItem(STORAGE_KEY, JSON.stringify(hist));
+                } catch (_) {}
+            }
+
+            function calcDistanceKm(lat1, lon1, lat2, lon2) {
+                const R = 6371;
+                const dLat = (lat2 - lat1) * Math.PI / 180;
+                const dLon = (lon2 - lon1) * Math.PI / 180;
+                const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+                    Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+                    Math.sin(dLon / 2) * Math.sin(dLon / 2);
+                return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+            }
+
+            function estimateDriveMinutes(km) {
+                const roadKm = km * 1.32;
+                return Math.max(3, Math.round((roadKm / 34) * 60 + 2));
+            }
+
+            function setLoadingUI(loading) {
+                isFetching = loading;
+                const card = document.getElementById('restaurantDiscoveryCard');
+                const btnMain = document.getElementById('discRefreshBtn');
+                card?.classList.toggle('is-loading', loading);
+                if (btnMain) btnMain.disabled = loading;
+            }
+
+            function updateHistoryFooter(hist) {
+                const infoEl = document.getElementById('discHistoryInfo');
+                const listEl = document.getElementById('discHistoryList');
+                const count = hist.items.length || hist.seen.length;
+                if (infoEl) {
+                    infoEl.textContent = `Entdeckt (${count})`;
+                }
+                if (listEl) {
+                    if (!hist.items.length) {
+                        listEl.innerHTML = '<div style="font-size:12px;color:rgba(255,255,255,0.65);padding:6px 4px;">Noch keine weiteren Lokale im Verlauf gespeichert.</div>';
+                    } else {
+                        listEl.innerHTML = hist.items.map((item, idx) => {
+                            const isCur = currentRestaurant && namesMatch(item.name, currentRestaurant.name);
+                            const safeName = String(item.name || '').replace(/</g, '&lt;');
+                            const safeSub = String(`${item.cuisine || 'Mediterrane Küche'} · ${item.area || 'Dénia'}`).replace(/</g, '&lt;');
+                            const safePrice = String(item.priceRange || '€€').replace(/</g, '&lt;');
+                            return `
+                                <button type="button" class="disc-hist-item${isCur ? ' is-current' : ''}" onclick="selectFromDiscoveryHistory(${idx})">
+                                    <span>
+                                        <span class="disc-hist-item-title">${safeName}</span>
+                                        <span class="disc-hist-item-sub">${safeSub}</span>
+                                    </span>
+                                    <span class="disc-hist-item-badge">${isCur ? '✓ Aktiv' : safePrice}</span>
+                                </button>
+                            `;
+                        }).join('');
+                    }
+                }
+            }
+
+            window.toggleDiscoveryHistory = function (forceOpen) {
+                const pop = document.getElementById('discHistoryPopover');
+                const btn = document.getElementById('discHistoryBtn');
+                if (!pop) return;
+                const open = typeof forceOpen === 'boolean' ? forceOpen : !pop.classList.contains('is-open');
+                pop.classList.toggle('is-open', open);
+                btn?.setAttribute('aria-expanded', open ? 'true' : 'false');
+            };
+
+            window.selectFromDiscoveryHistory = function (idx) {
+                const hist = loadHistory();
+                const picked = hist.items[idx];
+                if (!picked) return;
+                hist.current = { date: getTodayISO(), restaurant: picked };
+                saveHistory(hist);
+                renderRestaurant(picked, hist);
+                window.toggleDiscoveryHistory(false);
+            };
+
+            document.addEventListener('click', (e) => {
+                if (!e.target.closest('.discovery-history-wrap')) {
+                    window.toggleDiscoveryHistory(false);
+                }
+            });
+
+            const BLOCKED_SITE_RE = /(instagram\.com|facebook\.com|fb\.com|tiktok\.com|tripadvisor\.|thefork\.|yelp\.|restaurantguru\.|google\.)/i;
+
+            function sanitizeWebsiteUrl(raw) {
+                const s = String(raw || '').trim();
+                if (!/^https?:\/\/[a-z0-9.-]+\.[a-z]{2,}/i.test(s)) return '';
+                if (BLOCKED_SITE_RE.test(s)) return '';
+                return s;
+            }
+
+            function pickFallbackPhoto(r) {
+                const text = `${r.cuisine || ''} ${r.area || ''} ${r.description || ''}`.toLowerCase();
+                if (/paella|reis|arroz|gamba|fisch|meeresfr/.test(text)) return 'images/kulinarik-paella.jpg';
+                if (/tapas|altstadt|loreto|wein|tasca|markt/.test(text)) return 'images/kulinarik-tapas.jpg';
+                if (/strand|chiring|beach|meer|bucht/.test(text)) return 'images/kulinarik-chiringuito.jpg';
+                return 'images/kulinarik-hafen.jpg';
+            }
+
+            async function searchCommonsPhoto(query) {
+                try {
+                    const params = new URLSearchParams({
+                        action: 'query',
+                        generator: 'search',
+                        gsrsearch: `${query} filetype:bitmap`,
+                        gsrnamespace: '6',
+                        gsrlimit: '8',
+                        prop: 'imageinfo',
+                        iiprop: 'url|size|mime',
+                        iiurlwidth: '960',
+                        format: 'json',
+                        origin: '*'
+                    });
+                    const resp = await fetch(`https://commons.wikimedia.org/w/api.php?${params.toString()}`);
+                    if (!resp.ok) return '';
+                    const data = await resp.json();
+                    const pages = Object.values(data?.query?.pages || {});
+                    const candidates = pages
+                        .map(p => ({ title: p.title || '', info: p.imageinfo?.[0] }))
+                        .filter(x => x.info && x.info.thumburl && x.info.width >= 800 && x.info.width > x.info.height && /image\/jpe?g/i.test(x.info.mime || '') && !/logo|map|icon|flag|coat|plan|sign|menu|saint|sant|iglesia|church|ermita|azulejo|mural|statue|monument|plaque|escudo|castillo|cementerio|cemetery|tomb/i.test(x.title));
+                    if (!candidates.length) return '';
+                    return candidates[Math.floor(Math.random() * Math.min(candidates.length, 4))].info.thumburl;
+                } catch (_) {
+                    return '';
+                }
+            }
+
+            let photoLoadToken = 0;
+
+            async function loadDiscoveryPhoto(r) {
+                const visual = document.getElementById('discVisual');
+                if (!visual) return;
+                const token = ++photoLoadToken;
+
+                // Sofort passendes lokales Fallback-Bild setzen
+                visual.style.backgroundImage = `url('${pickFallbackPhoto(r)}')`;
+
+                // Online-Bild suchen: 1) Worker imageUrl, 2) Wikimedia Commons (Lokal / Viertel / Küche)
+                const tryApplyImage = (url) => new Promise((resolve) => {
+                    if (!url) return resolve(false);
+                    const img = new Image();
+                    img.onload = () => {
+                        if (token === photoLoadToken && img.naturalWidth >= 400) {
+                            visual.style.backgroundImage = `url('${url}')`;
+                            resolve(true);
+                        } else {
+                            resolve(false);
+                        }
+                    };
+                    img.onerror = () => resolve(false);
+                    img.src = url;
+                });
+
+                if (r.imageUrl && await tryApplyImage(r.imageUrl)) return;
+
+                const cuisineLower = (r.cuisine || '').toLowerCase();
+                const queries = [];
+                if (/paella|reis|arroz|fideu/.test(cuisineLower)) queries.push('Paella Valenciana food', 'Arroz a banda');
+                else if (/fisch|gamba|meeresfr|marisco/.test(cuisineLower)) queries.push('Gamba roja seafood', 'Mediterranean seafood dish');
+                else if (/tapas|tasca|wein|markt|baret/.test(cuisineLower)) queries.push('Spanish tapas food', 'Tapas bar Spain');
+                else queries.push('Mediterranean restaurant food Spain', 'Spanish tapas food');
+
+                for (const q of queries) {
+                    if (token !== photoLoadToken) return;
+                    const url = await searchCommonsPhoto(q);
+                    if (url && await tryApplyImage(url)) return;
+                }
+            }
+
+            function renderRestaurant(r, hist) {
+                currentRestaurant = r;
+                const km = calcDistanceKm(CASA_LAT, CASA_LON, r.lat, r.lon);
+                const mins = estimateDriveMinutes(km);
+
+                document.getElementById('discBadgePrice').textContent = r.priceRange || '€€';
+                document.getElementById('discBadgeDist').textContent = `🚗 ca. ${mins} Min. (${km.toFixed(1).replace('.', ',')} km)`;
+                document.getElementById('discCategory').textContent = `${r.cuisine || 'Mediterrane Küche'} · ${r.area || 'Dénia'}`;
+                document.getElementById('discTitle').textContent = r.name;
+                document.getElementById('discDesc').textContent = r.description;
+                document.getElementById('discTip').textContent = r.tip;
+
+                const webBtn = document.getElementById('discWebsiteBtn');
+                const validSite = r.websiteVerified ? sanitizeWebsiteUrl(r.website) : '';
+                if (validSite) {
+                    webBtn.href = validSite;
+                    webBtn.textContent = '🌐 Website';
+                } else {
+                    const googleEntryQuery = encodeURIComponent(`${r.name} Dénia Restaurant`);
+                    webBtn.href = `https://www.google.com/search?q=${googleEntryQuery}`;
+                    webBtn.textContent = '🔍 Google-Eintrag';
+                }
+                webBtn.style.display = '';
+
+                const mapsQuery = encodeURIComponent(`${r.name} ${r.address || 'Denia Alicante'}`);
+                document.getElementById('discMapsBtn').href = `https://www.google.com/maps/search/?api=1&query=${mapsQuery}`;
+
+                loadDiscoveryPhoto(r);
+                updateHistoryFooter(hist);
+                syncDiscoveryMap();
+                syncBadgeTooltips();
+            }
+
+            function isAlreadyKnown(name, seenList) {
+                if (!name || isExistingFavorite(name)) return true;
+                return seenList.some(s => namesMatch(s, name));
+            }
+
+            function parseRestaurantJson(text) {
+                const match = String(text || '').match(/\{[\s\S]*\}/);
+                if (!match) return null;
+                const obj = JSON.parse(match[0]);
+                if (!obj || !obj.name) return null;
+                let lat = parseFloat(obj.lat);
+                let lon = parseFloat(obj.lon);
+                if (!Number.isFinite(lat) || lat < 38.78 || lat > 38.90 || !Number.isFinite(lon) || lon < 0.02 || lon > 0.19) {
+                    lat = 38.8408;
+                    lon = 0.1057;
+                }
+                return {
+                    name: String(obj.name).trim(),
+                    area: String(obj.area || 'Dénia').trim(),
+                    cuisine: String(obj.cuisine || 'Mediterrane Küche').trim(),
+                    priceRange: String(obj.priceRange || '€€').trim(),
+                    description: String(obj.description || '').trim(),
+                    tip: String(obj.tip || '').trim(),
+                    address: String(obj.address || '03700 Dénia, Alicante').trim(),
+                    lat,
+                    lon,
+                    website: '',
+                    websiteVerified: false
+                };
+            }
+
+            const NON_DENIA_RE = /\b(valencia|roca|meliana|javea|xabia|calpe|calp|altea|benidorm|moraira|gandia|oliva|ondara|pedreguer|els poblets|benissa)\b/i;
+
+            function isValidDeniaRestaurant(r) {
+                if (!r || !r.name) return false;
+                if (namesMatch(r.name, 'Ca Pepico')) return false;
+                const addrNorm = String(r.address || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+                const areaNorm = String(r.area || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+                if (NON_DENIA_RE.test(addrNorm) || NON_DENIA_RE.test(areaNorm)) return false;
+                if (addrNorm && !/(denia|03700)/.test(addrNorm) && !/denia/.test(areaNorm)) return false;
+                return true;
+            }
+
+            function mergeWithVerifiedFactCheck(r) {
+                const match = BACKUP_DISCOVERIES.find(b => namesMatch(b.name, r.name));
+                if (match) {
+                    return { ...match, websiteVerified: Boolean(match.website) };
+                }
+                return r;
+            }
+
+            async function fetchOnlineRestaurant(seenNames) {
+                // 1) Dedizierter Worker-Endpoint (/discover-restaurant, mit Live-Websuche + HTTP-Website-Check)
+                try {
+                    const resp = await fetch(`${WORKER_BASE}/discover-restaurant`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ exclude: seenNames })
+                    });
+                    if (resp.ok) {
+                        const data = await resp.json();
+                        if (data?.restaurant?.name && isValidDeniaRestaurant(data.restaurant) && !isAlreadyKnown(data.restaurant.name, seenNames)) {
+                            const safeUrl = sanitizeWebsiteUrl(data.restaurant.website);
+                            data.restaurant.website = safeUrl;
+                            data.restaurant.websiteVerified = Boolean(safeUrl && data.restaurant.websiteVerified);
+                            return mergeWithVerifiedFactCheck(data.restaurant);
+                        }
+                    }
+                } catch (_) {}
+
+                // 2) Live-Online-Suche über /concierge (unbegrenzt viele neue Lokale in 03700 Dénia!)
+                for (let attempt = 0; attempt < 2; attempt++) {
+                    try {
+                        const recentExcl = seenNames.slice(-10).join(', ');
+                        const exclPart = recentExcl ? ` und NICHT: ${recentExcl}` : '';
+                        let prompt = `Suche 1 echtes, offenes Restaurant in 03700 Dénia (NICHT Valencia/Jávea, NICHT Homepage-Liste${exclPart}). Lage/Stadtteil exakt laut Adresse angeben (nichts erfinden). Nur JSON: {"name":"","area":"Stadtteil · Dénia","cuisine":"","priceRange":"€€","description":"","tip":"","address":"Straße, 03700 Dénia","lat":38.84,"lon":0.11}`;
+                        if (prompt.length > 495) {
+                            prompt = `1 echtes Restaurant in 03700 Dénia (NICHT Valencia/Jávea, NICHT: ${seenNames.slice(-5).join(', ')}). Lage exakt laut Adresse. Nur JSON: {"name":"","area":"Dénia","cuisine":"","priceRange":"€€","description":"","tip":"","address":"03700 Dénia","lat":38.84,"lon":0.11}`;
+                        }
+
+                        const resp = await fetch(`${WORKER_BASE}/concierge`, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ message: prompt, history: [] })
+                        });
+                        if (resp.ok) {
+                            const data = await resp.json();
+                            const parsed = parseRestaurantJson(data?.reply);
+                            if (parsed && isValidDeniaRestaurant(parsed) && !isAlreadyKnown(parsed.name, seenNames)) {
+                                return mergeWithVerifiedFactCheck(parsed);
+                            }
+                        }
+                    } catch (_) {
+                        break;
+                    }
+                }
+
+                // 3) Fallback: Verifizierter Dénia-Pool (falls offline oder KI-Duplikat)
+                const unseenVerified = BACKUP_DISCOVERIES.filter(r => !isAlreadyKnown(r.name, seenNames));
+                const chosen = unseenVerified.length > 0
+                    ? unseenVerified[Math.floor(Math.random() * unseenVerified.length)]
+                    : BACKUP_DISCOVERIES[Math.floor(Math.random() * BACKUP_DISCOVERIES.length)];
+                return { ...chosen, websiteVerified: Boolean(chosen.website) };
+            }
+
+            window.discoverNewRestaurant = async function (forceNew) {
+                if (isFetching) return;
+                const hist = loadHistory();
+                const today = getTodayISO();
+
+                // Fehlerhafte / nicht in Dénia existierende Alt-Einträge (z. B. Ca Pepico) & gelistete Favoriten bereinigen
+                const isInvalidEntry = (name) => isExistingFavorite(name) || namesMatch(name, 'Ca Pepico');
+                if (hist.current?.restaurant && isInvalidEntry(hist.current.restaurant.name)) {
+                    hist.current = null;
+                }
+                const cleanedSeen = hist.seen.filter(s => !isInvalidEntry(s));
+                const cleanedItems = hist.items.filter(it => !isInvalidEntry(it.name));
+                if (cleanedSeen.length !== hist.seen.length || cleanedItems.length !== hist.items.length) {
+                    hist.seen = cleanedSeen;
+                    hist.items = cleanedItems;
+                    saveHistory(hist);
+                }
+
+                // Falls aktuelles Restaurant noch nicht in hist.items gespeichert ist (Migration), nachpflegen
+                if (hist.current?.restaurant && !hist.items.some(it => namesMatch(it.name, hist.current.restaurant.name))) {
+                    hist.items.unshift(hist.current.restaurant);
+                    saveHistory(hist);
+                }
+
+                if (!forceNew && hist.current && hist.current.date === today && hist.current.restaurant) {
+                    const checked = mergeWithVerifiedFactCheck(hist.current.restaurant);
+                    hist.current.restaurant = checked;
+                    renderRestaurant(checked, hist);
+                    return;
+                }
+
+                setLoadingUI(true);
+                if (forceNew) {
+                    document.getElementById('discTitle').textContent = 'Suche neues Lokal in Dénia…';
+                }
+
+                try {
+                    const restaurant = await fetchOnlineRestaurant(hist.seen);
+                    if (!hist.seen.some(s => namesMatch(s, restaurant.name))) {
+                        hist.seen.push(restaurant.name);
+                    }
+                    hist.items = [restaurant, ...hist.items.filter(it => !namesMatch(it.name, restaurant.name))].slice(0, 40);
+                    hist.current = { date: today, restaurant };
+                    saveHistory(hist);
+                    renderRestaurant(restaurant, hist);
+                } finally {
+                    setLoadingUI(false);
+                }
+            };
+
+            window.resetDiscoveryHistory = function () {
+                saveHistory({ seen: [], items: [], current: null });
+                window.toggleDiscoveryHistory(false);
+                window.discoverNewRestaurant(true);
+            };
+
+            // =====================================================
+            //   GOOGLE MAPS DIREKTKARTE (SAT-HYBRID ALS DEFAULT)
+            // =====================================================
+            function hasMapConsent() {
+                try { return localStorage.getItem(MAP_CONSENT_KEY) === '1'; } catch (_) { return false; }
+            }
+
+            function buildGoogleMapEmbedUrl(r, mode) {
+                const placeQuery = encodeURIComponent(`${r.name}, ${r.address || '03700 Dénia, Alicante'}`);
+                if (mode === 'route') {
+                    const km = calcDistanceKm(CASA_LAT, CASA_LON, r.lat, r.lon);
+                    const midLat = ((CASA_LAT + r.lat) / 2).toFixed(5);
+                    const midLon = ((CASA_LON + r.lon) / 2).toFixed(5);
+                    const zoom = km < 2.2 ? 14 : (km < 6.5 ? 13 : 12);
+                    return `https://maps.google.com/maps?saddr=${CASA_LAT},${CASA_LON}&daddr=${r.lat},${r.lon}&ll=${midLat},${midLon}&z=${zoom}&dirflg=d&t=h&hl=de&output=embed`;
+                }
+                return `https://maps.google.com/maps?q=${placeQuery}&t=h&hl=de&z=16&output=embed`;
+            }
+
+            function syncDiscoveryMap() {
+                const gate = document.getElementById('discMapConsentGate');
+                const iframe = document.getElementById('discoveryGoogleMapIframe');
+                if (!iframe) return;
+
+                if (hasMapConsent()) {
+                    gate?.classList.add('hidden');
+                    if (currentRestaurant) {
+                        const nextUrl = buildGoogleMapEmbedUrl(currentRestaurant, discMapMode);
+                        if (iframe.src !== nextUrl) {
+                            iframe.src = nextUrl;
+                        }
+                    }
+                } else {
+                    gate?.classList.remove('hidden');
+                }
+            }
+
+            window.unlockDiscoveryMap = function () {
+                try { localStorage.setItem(MAP_CONSENT_KEY, '1'); } catch (_) {}
+                syncDiscoveryMap();
+            };
+
+            window.toggleDiscoveryMapMode = function () {
+                discMapMode = discMapMode === 'route' ? 'place' : 'route';
+                const btn = document.getElementById('discMapToggleBtn');
+                if (btn) {
+                    const isRoute = discMapMode === 'route';
+                    btn.classList.toggle('is-active-mode', isRoute);
+                    btn.textContent = isRoute ? '📍 Lokal auf Karte' : '🚗 Route auf Karte';
+                }
+                syncDiscoveryMap();
+            };
+
+            window.scrollToDiscoveryCard = function () {
+                const card = document.getElementById('restaurantDiscoveryCard');
+                if (card) {
+                    card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+            };
+
+            function updateSingleBadgeTooltip(el) {
+                if (!el) return;
+                if (el.dataset.fullTitle) {
+                    el.title = el.dataset.fullTitle;
+                } else if (el.scrollWidth > el.clientWidth + 1) {
+                    el.title = el.textContent.trim();
+                } else {
+                    el.removeAttribute('title');
+                }
+            }
+
+            function syncBadgeTooltips() {
+                document.querySelectorAll('.spot-badge').forEach(updateSingleBadgeTooltip);
+            }
+
+            window.addEventListener('resize', syncBadgeTooltips);
+            window.addEventListener('load', syncBadgeTooltips);
+            if (document.fonts && document.fonts.ready) {
+                document.fonts.ready.then(syncBadgeTooltips);
+            }
+            document.addEventListener('mouseover', (e) => {
+                const badge = e.target.closest?.('.spot-badge');
+                if (badge) updateSingleBadgeTooltip(badge);
+            });
+
+            document.addEventListener('DOMContentLoaded', () => {
+                syncBadgeTooltips();
+                const params = new URLSearchParams(window.location.search);
+                const forceFromConcierge = params.get('discover') === '1';
+                window.discoverNewRestaurant(forceFromConcierge);
+                if (forceFromConcierge) {
+                    setTimeout(() => {
+                        const discBtn = document.getElementById('btnFilterDiscovery');
+                        if (typeof window.filterSpots === 'function' && discBtn) {
+                            window.filterSpots('discovery', discBtn);
+                        }
+                        window.scrollToDiscoveryCard();
+                    }, 150);
+                }
+            });
+        })();
+    </script>
 </body>
 </html>

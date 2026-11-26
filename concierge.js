@@ -8,6 +8,7 @@
     const CONCIERGE_API_URL = 'https://denia-flights.cf-5a7.workers.dev/concierge';
 
     const QUICK_PROMPTS = [
+        { label: '✨ Empfiehl ein neues Restaurant', action: 'discover-restaurant' },
         { label: '🗑️ Wann darf der Müll raus?', q: 'Wann und wie funktioniert die Müllentsorgung in Dénia?' },
         { label: '🥘 Beste Paella- & Tapas-Tipps?', q: 'Welche Restaurants empfehlt ihr für Paella und Tapas?' },
         { label: '🌅 Höhenweg Montgó?', q: 'Wann startet man am besten zum Höhenweg am Montgó und wo kann man parken?' },
@@ -452,9 +453,24 @@
         messagesEl.querySelectorAll('[data-quick-idx]').forEach(btn => {
             btn.addEventListener('click', () => {
                 const idx = parseInt(btn.dataset.quickIdx, 10);
-                if (QUICK_PROMPTS[idx]) {
-                    sendQuestion(QUICK_PROMPTS[idx].q);
+                const item = QUICK_PROMPTS[idx];
+                if (!item) return;
+                if (item.action === 'discover-restaurant') {
+                    const card = document.getElementById('restaurantDiscoveryCard');
+                    if (card && typeof window.discoverNewRestaurant === 'function') {
+                        closeConcierge();
+                        const discBtn = document.getElementById('btnFilterDiscovery');
+                        if (typeof window.filterSpots === 'function' && discBtn) {
+                            window.filterSpots('discovery', discBtn);
+                        }
+                        card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        window.discoverNewRestaurant(true);
+                    } else {
+                        window.location.href = 'kulinarisches.html?discover=1#restaurantDiscoveryCard';
+                    }
+                    return;
                 }
+                sendQuestion(item.q);
             });
         });
     }

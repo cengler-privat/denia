@@ -102,7 +102,7 @@
         .spots-container {
             max-width: 1240px;
             margin: 0 auto;
-            padding: 50px 20px;
+            padding: 18px 20px 50px 20px;
         }
 
         .spots-grid {
@@ -309,21 +309,22 @@
                 <button type="button" class="vibe-btn" onclick="filterSpots('natur', this)">🥾 Bergziegen &amp; Aktiv</button>
                 <button type="button" class="vibe-btn" onclick="filterSpots('wasser', this)">🌊 Buchten &amp; Meer</button>
             </div>
-
-            <div class="distance-filter-bar" role="group" aria-label="Entfernung und Anfahrtsdauer ab Casa">
-                <span class="dist-filter-label">Anfahrt:</span>
-                <button type="button" class="dist-btn active" data-dist="all" onclick="filterByDistance('all', this)">🌍 Alle</button>
-                <button type="button" class="dist-btn" data-dist="20" onclick="filterByDistance('20', this)">🚗 Bis 20 Min.</button>
-                <button type="button" class="dist-btn" data-dist="45" onclick="filterByDistance('45', this)">🚗 Bis 45 Min.</button>
-                <button type="button" class="dist-btn" data-dist="daytrip" onclick="filterByDistance('daytrip', this)">🛣️ Tagesausflug (45+ Min.)</button>
-                <span class="dist-divider" aria-hidden="true"></span>
-                <button type="button" class="dist-map-btn" onclick="openSpotMapOverlay({ cat: 'ausflug', dist: getActivePageDistFilter() })"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9.5"/><polygon points="16.2 7.8 14.1 14.1 7.8 16.2 9.9 9.9 16.2 7.8" fill="#f59e0b" stroke="#f59e0b" stroke-width="1.2"/></svg> Entdecker-Karte</button>
-            </div>
         </div>
     </header>
 
     <main>
         <section id="trigger-whatsapp" class="spots-container">
+            <div class="spots-top-tools">
+                <button type="button" class="dist-toggle-btn" aria-expanded="false" onclick="toggleDistanceFilterBar(this)">🚗 Nach Entfernung filtern ▾</button>
+                <div class="distance-filter-bar collapsible" role="group" aria-label="Entfernung und Anfahrtsdauer ab Casa">
+                    <span class="dist-filter-label">Anfahrt:</span>
+                    <button type="button" class="dist-btn active" data-dist="all" onclick="filterByDistance('all', this)">🌍 Alle</button>
+                    <button type="button" class="dist-btn" data-dist="20" onclick="filterByDistance('20', this)">🚗 Bis 20 Min.</button>
+                    <button type="button" class="dist-btn" data-dist="45" onclick="filterByDistance('45', this)">🚗 Bis 45 Min.</button>
+                    <button type="button" class="dist-btn" data-dist="daytrip" onclick="filterByDistance('daytrip', this)">🛣️ Tagesausflug (45+ Min.)</button>
+                </div>
+            </div>
+
             <div class="spots-grid">
 
                 <!-- 1. BURG VON DÉNIA -->

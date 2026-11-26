@@ -726,6 +726,31 @@
                 align-items: center;
                 gap: 10px;
             }
+            .filter-sub-actions {
+                display: inline-flex;
+                flex-wrap: wrap;
+                align-items: center;
+                justify-content: center;
+                gap: 8px;
+            }
+            .dist-toggle-btn {
+                background: rgba(255, 255, 255, 0.06);
+                border: 1px solid rgba(255, 255, 255, 0.16);
+                color: rgba(255, 255, 255, 0.78);
+                padding: 6px 13px;
+                border-radius: 20px;
+                font-family: 'Lato', sans-serif;
+                font-size: 12.5px;
+                font-weight: 700;
+                cursor: pointer;
+                transition: all 0.2s ease;
+            }
+            .dist-toggle-btn:hover,
+            .dist-toggle-btn.is-open {
+                background: rgba(255, 255, 255, 0.14);
+                color: #ffffff;
+                border-color: rgba(255, 255, 255, 0.32);
+            }
             .distance-filter-bar {
                 display: inline-flex;
                 flex-wrap: wrap;
@@ -740,6 +765,64 @@
                 border: 1px solid rgba(56, 189, 248, 0.28);
                 max-width: 100%;
                 box-sizing: border-box;
+            }
+            .spots-top-tools {
+                display: flex;
+                flex-wrap: wrap;
+                align-items: center;
+                justify-content: flex-start;
+                gap: 8px;
+                margin-bottom: 14px;
+            }
+            .spots-top-tools .dist-toggle-btn {
+                background: #ffffff;
+                border: 1px solid rgba(15, 23, 42, 0.14);
+                color: #475569;
+                padding: 5px 11px;
+                border-radius: 18px;
+                font-family: 'Lato', sans-serif;
+                font-size: 11.5px;
+                font-weight: 700;
+                cursor: pointer;
+                box-shadow: 0 1px 5px rgba(15, 23, 42, 0.05);
+                transition: all 0.2s ease;
+            }
+            .spots-top-tools .dist-toggle-btn:hover,
+            .spots-top-tools .dist-toggle-btn.is-open {
+                background: #0f172a;
+                color: #ffffff;
+                border-color: #0f172a;
+            }
+            .spots-top-tools .distance-filter-bar {
+                background: #ffffff;
+                border: 1px solid rgba(15, 23, 42, 0.12);
+                box-shadow: 0 3px 10px rgba(15, 23, 42, 0.05);
+                padding: 3px 6px;
+                gap: 4px;
+                border-radius: 20px;
+            }
+            .spots-top-tools .dist-filter-label {
+                color: #64748b;
+                font-size: 10.5px;
+            }
+            .spots-top-tools .dist-btn {
+                color: #334155;
+                padding: 4px 9px;
+                font-size: 11.5px;
+            }
+            .spots-top-tools .dist-btn:hover {
+                background: #f1f5f9;
+                color: #0f172a;
+            }
+            .spots-top-tools .dist-btn.active {
+                background: #0f172a;
+                color: #ffffff;
+            }
+            .distance-filter-bar.collapsible {
+                display: none;
+            }
+            .distance-filter-bar.collapsible.is-open {
+                display: inline-flex;
             }
             .dist-filter-label {
                 font-family: 'Lato', sans-serif;
@@ -1274,7 +1357,178 @@
             .smo-popup-btn.secondary { background: #f1f5f9; color: #0f172a !important; }
             .smo-popup-btn.secondary:hover { background: #e2e8f0; }
 
+            /* =============================================================
+               🗺️ FLOORPLAN-STYLE VORSCHAUKARTE (WIE 360°-GRUNDRISS)
+               ============================================================= */
+            .spot-minimap-card {
+                position: fixed;
+                top: 72px;
+                right: 20px;
+                z-index: 990;
+                width: 215px;
+                background: rgba(15, 23, 42, 0.84);
+                backdrop-filter: blur(14px);
+                -webkit-backdrop-filter: blur(14px);
+                border: 1px solid rgba(255, 255, 255, 0.22);
+                border-radius: 16px;
+                padding: 8px 9px;
+                box-shadow: 0 14px 32px rgba(0, 0, 0, 0.42);
+                transition: all 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+                user-select: none;
+                color: #ffffff;
+                font-family: 'Lato', sans-serif;
+            }
+            .spot-minimap-card.collapsed {
+                width: auto;
+                padding: 8px 14px;
+                border-radius: 30px;
+            }
+            .spot-minimap-card.collapsed .smm-body {
+                display: none;
+            }
+            .spot-minimap-card.collapsed .smm-header {
+                margin-bottom: 0;
+                gap: 10px;
+            }
+            .smm-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 8px;
+                padding: 0 2px;
+                color: rgba(255, 255, 255, 0.95);
+                font-size: 11px;
+                font-weight: 700;
+                letter-spacing: 1.4px;
+                text-transform: uppercase;
+                gap: 8px;
+                cursor: grab;
+                touch-action: none;
+            }
+            .spot-minimap-card.is-dragging {
+                transition: none !important;
+                box-shadow: 0 22px 48px rgba(0, 0, 0, 0.58);
+            }
+            .spot-minimap-card.is-dragging .smm-header {
+                cursor: grabbing;
+            }
+            .smm-header > span {
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                min-width: 0;
+            }
+            .smm-header-actions {
+                display: inline-flex;
+                align-items: center;
+                gap: 5px;
+            }
+            .smm-icon-btn {
+                background: rgba(255, 255, 255, 0.14);
+                border: none;
+                color: #ffffff;
+                width: 24px;
+                height: 24px;
+                border-radius: 50%;
+                cursor: pointer;
+                font-size: 13px;
+                line-height: 1;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                transition: background 0.2s, color 0.2s;
+            }
+            .smm-icon-btn:hover {
+                background: #f59e0b;
+                color: #0f172a;
+            }
+            .smm-svg {
+                width: 100%;
+                height: auto;
+                display: block;
+                border-radius: 12px;
+                background: linear-gradient(155deg, rgba(12, 74, 110, 0.72) 0%, rgba(15, 36, 58, 0.92) 100%);
+                border: 1px solid rgba(255, 255, 255, 0.12);
+            }
+            .smm-land {
+                fill: rgba(214, 186, 146, 0.34);
+                stroke: rgba(238, 214, 178, 0.75);
+                stroke-width: 1.35;
+                stroke-linejoin: round;
+            }
+            .smm-montgo {
+                fill: rgba(168, 122, 78, 0.38);
+                stroke: rgba(224, 184, 138, 0.55);
+                stroke-width: 0.95;
+                stroke-dasharray: 2.5 2;
+            }
+            .smm-urban {
+                fill: rgba(245, 158, 11, 0.24);
+                stroke: rgba(251, 191, 36, 0.48);
+                stroke-width: 0.8;
+            }
+            .smm-label {
+                fill: rgba(255, 248, 235, 0.78);
+                font-family: 'Lato', sans-serif;
+                font-size: 7.5px;
+                font-weight: 700;
+                letter-spacing: 0.4px;
+                pointer-events: none;
+            }
+            .smm-sea-label {
+                fill: rgba(186, 230, 253, 0.55);
+                font-family: 'Lato', sans-serif;
+                font-size: 7px;
+                font-weight: 700;
+                letter-spacing: 1.6px;
+                text-transform: uppercase;
+                pointer-events: none;
+            }
+            .smm-casa-ring {
+                fill: rgba(56, 189, 248, 0.25);
+                pointer-events: none;
+            }
+            .smm-casa-dot {
+                fill: #38bdf8;
+                stroke: #ffffff;
+                stroke-width: 1.6;
+                pointer-events: none;
+            }
+            .smm-pin {
+                fill: #f59e0b;
+                stroke: #ffffff;
+                stroke-width: 1.5;
+                cursor: pointer;
+                transition: r 0.18s ease, fill 0.18s ease;
+            }
+            .smm-pin:hover,
+            .smm-pin.is-hovered {
+                fill: #fde68a;
+            }
+            .smm-status {
+                margin-top: 7px;
+                font-size: 11.5px;
+                color: rgba(255, 255, 255, 0.78);
+                text-align: center;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                min-height: 16px;
+            }
+            .smm-status strong {
+                color: #fde68a;
+            }
+            .spot-card.spot-card-focus-pulse {
+                animation: spotFocusPulse 1.7s ease-out;
+            }
+            @keyframes spotFocusPulse {
+                0% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.85), 0 18px 42px rgba(15, 23, 42, 0.2); }
+                30% { box-shadow: 0 0 0 6px rgba(245, 158, 11, 0.45), 0 22px 48px rgba(15, 23, 42, 0.22); }
+                100% { box-shadow: 0 0 0 14px rgba(245, 158, 11, 0), 0 15px 35px rgba(15, 23, 42, 0.08); }
+            }
+
             @media (max-width: 768px) {
+                .spot-minimap-card { top: 72px; right: 14px; left: auto; bottom: auto; width: 242px; }
                 .distance-filter-bar { width: 100%; border-radius: 20px; padding: 8px; gap: 5px; }
                 .dist-filter-label { width: 100%; text-align: center; padding-bottom: 2px; }
                 .dist-divider { display: none; }
@@ -1734,6 +1988,228 @@
             });
             cards.forEach(card => grid.appendChild(card));
         }
+
+        // Floorplan-Style Vorschaukarte (wie beim 360°-Grundriss) einbinden
+        initMiniFloorplanMap(defaultPageCat);
+        updateMiniFloorplanMap();
+    }
+
+    /* =====================================================================
+       🗺️ FLOORPLAN-STYLE VORSCHAUKARTE (ECHTE PROPORTIONEN & VERSCHIEBBAR)
+       ===================================================================== */
+    const SMM_COS_LAT = Math.cos(38.8 * Math.PI / 180);
+    const SMM_SCALE = 690.0;
+
+    function projectToMiniSvg(lat, lon) {
+        // Kernbereich Dénia–Jávea–Benissa maßstabsgetreu; weiter entfernte Ausflugsziele
+        // (Valencia, Guadalest, Relleu, Alicante, Ibiza) weich in den Randbereich komprimieren
+        let x;
+        if (lon < 0.0) {
+            // Westliches Hinterland & Süden (-0.50 .. 0.0 -> x: 14 .. 64)
+            const t = Math.max(0, Math.min(1, (lon + 0.50) / 0.50));
+            x = 14 + t * 50;
+        } else if (lon > 0.24) {
+            // Inseln im Mittelmeer (Ibiza/Formentera -> rechts im Meer)
+            const t = Math.max(0, Math.min(1, (lon - 0.24) / 1.3));
+            x = 198 + t * 46;
+        } else {
+            x = 128 + (lon - 0.115) * SMM_SCALE * SMM_COS_LAT;
+        }
+
+        let y;
+        if (lat > 38.895) {
+            // Norden (z. B. Oceanogràfic Valencia -> ganz oben links)
+            const t = Math.max(0, Math.min(1, (lat - 38.895) / 0.60));
+            y = 18 - t * 6;
+        } else if (lat < 38.635) {
+            // Weiter im Süden (Altea, Benidorm, Relleu, Alicante -> unterer Rand verteilt)
+            const t = Math.max(0, Math.min(1, (38.635 - lat) / 0.30));
+            y = 188 + t * 12;
+        } else {
+            y = 108 - (lat - 38.765) * SMM_SCALE;
+        }
+
+        return {
+            x: Math.max(10, Math.min(250, x)),
+            y: Math.max(10, Math.min(200, y))
+        };
+    }
+
+    function initMiniFloorplanMap(defaultPageCat) {
+        if (document.getElementById('spotMinimapCard')) return;
+        const grid = document.querySelector('.spots-grid');
+        if (!grid) return;
+
+        // Desktop standardmäßig aufgeklappt, Mobil kompakt zugeklappt
+        const isMobile = window.innerWidth <= 900;
+        const card = document.createElement('div');
+        card.id = 'spotMinimapCard';
+        card.className = 'spot-minimap-card' + (isMobile ? ' collapsed' : '');
+        card.innerHTML = `
+            <div class="smm-header" id="smmDragHandle" title="Zum Verschieben ziehen">
+                <span id="smmTitle">🗺️ Übersicht</span>
+                <div class="smm-header-actions">
+                    <button type="button" class="smm-icon-btn" id="smmExpandBtn" title="Große Entdecker-Karte öffnen">⤢</button>
+                    <button type="button" class="smm-icon-btn" id="smmToggleBtn" title="Vorschaukarte ein-/ausklappen">${isMobile ? '+' : '−'}</button>
+                </div>
+            </div>
+            <div class="smm-body">
+                <svg class="smm-svg" viewBox="0 0 260 210" aria-label="Interaktive Übersichtskarte Dénia &amp; Costa Blanca Nord">
+                    <path class="smm-land" d="M 0,0 L 55.4,14.9 L 75.8,28.6 L 88.7,36.9 L 96.3,41.1 L 103.3,44.5 L 113.5,46.6 L 122.6,50.7 L 128.0,54.2 L 131.8,56.9 L 132.8,60.4 L 140.4,64.5 L 150.6,72.1 L 172.1,81.1 L 163.5,86.6 L 166.2,93.5 L 172.1,99.0 L 183.9,102.5 L 183.4,112.8 L 191.5,119.0 L 190.4,126.6 L 176.4,132.2 L 171.6,132.8 L 156.5,144.6 L 146.8,162.5 L 138.2,161.8 L 122.6,172.2 L 113.5,177.7 L 104.9,190.8 L 107.6,199.1 L 90.4,208.1 L 0,210 Z" />
+                    <path class="smm-urban" d="M 111,48 Q 123,49 131,56 Q 133,63 124,65 Q 113,65 109,57 Q 108,50 111,48 Z" />
+                    <ellipse class="smm-montgo" cx="137" cy="79" rx="18" ry="8" transform="rotate(14 137 79)" />
+                    <text x="215" y="42" class="smm-sea-label" text-anchor="middle">Mittelmeer</text>
+                    <text x="68" y="47" class="smm-label" text-anchor="middle">Les Marines</text>
+                    <text x="104" y="64" class="smm-label" text-anchor="middle">Dénia</text>
+                    <text x="137" y="82" class="smm-label" text-anchor="middle">Montgó</text>
+                    <text x="142" y="102" class="smm-label" text-anchor="middle">Jávea</text>
+                    <text x="90" y="180" class="smm-label" text-anchor="middle">Benissa</text>
+                    <circle class="smm-casa-ring" cx="103.3" cy="44.6" r="8" />
+                    <circle class="smm-casa-dot" cx="103.3" cy="44.6" r="3.8"><title>🏠 Casa Englers y Amigos</title></circle>
+                    <g id="smmPinsGroup"></g>
+                </svg>
+            </div>
+        `;
+        document.body.appendChild(card);
+
+        document.getElementById('smmToggleBtn').addEventListener('click', (e) => {
+            e.stopPropagation();
+            const collapsed = card.classList.toggle('collapsed');
+            document.getElementById('smmToggleBtn').textContent = collapsed ? '+' : '−';
+        });
+
+        document.getElementById('smmExpandBtn').addEventListener('click', (e) => {
+            e.stopPropagation();
+            openSpotMapOverlay({ cat: defaultPageCat, dist: getActivePageDistFilter() });
+        });
+
+        // Frei verschiebbar über die Kopfzeile (Maus & Touch)
+        const handle = document.getElementById('smmDragHandle');
+        let dragging = false;
+        let startX = 0, startY = 0, origLeft = 0, origTop = 0;
+
+        handle.addEventListener('pointerdown', (e) => {
+            if (e.target.closest('button')) return;
+            dragging = true;
+            const rect = card.getBoundingClientRect();
+            origLeft = rect.left;
+            origTop = rect.top;
+            startX = e.clientX;
+            startY = e.clientY;
+            card.style.left = `${origLeft}px`;
+            card.style.top = `${origTop}px`;
+            card.style.right = 'auto';
+            card.style.bottom = 'auto';
+            card.classList.add('is-dragging');
+            handle.setPointerCapture?.(e.pointerId);
+        });
+
+        handle.addEventListener('pointermove', (e) => {
+            if (!dragging) return;
+            const maxLeft = Math.max(8, window.innerWidth - card.offsetWidth - 8);
+            const maxTop = Math.max(8, window.innerHeight - card.offsetHeight - 8);
+            const nextLeft = Math.max(8, Math.min(maxLeft, origLeft + (e.clientX - startX)));
+            const nextTop = Math.max(8, Math.min(maxTop, origTop + (e.clientY - startY)));
+            card.style.left = `${nextLeft}px`;
+            card.style.top = `${nextTop}px`;
+        });
+
+        const stopDrag = () => {
+            if (!dragging) return;
+            dragging = false;
+            card.classList.remove('is-dragging');
+        };
+        handle.addEventListener('pointerup', stopDrag);
+        handle.addEventListener('pointercancel', stopDrag);
+    }
+
+    function updateMiniFloorplanMap() {
+        const pinsGroup = document.getElementById('smmPinsGroup');
+        const titleEl = document.getElementById('smmTitle');
+        const statusEl = document.getElementById('smmStatus');
+        const grid = document.querySelector('.spots-grid');
+        if (!pinsGroup || !grid) return;
+
+        const visibleCards = Array.from(grid.querySelectorAll('.spot-card:not(.hidden)'));
+        const points = [];
+
+        visibleCards.forEach(cardEl => {
+            const spotId = cardEl.dataset.spotId;
+            if (!spotId) return;
+            const spot = SPOTS.find(s => s.id === spotId);
+            if (!spot) return;
+            const pos = projectToMiniSvg(spot.lat, spot.lon);
+            points.push({
+                id: spot.id,
+                name: spot.name,
+                driveMin: spot.driveMin,
+                x: pos.x,
+                y: pos.y,
+                cardEl
+            });
+        });
+
+        // Sanfte Kollisions-Entzerrung, damit nah beieinanderliegende Punkte alle einzeln klickbar sind
+        const minDist = 11.5;
+        for (let iter = 0; iter < 5; iter++) {
+            for (let i = 0; i < points.length; i++) {
+                for (let j = i + 1; j < points.length; j++) {
+                    const dx = points[j].x - points[i].x;
+                    const dy = points[j].y - points[i].y;
+                    const dist = Math.hypot(dx, dy) || 0.01;
+                    if (dist < minDist) {
+                        const push = (minDist - dist) / 2;
+                        const nx = dx / dist;
+                        const ny = dy / dist;
+                        points[i].x = Math.max(10, Math.min(250, points[i].x - nx * push));
+                        points[i].y = Math.max(12, Math.min(198, points[i].y - ny * push));
+                        points[j].x = Math.max(10, Math.min(250, points[j].x + nx * push));
+                        points[j].y = Math.max(12, Math.min(198, points[j].y + ny * push));
+                    }
+                }
+            }
+        }
+
+        pinsGroup.innerHTML = '';
+        const ns = 'http://www.w3.org/2000/svg';
+        points.forEach(pt => {
+            const c = document.createElementNS(ns, 'circle');
+            c.setAttribute('class', 'smm-pin');
+            c.setAttribute('cx', pt.x.toFixed(1));
+            c.setAttribute('cy', pt.y.toFixed(1));
+            c.setAttribute('r', '4.8');
+
+            const t = document.createElementNS(ns, 'title');
+            t.textContent = `${pt.name} (${pt.driveMin} Min.)`;
+            c.appendChild(t);
+
+            c.addEventListener('mouseenter', () => {
+                c.setAttribute('r', '6.6');
+                c.classList.add('is-hovered');
+                if (titleEl) {
+                    titleEl.textContent = `${pt.name} · ${pt.driveMin} Min.`;
+                }
+            });
+            c.addEventListener('mouseleave', () => {
+                c.setAttribute('r', '4.8');
+                c.classList.remove('is-hovered');
+                if (titleEl) {
+                    titleEl.textContent = `🗺️ Übersicht (${points.length})`;
+                }
+            });
+            c.addEventListener('click', () => {
+                pt.cardEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                pt.cardEl.classList.remove('spot-card-focus-pulse');
+                void pt.cardEl.offsetWidth;
+                pt.cardEl.classList.add('spot-card-focus-pulse');
+            });
+
+            pinsGroup.appendChild(c);
+        });
+
+        if (titleEl) {
+            titleEl.textContent = `🗺️ Übersicht (${points.length})`;
+        }
     }
 
     /* =====================================================================
@@ -1748,6 +2224,12 @@
 
         let visibleCount = 0;
         grid.querySelectorAll('.spot-card').forEach(card => {
+            if (card.classList.contains('discovery-card')) {
+                const showDisc = pageCatFilter === 'all' || pageCatFilter === 'discovery';
+                card.classList.toggle('hidden', !showDisc);
+                if (showDisc) visibleCount++;
+                return;
+            }
             const cats = (card.dataset.category || '').split(/\s+/);
             const catOk = pageCatFilter === 'all' || cats.includes(pageCatFilter);
 
@@ -1787,6 +2269,8 @@
         } else if (emptyEl) {
             emptyEl.remove();
         }
+
+        updateMiniFloorplanMap();
     }
 
     window.filterSpots = function (category, btn) {
@@ -1813,6 +2297,17 @@
             b.classList.toggle('active', b.dataset.dist === 'all');
         });
         applyPageFilters();
+    };
+
+    window.toggleDistanceFilterBar = function (btn) {
+        const bar = document.querySelector('.distance-filter-bar.collapsible');
+        if (!bar) return;
+        const open = !bar.classList.contains('is-open');
+        bar.classList.toggle('is-open', open);
+        if (btn) {
+            btn.classList.toggle('is-open', open);
+            btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+        }
     };
 
     window.getActivePageDistFilter = function () {
